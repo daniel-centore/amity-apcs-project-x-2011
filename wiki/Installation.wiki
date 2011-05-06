@@ -36,12 +36,11 @@
   # Do tab setup according to TabSetup.
 
 ==Command Line==
-*NOTE: This is still from the GE Case Study. Mike Z should update it accordingly.*
-  # `svn checkout https://amity-apcs-ge-2011.googlecode.com/svn/ amity-apcs-ge-2011`
+  # `svn checkout https://amity-apcs-project-x-2011.googlecode.com/svn/ amity-apcs-project-x-2011`
     * Use `--username` if your username is not the same as your local username. This is very likely.
     * Use `--password` if you don't mind your password being saved to your history. Since it's just a random string, this is also very likely.
-    * So, it would look like `svn --username fred@spamavert.com --password abcdefg checkout https://amity-apcs-ge-2011.googlecode.com/svn/ amity-apcs-ge-2011`
-  # `cd amity-apcs-ge-2011/trunk`
+    * So, it would look like `svn --username fred@spamavert.com --password abcdefg checkout https://amity-apcs-project-x-2011.googlecode.com/svn/ amity-apcs-project-x-2011`
+  # `cd amity-apcs-project-x-2011/trunk`
     * This just gets to the code; it's not necessary to do so.
-    * You can also use `amity-apcs-ge-2011/GE\ Contest`, but typing in that space is a pain, and make the fact that I created a symlink "trunk" kind of pointless.
+    * You can also use `amity-apcs-project-x-2011/Project\ X`, but typing in that space is a pain, and make the fact that I created a symlink "trunk" kind of pointless.
   # Do tab setup according to TabSetup.

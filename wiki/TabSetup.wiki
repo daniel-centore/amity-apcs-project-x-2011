@@ -77,8 +77,8 @@ ${type_declaration}
 
 ==Command Line==
   * If you use a modern `vi`, just make sure you `:set modeline` in your `.exrc`. The source files have appropriate modelines.
-  * No spaces before parentheses.
-  * Use comment and brace style as in `trunk/org/amityregion5/Template.java`.
+  * No spaces before function parentheses.
+  * Use comment and brace style as in `trunk/src/org/amityregion5/Template.java`.
     * The newline after the `class` declaration is optional and harmless.
   * Use a 4-space tab stop for indentation.
   * Use template located at org.amityregion5.Template
