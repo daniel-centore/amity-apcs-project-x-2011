@@ -21,6 +21,7 @@ package hrml.client;
 
 import java.net.Socket;
 
+import hrml.common.Connection;
 import hrml.common.Magic;
 import hrml.common.Report;
 

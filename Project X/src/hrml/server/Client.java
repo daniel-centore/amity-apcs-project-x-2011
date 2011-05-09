@@ -19,34 +19,24 @@
  */
 package hrml.server;
 
-import java.io.DataInputStream;
-import java.io.InputStream;
-import java.io.PrintStream;
 import java.io.IOException;
 import java.net.Socket;
-import java.util.Scanner;
+
+import hrml.common.Connection;
 
 /**
  * @author Michael Zuo <sreservoir@gmail.com>
  */
-public class Client
+public class Client extends Connection
 {
-    public final Socket from;
-    public final InputStream recv;
-    public final Scanner scan;
-    public final PrintStream send;
-
     public Client()
         throws IOException
     {
-        this(null);
+        super();
     }
     public Client(Socket _)
         throws IOException
     {
-        from = _;
-        recv = new DataInputStream(from.getInputStream());
-        scan = new Scanner(recv);
-        send = new PrintStream(from.getOutputStream());
+        super(_);
     }
 }

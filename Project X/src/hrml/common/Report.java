@@ -19,6 +19,8 @@
  */
 package hrml.common;
 
+import java.io.PrintStream;
+
 /**
  * @author Michael Zuo <sreservoir@gmail.com>
  */
@@ -37,13 +39,23 @@ public enum Report
     private static Report minError = MINOR;
 
     public static void report(Report s,Object e) {
-        String msg = s.name().toLowerCase() + ": " + e;
+        PrintStream to = reportTo(s);
+        if (s != null) {
+            to.print(s.name().toLowerCase() + ": " );
+            if (e instanceof Throwable)
+                ((Throwable) e).printStackTrace(to);
+            else
+                to.println(e);
+        }
+    }
+
+    public static PrintStream reportTo(Report s) {
         if (s.compareTo(reported) < 0)
-            return;
+            return null;
         if (s.compareTo(minError) < 0)
-            System.out.println(msg);
+            return System.out;
         else
-            System.err.println(msg);
+            return System.err;
     }
 
     public static void setReported(Report _) {
@@ -54,19 +66,9 @@ public enum Report
         minError = _;
     }
 
-    public static void debug(Object e) {
-        report(DEBUG,e);
-    }
-    public static void minor(Object e) {
-        report(MINOR,e);
-    }
-    public static void error(Object e) {
-        report(ERROR,e);
-    }
-    public static void major(Object e) {
-        report(MAJOR,e);
-    }
-    public static void alert(Object e) {
-        report(ALERT,e);
-    }
+    public static void debug(Object e) { report(DEBUG,e); }
+    public static void minor(Object e) { report(MINOR,e); }
+    public static void error(Object e) { report(ERROR,e); }
+    public static void major(Object e) { report(MAJOR,e); }
+    public static void alert(Object e) { report(ALERT,e); }
 }
