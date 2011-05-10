@@ -1,5 +1,4 @@
 #summary Introduction for setting up SVN
-#labels trololo
 
 =Installation=
   * Install either Eclipse or !NetBeans depending on preference
