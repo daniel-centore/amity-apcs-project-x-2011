@@ -28,8 +28,9 @@ public class SplashScreen extends JFrame {
     {
         this.setUndecorated(true); // remove title bar
         initComponents();
-        this.setVisible(true);
         this.setLocationRelativeTo(null); // center on screen
+        this.setAlwaysOnTop(true);
+        this.setVisible(true);
     }
 
     /**
