@@ -35,7 +35,7 @@
   # Click Finish
   # Do tab setup according to TabSetup.
 
-==Command Line that Nobody except Mike Z Really Uses Anymore==
+==Command Line==
   # `svn checkout https://amity-apcs-project-x-2011.googlecode.com/svn/ amity-apcs-project-x-2011`
     * Use `--username` if your username is not the same as your local username. This is very likely.
     * Use `--password` if you don't mind your password being saved to your history. Since it's just a random string, this is also very likely.
