@@ -8,7 +8,7 @@
  *
  * Created on May 11, 2011, 5:33:11 PM
  */
-package org.amityregion5.projectx.gui;
+package org.amityregion5.projectx.client.gui;
 
 import javax.swing.SwingUtilities;
 

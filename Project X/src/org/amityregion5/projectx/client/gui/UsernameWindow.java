@@ -17,7 +17,7 @@
  * by the Free Software Foundation.
  */
 
-package org.amityregion5.projectx.gui;
+package org.amityregion5.projectx.client.gui;
 
 /**
  * UsernameWindow.java

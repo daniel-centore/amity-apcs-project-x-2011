@@ -23,7 +23,7 @@
  * Created on May 11, 2011, 5:04:30 PM
  */
 
-package org.amityregion5.projectx.gui;
+package org.amityregion5.projectx.client.gui;
 
 /**
  *
