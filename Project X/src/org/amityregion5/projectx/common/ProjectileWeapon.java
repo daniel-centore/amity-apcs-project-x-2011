@@ -22,6 +22,25 @@ package org.amityregion5.projectx.common;
  * Class documentation.
  *
  * @author Mike DiBuduo
+ * @author Joe Stein
  */
-public class ProjectileWeapon extends Weapon {
+public abstract class ProjectileWeapon extends Weapon {
+   private int ammo;
+   private int maxAmmo;
+   private double fireRate;
+
+   public int getAmmo()
+   {
+      return ammo;
+   }
+
+   public int getMaxAmmo()
+   {
+      return maxAmmo;
+   }
+
+   public double getFireRate()
+   {
+      return fireRate;
+   }
 }
