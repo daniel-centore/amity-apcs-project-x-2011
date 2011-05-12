@@ -15,13 +15,11 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  *
- * @author Mike DiBuduo
+ * @author Joe Stein
  */
 
 package org.amityregion5.projectx.common;
 
-public abstract class Character extends Entity
-{
-
-
+public abstract class HeldItem {
+   
 }
