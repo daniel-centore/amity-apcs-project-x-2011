@@ -25,17 +25,7 @@ import java.util.ArrayList;
  *
  * @author Mike DiBuduo
  */
-public abstract class AbstractMap {
-
-    private ArrayList<Entity> entities;
-
-    public ArrayList<Entity> getEntities()
-    {
-        return entities;
-    }
-
-    public void addEntity(Entity e)
-    {
-        entities.add(e);
-    }
+public class Player extends Character {
+    private ArrayList<Weapon> weapons;
+    private int currWeapon;
 }

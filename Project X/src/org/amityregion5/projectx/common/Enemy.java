@@ -18,24 +18,11 @@
  */
 package org.amityregion5.projectx.common;
 
-import java.util.ArrayList;
-
 /**
  * Class documentation.
  *
  * @author Mike DiBuduo
  */
-public abstract class AbstractMap {
+public class Enemy extends Character{
 
-    private ArrayList<Entity> entities;
-
-    public ArrayList<Entity> getEntities()
-    {
-        return entities;
-    }
-
-    public void addEntity(Entity e)
-    {
-        entities.add(e);
-    }
 }
