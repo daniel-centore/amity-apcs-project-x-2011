@@ -28,6 +28,8 @@ import javax.swing.JFrame;
 
 /**
  * The window that the main game is played in
+ *
+ * Hello my name is daniel and this is a chnage
  * 
  * @author Daniel Centore
  * 
