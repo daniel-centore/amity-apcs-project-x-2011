@@ -44,7 +44,7 @@ public class ${name} {
 }}}
 
 ==Eclipse==
-  * http://code.google.com/p/amity-apcs-project-x-2011/downloads/detail?name=EclipseFormatting.xml&can=2&q=#makechanges
+  * http://code.google.com/p/amity-apcs-project-x-2011/downloads/detail?name=EclipseFormatting.xml
   * Window>Preferences>Java>Code Style>Formatter>Import...>select the xml file.
   * Window>Preferences>Java>Code Style>Code Templates>Code>New Java Files>Edit...
   * Change to:
