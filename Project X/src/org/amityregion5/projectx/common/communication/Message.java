@@ -17,32 +17,18 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
-package org.amityregion5.projectx.client.main;
+package org.amityregion5.projectx.common.communication;
 
-import org.amityregion5.projectx.client.communication.CommunicationHandler;
-import org.amityregion5.projectx.client.gui.LobbyWindow;
-import org.amityregion5.projectx.client.gui.SplashScreen;
+import java.io.Serializable;
 
-public class Main {
+/**
+ * Class used to send a message. Extend this and create new messages (ie EntityMovedMessage)
+ * 
+ * @author Daniel Centore
+ *
+ */
+public abstract class Message implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     
-    public static final int SPLASH_TIME = 2000;
-
-    /**
-     * @param args
-     */
-    public static void main(String[] args)
-    {
-        SplashScreen s = new SplashScreen();
-        try
-        {
-            Thread.sleep(SPLASH_TIME);
-        } catch (InterruptedException e)
-        {
-        }
-        
-        s.setVisible(false);
-        
-        new LobbyWindow().setVisible(true);
-    }
-
 }

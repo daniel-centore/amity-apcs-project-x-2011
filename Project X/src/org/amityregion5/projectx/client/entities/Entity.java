@@ -17,32 +17,57 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
-package org.amityregion5.projectx.client.main;
+package org.amityregion5.projectx.client.entities;
 
-import org.amityregion5.projectx.client.communication.CommunicationHandler;
-import org.amityregion5.projectx.client.gui.LobbyWindow;
-import org.amityregion5.projectx.client.gui.SplashScreen;
+import java.awt.image.BufferedImage;
 
-public class Main {
+/**
+ * An entity
+ * 
+ * @author Daniel Centore
+ *
+ */
+public abstract class Entity {
+
+    private int x;
+    private int y;
+    private BufferedImage image;
     
-    public static final int SPLASH_TIME = 2000;
-
-    /**
-     * @param args
-     */
-    public static void main(String[] args)
+    public Entity(BufferedImage image, int x, int y)
     {
-        SplashScreen s = new SplashScreen();
-        try
-        {
-            Thread.sleep(SPLASH_TIME);
-        } catch (InterruptedException e)
-        {
-        }
-        
-        s.setVisible(false);
-        
-        new LobbyWindow().setVisible(true);
+        this.image = image;
+        this.x = x;
+        this.y = y;
+    }
+
+    public int getX()
+    {
+        return x;
+    }
+
+    public void setX(int x)
+    {
+        this.x = x;
+    }
+
+    public int getY()
+    {
+        return y;
+    }
+
+    public void setY(int y)
+    {
+        this.y = y;
+    }
+
+    public BufferedImage getImage()
+    {
+        return image;
+    }
+
+    public void setImage(BufferedImage image)
+    {
+        this.image = image;
     }
 
 }

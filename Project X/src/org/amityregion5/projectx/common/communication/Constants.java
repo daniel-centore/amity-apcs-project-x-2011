@@ -17,57 +17,10 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
-package org.amityregion5.projectx.common.entities;
+package org.amityregion5.projectx.common.communication;
 
-import java.awt.image.BufferedImage;
+public class Constants {
 
-/**
- * An entity
- * 
- * @author Daniel Centore
- *
- */
-public abstract class Entity {
-
-    private int x;
-    private int y;
-    private BufferedImage image;
+    public static final int PORT = 65656;
     
-    public Entity(BufferedImage image, int x, int y)
-    {
-        this.image = image;
-        this.x = x;
-        this.y = y;
-    }
-
-    public int getX()
-    {
-        return x;
-    }
-
-    public void setX(int x)
-    {
-        this.x = x;
-    }
-
-    public int getY()
-    {
-        return y;
-    }
-
-    public void setY(int y)
-    {
-        this.y = y;
-    }
-
-    public BufferedImage getImage()
-    {
-        return image;
-    }
-
-    public void setImage(BufferedImage image)
-    {
-        this.image = image;
-    }
-
 }

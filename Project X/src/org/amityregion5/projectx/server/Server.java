@@ -17,32 +17,34 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
-package org.amityregion5.projectx.client.main;
+package org.amityregion5.projectx.server;
 
-import org.amityregion5.projectx.client.communication.CommunicationHandler;
-import org.amityregion5.projectx.client.gui.LobbyWindow;
-import org.amityregion5.projectx.client.gui.SplashScreen;
+import java.io.IOException;
+import java.net.ServerSocket;
 
-public class Main {
-    
-    public static final int SPLASH_TIME = 2000;
+import org.amityregion5.projectx.common.communication.Constants;
 
-    /**
-     * @param args
-     */
-    public static void main(String[] args)
+public class Server {
+
+    public static void main(String[] args) throws IOException
     {
-        SplashScreen s = new SplashScreen();
+        ServerSocket serverSocket = null;
+        boolean listening = true;
+
         try
         {
-            Thread.sleep(SPLASH_TIME);
-        } catch (InterruptedException e)
+            serverSocket = new ServerSocket(Constants.PORT);
+        } catch (IOException e)
         {
+            // usually means a server is already running
+            e.printStackTrace();
+            System.exit(-1);
         }
-        
-        s.setVisible(false);
-        
-        new LobbyWindow().setVisible(true);
+
+        while (listening)
+            new Client(serverSocket.accept()).start();
+
+        serverSocket.close();
     }
 
 }
