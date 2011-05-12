@@ -17,6 +17,7 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
+
 package org.amityregion5.projectx.client.communication;
 
 import java.io.IOException;
@@ -27,22 +28,29 @@ import java.net.UnknownHostException;
 import org.amityregion5.projectx.common.communication.Constants;
 import org.amityregion5.projectx.common.communication.Message;
 
+/**
+ * Handles messages from, and sends messages to, the server.
+ * 
+ * @author Daniel Centore
+ * @author Joe Stein
+ */
 public class CommunicationHandler extends Thread {
 
-    private String server;
+    private String serverIP;
+    private Socket socket = null;
+    private boolean keepReading = true;
 
-    public CommunicationHandler(String server)
+    public CommunicationHandler(String serverIP)
     {
-        this.server = server;
+        this.serverIP = serverIP;
     }
 
+    @Override
     public void run()
     {
-        Socket socket = null;
-
         try
         {
-            socket = new Socket(server, Constants.PORT);
+            socket = new Socket(serverIP, Constants.PORT);
         } catch (UnknownHostException e)
         {
             e.printStackTrace();
@@ -57,13 +65,10 @@ public class CommunicationHandler extends Thread {
         {
             ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
 
-            boolean quit = false;
-
-            while (!quit)
+            while (keepReading)
             {
                 Message m = (Message) input.readObject();
-
-                // ie if (m instanceof EntityMovedMessage) { ... }
+                handle(m);
             }
             
         } catch (IOException e1)
@@ -81,6 +86,19 @@ public class CommunicationHandler extends Thread {
         {
             e.printStackTrace();
         }
+    }
+
+    private void handle(Message m)
+    {
+        // TODO handle messages here
+        // ie if (m instanceof EntityMovedMessage) { ... }
+    }
+
+    public void send(Message m)
+    {
+        // TODO send a Message to the server. Mike Z wanted to write his own raw
+        // packet data so this is where the Message would be converted into
+        // bytes.
     }
 
 }

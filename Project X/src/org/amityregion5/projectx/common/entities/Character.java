@@ -1,8 +1,6 @@
 /**
  * Copyright (c) 2011 Amity AP CS A Students of 2010-2011.
  *
- * ex: set filetype=java expandtab tabstop=4 shiftwidth=4 :
- *
  * This program is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of
@@ -16,35 +14,14 @@
  * This code is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
+ *
+ * @author Mike DiBuduo
  */
-package org.amityregion5.projectx.common.communication;
 
-import java.io.Serializable;
+package org.amityregion5.projectx.common.entities;
 
-/**
- * Class used to send a message. Extend this and create new messages (ie EntityMovedMessage)
- * 
- * @author Daniel Centore
- * @author Joe Stein
- */
-public abstract class Message implements Serializable {
+public abstract class Character extends Entity
+{
 
-    private static final long serialVersionUID = 1L;
-    protected Object contents;
 
-    public Message()
-    {
-
-    }
-
-    public Message(Object contents)
-    {
-        this.contents = contents;
-    }
-
-    public Object getContent()
-    {
-        return contents;
-    }
-    
 }

@@ -19,45 +19,56 @@
  */
 package org.amityregion5.projectx.common.entities;
 
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 /**
  * An entity
  * 
  * @author Daniel Centore
- *
+ * @author Joe Stein
  */
 public abstract class Entity {
 
-    private int x;
-    private int y;
+    private Point location;
     private BufferedImage image;
-    
+    private int directionFacing;
+    private int directionMoving;
+    private double moveSpeed;
+
+    /**
+     * Default entity constructor. Use as little as possible.
+     * Sets location to (0,0),
+     */
+    public Entity()
+    {
+        location = new Point(0, 0);
+    }
+
     public Entity(BufferedImage image, int x, int y)
     {
         this.image = image;
-        this.x = x;
-        this.y = y;
+        location = new Point(x, y);
     }
 
     public int getX()
     {
-        return x;
+        return (int) location.getX();
     }
 
     public void setX(int x)
     {
-        this.x = x;
+        location.setLocation(x, location.getY());
     }
 
     public int getY()
     {
-        return y;
+        return (int) location.getY();
     }
 
     public void setY(int y)
     {
-        this.y = y;
+        location.setLocation(location.getX(), y);
     }
 
     public BufferedImage getImage()
@@ -70,4 +81,33 @@ public abstract class Entity {
         this.image = image;
     }
 
+    public int getDirectionFacing()
+    {
+        return directionFacing;
+    }
+
+    public void setDirectionFacing(int directionFacing)
+    {
+        this.directionFacing = directionFacing;
+    }
+
+    public int getDirectionMoving()
+    {
+        return directionMoving;
+    }
+
+    public void setDirectionMoving(int directionMoving)
+    {
+        this.directionMoving = directionMoving;
+    }
+
+    public double getMoveSpeed()
+    {
+        return moveSpeed;
+    }
+
+    public void setMoveSpeed(double moveSpeed)
+    {
+        this.moveSpeed = moveSpeed;
+    }
 }
