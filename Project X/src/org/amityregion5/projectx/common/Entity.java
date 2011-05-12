@@ -20,6 +20,7 @@
 package org.amityregion5.projectx.common;
 
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 
 /**
  * Object that can exist on the map.
@@ -28,8 +29,9 @@ public abstract class Entity
 {
 
    private int direction;
-   private Point location;
+   private Point location; // top-left X and Y
    private int moveSpeed;
+   private BufferedImage sprite;
 
    /**
     * Gets this Entity's direction.
@@ -38,6 +40,11 @@ public abstract class Entity
    public int getDirection()
    {
       return direction;
+   }
+
+   public BufferedImage getSprite()
+   {
+      return sprite;
    }
 
    public Point getLocation()
