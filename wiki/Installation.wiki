@@ -1,7 +1,7 @@
 #summary Introduction for setting up SVN
 
 =Installation=
-  * Install either Eclipse or !NetBeans depending on preference
+  * Install either Eclipse or !NetBeans depending on preference.
 
 ==!NetBeans==
   # Team>Subversion>Checkout
