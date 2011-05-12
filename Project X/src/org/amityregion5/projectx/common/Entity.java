@@ -15,35 +15,34 @@ public class Entity {
     private int direction;
     private Point location;
     private int moveSpeed;
-   private String name;
-
-   public void test()
-   {
-      throw new RuntimeException("Something in it");
-   }
 
    public int getDirection()
    {
       return direction;
    }
 
-    public void setDirection(int direction) {
+    public void setDirection(int direction)
+    {
         this.direction = direction;
     }
 
-    public Point getLocation() {
+    public Point getLocation()
+    {
         return location;
     }
 
-    public void setLocation(Point location) {
+    public void setLocation(Point location)
+    {
         this.location = location;
     }
 
-    public int getMoveSpeed() {
+    public int getMoveSpeed()
+    {
         return moveSpeed;
     }
 
-    public void setMoveSpeed(int moveSpeed) {
+    public void setMoveSpeed(int moveSpeed)
+    {
         this.moveSpeed = moveSpeed;
     }
 }
