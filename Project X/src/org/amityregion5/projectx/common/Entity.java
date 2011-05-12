@@ -16,6 +16,13 @@ public class Entity
    private Point location;
    private int moveSpeed;
 
+   private String name;
+
+   public void test()
+   {
+      throw new RuntimeException("Something in it");
+   }
+
    public int getDirection()
    {
       return direction;
