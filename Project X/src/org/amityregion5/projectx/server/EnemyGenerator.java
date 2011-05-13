@@ -25,4 +25,6 @@ package org.amityregion5.projectx.server;
  */
 public class EnemyGenerator extends GameState{
 
+   private GeneratorThread gen;
+
 }

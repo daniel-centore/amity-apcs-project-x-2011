@@ -22,7 +22,10 @@ package org.amityregion5.projectx.server;
  * Class documentation.
  *
  * @author Jenny Liu
+ * @author Mike DiBuduo
  */
 public class EnemyManager {
+
+   private GeneratorThread gen;
 
 }

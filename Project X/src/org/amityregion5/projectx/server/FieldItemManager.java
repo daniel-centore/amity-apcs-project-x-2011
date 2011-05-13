@@ -18,11 +18,24 @@
  */
 package org.amityregion5.projectx.server;
 
+import java.util.ArrayList;
+import org.amityregion5.projectx.common.entities.items.field.FieldItem;
+
 /**
  * Class documentation.
  *
  * @author Jenny Liu
+ * @author Mike DiBuduo
  */
-public class FieldItemManager {
+public class FieldItemManager
+{
 
+   private ArrayList<FieldItem> fieldItems;
+   private Thread managerThread = new Thread()
+   {
+
+      public void run()
+      {
+      }
+   };
 }

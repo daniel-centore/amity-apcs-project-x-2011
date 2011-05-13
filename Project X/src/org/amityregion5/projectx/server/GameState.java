@@ -18,11 +18,17 @@
  */
 package org.amityregion5.projectx.server;
 
+import java.util.ArrayList;
+import org.amityregion5.projectx.common.entities.Entity;
+
 /**
  * Class documentation.
  *
  * @author Jenny Liu
+ * @author Mike DiBuduo
  */
 public class GameState {
+
+   private ArrayList<Entity> entities;
 
 }
