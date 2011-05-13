@@ -21,7 +21,7 @@ package org.amityregion5.projectx.client.gui.input;
 /**
  * Class documentation.
  *
- * @author wenke
+ * @author Michael Wenke
  */
 public class InputHandler {
 

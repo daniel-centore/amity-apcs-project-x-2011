@@ -24,7 +24,7 @@ import java.awt.event.KeyListener;
 /**
  * Class documentation.
  *
- * @author wenkemi
+ * @author Michael Wenke
  */
 public class KeyboardInput implements KeyListener{
 
