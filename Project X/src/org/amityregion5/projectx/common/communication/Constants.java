@@ -23,10 +23,8 @@ package org.amityregion5.projectx.common.communication;
  * Constants for use in communication
  * 
  * @author Daniel Centore
- *
+ * @author Michael Zuo
  */
 public class Constants {
-
-    public static final int PORT = 65656;
-    
+    public static final int DEF_PORT = 27182;
 }

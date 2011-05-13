@@ -20,33 +20,32 @@
 package org.amityregion5.projectx.common.communication;
 
 import java.io.Serializable;
+import java.io.IOException;
 
 /**
- * Class used to send a message. Extend this and create new messages (ie EntityMovedMessage)
+ * Class used to represent a message.
+ *
+ * Reciever tests essages with instanceof to determine type of message.
  * 
- * @author Daniel Centore
- * @author Joe Stein
- * @param T The type that the message contains (optional)
+ * @author Michael Zuo
+ * @param T The type that the message contains.
  */
 public abstract class Message<T> implements Serializable {
-
     private static final long serialVersionUID = 1L;
 
-    private T contents;
+    private T cont;
 
     public Message()
     {
         this(null);
     }
-
-    public Message(T contents)
+    public Message(T cont)
     {
-        this.contents = contents;
+        this.cont = cont;
     }
 
     public T getContent()
     {
-        return contents;
+        return cont;
     }
-
 }
