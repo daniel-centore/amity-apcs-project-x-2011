@@ -28,6 +28,8 @@ import java.awt.event.WindowEvent;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
+import org.amityregion5.projectx.client.gui.input.KeyboardInput;
+import org.amityregion5.projectx.client.gui.input.MouseInput;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 
 /**
@@ -39,10 +41,10 @@ import org.amityregion5.projectx.common.maps.AbstractMap;
 public class Gui extends JFrame {
 
     private static final long serialVersionUID = 1L;
-    
-    public static final int GAME_WIDTH = 1024;
+
+    public static final int GAME_WIDTH = 1024; // the game size we will draw at before resizing
     public static final int GAME_HEIGHT = 765;
-    
+
     private static Gui instance;
     private static AbstractMap map;
     private static JComponent panel;
@@ -51,9 +53,9 @@ public class Gui extends JFrame {
     public Gui(AbstractMap map)
     {
         super("Amity Project X");
-        
+
         instance = this;
-        
+
         Gui.map = map;
 
         this.setBackground(Color.black);
@@ -66,9 +68,8 @@ public class Gui extends JFrame {
                 System.exit(0);
             }
         });
-        
-        panel = new JComponent()
-        {
+
+        panel = new JComponent() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -89,14 +90,19 @@ public class Gui extends JFrame {
                 g.drawImage(img, 0, 0, null);
             }
         };
-        
+
+        // register listeners
+        MouseInput mi = new MouseInput();
+        panel.addMouseListener(mi);
+        panel.addMouseMotionListener(mi);
+        panel.addKeyListener(new KeyboardInput());
+
         this.add(panel, BorderLayout.CENTER);
-        
+
         this.setVisible(true);
 
         // makes sure game has focus always, even if we add menus and such later
-        new Thread()
-        {
+        new Thread() {
             @Override
             public void run()
             {
@@ -114,9 +120,10 @@ public class Gui extends JFrame {
         }.start();
 
     }
-    
+
     /**
      * Gets image scaling keeping its aspect ratio
+     * 
      * @param image Image to scale
      * @param newWidth Width goal
      * @param newHeight Height goal
@@ -138,8 +145,7 @@ public class Gui extends JFrame {
             newHeight = (int) (newWidth / aspectRatio);
             y /= 2;
             y -= newHeight / 2;
-        }
-        else
+        } else
         {
             x = newWidth;
             newWidth = (int) (newHeight * aspectRatio);
@@ -147,16 +153,17 @@ public class Gui extends JFrame {
             x -= newWidth / 2;
         }
 
-        return new int[] { newWidth, newHeight, x, y };
+        return new int[]
+        { newWidth, newHeight, x, y };
     }
-    
+
     public static void fireRepaintRequired()
     {
         buffer = map.getImage();
-        
+
         panel.repaint();
     }
-    
+
     public static Image createImage()
     {
         return instance.createImage(GAME_WIDTH, GAME_HEIGHT);
@@ -165,6 +172,27 @@ public class Gui extends JFrame {
     public static Gui getInstance()
     {
         return instance;
+    }
+
+    /**
+     * @return The width of the game panel right now
+     */
+    public static int getCurrentWidth()
+    {
+        return panel.getWidth();
+    }
+
+    /**
+     * @return The height of the game panel right now
+     */
+    public static int getCurrentHeight()
+    {
+        return panel.getHeight();
+    }
+    
+    public static void main(String[] args)
+    {
+        new Gui(null);
     }
 
 }
