@@ -34,8 +34,12 @@ import org.amityregion5.projectx.common.communication.Message;
  */
 public class Client extends Thread {
 
-    private Socket sock;
+    private Socket sock;    //server socket
 
+    /**
+     * Creates a client
+     * @param sock Socket for communications
+     */
     public Client(Socket sock)
     {
         this.sock = sock;
@@ -51,7 +55,7 @@ public class Client extends Thread {
 
             while (!quit)
             {
-                Message m = (Message) inObject.readObject();
+                Message<?> m = (Message<?>) inObject.readObject();
                 
                 // ie if (m instanceof EntityMovedMessage) { ... }
             }
@@ -68,7 +72,11 @@ public class Client extends Thread {
         }
     }
 
-    public void send(Message m)
+    /**
+     * Sends a message
+     * @param m Message to send
+     */
+    public void send(Message<?> m)
     {
         try
         {

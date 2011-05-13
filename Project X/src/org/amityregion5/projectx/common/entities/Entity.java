@@ -19,7 +19,6 @@
  */
 package org.amityregion5.projectx.common.entities;
 
-import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 /**
@@ -30,82 +29,139 @@ import java.awt.image.BufferedImage;
  */
 public abstract class Entity {
 
-    private Point location;
+    private double x;
+    private double y;
     private BufferedImage image;
-    private int directionFacing;
+    private int directionFacing; // TODO: make constants for these
     private int directionMoving;
     private double moveSpeed;
 
     /**
-     * Default entity constructor. Use as little as possible.
-     * Sets location to (0,0),
+     * Default entity constructor. Use as little as possible. Sets location to (0,0),
      */
     public Entity()
     {
-        location = new Point(0, 0);
+        x = 0;
+        y = 0;
+        image = null;
+        directionFacing = 0;
+        directionMoving = 0;
+        moveSpeed = 0;
     }
 
+    /**
+     * Creates a new entity
+     * 
+     * @param image Image for it to use
+     * @param x X coordinate
+     * @param y Y coordinate
+     */
     public Entity(BufferedImage image, int x, int y)
     {
+        this();
+
         this.image = image;
-        location = new Point(x, y);
+        this.x = x;
+        this.y = y;
     }
 
+    /**
+     * @return X coordinate
+     */
     public int getX()
     {
-        return (int) location.getX();
+        return (int) x;
     }
 
+    /**
+     * Sets the X coord
+     * @param x
+     */
     public void setX(int x)
     {
-        location.setLocation(x, location.getY());
+        this.x = x;
     }
 
+    /**
+     * @return Y coordinate
+     */
     public int getY()
     {
-        return (int) location.getY();
+        return (int) y;
     }
 
+    /**
+     * Sets the Y coord
+     * @param y
+     */
     public void setY(int y)
     {
-        location.setLocation(location.getX(), y);
+        this.y = y;
     }
 
+    /**
+     * @return The image of this entity
+     */
     public BufferedImage getImage()
     {
         return image;
     }
 
+    /**
+     * Sets the image of the entity
+     * @param image Image to set it to
+     */
     public void setImage(BufferedImage image)
     {
         this.image = image;
     }
 
+    /**
+     * @return Current facing direction
+     */
     public int getDirectionFacing()
     {
         return directionFacing;
     }
 
+    /**
+     * Sets the current direction we are facing
+     * @param directionFacing
+     */
     public void setDirectionFacing(int directionFacing)
     {
         this.directionFacing = directionFacing;
     }
 
+    /**
+     * @return The direction we are moving in
+     */
     public int getDirectionMoving()
     {
         return directionMoving;
     }
 
+    /**
+     * Sets the direction we are moving in
+     * @param directionMoving
+     */
     public void setDirectionMoving(int directionMoving)
     {
         this.directionMoving = directionMoving;
     }
 
+    /**
+     * @return The move speed
+     */
     public double getMoveSpeed()
     {
         return moveSpeed;
     }
 
+    /**
+     * Sets the move speed
+     * @param moveSpeed
+     */
     public void setMoveSpeed(double moveSpeed)
     {
         this.moveSpeed = moveSpeed;

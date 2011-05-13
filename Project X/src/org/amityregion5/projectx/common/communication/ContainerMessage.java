@@ -19,14 +19,6 @@
  */
 package org.amityregion5.projectx.common.communication;
 
-/**
- * Constants for use in communication
- * 
- * @author Daniel Centore
- *
- */
-public class Constants {
+public class ContainerMessage {
 
-    public static final int PORT = 65656;
-    
 }

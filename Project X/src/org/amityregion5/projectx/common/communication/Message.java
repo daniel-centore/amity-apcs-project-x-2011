@@ -26,25 +26,27 @@ import java.io.Serializable;
  * 
  * @author Daniel Centore
  * @author Joe Stein
+ * @param T The type that the message contains (optional)
  */
-public abstract class Message implements Serializable {
+public abstract class Message<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    protected Object contents;
+
+    private T contents;
 
     public Message()
     {
-
+        this(null);
     }
 
-    public Message(Object contents)
+    public Message(T contents)
     {
         this.contents = contents;
     }
 
-    public Object getContent()
+    public T getContent()
     {
         return contents;
     }
-    
+
 }

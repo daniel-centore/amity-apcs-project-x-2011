@@ -19,7 +19,6 @@
  */
 package org.amityregion5.projectx.client.main;
 
-import org.amityregion5.projectx.client.communication.CommunicationHandler;
 import org.amityregion5.projectx.client.gui.LobbyWindow;
 import org.amityregion5.projectx.client.gui.SplashScreen;
 
@@ -27,9 +26,6 @@ public class Main {
     
     public static final int SPLASH_TIME = 2000;
 
-    /**
-     * @param args
-     */
     public static void main(String[] args)
     {
         SplashScreen s = new SplashScreen();

@@ -24,7 +24,7 @@ import org.amityregion5.projectx.common.entities.items.held.Weapon;
 
 /**
  * Class documentation.
- *
+ * 
  * @author Mike DiBuduo
  */
 public class Player extends Character {
