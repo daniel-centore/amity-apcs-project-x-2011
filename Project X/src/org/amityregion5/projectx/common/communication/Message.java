@@ -20,32 +20,43 @@
 package org.amityregion5.projectx.common.communication;
 
 import java.io.Serializable;
-import java.io.IOException;
 
 /**
  * Class used to represent a message.
  *
- * Reciever tests essages with instanceof to determine type of message.
- * 
+ * @author Daniel Centore
+ * @author Joe Stein
  * @author Michael Zuo
  * @param T The type that the message contains.
  */
 public abstract class Message<T> implements Serializable {
+    
     private static final long serialVersionUID = 1L;
 
-    private T cont;
+    private T content;
 
+    /**
+     * Creates a message with null content
+     */
     public Message()
     {
         this(null);
     }
-    public Message(T cont)
+    
+    /**
+     * Creates a message
+     * @param content Content to give it
+     */
+    public Message(T content)
     {
-        this.cont = cont;
+        this.content = content;
     }
 
+    /**
+     * @return The content of this message (or null if there is none)
+     */
     public T getContent()
     {
-        return cont;
+        return content;
     }
 }
