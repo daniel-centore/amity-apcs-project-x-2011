@@ -19,10 +19,34 @@
 package org.amityregion5.projectx.client.gui.input;
 
 /**
- * Class documentation.
- *
+ * Handles inputs as they come in
+ * 
  * @author Michael Wenke
  */
 public class InputHandler {
+
+    public static void mouseDragged(int x, int y)
+    {
+    }
+
+    public static void mouseMoved(int x, int y)
+    {
+    }
+
+    public static void mousePressed(int x, int y, int button)
+    {
+    }
+
+    public static void mouseReleased(int x, int y, int button)
+    {
+    }
+
+    public static void keyPressed(int keyCode) // this includes key repeats
+    {
+    }
+
+    public static void keyReleased(int keyCode) // only when key is released
+    {
+    }
 
 }

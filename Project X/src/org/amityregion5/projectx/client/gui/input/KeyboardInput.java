@@ -22,25 +22,26 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 /**
- * Class documentation.
+ * Controls keyboard inputs. They should be handled in InputHandler.
  *
  * @author Michael Wenke
+ * @author Daniel Centore
  */
 public class KeyboardInput implements KeyListener{
 
     public void keyTyped(KeyEvent e)
     {
-        throw new UnsupportedOperationException("Not supported yet.");
+        // keyPressed is preferable
     }
 
     public void keyPressed(KeyEvent e)
     {
-        throw new UnsupportedOperationException("Not supported yet.");
+        InputHandler.keyPressed(e.getKeyCode());
     }
 
     public void keyReleased(KeyEvent e)
     {
-        throw new UnsupportedOperationException("Not supported yet.");
+        InputHandler.keyReleased(e.getKeyCode());
     }
 
 }

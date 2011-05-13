@@ -26,7 +26,7 @@ import java.awt.event.MouseMotionListener;
 import org.amityregion5.projectx.client.gui.Gui;
 
 /**
- * Handles the mouse inputs
+ * Controls mouse inputs. They should be handled in InputHandler.
  * 
  * @author Daniel Centore
  * @author Mike Wenke
@@ -36,40 +36,45 @@ public class MouseInput implements MouseMotionListener, MouseListener {
     public void mouseDragged(MouseEvent e)
     {
         Point p = fix(e);
+        InputHandler.mouseDragged(p.x, p.y);
     }
 
     public void mouseMoved(MouseEvent e)
     {
         Point p = fix(e);
+        InputHandler.mouseMoved(p.x, p.y);
     }
 
     public void mouseClicked(MouseEvent e)
     {
-        Point p = fix(e);
+        // mouseReleased is preferable
     }
 
     public void mousePressed(MouseEvent e)
     {
         Point p = fix(e);
+        InputHandler.mousePressed(p.x, p.y, e.getButton());
     }
 
     public void mouseReleased(MouseEvent e)
     {
         Point p = fix(e);
+        InputHandler.mouseReleased(p.x, p.y, e.getButton());
     }
 
     public void mouseEntered(MouseEvent e)
     {
-        Point p = fix(e);
+        // useless for now
     }
 
     public void mouseExited(MouseEvent e)
     {
-        Point p = fix(e);
+        // useless for now
     }
-    
+
     /**
      * Fixes the coordinates based on screen size
+     * 
      * @param e The MouseEvent we pull coordinates from
      * @return A Point inside GAME_WIDTH and GAME_HEIGHT
      */
@@ -80,6 +85,7 @@ public class MouseInput implements MouseMotionListener, MouseListener {
 
     /**
      * Fixes the coordinates based on screen size
+     * 
      * @param x X and Y coordinates to fix
      * @param y
      * @returnA Point inside GAME_WIDTH and GAME_HEIGHT
