@@ -23,6 +23,6 @@ package org.amityregion5.projectx.server;
  *
  * @author Jenny Liu
  */
-public class Main {
+public class ManagerThread extends FieldItemManager {
 
 }

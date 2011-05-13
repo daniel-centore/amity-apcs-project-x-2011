@@ -21,7 +21,7 @@ package org.amityregion5.projectx.server;
 /**
  * Class documentation.
  *
- * @author liuji
+ * @author Jenny Liu
  */
 public class GameState {
 
