@@ -23,8 +23,5 @@ package org.amityregion5.projectx.server;
  *
  * @author Jenny Liu
  */
-public class GeneratorThread extends Thread implements Runnable {
-
-    private class EnemyGenerator extends GeneratorThread {
-    }
+public class GeneratorThread extends Thread{
 }
