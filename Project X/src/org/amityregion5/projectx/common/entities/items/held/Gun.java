@@ -17,8 +17,19 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
+
+/**
+ * Class Documentation
+ *
+ * @author Mike DiBuduo
+ */
 package org.amityregion5.projectx.common.entities.items.held;
 
 public class Gun extends ProjectileWeapon {
+
+   public Gun(int range, int ammo, int maxAmmo, int fireRate)
+   {
+      super(range, ammo, maxAmmo, fireRate);
+   }
 
 }

@@ -19,6 +19,10 @@
  */
 package org.amityregion5.projectx.common.entities.items.held;
 
-public class Sword extends MeleeWeapon {
+public class Sword extends MeleeWeapon
+{
+   public Sword()
+   {
 
+   }
 }

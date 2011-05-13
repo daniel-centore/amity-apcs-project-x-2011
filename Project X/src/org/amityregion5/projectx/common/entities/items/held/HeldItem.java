@@ -16,10 +16,12 @@
  * by the Free Software Foundation.
  *
  * @author Joe Stein
+ * @author Mike DiBuduo
  */
-
 package org.amityregion5.projectx.common.entities.items.held;
 
-public abstract class HeldItem {
-   
+import org.amityregion5.projectx.common.entities.items.Item;
+
+public abstract class HeldItem extends Item
+{
 }

@@ -11,4 +11,28 @@ package org.amityregion5.projectx.common.entities.items.held;
  */
 public abstract class Weapon extends HeldItem {
 
+   private int range;
+
+
+   public Weapon()
+   {
+      range = 0;
+   }
+   public Weapon(int range)
+   {
+      this.range = range;
+   }
+
+   public int getRange()
+   {
+      return range;
+   }
+
+   public void setRange(int range)
+   {
+      this.range = range;
+   }
+
+
+
 }

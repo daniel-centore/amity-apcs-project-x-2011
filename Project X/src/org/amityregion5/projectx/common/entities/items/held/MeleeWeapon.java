@@ -19,6 +19,15 @@
  */
 package org.amityregion5.projectx.common.entities.items.held;
 
-public class MeleeWeapon extends Weapon {
+import org.amityregion5.projectx.common.entities.items.DamageDealing;
 
+public class MeleeWeapon extends Weapon implements DamageDealing
+{
+
+   private int damage;
+
+   public int getDamage()
+   {
+      return damage;
+   }
 }

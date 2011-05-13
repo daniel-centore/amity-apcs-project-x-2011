@@ -19,11 +19,20 @@
  */
 package org.amityregion5.projectx.common.entities.items.field;
 
-public abstract class Projectile extends FieldItem {
-    private int damage;
+import org.amityregion5.projectx.common.entities.items.DamageDealing;
 
-    public Projectile(int dm)
-    {
-        damage = dm;
-    }
+public abstract class Projectile extends FieldItem implements DamageDealing
+{
+
+   private int damage;
+
+   public Projectile(int dm)
+   {
+      damage = dm;
+   }
+
+   public int getDamage()
+   {
+      return damage;
+   }
 }
