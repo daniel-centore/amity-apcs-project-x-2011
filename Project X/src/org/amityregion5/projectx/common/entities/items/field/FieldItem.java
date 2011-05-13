@@ -17,7 +17,10 @@
  *
  * @author Mike DiBuduo
  */
-package org.amityregion5.projectx.common.entities;
+package org.amityregion5.projectx.common.entities.items.field;
 
-public class Block extends FieldItem {
+import org.amityregion5.projectx.common.entities.items.Item;
+
+
+public abstract class FieldItem extends Item{
 }

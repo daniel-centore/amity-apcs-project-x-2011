@@ -16,31 +16,18 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
-package org.amityregion5.projectx.common.entities;
+package org.amityregion5.projectx.common.entities.characters;
+
+import java.util.ArrayList;
+
+import org.amityregion5.projectx.common.entities.items.held.Weapon;
 
 /**
  * Class documentation.
  *
  * @author Mike DiBuduo
- * @author Joe Stein
  */
-public abstract class ProjectileWeapon extends Weapon {
-   private int ammo;
-   private int maxAmmo;
-   private double fireRate;
-
-   public int getAmmo()
-   {
-      return ammo;
-   }
-
-   public int getMaxAmmo()
-   {
-      return maxAmmo;
-   }
-
-   public double getFireRate()
-   {
-      return fireRate;
-   }
+public class Player extends Character {
+    private ArrayList<Weapon> weapons;
+    private int currWeapon;
 }

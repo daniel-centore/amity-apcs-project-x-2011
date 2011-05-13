@@ -15,14 +15,15 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  *
+ * @author Mike DiBuduo
  */
-package org.amityregion5.projectx.common.entities;
 
-/**
- *
- * @author Joe Stein
- */
-public abstract class Item extends Entity
+package org.amityregion5.projectx.common.entities.characters;
+
+import org.amityregion5.projectx.common.entities.Entity;
+
+public abstract class Character extends Entity
 {
-   
+
+
 }

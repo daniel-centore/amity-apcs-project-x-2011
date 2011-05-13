@@ -16,36 +16,13 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
-package org.amityregion5.projectx.common.entities;
-
-import java.util.ArrayList;
+package org.amityregion5.projectx.common.entities.characters;
 
 /**
  * Class documentation.
  *
  * @author Mike DiBuduo
  */
-public abstract class AbstractMap {
+public class Enemy extends Character{
 
-    private ArrayList<Entity> entities;
-
-    public ArrayList<Entity> getEntities()
-    {
-        return entities;
-    }
-
-    public void addEntity(Entity e)
-    {
-        entities.add(e);
-    }
-
-    public void removeEntity(Entity e)
-    {
-        entities.remove(e);
-    }
-
-    public void removeEntity(int index)
-    {
-        entities.remove(index);
-    }
 }

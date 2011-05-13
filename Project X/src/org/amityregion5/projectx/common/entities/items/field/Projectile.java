@@ -17,8 +17,7 @@
  *
  * @author Mike DiBuduo
  */
-package org.amityregion5.projectx.common.entities;
+package org.amityregion5.projectx.common.entities.items.field;
 
-
-public abstract class FieldItem extends Item{
+public abstract class Projectile extends FieldItem {
 }

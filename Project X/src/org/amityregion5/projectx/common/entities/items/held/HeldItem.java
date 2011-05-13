@@ -18,7 +18,7 @@
  * @author Joe Stein
  */
 
-package org.amityregion5.projectx.common.entities;
+package org.amityregion5.projectx.common.entities.items.held;
 
 public abstract class HeldItem {
    
