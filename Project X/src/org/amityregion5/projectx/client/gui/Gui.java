@@ -98,6 +98,8 @@ public class Gui extends JFrame {
         panel.addKeyListener(new KeyboardInput());
 
         this.add(panel, BorderLayout.CENTER);
+        
+        this.setSize(GAME_WIDTH, GAME_HEIGHT);
 
         this.setVisible(true);
 
