@@ -21,4 +21,8 @@ package org.amityregion5.projectx.common.entities.items.field;
 
 public class Wall extends Block {
 
+    public Wall(int health)
+    {
+        super(health);
+    }
 }

@@ -20,4 +20,10 @@
 package org.amityregion5.projectx.common.entities.items.field;
 
 public abstract class Projectile extends FieldItem {
+    private int damage;
+
+    public Projectile(int dm)
+    {
+        damage = dm;
+    }
 }

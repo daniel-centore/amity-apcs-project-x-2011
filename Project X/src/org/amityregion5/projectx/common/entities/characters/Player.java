@@ -18,8 +18,6 @@
  */
 package org.amityregion5.projectx.common.entities.characters;
 
-import java.util.ArrayList;
-
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
 
 /**
@@ -28,6 +26,15 @@ import org.amityregion5.projectx.common.entities.items.held.Weapon;
  * @author Mike DiBuduo
  */
 public class Player extends Character {
-    private ArrayList<Weapon> weapons;
-    private int currWeapon;
+
+    public Player(int health)
+    {
+        super(health);
+    }
+
+    public Player(int health, Weapon wp)
+    {
+        super(health);
+        addWeapon(wp);
+    }
 }

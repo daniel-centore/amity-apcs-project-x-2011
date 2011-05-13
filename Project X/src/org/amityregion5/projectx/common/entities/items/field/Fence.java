@@ -21,4 +21,9 @@ package org.amityregion5.projectx.common.entities.items.field;
 
 public class Fence extends Block {
 
+    public Fence(int health)
+    {
+        super(health);
+    }
+
 }

@@ -16,25 +16,21 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
-package org.amityregion5.projectx.common.entities.characters;
-
-import org.amityregion5.projectx.common.entities.items.held.Weapon;
+package org.amityregion5.projectx.common.entities;
 
 /**
  * Class documentation.
  *
  * @author Mike DiBuduo
  */
-public class Enemy extends Character {
-
-    public Enemy(int health)
-    {
-        super(health);
-    }
-
-    public Enemy(int health, Weapon wp)
-    {
-        super(health);
-        addWeapon(wp);
-    }
+public class EntityConstants {
+    public final int NORTH = 0;
+    public final int EAST = 90;
+    public final int SOUTH = 180;
+    public final int WEST = 270;
+    public final int NORTH_EAST = 45;
+    public final int SOUTH_EAST = 135;
+    public final int SOUTH_WEST = 225;
+    public final int NORTH_WEST = 315;
+    
 }

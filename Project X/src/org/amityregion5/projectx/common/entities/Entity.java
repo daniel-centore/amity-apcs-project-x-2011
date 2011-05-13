@@ -32,7 +32,7 @@ public abstract class Entity {
     private double x;
     private double y;
     private BufferedImage image;
-    private int directionFacing; // TODO: make constants for these
+    private int directionFacing; //COnstants in EntityConstants
     private int directionMoving;
     private double moveSpeed;
 

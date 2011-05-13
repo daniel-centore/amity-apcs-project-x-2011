@@ -21,4 +21,9 @@ package org.amityregion5.projectx.common.entities.items.field;
 
 public class Bullet extends Projectile {
 
+    public Bullet(int dm)
+    {
+        super(dm);
+    }
+
 }
