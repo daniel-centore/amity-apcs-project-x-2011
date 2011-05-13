@@ -26,5 +26,5 @@ package org.amityregion5.projectx.common.communication;
  * @author Michael Zuo
  */
 public class Constants {
-    public static final int DEF_PORT = 27182;
+    public static final int PORT = 27182;
 }
