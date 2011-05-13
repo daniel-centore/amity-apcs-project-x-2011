@@ -33,8 +33,6 @@ import org.amityregion5.projectx.common.maps.AbstractMap;
 /**
  * Handles the main game Gui
  * 
- * TODO: Make it so the Maps have a getImage() of the whole game, and paint it in here when a fireUpdate() is called
- * 
  * @author Daniel Centore
  * 
  */
@@ -45,6 +43,7 @@ public class Gui extends JFrame {
     public static final int GAME_WIDTH = 1024;
     public static final int GAME_HEIGHT = 765;
     
+    private static Gui instance;
     private static AbstractMap map;
     private static JComponent panel;
     private static Image buffer;
@@ -52,7 +51,10 @@ public class Gui extends JFrame {
     public Gui(AbstractMap map)
     {
         super("Amity Project X");
-        this.map = map;
+        
+        instance = this;
+        
+        Gui.map = map;
 
         this.setBackground(Color.black);
 
@@ -146,6 +148,23 @@ public class Gui extends JFrame {
         }
 
         return new int[] { newWidth, newHeight, x, y };
+    }
+    
+    public static void fireRepaintRequired()
+    {
+        buffer = map.getImage();
+        
+        panel.repaint();
+    }
+    
+    public static Image createImage()
+    {
+        return instance.createImage(GAME_WIDTH, GAME_HEIGHT);
+    }
+
+    public static Gui getInstance()
+    {
+        return instance;
     }
 
 }

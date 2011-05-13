@@ -18,8 +18,11 @@
  */
 package org.amityregion5.projectx.common.maps;
 
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.util.ArrayList;
 
+import org.amityregion5.projectx.client.gui.Gui;
 import org.amityregion5.projectx.common.entities.Entity;
 
 /**
@@ -66,5 +69,33 @@ public abstract class AbstractMap {
     public synchronized void removeEntity(int index)
     {
         entities.remove(index);
+    }
+    
+    /**
+     * @return The background image (or null for default background)
+     */
+    public synchronized Image getBackground()
+    {
+        return null;
+    }
+    
+    /**
+     * @return The image of this map
+     */
+    public synchronized Image getImage()
+    {
+        Image img = Gui.createImage();
+        Graphics2D g = (Graphics2D) img.getGraphics();
+        
+        Image k;
+        if((k = getBackground()) != null)
+            g.drawImage(k, 0, 0, null);
+        
+        for(Entity e : entities)
+        {
+            g.drawImage(e.getImage(), e.getX(), e.getY(), null);
+        }
+        
+        return img;
     }
 }
