@@ -68,7 +68,7 @@ public class CommunicationHandler extends Thread {
 
             while (keepReading)
             {
-                Message m = (Message) input.readObject();
+                Message<?> m = (Message<?>) input.readObject();
                 handle(m);
             }
             
@@ -89,13 +89,13 @@ public class CommunicationHandler extends Thread {
         }
     }
 
-    private void handle(Message m)
+    private void handle(Message<?> m)
     {
         // TODO handle messages here
         // ie if (m instanceof EntityMovedMessage) { ... }
     }
 
-    public void send(Message m)
+    public void send(Message<?> m)
     {
         // TODO send a Message to the server. Mike Z wanted to write his own raw
         // packet data so this is where the Message would be converted into
