@@ -22,6 +22,7 @@ package org.amityregion5.projectx.client.communication;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -99,6 +100,18 @@ public class CommunicationHandler extends Thread {
         // TODO send a Message to the server. Mike Z wanted to write his own raw
         // packet data so this is where the Message would be converted into
         // bytes.
+        
+        try
+        {
+            ObjectOutputStream outObjects = new ObjectOutputStream(socket.getOutputStream());
+            outObjects.writeObject(m);
+
+            outObjects.flush();
+        } catch (IOException e)
+        {
+            // This happens sometimes. I forget when though.
+            e.printStackTrace();
+        }
     }
 
 }
