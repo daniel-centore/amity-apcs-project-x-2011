@@ -5,13 +5,11 @@
 
 package org.amityregion5.projectx.common.entities.items.held;
 
-import org.amityregion5.projectx.common.entities.items.DamageDealing;
-
 /**
  *
  * @author Joe Stein
  */
-public abstract class Weapon extends HeldItem implements DamageDealing {
+public abstract class Weapon extends HeldItem {
 
    private int range; // Range (in pixels)
    

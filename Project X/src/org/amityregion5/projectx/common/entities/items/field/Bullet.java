@@ -21,11 +21,10 @@ package org.amityregion5.projectx.common.entities.items.field;
 
 import org.amityregion5.projectx.common.entities.items.DamageDealing;
 
-public class Bullet extends Projectile implements DamageDealing{
+public class Bullet extends Projectile implements DamageDealing {
 
     public Bullet(int dm)
     {
         super(dm);
     }
-
 }
