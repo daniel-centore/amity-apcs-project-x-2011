@@ -24,13 +24,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import org.amityregion5.projectx.common.communication.Message;
+import org.amityregion5.projectx.common.communication.messages.Message;
 
 /**
  * Represents a client in the game
  * 
  * @author Daniel Centore
- *
  */
 public class Client extends Thread {
 
@@ -55,7 +54,7 @@ public class Client extends Thread {
 
             while (!quit)
             {
-                Message<?> m = (Message<?>) inObject.readObject();
+                Message m = (Message) inObject.readObject();
                 
                 // ie if (m instanceof EntityMovedMessage) { ... }
             }
@@ -76,7 +75,7 @@ public class Client extends Thread {
      * Sends a message
      * @param m Message to send
      */
-    public void send(Message<?> m)
+    public void send(Message m)
     {
         try
         {

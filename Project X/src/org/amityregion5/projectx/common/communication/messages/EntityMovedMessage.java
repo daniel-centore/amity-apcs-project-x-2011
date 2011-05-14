@@ -1,62 +1,44 @@
 /**
  * Copyright (c) 2011 Amity AP CS A Students of 2010-2011.
- *
+ * 
  * ex: set filetype=java expandtab tabstop=4 shiftwidth=4 :
- *
+ * 
  * This program is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of
  * the License, or (at your option) any later version.
- *
+ * 
  * This code is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * 
  * This code is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
-package org.amityregion5.projectx.common.communication;
+package org.amityregion5.projectx.common.communication.messages;
 
-import java.io.Serializable;
+import org.amityregion5.projectx.common.entities.Entity;
 
 /**
- * Class used to represent a message.
+ * Notes that an entity has moved.
  *
- * @author Daniel Centore
- * @author Joe Stein
- * @author Michael Zuo
- * @param T The type that the message contains.
+ * @author Michael Zuo <sreservoir@gmail.com>
  */
-public abstract class Message<T> implements Serializable {
-    
+public class EntityMovedMessage extends Message
+{
     private static final long serialVersionUID = 1L;
 
-    private T content;
-
     /**
-     * Creates a message with null content
+     * Create meaningless message.
      */
-    public Message()
-    {
-        this(null);
+    public EntityMovedMessage() {
     }
-    
     /**
-     * Creates a message
-     * @param content Content to give it
+     * Create message which notes only locations.
+     *
+     * FIXME: not implementable without mantissa of Entity location.
      */
-    public Message(T content)
-    {
-        this.content = content;
-    }
-
-    /**
-     * @return The content of this message (or null if there is none)
-     */
-    public T getContent()
-    {
-        return content;
-    }
+    //public EntityMovedMessage(?? point information) { }
 }
