@@ -62,16 +62,6 @@ public abstract class AbstractMap {
     }
 
     /**
-     * Removes an entity from the map by index
-     * @deprecated Should not be used because we are multithreading, so indices change!
-     * @param index
-     */
-    public synchronized void removeEntity(int index)
-    {
-        entities.remove(index);
-    }
-    
-    /**
      * @return The background image (or null for default background)
      */
     public synchronized Image getBackground()
