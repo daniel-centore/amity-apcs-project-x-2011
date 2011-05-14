@@ -26,4 +26,5 @@ import org.amityregion5.projectx.common.entities.Entity;
  */
 public abstract class Item extends Entity
 {
+    
 }

@@ -24,38 +24,44 @@ package org.amityregion5.projectx.common.entities.items.held;
  * @author Mike DiBuduo
  * @author Joe Stein
  */
-public abstract class ProjectileWeapon extends Weapon
-{
+public abstract class ProjectileWeapon extends Weapon {
 
-   private int ammo;
-   private int maxAmmo;
-   private double fireRate;
+    private int ammo;
+    private int maxAmmo;
+    private double fireRate;
+    private int roundsPerMag;
 
-   public ProjectileWeapon(int range, int startAmmo, int _maxAmmo, int rate)
-   {
-      super(range);
-      ammo = startAmmo;
-      maxAmmo = _maxAmmo;
-      fireRate = rate;
-   }
+    public ProjectileWeapon(int range, int startAmmo, int _maxAmmo, int rate, int rpm)
+    {
+        super(range);
+        ammo = startAmmo;
+        maxAmmo = _maxAmmo;
+        fireRate = rate;
+        roundsPerMag = rpm;
+    }
 
-   public int getAmmo()
-   {
-      return ammo;
-   }
+    public int getAmmo()
+    {
+        return ammo;
+    }
 
-   public void addAmmo(int rounds)
-   {
-      ammo += rounds;
-   }
+    public void addAmmo(int rounds)
+    {
+        ammo += rounds;
+    }
 
-   public int getMaxAmmo()
-   {
-      return maxAmmo;
-   }
+    public int getMaxAmmo()
+    {
+        return maxAmmo;
+    }
 
-   public double getFireRate()
-   {
-      return fireRate;
-   }
+    public double getFireRate()
+    {
+        return fireRate;
+    }
+
+    public int getRoundsPerMag()
+    {
+        return roundsPerMag;
+    }
 }

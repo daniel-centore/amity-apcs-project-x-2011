@@ -21,13 +21,19 @@ package org.amityregion5.projectx.common.entities.items.held;
 
 import org.amityregion5.projectx.common.entities.items.DamageDealing;
 
-public class MeleeWeapon extends Weapon implements DamageDealing
-{
+public abstract class MeleeWeapon extends Weapon implements DamageDealing {
 
-   private int damage;
+    public static final int MELEE_RANGE = 5; // default to 5 pixels range
 
-   public int getDamage()
-   {
-      return damage;
-   }
+    private int damage;
+
+    public MeleeWeapon()
+    {
+        super(MELEE_RANGE);
+    }
+
+    public int getDamage()
+    {
+        return damage;
+    }
 }
