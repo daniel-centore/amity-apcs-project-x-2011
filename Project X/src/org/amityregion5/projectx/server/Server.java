@@ -26,6 +26,7 @@ import java.util.HashMap;
 import org.amityregion5.projectx.common.communication.Constants;
 import org.amityregion5.projectx.common.communication.messages.AnnounceMessage;
 import org.amityregion5.projectx.common.communication.messages.ChatMessage;
+import org.amityregion5.projectx.server.communication.Multicaster;
 
 /**
  * Accepts incoming connections and makes Clients for them
@@ -35,8 +36,10 @@ import org.amityregion5.projectx.common.communication.messages.ChatMessage;
  */
 public class Server {
 
+    private String name; // the text name of the server
     private boolean listening = true;
     private ServerSocket servSock;
+    private Multicaster multicaster; // for multicasting IP and String
 
     /*
      * A HashMap of the connected Clients to this Server.
@@ -45,16 +48,21 @@ public class Server {
      */
     private HashMap<String, Client> clients = new HashMap<String, Client>();
 
-    public void addClient(String username, Client c)
+    public Server(String name)
     {
-        clients.put(username, c);
-    }
-
-    public Server()
-    {
+        this.name = name;
         try
         {
+            System.out.println("Creating server socket...");
             servSock = new ServerSocket(Constants.PORT);
+            System.out.println("Starting to listen on port " + Constants.PORT);
+            startListening();
+            System.out.println("Creating multicaster...");
+            multicaster = new Multicaster(name);
+            multicaster.setDaemon(true);
+            System.out.println("Starting multicaster...");
+            multicaster.start();
+           
         }
         catch(IOException e)
         {
@@ -62,8 +70,11 @@ public class Server {
             e.printStackTrace();
             System.exit(-1);
         }
+    }
 
-        startListening();
+    public void addClient(String username, Client c)
+    {
+        clients.put(username, c);
     }
 
     private void startListening()
@@ -85,24 +96,6 @@ public class Server {
         return clients.containsKey(text);
     }
 
-    private class ClientNetListener implements Runnable {
-
-        public void run()
-        {
-            try
-            {
-                while(listening)
-                {
-                    new Client(servSock.accept()).start();
-                }
-            }
-            catch(IOException e)
-            {
-                listening = false;
-            }
-        }
-    }
-
     public void setListening(boolean listening)
     {
         this.listening = listening;
@@ -118,6 +111,26 @@ public class Server {
         for (Client client : clients.values())
         {
             client.send(m);
+        }
+    }
+
+    private class ClientNetListener implements Runnable {
+
+        public void run()
+        {
+            try
+            {
+                while(listening)
+                {
+                    System.out.println("Waiting for clients...");
+                    new Client(servSock.accept()).start();
+                    System.out.println("Accepted new client.");
+                }
+            }
+            catch(IOException e)
+            {
+                listening = false;
+            }
         }
     }
 }

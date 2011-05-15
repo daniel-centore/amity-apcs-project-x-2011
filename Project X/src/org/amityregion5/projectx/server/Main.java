@@ -19,6 +19,8 @@
  */
 package org.amityregion5.projectx.server;
 
+import org.amityregion5.projectx.server.gui.ServerNameWindow;
+
 /**
  * Server-side program entry point
  * 
@@ -29,6 +31,6 @@ public class Main {
 
     public static void main(String[] args)
     {
-        new Server();
+        new ServerNameWindow();
     }
 }

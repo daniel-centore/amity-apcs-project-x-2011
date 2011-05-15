@@ -28,6 +28,7 @@ import javax.swing.SwingUtilities;
 
 import org.amityregion5.projectx.common.communication.MessageListener;
 import org.amityregion5.projectx.common.communication.messages.ChatMessage;
+import org.amityregion5.projectx.common.communication.messages.GoodbyeMessage;
 import org.amityregion5.projectx.common.communication.messages.IntroduceMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
 
@@ -174,6 +175,16 @@ public class LobbyWindow extends JFrame implements MessageListener {
                     playerListModel.addElement(((IntroduceMessage) m).getText());
                 }
                 
+            });
+        } else if (m instanceof GoodbyeMessage)
+        {
+            SwingUtilities.invokeLater(new Runnable(){
+
+                public void run()
+                {
+                    playerListModel.removeElement(((IntroduceMessage) m).getText());
+                }
+
             });
         }
     }
