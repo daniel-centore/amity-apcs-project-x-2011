@@ -35,6 +35,7 @@ import org.amityregion5.projectx.common.entities.Entity;
 public abstract class AbstractMap {
 
     private ArrayList<Entity> entities; // list of entities on the map
+    private Image bgImage; // the image of the actual scenery/map/whatever
 
     /**
      * @return Map entities
@@ -67,29 +68,8 @@ public abstract class AbstractMap {
     /**
      * @return The background image (or null for default background)
      */
-    public synchronized Image getBackground()
+    public Image getBackground()
     {
-        return null;
-    }
-
-    /**
-     * @return The image of this map
-     */
-    public synchronized Image getImage()
-    {
-        Image img = Gui.createImage();
-        Graphics2D g = (Graphics2D) img.getGraphics();
-
-        Image k = getBackground();
-
-        if (k != null)
-            g.drawImage(k, 0, 0, null);
-
-        for (Entity e : entities)
-        {
-            g.drawImage(e.getImage(), e.getX(), e.getY(), null);
-        }
-
-        return img;
+        return bgImage;
     }
 }

@@ -22,6 +22,7 @@ package org.amityregion5.projectx.client.gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.WindowEvent;
 
@@ -30,6 +31,7 @@ import javax.swing.JFrame;
 
 import org.amityregion5.projectx.client.gui.input.KeyboardInput;
 import org.amityregion5.projectx.client.gui.input.MouseInput;
+import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 
 /**
@@ -41,10 +43,8 @@ import org.amityregion5.projectx.common.maps.AbstractMap;
 public class Gui extends JFrame {
 
     private static final long serialVersionUID = 1L;
-
     public static final int GAME_WIDTH = 1024; // the game size we will draw at before resizing
     public static final int GAME_HEIGHT = 765;
-
     private static Gui instance;
     private static AbstractMap map;
     private static JComponent panel;
@@ -61,6 +61,7 @@ public class Gui extends JFrame {
         this.setBackground(Color.black);
 
         this.addWindowListener(new AbstractWindowListener() {
+
             @Override
             public void windowClosing(WindowEvent arg0)
             {
@@ -70,13 +71,14 @@ public class Gui extends JFrame {
         });
 
         panel = new JComponent() {
+
             private static final long serialVersionUID = 1L;
 
             @Override
             // called when we run RepaintHandler.fireUpdateRequired()
             public void paintComponent(Graphics g)
             {
-                if (buffer == null)
+                if(buffer == null)
                     return;
 
                 int w = this.getWidth();
@@ -98,23 +100,26 @@ public class Gui extends JFrame {
         panel.addKeyListener(new KeyboardInput());
 
         this.add(panel, BorderLayout.CENTER);
-        
+
         this.setSize(GAME_WIDTH, GAME_HEIGHT);
 
         this.setVisible(true);
 
+        // FIXME this is kind of obnoxious to the user... is it necessary?
         // makes sure game has focus always, even if we add menus and such later
         new Thread() {
+
             @Override
             public void run()
             {
-                while (true)
+                while(true)
                 {
                     panel.requestFocusInWindow();
                     try
                     {
                         Thread.sleep(1000);
-                    } catch (InterruptedException e)
+                    }
+                    catch(InterruptedException e)
                     {
                     }
                 }
@@ -141,13 +146,14 @@ public class Gui extends JFrame {
         int x = 0;
         int y = 0;
 
-        if (thumbRatio < aspectRatio)
+        if(thumbRatio < aspectRatio)
         {
             y = newHeight;
             newHeight = (int) (newWidth / aspectRatio);
             y /= 2;
             y -= newHeight / 2;
-        } else
+        }
+        else
         {
             x = newWidth;
             newWidth = (int) (newHeight * aspectRatio);
@@ -156,14 +162,38 @@ public class Gui extends JFrame {
         }
 
         return new int[]
-        { newWidth, newHeight, x, y };
+                {
+                    newWidth, newHeight, x, y
+                };
     }
 
     public static void fireRepaintRequired()
     {
-        buffer = map.getImage();
+        buffer = instance.getMapFlatImage();
 
         panel.repaint();
+    }
+
+    /**
+     * Returns a flat image of the map with all the entities painted on it.
+     * @return a flat image of the map with its entities
+     */
+    private Image getMapFlatImage()
+    {
+        Image img = Gui.createImage();
+        Graphics2D g = (Graphics2D) img.getGraphics();
+
+        Image k = map.getBackground();
+
+        if(k != null)
+            g.drawImage(k, 0, 0, null);
+
+        for(Entity e : map.getEntities())
+        {
+            g.drawImage(e.getImage(), e.getX(), e.getY(), null);
+        }
+
+        return img;
     }
 
     public static Image createImage()
@@ -191,10 +221,9 @@ public class Gui extends JFrame {
     {
         return panel.getHeight();
     }
-    
+
     public static void main(String[] args)
     {
         new Gui(null);
     }
-
 }
