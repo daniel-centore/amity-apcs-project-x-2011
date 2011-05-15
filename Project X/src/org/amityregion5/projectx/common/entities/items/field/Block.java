@@ -19,22 +19,22 @@
  */
 package org.amityregion5.projectx.common.entities.items.field;
 
-public class Block extends FieldItem{
+public class Block extends FieldItem {
 
-   private int hp;
+    private int hp;
 
-   public Block(int health)
-   {
-      hp = health;
-   }
+    public Block(int health)
+    {
+        hp = health;
+    }
 
-   public int getHp()
-   {
-      return hp;
-   }
+    public int getHp()
+    {
+        return hp;
+    }
 
-   public void setHp(int hp)
-   {
-      this.hp = hp;
-   }
+    public void setHp(int hp)
+    {
+        this.hp = hp;
+    }
 }

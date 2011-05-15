@@ -19,10 +19,21 @@
  */
 package org.amityregion5.projectx.common.entities.items.held;
 
-public class Sword extends MeleeWeapon
-{
-   public Sword()
-   {
+import org.amityregion5.projectx.common.entities.items.DamageDealing;
 
-   }
+public class Sword extends MeleeWeapon implements DamageDealing {
+    private static int SWORD_RATE = 42; // FIXME: arbitrary.
+
+    private int damage;
+
+    public Sword()
+    {
+        super(SWORD_RATE);
+    }
+
+    public int getDamage()
+    {
+        return damage;
+    }
+
 }

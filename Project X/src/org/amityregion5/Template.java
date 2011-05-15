@@ -22,22 +22,21 @@ package org.amityregion5;
 
 /**
  * A standard template for classes.
- *
- * The API of this class should remain constant; more methods and
- * fields may be added, but never changed or removed.
- *
- * The internal implementation of this class may be significantly
- * more ephemeral, and is subject to unforseeable change.
- *
- * Thus, as a rule of thumb: everything should be private unless it
- * is documented, so as to protect yourself from relying on things
- * that might be refactored.
- *
- * If you need something private, write appropriate documentation
- * BEFORE the code itself, so that you set well-defined limits for
- * what you're doing.
+ * 
+ * The API of this class should remain constant; more methods and fields may be
+ * added, but never changed or removed.
+ * 
+ * The internal implementation of this class may be significantly more
+ * ephemeral, and is subject to unforseeable change.
+ * 
+ * Thus, as a rule of thumb: everything should be private unless it is
+ * documented, so as to protect yourself from relying on things that might be
+ * refactored.
+ * 
+ * If you need something private, write appropriate documentation BEFORE the
+ * code itself, so that you set well-defined limits for what you're doing.
  */
 
 public class Template {
-  // put stuff here.
+    // put stuff here.
 }

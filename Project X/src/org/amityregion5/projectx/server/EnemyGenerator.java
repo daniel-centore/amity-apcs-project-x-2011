@@ -20,11 +20,11 @@ package org.amityregion5.projectx.server;
 
 /**
  * Class documentation.
- *
+ * 
  * @author Jenny Liu
  */
-public class EnemyGenerator extends GameState{
+public class EnemyGenerator extends GameState {
 
-   private GeneratorThread gen;
+    private GeneratorThread gen;
 
 }

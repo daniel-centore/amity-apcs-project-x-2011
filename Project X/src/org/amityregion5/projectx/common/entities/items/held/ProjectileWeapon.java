@@ -19,24 +19,22 @@
 package org.amityregion5.projectx.common.entities.items.held;
 
 /**
- * Class documentation.
- *
+ * An item which releases ammo when used..
+ * 
  * @author Mike DiBuduo
  * @author Joe Stein
  */
 public abstract class ProjectileWeapon extends Weapon {
-
     private int ammo;
     private int maxAmmo;
-    private double fireRate;
     private int roundsPerMag;
 
-    public ProjectileWeapon(int range, int startAmmo, int _maxAmmo, int rate, int rpm)
+    public ProjectileWeapon(int range, int startAmmo, int _maxAmmo, int rate,
+            int rpm)
     {
-        super(range);
+        super(range, rate);
         ammo = startAmmo;
         maxAmmo = _maxAmmo;
-        fireRate = rate;
         roundsPerMag = rpm;
     }
 
@@ -53,11 +51,6 @@ public abstract class ProjectileWeapon extends Weapon {
     public int getMaxAmmo()
     {
         return maxAmmo;
-    }
-
-    public double getFireRate()
-    {
-        return fireRate;
     }
 
     public int getRoundsPerMag()

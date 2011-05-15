@@ -26,9 +26,9 @@ import org.amityregion5.projectx.common.communication.Constants;
 
 /**
  * Accepts incoming connections and makes Clients for them
- *  
+ * 
  * @author Daniel Centore
- *
+ * 
  */
 public class Server {
 
@@ -40,7 +40,8 @@ public class Server {
         try
         {
             serverSocket = new ServerSocket(Constants.PORT);
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
             // usually means a server is already running
             e.printStackTrace();

@@ -46,6 +46,7 @@ public abstract class AbstractMap {
 
     /**
      * Adds an entity to the map
+     * 
      * @param e
      */
     public synchronized void addEntity(Entity e)
@@ -55,6 +56,7 @@ public abstract class AbstractMap {
 
     /**
      * Removes an entity from the map
+     * 
      * @param e
      */
     public synchronized void removeEntity(Entity e)
@@ -69,7 +71,7 @@ public abstract class AbstractMap {
     {
         return null;
     }
-    
+
     /**
      * @return The image of this map
      */
@@ -77,17 +79,17 @@ public abstract class AbstractMap {
     {
         Image img = Gui.createImage();
         Graphics2D g = (Graphics2D) img.getGraphics();
-        
+
         Image k = getBackground();
 
         if (k != null)
             g.drawImage(k, 0, 0, null);
-        
+
         for (Entity e : entities)
         {
             g.drawImage(e.getImage(), e.getX(), e.getY(), null);
         }
-        
+
         return img;
     }
 }

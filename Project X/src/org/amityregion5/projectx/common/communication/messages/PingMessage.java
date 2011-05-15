@@ -21,14 +21,13 @@ package org.amityregion5.projectx.common.communication.messages;
 
 /**
  * Requests a PONG to keep the connection alive.
- *
+ * 
  * More exemplary than actually necessary.
- *
+ * 
  * @author Michael Zuo <sreservoir@gmail.com>
  */
-public class PingMessage extends Message
-{
+public class PingMessage extends Message {
     private static final long serialVersionUID = 1L;
 
-    //information is implicit in type.
+    // information is implicit in type.
 }

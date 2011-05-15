@@ -20,7 +20,7 @@ package org.amityregion5.projectx.server;
 
 /**
  * Class documentation.
- *
+ * 
  * @author Jenny Liu
  */
 public class Main {

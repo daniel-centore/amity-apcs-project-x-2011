@@ -14,17 +14,14 @@
  * This code is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
- *
  */
 package org.amityregion5.projectx.common.entities.items;
 
 import org.amityregion5.projectx.common.entities.Entity;
 
 /**
- *
  * @author Joe Stein
  */
-public abstract class Item extends Entity
-{
-    
+public abstract class Item extends Entity {
+
 }

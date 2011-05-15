@@ -33,10 +33,11 @@ import org.amityregion5.projectx.common.communication.messages.Message;
  */
 public class Client extends Thread {
 
-    private Socket sock;    //server socket
+    private Socket sock; // server socket
 
     /**
      * Creates a client
+     * 
      * @param sock Socket for communications
      */
     public Client(Socket sock)
@@ -48,24 +49,27 @@ public class Client extends Thread {
     {
         try
         {
-            ObjectInputStream inObject = new ObjectInputStream(sock.getInputStream());
+            ObjectInputStream inObject = new ObjectInputStream(
+                    sock.getInputStream());
 
             boolean quit = false;
 
             while (!quit)
             {
                 Message m = (Message) inObject.readObject();
-                
+
                 // ie if (m instanceof EntityMovedMessage) { ... }
             }
-            
+
             inObject.close();
             sock.close();
 
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
             e.printStackTrace();
-        } catch (ClassNotFoundException e)
+        }
+        catch (ClassNotFoundException e)
         {
             e.printStackTrace();
         }
@@ -73,17 +77,20 @@ public class Client extends Thread {
 
     /**
      * Sends a message
+     * 
      * @param m Message to send
      */
     public void send(Message m)
     {
         try
         {
-            ObjectOutputStream outObjects = new ObjectOutputStream(sock.getOutputStream());
+            ObjectOutputStream outObjects = new ObjectOutputStream(
+                    sock.getOutputStream());
             outObjects.writeObject(m);
 
             outObjects.flush();
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
             // This happens sometimes. I forget when though.
             e.printStackTrace();

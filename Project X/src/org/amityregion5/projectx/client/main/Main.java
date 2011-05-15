@@ -23,7 +23,7 @@ import org.amityregion5.projectx.client.gui.LobbyWindow;
 import org.amityregion5.projectx.client.gui.SplashScreen;
 
 public class Main {
-    
+
     public static final int SPLASH_TIME = 2000;
 
     public static void main(String[] args)
@@ -32,12 +32,13 @@ public class Main {
         try
         {
             Thread.sleep(SPLASH_TIME);
-        } catch (InterruptedException e)
+        }
+        catch (InterruptedException e)
         {
         }
-        
+
         s.setVisible(false);
-        
+
         new LobbyWindow().setVisible(true);
     }
 

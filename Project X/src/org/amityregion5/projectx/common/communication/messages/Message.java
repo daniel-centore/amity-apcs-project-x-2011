@@ -23,7 +23,7 @@ import java.io.Serializable;
 
 /**
  * Class used to represent a message.
- *
+ * 
  * @author Daniel Centore
  * @author Joe Stein
  * @author Michael Zuo

@@ -20,8 +20,8 @@ package org.amityregion5.projectx.server;
 
 /**
  * Class documentation.
- *
+ * 
  * @author Jenny Liu
  */
-public class GeneratorThread extends Thread{
+public class GeneratorThread extends Thread {
 }

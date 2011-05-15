@@ -31,20 +31,21 @@ import java.awt.image.BufferedImage;
 public abstract class Entity {
     private static long NextUniqueID = 0;
 
-    private final long uniqueID; //necessary to check identity content changes.
+    private final long uniqueID; // necessary to check identity content changes.
     private Point2D location;
     private BufferedImage image;
-    private int directionFacing; //Constants in EntityConstants
+    private int directionFacing; // Constants in EntityConstants
     private int directionMoving;
     private double moveSpeed;
 
     /**
-     * Default entity constructor. Use as little as possible. Sets location to (0,0),
+     * Default entity constructor. Use as little as possible. Sets location to
+     * (0,0),
      */
     public Entity()
     {
         uniqueID = NextUniqueID++;
-        location = new Point2D.Double(0,0);
+        location = new Point2D.Double(0, 0);
         image = null;
         directionFacing = 0;
         directionMoving = 0;
@@ -75,6 +76,7 @@ public abstract class Entity {
 
     /**
      * Sets the X coord
+     * 
      * @param x
      */
     public void setX(int x)
@@ -92,6 +94,7 @@ public abstract class Entity {
 
     /**
      * Sets the Y coord
+     * 
      * @param y
      */
     public void setY(int y)
@@ -109,6 +112,7 @@ public abstract class Entity {
 
     /**
      * Sets the image of the entity
+     * 
      * @param image Image to set it to
      */
     public void setImage(BufferedImage image)
@@ -126,6 +130,7 @@ public abstract class Entity {
 
     /**
      * Sets the current direction we are facing
+     * 
      * @param directionFacing
      */
     public void setDirectionFacing(int directionFacing)
@@ -143,6 +148,7 @@ public abstract class Entity {
 
     /**
      * Sets the direction we are moving in
+     * 
      * @param directionMoving
      */
     public void setDirectionMoving(int directionMoving)
@@ -160,6 +166,7 @@ public abstract class Entity {
 
     /**
      * Sets the move speed
+     * 
      * @param moveSpeed
      */
     public void setMoveSpeed(double moveSpeed)

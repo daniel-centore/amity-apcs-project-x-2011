@@ -26,13 +26,13 @@ import javax.imageio.ImageIO;
 
 /**
  * Class documentation.
- *
+ * 
  * @author Mike DiBuduo
  */
 public class ImageHandler {
     /**
      * Loads an image from a source specified by a string.
-     *
+     * 
      * @param str A String representing the image source.
      * @return An image, or null if none could be found or read.
      */
@@ -45,26 +45,29 @@ public class ImageHandler {
 
     /**
      * Determines whether a given string seems to be a file path.
-     *
+     * 
      * @param str The string to be tested.
      * @return Whether the string should be treated as a file path.
      */
-    private boolean looksLikeFilePath(String str) {
+    private boolean looksLikeFilePath(String str)
+    {
         return true;
     }
 
     /**
      * Loads an image from a file, given the path.
-     *
+     * 
      * @param path The filesystem path to the image.
      * @return The image in the file, or null if reading failed.
      */
     public BufferedImage loadFile(String path)
     {
-        try {
+        try
+        {
             return ImageIO.read(new File(path));
         }
-        catch (IOException e) {
+        catch (IOException e)
+        {
             return null;
         }
     }

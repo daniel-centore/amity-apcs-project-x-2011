@@ -25,11 +25,10 @@ import org.amityregion5.projectx.common.entities.Entity;
 
 /**
  * Notes that a change in the positions of entities has occured.
- *
+ * 
  * @author Michael Zuo <sreservoir@gmail.com>
  */
-public class EntityMovedMessage extends Message
-{
+public class EntityMovedMessage extends Message {
     private static final long serialVersionUID = 1L;
 
     private Entity entity;
@@ -39,20 +38,22 @@ public class EntityMovedMessage extends Message
     /**
      * Create meaningless message.
      */
-    public EntityMovedMessage() {
+    public EntityMovedMessage()
+    {
         this.entity = null;
         this.oldLoc = null;
         this.newLoc = null;
     }
+
     /**
      * Note that an entity has moved elsewhere.
-     *
-     *
+     * 
      * @param entity The entity in question.
      * @param oldLoc The entity's old location. null indicates creation.
      * @param newLoc The entity's new location. null indicates destruction.
      */
-    public EntityMovedMessage(Entity entity,Point2D oldLoc,Point2D newLoc) {
+    public EntityMovedMessage(Entity entity, Point2D oldLoc, Point2D newLoc)
+    {
         this.entity = entity;
         this.oldLoc = oldLoc;
         this.newLoc = newLoc;

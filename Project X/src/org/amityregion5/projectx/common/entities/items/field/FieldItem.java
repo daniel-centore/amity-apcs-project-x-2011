@@ -21,5 +21,5 @@ package org.amityregion5.projectx.common.entities.items.field;
 
 import org.amityregion5.projectx.common.entities.items.Item;
 
-public abstract class FieldItem extends Item{
+public abstract class FieldItem extends Item {
 }

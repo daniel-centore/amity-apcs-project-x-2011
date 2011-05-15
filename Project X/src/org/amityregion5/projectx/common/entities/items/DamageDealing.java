@@ -20,14 +20,12 @@ package org.amityregion5.projectx.common.entities.items;
 
 /**
  * This interface should be implemented by Objects that will deal actual damage
- * (Projectile, Bullet, MelleWeapon, etc.)
- * Classes like Weapon and ProjectileWeapon that do not deal damage shouldn't
- * implement this interface
- *
+ * (Projectile, Bullet, MeleeWeapon, etc.) Classes like Weapon and
+ * ProjectileWeapon that do not necessarily deal damage should not implement
+ * this interface
+ * 
  * @author Mike DiBuduo
  */
-public interface DamageDealing
-{
-
-   public int getDamage();
+public interface DamageDealing {
+    public int getDamage();
 }

@@ -52,11 +52,13 @@ public class CommunicationHandler extends Thread {
         try
         {
             socket = new Socket(serverIP, Constants.PORT);
-        } catch (UnknownHostException e)
+        }
+        catch (UnknownHostException e)
         {
             e.printStackTrace();
             System.exit(-1);
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
             e.printStackTrace();
             System.exit(-1);
@@ -64,18 +66,21 @@ public class CommunicationHandler extends Thread {
 
         try
         {
-            ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
+            ObjectInputStream input = new ObjectInputStream(
+                    socket.getInputStream());
 
             while (keepReading)
             {
                 Message m = (Message) input.readObject();
                 handle(m);
             }
-            
-        } catch (IOException e1)
+
+        }
+        catch (IOException e1)
         {
             e1.printStackTrace();
-        } catch (ClassNotFoundException e)
+        }
+        catch (ClassNotFoundException e)
         {
             e.printStackTrace();
         }
@@ -83,7 +88,8 @@ public class CommunicationHandler extends Thread {
         try
         {
             socket.close();
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
             e.printStackTrace();
         }
@@ -98,14 +104,16 @@ public class CommunicationHandler extends Thread {
     public void send(Message m)
     {
         // TODO send a Message to the server.
-        
+
         try
         {
-            ObjectOutputStream outObjects = new ObjectOutputStream(socket.getOutputStream());
+            ObjectOutputStream outObjects = new ObjectOutputStream(
+                    socket.getOutputStream());
             outObjects.writeObject(m);
 
             outObjects.flush();
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
             // This happens sometimes. I forget when though.
             e.printStackTrace();

@@ -22,6 +22,5 @@ package org.amityregion5.projectx.common.entities.items.held;
 
 import org.amityregion5.projectx.common.entities.items.Item;
 
-public abstract class HeldItem extends Item
-{
+public abstract class HeldItem extends Item {
 }
