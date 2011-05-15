@@ -111,11 +111,19 @@ public abstract class Character extends Entity
       weapons.add(wp);
    }
 
+   /**
+    * returns MAX_HEALTH
+    * @return MAX_HEALTH
+    */
    public int getMAX_HEALTH()
    {
       return MAX_HEALTH;
    }
 
+   /**
+    * checks to see if a character's health is bellow 0
+    * if true, removes the character from the map
+    */
    public void killed()
    {
       if (hp <= 0)
@@ -124,12 +132,20 @@ public abstract class Character extends Entity
       }
    }
 
+   /**
+    * removes health from character. Then checks to see if character is killed
+    * @param damage the amount of health to remove
+    */
    public void damage(int damage)
    {
       hp -= damage;
       killed();
    }
 
+   /**
+    * adds health to hp. If health to add makes hp over MAX_HEALTH, then hp = MAX_HEALTH
+    * @param health health to add
+    */
    public void heal(int health)
    {
         hp = (hp +health > MAX_HEALTH ? MAX_HEALTH : hp + health);
