@@ -123,7 +123,7 @@ public class Server {
                 while(listening)
                 {
                     System.out.println("Waiting for clients...");
-                    new Client(servSock.accept()).start();
+                    new Client(servSock.accept(), Server.this).start();
                     System.out.println("Accepted new client.");
                 }
             }

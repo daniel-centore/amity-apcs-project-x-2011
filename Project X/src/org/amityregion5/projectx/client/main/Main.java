@@ -39,7 +39,7 @@ public class Main {
 
         s.setVisible(false);
 
-        new ServerChooserWindow().setVisible(true);
+        ServerChooserWindow.main(new String[0]);
     }
 
 }

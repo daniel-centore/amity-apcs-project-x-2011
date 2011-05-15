@@ -39,15 +39,36 @@ import org.amityregion5.projectx.common.communication.messages.Message;
  */
 public class CommunicationHandler extends Thread {
 
+    public static final int TIMEOUT_SECS = 6;
+
     private String serverIP;
     private Socket socket = null;
     private boolean keepReading = true;
-    private ArrayList<MessageListener> listeners =
-            new ArrayList<MessageListener>();
+    private ArrayList<MessageListener> listeners = new ArrayList<MessageListener>();
 
     public CommunicationHandler(String serverIP)
     {
         this.serverIP = serverIP;
+        this.start();
+
+        int i = 0;
+        while (socket == null)
+        {
+            if (i >= TIMEOUT_SECS)
+            {
+                System.out.println("Server timeout [" + TIMEOUT_SECS + " secs] exceeded! Terminating...");
+                System.exit(-1);
+            }
+
+            i++;
+
+            try
+            {
+                Thread.sleep(1000);
+            } catch (InterruptedException e)
+            {
+            }
+        }
     }
 
     @Override
@@ -56,13 +77,11 @@ public class CommunicationHandler extends Thread {
         try
         {
             socket = new Socket(serverIP, Constants.PORT);
-        }
-        catch (UnknownHostException e)
+        } catch (UnknownHostException e)
         {
             e.printStackTrace();
             System.exit(-1);
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             e.printStackTrace();
             System.exit(-1);
@@ -70,8 +89,7 @@ public class CommunicationHandler extends Thread {
 
         try
         {
-            ObjectInputStream input = new ObjectInputStream(
-                    socket.getInputStream());
+            ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
 
             while (keepReading)
             {
@@ -79,12 +97,10 @@ public class CommunicationHandler extends Thread {
                 handle(m);
             }
 
-        }
-        catch (IOException e1)
+        } catch (IOException e1)
         {
             e1.printStackTrace();
-        }
-        catch (ClassNotFoundException e)
+        } catch (ClassNotFoundException e)
         {
             e.printStackTrace();
         }
@@ -92,8 +108,7 @@ public class CommunicationHandler extends Thread {
         try
         {
             socket.close();
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             e.printStackTrace();
         }
@@ -123,17 +138,25 @@ public class CommunicationHandler extends Thread {
 
         try
         {
-            ObjectOutputStream outObjects = new ObjectOutputStream(
-                    socket.getOutputStream());
+            ObjectOutputStream outObjects = new ObjectOutputStream(socket.getOutputStream());
             outObjects.writeObject(m);
 
             outObjects.flush();
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             // This happens sometimes. I forget when though.
             e.printStackTrace();
         }
+    }
+
+    public String getServerIP()
+    {
+        return serverIP;
+    }
+
+    public Socket getSocket()
+    {
+        return socket;
     }
 
 }

@@ -31,14 +31,13 @@ import org.amityregion5.projectx.common.communication.DatagramListener;
 
 /**
  * A class for listening for multicast packets.
- *
+ * 
  * @author Joe Stein
  */
 public class MulticastCommunicationHandler extends Thread {
 
     private boolean keepListening = true;
-    private ArrayList<DatagramListener> dgListeners =
-            new ArrayList<DatagramListener>();
+    private ArrayList<DatagramListener> dgListeners = new ArrayList<DatagramListener>();
     private MulticastSocket sock;
 
     @Override
@@ -57,8 +56,7 @@ public class MulticastCommunicationHandler extends Thread {
                 sock.receive(packet);
                 firePacketReceived(packet);
             }
-        }
-        catch(IOException ex)
+        } catch (IOException ex)
         {
             Logger.getLogger(MulticastCommunicationHandler.class.getName()).log(Level.SEVERE, null, ex);
             keepListening = false;

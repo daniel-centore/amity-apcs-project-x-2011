@@ -46,8 +46,9 @@ public class Client extends Thread {
      * 
      * @param sock Socket for communications
      */
-    public Client(Socket sock)
+    public Client(Socket sock, Server server)
     {
+        this.server = server;
         this.sock = sock;
     }
 
