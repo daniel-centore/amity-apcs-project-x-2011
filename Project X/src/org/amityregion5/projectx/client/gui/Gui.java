@@ -43,12 +43,14 @@ import org.amityregion5.projectx.common.maps.AbstractMap;
 public class Gui extends JFrame {
 
     private static final long serialVersionUID = 1L;
+    
     public static final int GAME_WIDTH = 1024; // the game size we will draw at before resizing
     public static final int GAME_HEIGHT = 765;
-    private static Gui instance;
-    private static AbstractMap map;
-    private static JComponent panel;
-    private static Image buffer;
+    
+    private static Gui instance; // the instance of Gui
+    private static AbstractMap map; // the current game map
+    private static JComponent panel; // the panel we will draw on
+    private static Image buffer; // the image the panel should draw
 
     public Gui(AbstractMap map)
     {
@@ -78,7 +80,7 @@ public class Gui extends JFrame {
             // called when we run RepaintHandler.fireUpdateRequired()
             public void paintComponent(Graphics g)
             {
-                if(buffer == null)
+                if (buffer == null)
                     return;
 
                 int w = this.getWidth();
@@ -112,14 +114,13 @@ public class Gui extends JFrame {
             @Override
             public void run()
             {
-                while(true)
+                while (true)
                 {
                     panel.requestFocusInWindow();
                     try
                     {
                         Thread.sleep(1000);
-                    }
-                    catch(InterruptedException e)
+                    } catch (InterruptedException e)
                     {
                     }
                 }
@@ -146,14 +147,13 @@ public class Gui extends JFrame {
         int x = 0;
         int y = 0;
 
-        if(thumbRatio < aspectRatio)
+        if (thumbRatio < aspectRatio)
         {
             y = newHeight;
             newHeight = (int) (newWidth / aspectRatio);
             y /= 2;
             y -= newHeight / 2;
-        }
-        else
+        } else
         {
             x = newWidth;
             newWidth = (int) (newHeight * aspectRatio);
@@ -162,11 +162,12 @@ public class Gui extends JFrame {
         }
 
         return new int[]
-                {
-                    newWidth, newHeight, x, y
-                };
+        { newWidth, newHeight, x, y };
     }
 
+    /**
+     * Notifies the Gui that it needs to recreate and redraw the screen image
+     */
     public static void fireRepaintRequired()
     {
         buffer = instance.getMapFlatImage();
@@ -176,6 +177,7 @@ public class Gui extends JFrame {
 
     /**
      * Returns a flat image of the map with all the entities painted on it.
+     * 
      * @return a flat image of the map with its entities
      */
     private Image getMapFlatImage()
@@ -185,10 +187,10 @@ public class Gui extends JFrame {
 
         Image k = map.getBackground();
 
-        if(k != null)
+        if (k != null)
             g.drawImage(k, 0, 0, null);
 
-        for(Entity e : map.getEntities())
+        for (Entity e : map.getEntities())
         {
             g.drawImage(e.getImage(), e.getX(), e.getY(), null);
         }
@@ -196,11 +198,18 @@ public class Gui extends JFrame {
         return img;
     }
 
+    /**
+     * Creates a blank image the width and size of the Game
+     * @return The image
+     */
     public static Image createImage()
     {
         return instance.createImage(GAME_WIDTH, GAME_HEIGHT);
     }
 
+    /**
+     * @return The instance of Gui
+     */
     public static Gui getInstance()
     {
         return instance;
