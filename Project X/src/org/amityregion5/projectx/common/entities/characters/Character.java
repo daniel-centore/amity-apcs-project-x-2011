@@ -20,6 +20,7 @@
 package org.amityregion5.projectx.common.entities.characters;
 
 import java.util.ArrayList;
+import org.amityregion5.projectx.client.gui.Gui;
 
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
@@ -113,5 +114,24 @@ public abstract class Character extends Entity
    public int getMAX_HEALTH()
    {
       return MAX_HEALTH;
+   }
+
+   public void killed()
+   {
+      if (hp <= 0)
+      {
+         Gui.getMap().removeEntity(this);
+      }
+   }
+
+   public void damage(int damage)
+   {
+      hp -= damage;
+      killed();
+   }
+
+   public void heal(int health)
+   {
+        hp = (hp +health > MAX_HEALTH ? MAX_HEALTH : hp + health);
    }
 }

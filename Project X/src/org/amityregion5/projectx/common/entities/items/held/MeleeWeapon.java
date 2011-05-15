@@ -19,8 +19,6 @@
  */
 package org.amityregion5.projectx.common.entities.items.held;
 
-import org.amityregion5.projectx.common.entities.EntityConstants;
-
 /**
  *
  * @author Mike DiBuduo
@@ -28,10 +26,10 @@ import org.amityregion5.projectx.common.entities.EntityConstants;
 public abstract class MeleeWeapon extends Weapon
 {
 
-   public static final int RANGE = EntityConstants.MELEE_RANGE;
+   public static final int MELEE_RANGE = 5; // default to 5 pixels range
 
    public MeleeWeapon(int rate)
    {
-      super(RANGE, rate);
+      super(MELEE_RANGE, rate);
    }
 }
