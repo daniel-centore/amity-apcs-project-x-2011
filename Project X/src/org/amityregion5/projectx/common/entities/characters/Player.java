@@ -21,8 +21,8 @@ package org.amityregion5.projectx.common.entities.characters;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
 
 /**
- * Character user uses to fight enemies
- * can have multiple weapons
+ * Character controlled by a Player which fights Enemies.
+ * Capable of using multiple weapons.
  * 
  * @author Mike DiBuduo
  */

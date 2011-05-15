@@ -23,7 +23,7 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
 /**
- * An entity
+ * An entity.
  * 
  * @author Daniel Centore
  * @author Joe Stein
@@ -39,8 +39,9 @@ public abstract class Entity {
     private double moveSpeed;
 
     /**
-     * Default entity constructor. Use as little as possible. Sets location to
-     * (0,0),
+     * Default entity constructor.
+     * Sets sane (but not really useful) default values.
+     * Use this directly as little as possible.
      */
     public Entity()
     {
@@ -53,7 +54,7 @@ public abstract class Entity {
     }
 
     /**
-     * Creates a new entity
+     * Creates a new entity with the important information set.
      * 
      * @param image Image to represent it.
      * @param location Location to occupy.
@@ -75,7 +76,7 @@ public abstract class Entity {
     }
 
     /**
-     * Sets the X coord
+     * Sets the X coord.
      * 
      * @param x
      */
@@ -93,7 +94,7 @@ public abstract class Entity {
     }
 
     /**
-     * Sets the Y coord
+     * Sets the Y coord.
      * 
      * @param y
      */
@@ -111,7 +112,7 @@ public abstract class Entity {
     }
 
     /**
-     * Sets the image of the entity
+     * Sets the image of the entity.
      * 
      * @param image Image to set it to
      */
@@ -129,7 +130,7 @@ public abstract class Entity {
     }
 
     /**
-     * Sets the current direction we are facing
+     * Sets the current direction we are facing.
      * 
      * @param directionFacing
      */
@@ -147,7 +148,7 @@ public abstract class Entity {
     }
 
     /**
-     * Sets the direction we are moving in
+     * Sets the direction we are moving in.
      * 
      * @param directionMoving
      */
@@ -165,7 +166,7 @@ public abstract class Entity {
     }
 
     /**
-     * Sets the move speed
+     * Sets the move speed.
      * 
      * @param moveSpeed
      */

@@ -20,6 +20,7 @@
 package org.amityregion5.projectx.common.entities.items.held;
 
 /**
+ * A Weapon which can be used only within melee range.
  *
  * @author Mike DiBuduo
  */

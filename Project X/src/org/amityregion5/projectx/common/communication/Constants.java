@@ -20,7 +20,7 @@
 package org.amityregion5.projectx.common.communication;
 
 /**
- * Constants for use in communication
+ * Constants for use in communication.
  * 
  * @author Daniel Centore
  * @author Michael Zuo

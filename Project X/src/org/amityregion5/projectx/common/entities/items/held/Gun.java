@@ -20,8 +20,7 @@
 package org.amityregion5.projectx.common.entities.items.held;
 
 /**
- * Basic gun
- * Fires Projectiles into field
+ * A ProjectileWeapon which fires Bullets into field.
  *
  * @author Mike DiBuduo
  */

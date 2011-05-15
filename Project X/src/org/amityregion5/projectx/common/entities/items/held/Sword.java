@@ -22,7 +22,8 @@ package org.amityregion5.projectx.common.entities.items.held;
 import org.amityregion5.projectx.common.entities.items.DamageDealing;
 
 /**
- * Basic melee weapon
+ * Basic melee weapon.
+ *
  * @author Mike DiBuduo
  */
 public class Sword extends MeleeWeapon implements DamageDealing {

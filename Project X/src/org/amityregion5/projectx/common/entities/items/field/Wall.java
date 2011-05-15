@@ -20,7 +20,7 @@
 package org.amityregion5.projectx.common.entities.items.field;
 
 /**
- * Main fortress wall
+ * Main fortress wall.
  *
  * @author Mike DiBuduo
  */

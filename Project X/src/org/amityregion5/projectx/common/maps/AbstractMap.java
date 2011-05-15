@@ -19,15 +19,13 @@
  */
 package org.amityregion5.projectx.common.maps;
 
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.util.ArrayList;
 
-import org.amityregion5.projectx.client.gui.Gui;
 import org.amityregion5.projectx.common.entities.Entity;
 
 /**
- * An abstract map
+ * An abstract map.
  * 
  * @author Mike DiBuduo
  * @author Daniel Centore

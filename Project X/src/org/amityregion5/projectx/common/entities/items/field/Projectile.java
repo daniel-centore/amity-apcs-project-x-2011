@@ -19,7 +19,7 @@
 package org.amityregion5.projectx.common.entities.items.field;
 
 /**
- * A FieldItem that is fired from a ProjectileWeapon onto the map
+ * A FieldItem that is fired from a ProjectileWeapon onto the map.
  *
  * @author Mike DiBuduo
  */

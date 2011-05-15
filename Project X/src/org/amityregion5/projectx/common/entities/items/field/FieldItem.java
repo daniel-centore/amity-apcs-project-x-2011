@@ -22,7 +22,8 @@ package org.amityregion5.projectx.common.entities.items.field;
 import org.amityregion5.projectx.common.entities.items.Item;
 
 /**
- * Items that are placed or go through field
+ * Items that are placed on or pass through field.
+ *
  * @author Mike DiBuduo
  */
 public abstract class FieldItem extends Item {

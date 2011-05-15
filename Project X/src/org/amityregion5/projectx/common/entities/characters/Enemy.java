@@ -28,7 +28,8 @@ import org.amityregion5.projectx.common.entities.items.held.Weapon;
 public class Enemy extends Character {
 
    /**
-    * constructs enemy with
+    * Creates an enemy with specified health.
+    *
     * @param health
     */
     public Enemy(int health, int max)

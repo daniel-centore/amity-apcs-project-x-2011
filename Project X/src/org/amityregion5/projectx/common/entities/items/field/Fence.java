@@ -20,7 +20,7 @@
 package org.amityregion5.projectx.common.entities.items.field;
 
 /**
- * Lesser wall-style protection
+ * Lesser wall-style protection.
  *
  * @author Mike DiBuduo
  */

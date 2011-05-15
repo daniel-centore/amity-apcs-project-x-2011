@@ -22,8 +22,9 @@ package org.amityregion5.projectx.common.entities.items.field;
 import org.amityregion5.projectx.common.entities.items.DamageDealing;
 
 /**
- * Actual projectile that flies through field
- * Does damage to characters
+ * Actual projectile that flies through field.
+ * Does damage to characters.
+ *
  * @author Mike DiBuduo
  */
 public class Bullet extends Projectile implements DamageDealing {
