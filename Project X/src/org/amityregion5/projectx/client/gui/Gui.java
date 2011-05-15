@@ -44,8 +44,8 @@ public class Gui extends JFrame {
 
     private static final long serialVersionUID = 1L;
     
-    public static final int GAME_WIDTH = 1024; // the game size we will draw at before resizing
-    public static final int GAME_HEIGHT = 765;
+    public static final int GAME_WIDTH = 960; // the game size we will draw at before resizing
+    public static final int GAME_HEIGHT = 720;
     
     private static Gui instance; // the instance of Gui
     private static AbstractMap map; // the current game map
