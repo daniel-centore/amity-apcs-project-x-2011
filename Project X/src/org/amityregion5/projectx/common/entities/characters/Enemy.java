@@ -21,20 +21,25 @@ package org.amityregion5.projectx.common.entities.characters;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
 
 /**
- * Class documentation.
+ * Character that attacks player
+ * has a single Weapon that it uses
  * 
  * @author Mike DiBuduo
  */
 public class Enemy extends Character {
 
-    public Enemy(int health)
+   /**
+    * constructs enemy with
+    * @param health
+    */
+    public Enemy(int health, int max)
     {
-        super(health);
+        super(health, max);
     }
 
-    public Enemy(int health, Weapon wp)
+    public Enemy(int health, int max, Weapon wp)
     {
-        super(health);
+        this(health, max);
         addWeapon(wp);
     }
 }

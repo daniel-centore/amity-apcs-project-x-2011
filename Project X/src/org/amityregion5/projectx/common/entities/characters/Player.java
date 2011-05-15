@@ -21,20 +21,24 @@ package org.amityregion5.projectx.common.entities.characters;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
 
 /**
- * Class documentation.
+ * Character user uses to fight enemies
+ * can have multiple weapons
  * 
  * @author Mike DiBuduo
  */
-public class Player extends Character {
+public class Player extends Character
+{
 
-    public Player(int health)
-    {
-        super(health);
-    }
+   private static final int MAX_HEALTH = 100;// Player's health should be 100
 
-    public Player(int health, Weapon wp)
-    {
-        super(health);
-        addWeapon(wp);
-    }
+   public Player(int health)
+   {
+      super(health, MAX_HEALTH);
+   }
+
+   public Player(int health, Weapon wp)
+   {
+      this(health);
+      addWeapon(wp);
+   }
 }

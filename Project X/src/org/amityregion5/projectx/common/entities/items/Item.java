@@ -20,6 +20,7 @@ package org.amityregion5.projectx.common.entities.items;
 import org.amityregion5.projectx.common.entities.Entity;
 
 /**
+ * The basic outline for all Items
  * @author Joe Stein
  */
 public abstract class Item extends Entity {

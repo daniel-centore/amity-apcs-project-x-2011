@@ -17,23 +17,24 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
+package org.amityregion5.projectx.common.entities.items.held;
 
 /**
- * Class Documentation
+ * Basic gun
+ * Fires Projectiles into field
  *
  * @author Mike DiBuduo
  */
-package org.amityregion5.projectx.common.entities.items.held;
+public class Gun extends ProjectileWeapon
+{
 
-public class Gun extends ProjectileWeapon {
-    public Gun(int range, int ammo, int maxAmmo, int fireRate, int roundsPerMag)
-    {
-        super(range, ammo, maxAmmo, fireRate, roundsPerMag);
-    }
+   public Gun(int range, int ammo, int maxAmmo, int fireRate, int roundsPerMag)
+   {
+      super(range, ammo, maxAmmo, fireRate, roundsPerMag);
+   }
 
-    public int getDamage()
-    {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
+   public int getDamage()
+   {
+      throw new UnsupportedOperationException("Not supported yet.");
+   }
 }

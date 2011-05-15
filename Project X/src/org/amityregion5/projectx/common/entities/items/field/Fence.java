@@ -19,6 +19,11 @@
  */
 package org.amityregion5.projectx.common.entities.items.field;
 
+
+/**
+ * type of protection from enemy
+ * @author Mike DiBuduo
+ */
 public class Fence extends Block {
     public Fence(int health)
     {

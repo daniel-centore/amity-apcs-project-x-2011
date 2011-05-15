@@ -19,7 +19,7 @@
 package org.amityregion5.projectx.common.entities;
 
 /**
- * Constants used with Entity.
+ * Constants used for Entities.
  * 
  * @author Mike DiBuduo
  */
@@ -32,4 +32,5 @@ public class EntityConstants {
     public final int SOUTH_EAST = 135;
     public final int SOUTH_WEST = 225;
     public final int NORTH_WEST = 315;
+    public static final int MELEE_RANGE = 5; // default to 5 pixels range
 }

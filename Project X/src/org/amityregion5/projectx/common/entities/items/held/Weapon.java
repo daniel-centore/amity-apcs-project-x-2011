@@ -6,7 +6,9 @@
 package org.amityregion5.projectx.common.entities.items.held;
 
 /**
- * 
+ * Basic Weapon
+ * used to attack enemies
+ * the Weapon itself does not actually do damage
  * @author Joe Stein
  */
 public abstract class Weapon extends HeldItem {

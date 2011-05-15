@@ -15,21 +15,25 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  *
- * @author Mike DiBuduo
  */
 package org.amityregion5.projectx.common.entities.items.field;
 
-public abstract class Projectile extends FieldItem {
+/**
+ * A FieldItem that is fired(from PrjectileWeapon) into field at enemy
+ * @author Mike DiBuduo
+ */
+public abstract class Projectile extends FieldItem
+{
 
-    private int damage;
+   private int damage;
 
-    public Projectile(int dm)
-    {
-        damage = dm;
-    }
+   public Projectile(int dm)
+   {
+      damage = dm;
+   }
 
-    public int getDamage()
-    {
-        return damage;
-    }
+   public int getDamage()
+   {
+      return damage;
+   }
 }

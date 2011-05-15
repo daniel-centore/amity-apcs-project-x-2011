@@ -14,27 +14,31 @@
  * This code is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
- *
- * @author Mike DiBuduo
- */
+ **/
 package org.amityregion5.projectx.common.entities.items.field;
 
-public class Block extends FieldItem {
+/**
+ * the basic Block. Used to protect the base
+ * Has health which is drained by attacks from enemy
+ * @author Mike DiBuduo
+ */
+public class Block extends FieldItem
+{
 
-    private int hp;
+   private int hp;
 
-    public Block(int health)
-    {
-        hp = health;
-    }
+   public Block(int health)
+   {
+      hp = health;
+   }
 
-    public int getHp()
-    {
-        return hp;
-    }
+   public int getHp()
+   {
+      return hp;
+   }
 
-    public void setHp(int hp)
-    {
-        this.hp = hp;
-    }
+   public void setHp(int hp)
+   {
+      this.hp = hp;
+   }
 }
