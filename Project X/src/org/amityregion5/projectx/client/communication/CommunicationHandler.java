@@ -25,8 +25,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 import org.amityregion5.projectx.common.communication.Constants;
+import org.amityregion5.projectx.common.communication.MessageListener;
 import org.amityregion5.projectx.common.communication.messages.Message;
 
 /**
@@ -40,6 +42,8 @@ public class CommunicationHandler extends Thread {
     private String serverIP;
     private Socket socket = null;
     private boolean keepReading = true;
+    private ArrayList<MessageListener> listeners =
+            new ArrayList<MessageListener>();
 
     public CommunicationHandler(String serverIP)
     {
@@ -97,8 +101,20 @@ public class CommunicationHandler extends Thread {
 
     private void handle(Message m)
     {
-        // TODO handle messages here
-        // ie if (m instanceof EntityMovedMessage) { ... }
+        for (MessageListener mh : listeners)
+        {
+            mh.handle(m);
+        }
+    }
+
+    public void registerListener(MessageListener mh)
+    {
+        listeners.add(mh);
+    }
+
+    public void removeListener(MessageListener mh)
+    {
+        listeners.remove(mh);
     }
 
     public void send(Message m)

@@ -25,6 +25,6 @@ import org.amityregion5.projectx.common.communication.messages.Message;
  *
  * @author Joe Stein
  */
-public interface MessageHandler {
+public interface MessageListener {
     public void handle(Message m);
 }

@@ -38,4 +38,10 @@ public abstract class TextualMessage extends Message {
     {
         return text;
     }
+
+    @Override
+    public String toString()
+    {
+        return text;
+    }
 }

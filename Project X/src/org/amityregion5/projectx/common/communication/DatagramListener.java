@@ -2,8 +2,7 @@
  * Copyright (c) 2011 Amity AP CS A Students of 2010-2011.
  *
  * ex: set filetype=java expandtab tabstop=4 shiftwidth=4 :
- *
- * This program is free software: you can redistribute it and/or
+ * * This program is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of
  * the License, or (at your option) any later version.
@@ -19,14 +18,13 @@
  */
 package org.amityregion5.projectx.common.communication;
 
+import java.net.DatagramPacket;
+
 /**
- * Constants for use in communication.
- * 
- * @author Daniel Centore
- * @author Michael Zuo
+ * Class documentation.
+ *
+ * @author Joe Stein
  */
-public class Constants {
-    public static final int PORT = 27182;
-    public static final int UDPORT = 4567;
-    public static final String UDPGROUP = "230.0.0.1";
+public interface DatagramListener {
+    public void handle(DatagramPacket packet);
 }

@@ -20,8 +20,10 @@
 package org.amityregion5.projectx.client.gui;
 
 import java.net.Socket;
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
-import org.amityregion5.projectx.common.communication.MessageHandler;
+import javax.swing.SwingUtilities;
+import org.amityregion5.projectx.common.communication.MessageListener;
 import org.amityregion5.projectx.common.communication.messages.ChatMessage;
 import org.amityregion5.projectx.common.communication.messages.IntroduceMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
@@ -32,9 +34,10 @@ import org.amityregion5.projectx.common.communication.messages.Message;
  * @author Daniel Centore
  * @author Joe Stein
  */
-public class LobbyWindow extends JFrame implements MessageHandler {
+public class LobbyWindow extends JFrame implements MessageListener {
 
     private static final long serialVersionUID = 1L;
+    private DefaultListModel playerListModel;
     private Socket sock;
 
     /**
@@ -43,8 +46,10 @@ public class LobbyWindow extends JFrame implements MessageHandler {
      */
     public LobbyWindow(Socket sock)
     {
+        playerListModel = new DefaultListModel();
         this.sock = sock;
         initComponents();
+        playerList.setModel(playerListModel);
         this.setVisible(true);
     }
 
@@ -141,14 +146,32 @@ public class LobbyWindow extends JFrame implements MessageHandler {
     private javax.swing.JLabel statusLabel;
     // End of variables declaration//GEN-END:variables
 
-    public void handle(Message m)
+    public void handle(final Message m)
     {
         if (m instanceof ChatMessage)
         {
-            // TODO log the chat :P
+            ChatMessage cm = (ChatMessage) m;
+            final String toShow = cm.getFrom() + ": " + cm.getText();
+            SwingUtilities.invokeLater(new Runnable(){
+                public void run()
+                {
+                    chatLogArea.append(toShow + "\n");
+                    // automatically scroll down
+                    chatLogArea.setCaretPosition(
+                            chatLogArea.getDocument().getLength());
+                }
+            });
+            
         } else if (m instanceof IntroduceMessage)
         {
-            // TODO add the sender of the message to the playerlist
+            SwingUtilities.invokeLater(new Runnable(){
+                
+                public void run()
+                {
+                    playerListModel.addElement(((IntroduceMessage) m).getText());
+                }
+                
+            });
         }
     }
 }
