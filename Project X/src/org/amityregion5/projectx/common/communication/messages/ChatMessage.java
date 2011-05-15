@@ -27,6 +27,8 @@ import java.util.ArrayList;
  * @author Joe Stein
  */
 public class ChatMessage extends TextualMessage {
+    private static final long serialVersionUID = 1L;
+
     public enum Type
     {
         PUBLIC,

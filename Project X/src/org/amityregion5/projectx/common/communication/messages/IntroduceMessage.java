@@ -27,6 +27,7 @@ package org.amityregion5.projectx.common.communication.messages;
  * @author Joe Stein
  */
 public class IntroduceMessage extends TextualMessage {
+    private static final long serialVersionUID = 1L;
 
     public IntroduceMessage(String username)
     {

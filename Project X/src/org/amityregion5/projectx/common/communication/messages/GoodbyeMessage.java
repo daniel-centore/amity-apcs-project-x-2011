@@ -25,7 +25,8 @@ package org.amityregion5.projectx.common.communication.messages;
  * @author Joe Stein
  */
 public class GoodbyeMessage extends TextualMessage {
-    
+    private static final long serialVersionUID = 1L;
+
     public GoodbyeMessage(String username)
     {
         super(username);
