@@ -24,6 +24,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import org.amityregion5.projectx.common.communication.messages.BlockingMessage;
 import org.amityregion5.projectx.common.communication.messages.ChatMessage;
 import org.amityregion5.projectx.common.communication.messages.IntroduceMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
@@ -57,8 +58,7 @@ public class Client extends Thread {
     {
         try
         {
-            ObjectInputStream inObject = new ObjectInputStream(
-                    sock.getInputStream());
+            ObjectInputStream inObject = new ObjectInputStream(sock.getInputStream());
 
             boolean quit = false;
 
@@ -75,12 +75,10 @@ public class Client extends Thread {
             inObject.close();
             sock.close();
 
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             e.printStackTrace();
-        }
-        catch (ClassNotFoundException e)
+        } catch (ClassNotFoundException e)
         {
             e.printStackTrace();
         }
@@ -95,13 +93,11 @@ public class Client extends Thread {
     {
         try
         {
-            ObjectOutputStream outObjects = new ObjectOutputStream(
-                    sock.getOutputStream());
+            ObjectOutputStream outObjects = new ObjectOutputStream(sock.getOutputStream());
             outObjects.writeObject(m);
 
             outObjects.flush();
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             // This happens sometimes. I forget when though.
             e.printStackTrace();
@@ -110,26 +106,38 @@ public class Client extends Thread {
 
     private void processMessage(Message m)
     {
-        if (m instanceof TextualMessage)
+        if (m instanceof BlockingMessage)
         {
-            TextualMessage tm = (TextualMessage) m;
-            if (tm instanceof IntroduceMessage)
+            Message contained = ((BlockingMessage) m).getMessage();
+
+            if (contained instanceof IntroduceMessage)
             {
-                if (!server.hasClient(tm.getText()))
+                IntroduceMessage im = (IntroduceMessage) contained;
+
+                if (!server.hasClient(im.getText()))
                 {
-                    server.addClient(tm.getText(), this);
-                    send(new ReplyMessage(true));
+                    server.addClient(im.getText(), this);
+                    sendReply((BlockingMessage) m, new ReplyMessage(true));
                 } else
                 {
-                    send(new ReplyMessage(false));
+                    sendReply((BlockingMessage) m, new ReplyMessage(false));
                 }
-            } else if (tm instanceof ChatMessage)
+            }
+        } else if (m instanceof TextualMessage)
+        {
+            TextualMessage tm = (TextualMessage) m;
+            if (tm instanceof ChatMessage)
             {
                 server.relayChat((ChatMessage) tm);
             }
-            
+
         }
         // TODO message processing!! :P
+    }
+    
+    private void sendReply(BlockingMessage original, Message reply)
+    {
+        send(new BlockingMessage(original, reply));
     }
 
 }

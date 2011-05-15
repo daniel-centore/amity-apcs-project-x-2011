@@ -25,9 +25,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.amityregion5.projectx.common.communication.Constants;
 import org.amityregion5.projectx.common.communication.MessageListener;
+import org.amityregion5.projectx.common.communication.messages.BlockingMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
 
 /**
@@ -44,6 +46,7 @@ public class CommunicationHandler extends Thread {
     private Socket socket = null;
     private boolean keepReading = true;
     private ArrayList<MessageListener> listeners = new ArrayList<MessageListener>();
+    private volatile List<ReplyWaiting> replies = new ArrayList<ReplyWaiting>();
 
     public CommunicationHandler(String serverIP)
     {
@@ -111,6 +114,25 @@ public class CommunicationHandler extends Thread {
 
     private void handle(Message m)
     {
+        if (m instanceof BlockingMessage)
+        {
+            BlockingMessage q = (BlockingMessage) m;
+
+            for (ReplyWaiting bm : replies)
+            {
+                if (bm.message == q.getMessageNumber())
+                {
+                    bm.setReply(q.getMessage());
+                    synchronized (bm.thread)
+                    {
+                        bm.thread.notify();
+                    }
+                    return;
+                }
+            }
+
+            throw new RuntimeException("Got BlockingMessage that didn't need reply?");
+        }
         for (MessageListener mh : listeners)
         {
             mh.handle(m);
@@ -129,8 +151,6 @@ public class CommunicationHandler extends Thread {
 
     public void send(Message m)
     {
-        // TODO send a Message to the server.
-
         try
         {
             ObjectOutputStream outObjects = new ObjectOutputStream(socket.getOutputStream());
@@ -144,6 +164,33 @@ public class CommunicationHandler extends Thread {
         }
     }
 
+    public Message requestReply(Message m)
+    {
+        BlockingMessage bm = new BlockingMessage(m);
+
+        ReplyWaiting wait;
+        replies.add(wait = new ReplyWaiting(Thread.currentThread(), bm.getMessageNumber()));
+
+        send(bm);
+
+        synchronized (Thread.currentThread())
+        {
+            while (true)
+            {
+                try
+                {
+                    Thread.currentThread().wait();
+                } catch (InterruptedException e)
+                {
+                }
+
+                if (wait.getReply() != null)
+                    return wait.getReply();
+            }
+        }
+
+    }
+
     public String getServerIP()
     {
         return serverIP;
@@ -152,6 +199,35 @@ public class CommunicationHandler extends Thread {
     public Socket getSocket()
     {
         return socket;
+    }
+
+    private class ReplyWaiting {
+        private Thread thread;
+        private int message;
+        private Message reply;
+
+        /**
+         * Creates a marker that we are waiting for a reply
+         * 
+         * @param thread The Thread it is on
+         * @param message The number message to wait for
+         */
+        private ReplyWaiting(Thread thread, int message)
+        {
+            reply = null;
+            this.thread = thread;
+            this.message = message;
+        }
+
+        public Message getReply()
+        {
+            return reply;
+        }
+
+        public void setReply(Message reply)
+        {
+            this.reply = reply;
+        }
     }
 
 }

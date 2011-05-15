@@ -30,8 +30,10 @@ import javax.swing.SwingUtilities;
 
 import org.amityregion5.projectx.client.communication.CommunicationHandler;
 import org.amityregion5.projectx.client.communication.MulticastCommunicationHandler;
+import org.amityregion5.projectx.client.handlers.PreferenceHandler;
 import org.amityregion5.projectx.common.communication.DatagramListener;
 import org.amityregion5.projectx.common.communication.messages.IntroduceMessage;
+import org.amityregion5.projectx.common.communication.messages.ReplyMessage;
 
 /**
  * The window for choosing a server
@@ -80,11 +82,15 @@ public class ServerChooserWindow extends JFrame implements DatagramListener {
 
                 CommunicationHandler ch = new CommunicationHandler(server);
 
-                ServerChooserWindow.this.setVisible(false);
-
-                ch.send(new IntroduceMessage("USERNAME")); // TODO: add username handling
-
-                new LobbyWindow(ch.getSocket());
+                ReplyMessage reply = (ReplyMessage) ch.requestReply(new IntroduceMessage(PreferenceHandler.getUsername()));
+                if (!reply.isAffirmative())
+                {
+                    JOptionPane.showMessageDialog(null, "Username in use", "Error", JOptionPane.ERROR_MESSAGE);
+                } else
+                {
+                    ServerChooserWindow.this.setVisible(false);
+                    new LobbyWindow(ch.getSocket());
+                }
 
             }
 

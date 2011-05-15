@@ -17,29 +17,20 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
-package org.amityregion5.projectx.client.main;
+package org.amityregion5.projectx.client.handlers;
 
-import org.amityregion5.projectx.client.gui.ServerChooserWindow;
-import org.amityregion5.projectx.client.gui.SplashScreen;
+/**
+ * Handles user preferences
+ * 
+ * @author Daniel Centore
+ * 
+ */
+public class PreferenceHandler {
 
-public class Main {
-
-    public static final int SPLASH_TIME = 1000;
-
-    public static void main(String[] args)
+    // TODO: finish this
+    public static String getUsername()
     {
-        SplashScreen s = new SplashScreen();
-        try
-        {
-            Thread.sleep(SPLASH_TIME);
-        }
-        catch (InterruptedException e)
-        {
-        }
-
-        s.setVisible(false);
-
-        ServerChooserWindow.main(new String[0]);
+        return "USERNAME";
     }
 
 }
