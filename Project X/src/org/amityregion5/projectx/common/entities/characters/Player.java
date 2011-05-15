@@ -33,11 +33,6 @@ public class Player extends Character
 
    public Player(int health)
    {
-       super(MAX_HEALTH);
-   }
-
-   public Player(int health)
-   {
       super(health, MAX_HEALTH);
    }
 
