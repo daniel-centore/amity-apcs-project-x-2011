@@ -33,7 +33,6 @@ public class EntityMovedMessage extends Message {
     private static final long serialVersionUID = 1L;
 
     private Entity entity;
-    private Point2D oldLoc; // FIXME do we need the old loc, and if so, why?
     private Point2D newLoc;
 
     /**
@@ -46,7 +45,6 @@ public class EntityMovedMessage extends Message {
     public EntityMovedMessage(Entity entity, Point2D oldLoc, Point2D newLoc)
     {
         this.entity = entity;
-        this.oldLoc = oldLoc;
         this.newLoc = newLoc;
     }
 

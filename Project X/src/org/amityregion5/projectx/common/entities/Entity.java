@@ -32,6 +32,7 @@ public abstract class Entity {
     private static long NextUniqueID = 0;
 
     private final long uniqueID; // necessary to check identity content changes.
+
     private Point2D location;
     private BufferedImage image;
     private int directionFacing; // Constants in EntityConstants
@@ -173,5 +174,16 @@ public abstract class Entity {
     public void setMoveSpeed(double moveSpeed)
     {
         this.moveSpeed = moveSpeed;
+    }
+
+    /**
+     * Checks if two Entities are the same using uniquely-assigned ids.
+     *
+     * @param e The other Entity.
+     * @return The equivalence of the two Entities' ids.
+     */
+    public boolean equals(Entity e)
+    {
+        return this.uniqueID == e.uniqueID;
     }
 }

@@ -64,7 +64,4 @@ public class ChatMessage extends TextualMessage {
     {
         return type;
     }
-
-
-    
 }

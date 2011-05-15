@@ -28,6 +28,4 @@ package org.amityregion5.projectx.common.communication.messages;
  */
 public class PingMessage extends Message {
     private static final long serialVersionUID = 1L;
-
-    // information is implicit in type.
 }
