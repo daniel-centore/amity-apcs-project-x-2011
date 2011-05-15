@@ -18,11 +18,41 @@
  */
 package org.amityregion5.projectx.client.gui;
 
+import java.awt.Graphics2D;
+import java.awt.Image;
+import org.amityregion5.projectx.common.entities.Entity;
+import org.amityregion5.projectx.common.maps.AbstractMap;
+
 /**
  * Class documentation.
  *
  * @author wenke
  */
 public class RepaintHandler extends Thread{
+   /**
+    * Returns a flat image of the map with all the entities painted on it.
+    *
+    * @return a flat image of the map with its entities
+    */
+   private Image getMapFlatImage()
+   {
+      Image img = Gui.createImage();
+      Graphics2D g = (Graphics2D) img.getGraphics();
+
+      AbstractMap map = Gui.getMap();
+      Image k = map.getBackground();
+
+      if (k != null)
+      {
+         g.drawImage(k, 0, 0, null);
+      }
+
+      for (Entity e : map.getEntities())
+      {
+         g.drawImage(e.getImage(), e.getX(), e.getY(), null);
+      }
+
+      return img;
+   }
 
 }
