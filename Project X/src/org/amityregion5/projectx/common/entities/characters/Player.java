@@ -21,15 +21,19 @@ package org.amityregion5.projectx.common.entities.characters;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
 
 /**
- * Character controlled by a Player which fights Enemies.
+ * Character controlled by a Client which fights Enemies.
  * Capable of using multiple weapons.
  * 
  * @author Mike DiBuduo
  */
 public class Player extends Character
 {
-
    private static final int MAX_HEALTH = 100; // Player's health should be 100
+
+   public Player()
+   {
+       this(MAX_HEALTH);
+   }
 
    public Player(int health)
    {
