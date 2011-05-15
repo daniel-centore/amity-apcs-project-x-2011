@@ -2,8 +2,7 @@
  * Copyright (c) 2011 Amity AP CS A Students of 2010-2011.
  *
  * ex: set filetype=java expandtab tabstop=4 shiftwidth=4 :
- *
- * This program is free software: you can redistribute it and/or
+ * * This program is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of
  * the License, or (at your option) any later version.
@@ -17,29 +16,24 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
-package org.amityregion5.projectx.client.main;
+package org.amityregion5.projectx.common.communication.messages;
 
-import org.amityregion5.projectx.client.gui.ServerChooserWindow;
-import org.amityregion5.projectx.client.gui.SplashScreen;
+/**
+ * A message for the server to send as a response to a client.
+ * Only contains a boolean.
+ *
+ * @author Joe Stein
+ */
+public class ReplyMessage extends Message {
+    private boolean reply;
 
-public class Main {
-
-    public static final int SPLASH_TIME = 2000;
-
-    public static void main(String[] args)
+    public ReplyMessage(boolean r)
     {
-        SplashScreen s = new SplashScreen();
-        try
-        {
-            Thread.sleep(SPLASH_TIME);
-        }
-        catch (InterruptedException e)
-        {
-        }
-
-        s.setVisible(false);
-
-        new ServerChooserWindow().setVisible(true);
+        reply = r;
     }
 
+    public boolean isAffirmative()
+    {
+        return reply;
+    }
 }

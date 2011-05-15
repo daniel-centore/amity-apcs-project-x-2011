@@ -27,6 +27,7 @@ import org.amityregion5.projectx.common.communication.messages.ChatMessage;
 import org.amityregion5.projectx.common.communication.messages.IntroduceMessage;
 
 import org.amityregion5.projectx.common.communication.messages.Message;
+import org.amityregion5.projectx.common.communication.messages.ReplyMessage;
 import org.amityregion5.projectx.common.communication.messages.TextualMessage;
 
 /**
@@ -116,6 +117,10 @@ public class Client extends Thread {
                 if (!server.hasClient(tm.getText()))
                 {
                     server.addClient(tm.getText(), this);
+                    send(new ReplyMessage(true));
+                } else
+                {
+                    send(new ReplyMessage(false));
                 }
             } else if (tm instanceof ChatMessage)
             {

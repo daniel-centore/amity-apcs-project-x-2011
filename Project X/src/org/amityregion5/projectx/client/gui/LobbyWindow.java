@@ -17,15 +17,14 @@
  * by the Free Software Foundation.
  */
 
-/*
- * LobbyWindow.java
- *
- * Created on May 11, 2011, 5:04:30 PM
- */
-
 package org.amityregion5.projectx.client.gui;
 
+import java.net.Socket;
 import javax.swing.JFrame;
+import org.amityregion5.projectx.common.communication.MessageHandler;
+import org.amityregion5.projectx.common.communication.messages.ChatMessage;
+import org.amityregion5.projectx.common.communication.messages.IntroduceMessage;
+import org.amityregion5.projectx.common.communication.messages.Message;
 
 /**
  * The game lobby
@@ -33,16 +32,20 @@ import javax.swing.JFrame;
  * @author Daniel Centore
  * @author Joe Stein
  */
-public class LobbyWindow extends JFrame {
+public class LobbyWindow extends JFrame implements MessageHandler {
 
     private static final long serialVersionUID = 1L;
+    private Socket sock;
 
     /**
-     * Creates a new LobbyWindow
+     * Creates a new LobbyWindow.
+     * @param sock the socket that was connected to the server after choosing
      */
-    public LobbyWindow()
+    public LobbyWindow(Socket sock)
     {
+        this.sock = sock;
         initComponents();
+        this.setVisible(true);
     }
 
     /**
@@ -126,17 +129,6 @@ public class LobbyWindow extends JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-    * @param args the command line arguments
-    */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new LobbyWindow().setVisible(true);
-            }
-        });
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField chatField;
     private javax.swing.JTextArea chatLogArea;
@@ -149,4 +141,14 @@ public class LobbyWindow extends JFrame {
     private javax.swing.JLabel statusLabel;
     // End of variables declaration//GEN-END:variables
 
+    public void handle(Message m)
+    {
+        if (m instanceof ChatMessage)
+        {
+            // TODO log the chat :P
+        } else if (m instanceof IntroduceMessage)
+        {
+            // TODO add the sender of the message to the playerlist
+        }
+    }
 }
