@@ -19,6 +19,7 @@
  */
 package org.amityregion5.projectx.common.entities;
 
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
 /**
@@ -28,9 +29,10 @@ import java.awt.image.BufferedImage;
  * @author Joe Stein
  */
 public abstract class Entity {
+    private static long NextUniqueID = 0;
 
-    private double x;
-    private double y;
+    private final long uniqueID; //necessary to check identity content changes.
+    private Point2D location;
     private BufferedImage image;
     private int directionFacing; //Constants in EntityConstants
     private int directionMoving;
@@ -41,8 +43,8 @@ public abstract class Entity {
      */
     public Entity()
     {
-        x = 0;
-        y = 0;
+        uniqueID = NextUniqueID++;
+        location = new Point2D.Double(0,0);
         image = null;
         directionFacing = 0;
         directionMoving = 0;
@@ -52,17 +54,15 @@ public abstract class Entity {
     /**
      * Creates a new entity
      * 
-     * @param image Image for it to use
-     * @param x X coordinate
-     * @param y Y coordinate
+     * @param image Image to represent it.
+     * @param location Location to occupy.
      */
-    public Entity(BufferedImage image, int x, int y)
+    public Entity(BufferedImage image, Point2D location)
     {
         this();
 
         this.image = image;
-        this.x = x;
-        this.y = y;
+        this.location = location;
     }
 
     /**
@@ -70,7 +70,7 @@ public abstract class Entity {
      */
     public int getX()
     {
-        return (int) x;
+        return (int) location.getX();
     }
 
     /**
@@ -79,7 +79,7 @@ public abstract class Entity {
      */
     public void setX(int x)
     {
-        this.x = x;
+        location.setLocation(x, location.getY());
     }
 
     /**
@@ -87,7 +87,7 @@ public abstract class Entity {
      */
     public int getY()
     {
-        return (int) y;
+        return (int) location.getY();
     }
 
     /**
@@ -96,7 +96,7 @@ public abstract class Entity {
      */
     public void setY(int y)
     {
-        this.y = y;
+        location.setLocation(location.getX(), y);
     }
 
     /**

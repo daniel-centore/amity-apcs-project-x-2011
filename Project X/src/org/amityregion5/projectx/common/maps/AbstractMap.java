@@ -2,7 +2,8 @@
  * Copyright (c) 2011 Amity AP CS A Students of 2010-2011.
  *
  * ex: set filetype=java expandtab tabstop=4 shiftwidth=4 :
- * * This program is free software: you can redistribute it and/or
+ *
+ * This program is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of
  * the License, or (at your option) any later version.
@@ -77,11 +78,12 @@ public abstract class AbstractMap {
         Image img = Gui.createImage();
         Graphics2D g = (Graphics2D) img.getGraphics();
         
-        Image k;
-        if((k = getBackground()) != null)
+        Image k = getBackground();
+
+        if (k != null)
             g.drawImage(k, 0, 0, null);
         
-        for(Entity e : entities)
+        for (Entity e : entities)
         {
             g.drawImage(e.getImage(), e.getX(), e.getY(), null);
         }

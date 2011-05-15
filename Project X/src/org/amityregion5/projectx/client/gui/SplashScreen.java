@@ -21,7 +21,6 @@ package org.amityregion5.projectx.client.gui;
 
 import javax.swing.JFrame;
 
-
 /**
  * SplashScreen.java
  * Created on May 11, 2011, 11:02:11 AM

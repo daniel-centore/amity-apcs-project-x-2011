@@ -20,6 +20,7 @@
 package org.amityregion5.projectx.common.entities.characters;
 
 import java.util.ArrayList;
+
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
 

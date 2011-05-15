@@ -19,10 +19,12 @@
  */
 package org.amityregion5.projectx.common.communication.messages;
 
+import java.awt.geom.Point2D;
+
 import org.amityregion5.projectx.common.entities.Entity;
 
 /**
- * Notes that an entity has moved.
+ * Notes that a change in the positions of entities has occured.
  *
  * @author Michael Zuo <sreservoir@gmail.com>
  */
@@ -30,15 +32,29 @@ public class EntityMovedMessage extends Message
 {
     private static final long serialVersionUID = 1L;
 
+    private Entity entity;
+    private Point2D oldLoc;
+    private Point2D newLoc;
+
     /**
      * Create meaningless message.
      */
     public EntityMovedMessage() {
+        this.entity = null;
+        this.oldLoc = null;
+        this.newLoc = null;
     }
     /**
-     * Create message which notes only locations.
+     * Note that an entity has moved elsewhere.
      *
-     * FIXME: not implementable without mantissa of Entity location.
+     *
+     * @param entity The entity in question.
+     * @param oldLoc The entity's old location. null indicates creation.
+     * @param newLoc The entity's new location. null indicates destruction.
      */
-    //public EntityMovedMessage(?? point information) { }
+    public EntityMovedMessage(Entity entity,Point2D oldLoc,Point2D newLoc) {
+        this.entity = entity;
+        this.oldLoc = oldLoc;
+        this.newLoc = newLoc;
+    }
 }
