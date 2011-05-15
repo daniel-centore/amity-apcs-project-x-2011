@@ -16,18 +16,26 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
-package org.amityregion5.projectx.server;
+package org.amityregion5.projectx.common.communication.messages;
 
 /**
- * Server-side program entry point
- * 
- * @author Jenny Liu
+ * A Message that contains text.
+ * @see ChatMessage
+ * @see IntroduceMessage
+ * @see AnnounceMessage
+ *
  * @author Joe Stein
  */
-public class Main {
+public abstract class TextualMessage extends Message {
+    private String text;
 
-    public static void main(String[] args)
+    public TextualMessage(String text)
     {
-        new Server();
+        this.text = text;
+    }
+
+    public String getText()
+    {
+        return text;
     }
 }

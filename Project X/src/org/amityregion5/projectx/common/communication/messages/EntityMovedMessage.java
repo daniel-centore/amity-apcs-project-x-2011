@@ -27,23 +27,14 @@ import org.amityregion5.projectx.common.entities.Entity;
  * Notes that a change in the positions of entities has occured.
  * 
  * @author Michael Zuo <sreservoir@gmail.com>
+ * @author Joe Stein
  */
 public class EntityMovedMessage extends Message {
     private static final long serialVersionUID = 1L;
 
     private Entity entity;
-    private Point2D oldLoc;
+    private Point2D oldLoc; // FIXME do we need the old loc, and if so, why?
     private Point2D newLoc;
-
-    /**
-     * Create meaningless message.
-     */
-    public EntityMovedMessage()
-    {
-        this.entity = null;
-        this.oldLoc = null;
-        this.newLoc = null;
-    }
 
     /**
      * Note that an entity has moved elsewhere.
@@ -57,5 +48,15 @@ public class EntityMovedMessage extends Message {
         this.entity = entity;
         this.oldLoc = oldLoc;
         this.newLoc = newLoc;
+    }
+
+    public Point2D getNewLoc()
+    {
+        return newLoc;
+    }
+
+    public Entity getEntity()
+    {
+        return entity;
     }
 }

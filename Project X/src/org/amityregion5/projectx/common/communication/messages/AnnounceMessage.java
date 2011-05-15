@@ -16,18 +16,19 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
-package org.amityregion5.projectx.server;
+package org.amityregion5.projectx.common.communication.messages;
 
 /**
- * Server-side program entry point
- * 
- * @author Jenny Liu
+ * One-way text announcement message that comes from the server.
+ * (Maybe show up at the top of the screen if chats are at the bottom?)
+ * (Different format than chat messages?)
+ *
  * @author Joe Stein
  */
-public class Main {
+public class AnnounceMessage extends TextualMessage {
 
-    public static void main(String[] args)
+    public AnnounceMessage(String announcement)
     {
-        new Server();
+        super(announcement);
     }
 }

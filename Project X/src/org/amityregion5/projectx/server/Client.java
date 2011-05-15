@@ -23,17 +23,22 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import org.amityregion5.projectx.common.communication.messages.ChatMessage;
+import org.amityregion5.projectx.common.communication.messages.IntroduceMessage;
 
 import org.amityregion5.projectx.common.communication.messages.Message;
+import org.amityregion5.projectx.common.communication.messages.TextualMessage;
 
 /**
  * Represents a client in the game
  * 
  * @author Daniel Centore
+ * @author Joe Stein
  */
 public class Client extends Thread {
 
-    private Socket sock; // server socket
+    private Socket sock; // socket
+    private Server server; // the server to which this Client belongs
 
     /**
      * Creates a client
@@ -45,6 +50,7 @@ public class Client extends Thread {
         this.sock = sock;
     }
 
+    @Override
     public void run()
     {
         try
@@ -57,7 +63,10 @@ public class Client extends Thread {
             while (!quit)
             {
                 Message m = (Message) inObject.readObject();
-
+                this.processMessage(m);
+                // FIXME we may want to consider starting another thread for
+                // message processing, especially if we're gonna be having
+                // like 30 messages coming in per second
                 // ie if (m instanceof EntityMovedMessage) { ... }
             }
 
@@ -95,6 +104,26 @@ public class Client extends Thread {
             // This happens sometimes. I forget when though.
             e.printStackTrace();
         }
+    }
+
+    private void processMessage(Message m)
+    {
+        if (m instanceof TextualMessage)
+        {
+            TextualMessage tm = (TextualMessage) m;
+            if (tm instanceof IntroduceMessage)
+            {
+                if (!server.hasClient(tm.getText()))
+                {
+                    server.addClient(tm.getText(), this);
+                }
+            } else if (tm instanceof ChatMessage)
+            {
+                server.relayChat((ChatMessage) tm);
+            }
+            
+        }
+        // TODO message processing!! :P
     }
 
 }

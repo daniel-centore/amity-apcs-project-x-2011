@@ -21,36 +21,103 @@ package org.amityregion5.projectx.server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.util.HashMap;
 
 import org.amityregion5.projectx.common.communication.Constants;
+import org.amityregion5.projectx.common.communication.messages.AnnounceMessage;
+import org.amityregion5.projectx.common.communication.messages.ChatMessage;
 
 /**
  * Accepts incoming connections and makes Clients for them
  * 
  * @author Daniel Centore
+ * @author Joe Stein
  */
 public class Server {
 
-    public static void main(String[] args) throws IOException
-    {
-        ServerSocket serverSocket = null;
-        boolean listening = true;
+    private boolean listening = true;
+    private ServerSocket servSock;
 
+    /*
+     * A HashMap of the connected Clients to this Server.
+     * Will not include clients until they have sent an IntroduceMessage
+     * see Client
+     */
+    private HashMap<String, Client> clients = new HashMap<String, Client>();
+
+    public void addClient(String username, Client c)
+    {
+        clients.put(username, c);
+    }
+
+    public Server()
+    {
         try
         {
-            serverSocket = new ServerSocket(Constants.PORT);
+            servSock = new ServerSocket(Constants.PORT);
         }
-        catch (IOException e)
+        catch(IOException e)
         {
             // usually means a server is already running
             e.printStackTrace();
             System.exit(-1);
         }
 
-        while (listening)
-            new Client(serverSocket.accept()).start();
-
-        serverSocket.close();
+        startListening();
     }
 
+    private void startListening()
+    {
+        new Thread(new ClientNetListener()).start();
+    }
+
+    protected void kill()
+    {
+        listening = false;
+        for (Client client : clients.values())
+        {
+            client.send(new AnnounceMessage("Server shutting down!"));
+        }
+    }
+
+    public boolean hasClient(String text)
+    {
+        return clients.containsKey(text);
+    }
+
+    private class ClientNetListener implements Runnable {
+
+        public void run()
+        {
+            try
+            {
+                while(listening)
+                {
+                    new Client(servSock.accept()).start();
+                }
+            }
+            catch(IOException e)
+            {
+                listening = false;
+            }
+        }
+    }
+
+    public void setListening(boolean listening)
+    {
+        this.listening = listening;
+    }
+
+    public boolean isListening()
+    {
+        return listening;
+    }
+
+    public void relayChat(ChatMessage m)
+    {
+        for (Client client : clients.values())
+        {
+            client.send(m);
+        }
+    }
 }

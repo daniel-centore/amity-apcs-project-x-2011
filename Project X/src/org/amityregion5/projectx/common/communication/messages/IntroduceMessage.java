@@ -16,18 +16,19 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
-package org.amityregion5.projectx.server;
+package org.amityregion5.projectx.common.communication.messages;
 
 /**
- * Server-side program entry point
- * 
- * @author Jenny Liu
+ * Message sent with player information (e.g. username). Should be sent  by
+ * client first thing after a socket is opened so the Server can add the Client
+ * to its HashMap of Clients.
+ *
  * @author Joe Stein
  */
-public class Main {
+public class IntroduceMessage extends TextualMessage {
 
-    public static void main(String[] args)
+    public IntroduceMessage(String username)
     {
-        new Server();
+        super(username);
     }
 }

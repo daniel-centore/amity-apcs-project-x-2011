@@ -28,6 +28,7 @@ import java.io.Serializable;
  * @author Joe Stein
  * @author Michael Zuo
  */
-public abstract class Message implements Serializable {
+public abstract class Message<T> implements Serializable {
     private static final long serialVersionUID = 1L;
+
 }
