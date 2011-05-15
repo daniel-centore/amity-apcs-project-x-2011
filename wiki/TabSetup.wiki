@@ -2,7 +2,7 @@
 
 =Tab Setup=
 ==!NetBeans==
-  * http://code.google.com/p/amity-apcs-project-x-2011/downloads/detail?name=NetBeansFormatting.zip&can=2&q=#makechanges
+  * http://code.google.com/p/amity-apcs-project-x-2011/downloads/detail?name=NetBeansFormatting.zip
   * Tools>Options>Import>select the zip file.
   * Tools>Templates>Java>Java class>Open in editor
   * Update it to the following:

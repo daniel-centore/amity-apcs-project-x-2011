@@ -28,7 +28,6 @@ import org.amityregion5.projectx.common.communication.Constants;
  * Accepts incoming connections and makes Clients for them
  * 
  * @author Daniel Centore
- * 
  */
 public class Server {
 
