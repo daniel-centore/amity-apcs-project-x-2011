@@ -18,8 +18,9 @@
 package org.amityregion5.projectx.common.entities.items.field;
 
 /**
- * the basic Block. Used to protect the base
- * Has health which is drained by attacks from enemy
+ * The basic Block. Used to protect prevent direct attack or movement.
+ * Has health which is drained by attacks.
+ *
  * @author Mike DiBuduo
  */
 public class Block extends FieldItem

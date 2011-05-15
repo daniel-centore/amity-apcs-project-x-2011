@@ -22,7 +22,6 @@ import org.amityregion5.projectx.common.entities.items.held.Weapon;
 
 /**
  * Character that attacks player
- * has a single Weapon that it uses
  * 
  * @author Mike DiBuduo
  */

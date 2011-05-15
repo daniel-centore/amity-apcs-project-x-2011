@@ -19,7 +19,8 @@
 package org.amityregion5.projectx.common.entities.items.field;
 
 /**
- * A FieldItem that is fired(from PrjectileWeapon) into field at enemy
+ * A FieldItem that is fired from a ProjectileWeapon onto the map
+ *
  * @author Mike DiBuduo
  */
 public abstract class Projectile extends FieldItem

@@ -19,9 +19,9 @@
  */
 package org.amityregion5.projectx.common.entities.items.field;
 
-
 /**
- * type of protection from enemy
+ * Lesser wall-style protection
+ *
  * @author Mike DiBuduo
  */
 public class Fence extends Block {

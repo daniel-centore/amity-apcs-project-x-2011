@@ -20,7 +20,7 @@ package org.amityregion5.projectx.common.entities.items.held;
 
 /**
  * An item which releases ammo when used.
- * Fires Projectiles at enemies
+ * Generates Projectiles.
  * 
  * @author Mike DiBuduo
  * @author Joe Stein

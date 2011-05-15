@@ -20,8 +20,8 @@
 package org.amityregion5.projectx.common.entities.items.field;
 
 /**
- * Main fort wall
- * used as preliminary defense against enemies
+ * Main fortress wall
+ *
  * @author Mike DiBuduo
  */
 public class Wall extends Block {
