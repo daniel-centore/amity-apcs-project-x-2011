@@ -10,6 +10,7 @@
  */
 package org.amityregion5.projectx.client.gui;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
@@ -22,14 +23,17 @@ import javax.swing.SwingUtilities;
 public class ServerChooserWindow extends JFrame {
 
     private static final long serialVersionUID = 1L;
+    private DefaultListModel dlm = new DefaultListModel();
 
     /**
      * Creates new form ServerChooserWindow
      */
     public ServerChooserWindow()
     {
-        this.setVisible(true);
         initComponents();
+        dlm.addElement("Manual/Internet...");
+        serverList.setModel(dlm);
+        this.setVisible(true);
     }
 
     /** This method is called from within the constructor to
