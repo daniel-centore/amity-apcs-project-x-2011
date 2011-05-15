@@ -19,6 +19,7 @@
  */
 package org.amityregion5.projectx.client.main;
 
+import org.amityregion5.projectx.client.communication.MulticastCommunicationHandler;
 import org.amityregion5.projectx.client.gui.ServerChooserWindow;
 import org.amityregion5.projectx.client.gui.SplashScreen;
 
@@ -28,18 +29,22 @@ public class Main {
 
     public static void main(String[] args)
     {
+        final ServerChooserWindow chooser = new ServerChooserWindow();
+
+        MulticastCommunicationHandler mch = new MulticastCommunicationHandler();
+        mch.registerListener(chooser);
+        mch.start();
+
         SplashScreen s = new SplashScreen();
         try
         {
             Thread.sleep(SPLASH_TIME);
-        }
-        catch (InterruptedException e)
+        } catch (InterruptedException e)
         {
         }
 
         s.setVisible(false);
-
-        ServerChooserWindow.main(new String[0]);
+        chooser.setVisible(true);
     }
 
 }

@@ -51,9 +51,7 @@ public class ServerChooserWindow extends JFrame implements DatagramListener {
      */
     public ServerChooserWindow()
     {
-        MulticastCommunicationHandler mch = new MulticastCommunicationHandler();
-        mch.registerListener(this);
-        mch.start();
+
 
         initComponents();
         dlm.addElement("Manual/Internet...");
@@ -85,7 +83,7 @@ public class ServerChooserWindow extends JFrame implements DatagramListener {
                 ReplyMessage reply = (ReplyMessage) ch.requestReply(new IntroduceMessage(PreferenceHandler.getUsername()));
                 if (!reply.isAffirmative())
                 {
-                    JOptionPane.showMessageDialog(null, "Username in use", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Username in use!", "Error", JOptionPane.ERROR_MESSAGE);
                 } else
                 {
                     ServerChooserWindow.this.setVisible(false);
@@ -96,7 +94,6 @@ public class ServerChooserWindow extends JFrame implements DatagramListener {
 
         });
 
-        this.setVisible(true);
     }
 
     /**
@@ -175,19 +172,19 @@ public class ServerChooserWindow extends JFrame implements DatagramListener {
 
     }// GEN-LAST:event_serverListValueChanged
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[])
-    {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run()
-            {
-                new ServerChooserWindow().setVisible(true);
-            }
-        });
-    }
+//    /**
+//     * @param args the command line arguments
+//     */
+//    public static void main(String args[])
+//    {
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//
+//            public void run()
+//            {
+//                new ServerChooserWindow().setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
