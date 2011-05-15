@@ -48,43 +48,18 @@ public class CommunicationHandler extends Thread {
     private ArrayList<MessageListener> listeners = new ArrayList<MessageListener>();
     private volatile List<ReplyWaiting> replies = new ArrayList<ReplyWaiting>();
 
-    public CommunicationHandler(String serverIP)
+    public CommunicationHandler(String serverIP) throws IOException
     {
         this.serverIP = serverIP;
+
+        socket = new Socket(serverIP, Constants.PORT);
+
         this.start();
-
-        int i = 0;
-        while (socket == null)
-        {
-            if (i >= TIMEOUT_SECS)
-            {
-                System.out.println("Server timeout [" + TIMEOUT_SECS + " secs] exceeded! Terminating...");
-                System.exit(1);
-            }
-
-            i++;
-
-            try
-            {
-                Thread.sleep(1000);
-            } catch (InterruptedException e)
-            {
-            }
-        }
     }
 
     @Override
     public void run()
     {
-        try
-        {
-            socket = new Socket(serverIP, Constants.PORT);
-        } catch (IOException e)
-        {
-            e.printStackTrace();
-            System.exit(1);
-        }
-
         try
         {
             ObjectInputStream input = new ObjectInputStream(socket.getInputStream());

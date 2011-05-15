@@ -19,9 +19,14 @@
  */
 package org.amityregion5.projectx.client.gui;
 
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.ConnectException;
 import java.net.DatagramPacket;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
@@ -29,7 +34,6 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import org.amityregion5.projectx.client.communication.CommunicationHandler;
-import org.amityregion5.projectx.client.communication.MulticastCommunicationHandler;
 import org.amityregion5.projectx.client.handlers.PreferenceHandler;
 import org.amityregion5.projectx.common.communication.DatagramListener;
 import org.amityregion5.projectx.common.communication.messages.IntroduceMessage;
@@ -52,7 +56,6 @@ public class ServerChooserWindow extends JFrame implements DatagramListener {
     public ServerChooserWindow()
     {
 
-
         initComponents();
         dlm.addElement("Manual/Internet...");
         dlm.addElement("127.0.0.1");
@@ -71,14 +74,36 @@ public class ServerChooserWindow extends JFrame implements DatagramListener {
                 if (selected == 0) // manual/internet
                 {
                     server = JOptionPane.showInputDialog(ServerChooserWindow.this, "Input server IP", "Server Input", JOptionPane.PLAIN_MESSAGE);
-                    // TODO: verify the server here before continuing
                 } else
                 {
                     Object o = serverList.getModel().getElementAt(selected);
                     server = (String) o;
                 }
 
-                CommunicationHandler ch = new CommunicationHandler(server);
+                try
+                {
+                    if (!InetAddress.getByName(server).isReachable(2000))
+                    {
+                        JOptionPane.showMessageDialog(null, "Unavailable Server!", "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                } catch (HeadlessException e)
+                {
+                } catch (UnknownHostException e)
+                {
+                } catch (IOException e)
+                {
+                }
+
+                CommunicationHandler ch = null;
+                try
+                {
+                    ch = new CommunicationHandler(server);
+                } catch (IOException e)
+                {
+                    JOptionPane.showMessageDialog(null, "Connection Refused!", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
 
                 ReplyMessage reply = (ReplyMessage) ch.requestReply(new IntroduceMessage(PreferenceHandler.getUsername()));
                 if (!reply.isAffirmative())
@@ -172,19 +197,19 @@ public class ServerChooserWindow extends JFrame implements DatagramListener {
 
     }// GEN-LAST:event_serverListValueChanged
 
-//    /**
-//     * @param args the command line arguments
-//     */
-//    public static void main(String args[])
-//    {
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//
-//            public void run()
-//            {
-//                new ServerChooserWindow().setVisible(true);
-//            }
-//        });
-//    }
+    // /**
+    // * @param args the command line arguments
+    // */
+    // public static void main(String args[])
+    // {
+    // java.awt.EventQueue.invokeLater(new Runnable() {
+    //
+    // public void run()
+    // {
+    // new ServerChooserWindow().setVisible(true);
+    // }
+    // });
+    // }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
