@@ -24,7 +24,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import org.amityregion5.projectx.common.communication.Constants;
@@ -57,7 +56,7 @@ public class CommunicationHandler extends Thread {
             if (i >= TIMEOUT_SECS)
             {
                 System.out.println("Server timeout [" + TIMEOUT_SECS + " secs] exceeded! Terminating...");
-                System.exit(-1);
+                System.exit(1);
             }
 
             i++;
@@ -77,14 +76,10 @@ public class CommunicationHandler extends Thread {
         try
         {
             socket = new Socket(serverIP, Constants.PORT);
-        } catch (UnknownHostException e)
-        {
-            e.printStackTrace();
-            System.exit(-1);
         } catch (IOException e)
         {
             e.printStackTrace();
-            System.exit(-1);
+            System.exit(1);
         }
 
         try

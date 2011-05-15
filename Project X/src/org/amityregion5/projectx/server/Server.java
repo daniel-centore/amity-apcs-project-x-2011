@@ -68,7 +68,7 @@ public class Server {
         {
             // usually means a server is already running
             e.printStackTrace();
-            System.exit(-1);
+            System.exit(1);
         }
     }
 
