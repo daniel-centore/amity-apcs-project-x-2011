@@ -19,15 +19,10 @@
  */
 package org.amityregion5.projectx.client.gui;
 
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.awt.event.KeyEvent;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import org.amityregion5.projectx.client.communication.CommunicationHandler;
 import org.amityregion5.projectx.client.handlers.PreferenceManager;
@@ -58,8 +53,10 @@ public class LobbyWindow extends JFrame implements MessageListener {
     public LobbyWindow(CommunicationHandler ch)
     {
         this.ch = ch;
+        ch.registerListener(this);
         playerListModel = new DefaultListModel();
         initComponents();
+        playerListModel.addElement(PreferenceManager.getUsername());
         playerList.setModel(playerListModel);
         this.setVisible(true);
     }
@@ -86,6 +83,12 @@ public class LobbyWindow extends JFrame implements MessageListener {
         chatLogArea.setEditable(false);
         chatLogArea.setRows(5);
         jScrollPane1.setViewportView(chatLogArea);
+
+        chatField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                chatFieldKeyPressed(evt);
+            }
+        });
 
         jScrollPane2.setViewportView(playerList);
 
@@ -153,8 +156,48 @@ public class LobbyWindow extends JFrame implements MessageListener {
 
     private void sendBtnActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_sendBtnActionPerformed
     {//GEN-HEADEREND:event_sendBtnActionPerformed
-        chatField.getText();
+        sendChat();
+
     }//GEN-LAST:event_sendBtnActionPerformed
+
+    private void chatFieldKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_chatFieldKeyPressed
+    {//GEN-HEADEREND:event_chatFieldKeyPressed
+        int keycode = evt.getKeyCode();
+        if(keycode == KeyEvent.VK_ENTER)
+        {
+            if(chatField.getText().length() > 0)
+            {
+                sendChat();
+            }
+        }
+        else if(keycode == KeyEvent.VK_BACK_SPACE
+                && chatField.getText().length() <= 1)
+        {
+            if(sendBtn.isEnabled())
+            {
+                SwingUtilities.invokeLater(new Runnable() {
+
+                    public void run()
+                    {
+                        sendBtn.setEnabled(false);
+                    }
+                });
+            }
+        }
+        else
+        {
+            if(!sendBtn.isEnabled())
+            {
+                SwingUtilities.invokeLater(new Runnable() {
+
+                    public void run()
+                    {
+                        sendBtn.setEnabled(true);
+                    }
+                });
+            }
+        }
+    }//GEN-LAST:event_chatFieldKeyPressed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField chatField;
     private javax.swing.JTextArea chatLogArea;
@@ -169,6 +212,7 @@ public class LobbyWindow extends JFrame implements MessageListener {
 
     public void handle(final Message m)
     {
+        System.out.println(m.getClass());
         if(m instanceof ChatMessage)
         {
             ChatMessage cm = (ChatMessage) m;
@@ -212,5 +256,13 @@ public class LobbyWindow extends JFrame implements MessageListener {
         ChatMessage chm = new ChatMessage(chatField.getText(),
                 ChatMessage.Type.PUBLIC, PreferenceManager.getUsername());
         ch.send(chm);
+        SwingUtilities.invokeLater(new Runnable() {
+
+            public void run()
+            {
+                chatField.setText("");
+                sendBtn.setEnabled(false);
+            }
+        });
     }
 }
