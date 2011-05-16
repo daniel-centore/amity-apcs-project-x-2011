@@ -157,6 +157,7 @@ public class Client extends Thread {
                     username = im.getText();
                     server.addClient(username, this);
                     sendReply((BlockingMessage) m, new BooleanReplyMessage(true));
+                    server.relayMessage(im);
                 }
                 else
                 {
@@ -167,7 +168,7 @@ public class Client extends Thread {
         else if(m instanceof TextualMessage)
         {
             TextualMessage tm = (TextualMessage) m;
-            if(tm instanceof ChatMessage || tm instanceof IntroduceMessage)
+            if(tm instanceof ChatMessage)
             {
                 server.relayMessage(tm);
             }

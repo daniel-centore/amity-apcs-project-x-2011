@@ -232,6 +232,7 @@ public class LobbyWindow extends JFrame implements MessageListener
 
       } else if (m instanceof IntroduceMessage)
       {
+         System.out.println("user joined");
          SwingUtilities.invokeLater(new Runnable()
          {
 
@@ -247,7 +248,7 @@ public class LobbyWindow extends JFrame implements MessageListener
 
             public void run()
             {
-               playerListModel.removeElement(((IntroduceMessage) m).getText());
+               playerListModel.removeElement(((GoodbyeMessage) m).getText());
             }
          });
       } else if (m instanceof StatusUpdateMessage)
