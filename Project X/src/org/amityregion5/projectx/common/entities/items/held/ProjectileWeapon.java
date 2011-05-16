@@ -25,11 +25,13 @@ package org.amityregion5.projectx.common.entities.items.held;
  * 
  * @author Mike DiBuduo
  * @author Joe Stein
+ * @author Mike Wenke
  */
 public abstract class ProjectileWeapon extends Weapon {
     private int ammo;
     private int maxAmmo;
     private int roundsPerMag;
+    private int mags;
 
     public ProjectileWeapon(int range, int startAmmo, int _maxAmmo, int rate,
             int rpm)
@@ -59,4 +61,17 @@ public abstract class ProjectileWeapon extends Weapon {
     {
         return roundsPerMag;
     }
+    public int getMags()
+    {
+        return mags;
+    }
+
+    public void reload()
+    {
+        if(ammo == maxAmmo || mags == 0)
+            return;
+        ammo = roundsPerMag - ammo;
+        mags--;
+    }
+
 }
