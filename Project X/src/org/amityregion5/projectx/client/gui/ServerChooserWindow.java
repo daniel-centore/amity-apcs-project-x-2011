@@ -182,11 +182,15 @@ public class ServerChooserWindow extends JFrame implements DatagramListener {
         BooleanReplyMessage reply = (BooleanReplyMessage) ch.requestReply(new IntroduceMessage(PreferenceManager.getUsername()));
         if(!reply.isAffirmative())
         {
-            JOptionPane.showMessageDialog(null, "Username already in use", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Username already in use", "Error", JOptionPane.WARNING_MESSAGE);
+            int choice = JOptionPane.showConfirmDialog(this, "Do you want to change your username?", "Do you want to change?", JOptionPane.YES_NO_OPTION);
+            if (choice == JOptionPane.YES_OPTION)
+                new UsernameWindow(this, true, false);
         }
         else
         {
             ServerChooserWindow.this.setVisible(false);
+            ServerChooserWindow.this.dispose();
             new LobbyWindow(ch);
         }
     }//GEN-LAST:event_joinBtnActionPerformed

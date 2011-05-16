@@ -47,7 +47,7 @@ public abstract class ProjectileWeapon extends Weapon {
 
     public void addAmmo(int rounds)
     {
-        ammo += rounds;
+        ammo = (rounds + ammo > maxAmmo ? maxAmmo : rounds + ammo);
     }
 
     public int getMaxAmmo()
