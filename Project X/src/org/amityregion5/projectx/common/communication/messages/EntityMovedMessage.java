@@ -30,10 +30,11 @@ import org.amityregion5.projectx.common.entities.Entity;
  * @author Joe Stein
  */
 public class EntityMovedMessage extends Message {
+
     private static final long serialVersionUID = 1L;
 
-    private Entity entity;
-    private Point2D newLoc;
+    private Entity entity; // The entity that moved
+    private Point2D newLoc; // Where it moved to
 
     /**
      * Note that an entity has moved elsewhere.
@@ -48,11 +49,17 @@ public class EntityMovedMessage extends Message {
         this.newLoc = newLoc;
     }
 
+    /**
+     * @return Gets the new entity location
+     */
     public Point2D getNewLoc()
     {
         return newLoc;
     }
 
+    /**
+     * @return The entity that was changed
+     */
     public Entity getEntity()
     {
         return entity;

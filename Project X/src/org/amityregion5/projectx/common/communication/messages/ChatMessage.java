@@ -23,29 +23,48 @@ import java.util.ArrayList;
 
 /**
  * A chat message.
- *
+ * 
  * @author Joe Stein
+ * @author Daniel Centore
+ * 
  */
 public class ChatMessage extends TextualMessage {
+
     private static final long serialVersionUID = 1L;
 
+    /**
+     * The type of chat message this is
+     * 
+     * @author Joe Stein
+     */
     public enum Type
     {
-        PUBLIC,
-        TEAM,
-        PRIVATE;
+        PUBLIC, TEAM, PRIVATE;
     }
 
-    private String usernameFrom;
-    private ArrayList<String> destUsers = new ArrayList<String>();
+    private String usernameFrom; // who the message is from
+    private ArrayList<String> destUsers = new ArrayList<String>(); // the users to send it to
     private Type type; // type of message (see inner enum Type)
 
+    /**
+     * Creates a chat message
+     * 
+     * @param cont The message
+     * @param from Who it's from
+     */
     public ChatMessage(String cont, String from)
     {
         super(cont);
         usernameFrom = from;
     }
 
+    /**
+     * Creates a chat message
+     * 
+     * @param cont The messahe
+     * @param t The visibility (see enum type)
+     * @param from Who it's from
+     */
     public ChatMessage(String cont, Type t, String from)
     {
         super(cont);
@@ -53,16 +72,25 @@ public class ChatMessage extends TextualMessage {
         usernameFrom = from;
     }
 
+    /**
+     * @return The person it's from
+     */
     public String getFrom()
     {
         return usernameFrom;
     }
 
+    /**
+     * @return The users it's destined for
+     */
     public ArrayList<String> getDestUsers()
     {
         return destUsers;
     }
 
+    /**
+     * @return Type of message it is (see enum type)
+     */
     public Type getType()
     {
         return type;

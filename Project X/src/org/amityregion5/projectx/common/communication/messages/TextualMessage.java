@@ -21,20 +21,32 @@ package org.amityregion5.projectx.common.communication.messages;
 
 /**
  * A Message that contains text.
+ * 
  * @see ChatMessage
  * @see IntroduceMessage
  * @see AnnounceMessage
- *
+ * 
  * @author Joe Stein
+ * @author Daniel Centore
  */
 public abstract class TextualMessage extends Message {
-    private String text;
 
+    private static final long serialVersionUID = 1L;
+
+    private String text; // the text this message contains
+
+    /**
+     * Creates a textual message
+     * @param text The text it will contain
+     */
     public TextualMessage(String text)
     {
         this.text = text;
     }
 
+    /**
+     * @return The text of this message
+     */
     public String getText()
     {
         return text;

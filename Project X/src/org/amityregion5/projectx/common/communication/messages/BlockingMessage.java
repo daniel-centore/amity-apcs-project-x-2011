@@ -23,18 +23,19 @@ package org.amityregion5.projectx.common.communication.messages;
  * Acts as a container for Message with an ID, so we can receive replies
  * 
  * @author Daniel Centore
- *
+ * 
  */
 public class BlockingMessage extends Message {
-    
+
     private static final long serialVersionUID = 1L;
-    private static int currentMessage = 0;
-    
-    private int messageNumber;
-    private Message message;
-    
+    private static int currentMessage = 0; // the message id we're on
+
+    private int messageNumber; // this message's number
+    private Message message; // the message we are wrapping
+
     /**
      * Creates a BlockingMessage meant to be sent as a reply to original
+     * 
      * @param original
      * @param message
      */
@@ -43,23 +44,39 @@ public class BlockingMessage extends Message {
         messageNumber = original.getMessageNumber();
         this.message = message;
     }
-    
+
+    /**
+     * Creates an original BlockingMessage
+     * 
+     * @param message The message to wrap
+     */
     public BlockingMessage(Message message)
     {
         messageNumber = currentMessage++;
         this.message = message;
     }
 
+    /**
+     * @return The message number
+     */
     public int getMessageNumber()
     {
         return messageNumber;
     }
 
+    /**
+     * @return The message we are wrapping
+     */
     public Message getMessage()
     {
         return message;
     }
 
+    /**
+     * Sets the message to wrap
+     * 
+     * @param message The message
+     */
     public void setMessage(Message message)
     {
         this.message = message;

@@ -27,5 +27,7 @@ package org.amityregion5.projectx.common.communication.messages;
  * @author Michael Zuo <sreservoir@gmail.com>
  */
 public class PingMessage extends Message {
+    
     private static final long serialVersionUID = 1L;
+    
 }

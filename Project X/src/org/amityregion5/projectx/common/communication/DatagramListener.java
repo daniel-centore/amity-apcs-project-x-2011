@@ -21,10 +21,13 @@ package org.amityregion5.projectx.common.communication;
 import java.net.DatagramPacket;
 
 /**
- * Class documentation.
+ * Listens to incomming multicast stuff
  *
  * @author Joe Stein
+ * @author Daniel Centore
  */
 public interface DatagramListener {
+    
     public void handle(DatagramPacket packet);
+    
 }
