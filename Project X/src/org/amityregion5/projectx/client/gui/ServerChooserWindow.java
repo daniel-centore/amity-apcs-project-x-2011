@@ -187,7 +187,7 @@ public class ServerChooserWindow extends JFrame implements DatagramListener {
         else
         {
             ServerChooserWindow.this.setVisible(false);
-            new LobbyWindow(ch.getSocket());
+            new LobbyWindow(ch);
         }
     }//GEN-LAST:event_joinBtnActionPerformed
 

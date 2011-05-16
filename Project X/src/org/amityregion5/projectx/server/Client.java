@@ -86,6 +86,7 @@ public class Client extends Thread {
                         Client.this.processMessage(m);
                     }
                 }.start();
+
             }
 
             inObjects.close();

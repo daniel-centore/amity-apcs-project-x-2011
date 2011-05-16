@@ -17,7 +17,6 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
-
 package org.amityregion5.projectx.client.gui;
 
 import java.io.IOException;
@@ -30,6 +29,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import org.amityregion5.projectx.client.communication.CommunicationHandler;
 import org.amityregion5.projectx.client.handlers.PreferenceManager;
 
 import org.amityregion5.projectx.common.communication.MessageListener;
@@ -49,25 +49,16 @@ public class LobbyWindow extends JFrame implements MessageListener {
 
     private static final long serialVersionUID = 1L;
     private DefaultListModel playerListModel;
-    private Socket sock;
-    private ObjectOutputStream oos;
+    private CommunicationHandler ch;
 
     /**
      * Creates a new LobbyWindow.
      * @param sock the socket that was connected to the server after choosing
      */
-    public LobbyWindow(Socket sock)
+    public LobbyWindow(CommunicationHandler ch)
     {
+        this.ch = ch;
         playerListModel = new DefaultListModel();
-        this.sock = sock;
-        try
-        {
-            oos = new ObjectOutputStream(sock.getOutputStream());
-        }
-        catch(IOException ex)
-        {
-            Logger.getLogger(LobbyWindow.class.getName()).log(Level.SEVERE, null, ex);
-        }
         initComponents();
         playerList.setModel(playerListModel);
         this.setVisible(true);
@@ -164,7 +155,6 @@ public class LobbyWindow extends JFrame implements MessageListener {
     {//GEN-HEADEREND:event_sendBtnActionPerformed
         chatField.getText();
     }//GEN-LAST:event_sendBtnActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField chatField;
     private javax.swing.JTextArea chatLogArea;
@@ -179,11 +169,12 @@ public class LobbyWindow extends JFrame implements MessageListener {
 
     public void handle(final Message m)
     {
-        if (m instanceof ChatMessage)
+        if(m instanceof ChatMessage)
         {
             ChatMessage cm = (ChatMessage) m;
             final String toShow = cm.getFrom() + ": " + cm.getText();
-            SwingUtilities.invokeLater(new Runnable(){
+            SwingUtilities.invokeLater(new Runnable() {
+
                 public void run()
                 {
                     chatLogArea.append(toShow + "\n");
@@ -192,43 +183,34 @@ public class LobbyWindow extends JFrame implements MessageListener {
                             chatLogArea.getDocument().getLength());
                 }
             });
-            
-        } else if (m instanceof IntroduceMessage)
+
+        }
+        else if(m instanceof IntroduceMessage)
         {
-            SwingUtilities.invokeLater(new Runnable(){
-                
+            SwingUtilities.invokeLater(new Runnable() {
+
                 public void run()
                 {
                     playerListModel.addElement(((IntroduceMessage) m).getText());
                 }
-                
             });
-        } else if (m instanceof GoodbyeMessage)
+        }
+        else if(m instanceof GoodbyeMessage)
         {
-            SwingUtilities.invokeLater(new Runnable(){
+            SwingUtilities.invokeLater(new Runnable() {
 
                 public void run()
                 {
                     playerListModel.removeElement(((IntroduceMessage) m).getText());
                 }
-
             });
         }
     }
 
     private void sendChat()
     {
-        try
-        {
-            ChatMessage chm = new ChatMessage(chatField.getText(),
-                    ChatMessage.Type.PUBLIC, PreferenceManager.getUsername());
-            oos.writeObject(chm);
-            oos.flush();
-        }
-        catch(IOException ex)
-        {
-            JOptionPane.showMessageDialog(this, "Couldn't send chat", "Error",
-                    JOptionPane.ERROR_MESSAGE);
-        }
+        ChatMessage chm = new ChatMessage(chatField.getText(),
+                ChatMessage.Type.PUBLIC, PreferenceManager.getUsername());
+        ch.send(chm);
     }
 }

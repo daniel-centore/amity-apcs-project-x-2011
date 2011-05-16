@@ -23,6 +23,8 @@ import javax.swing.UIManager;
 import org.amityregion5.projectx.client.communication.MulticastCommunicationHandler;
 import org.amityregion5.projectx.client.gui.ServerChooserWindow;
 import org.amityregion5.projectx.client.gui.SplashScreen;
+import org.amityregion5.projectx.client.gui.UsernameWindow;
+import org.amityregion5.projectx.client.handlers.PreferenceManager;
 
 /**
  * Main class for loading the Client
@@ -56,6 +58,12 @@ public class Main {
         try
         {
             Thread.sleep(SPLASH_TIME);
+            if (PreferenceManager.getUsername() == null)
+            {
+                // user has never used Project X before!
+                
+                new UsernameWindow(s,true,true);
+            }
         }
         catch(InterruptedException e)
         {

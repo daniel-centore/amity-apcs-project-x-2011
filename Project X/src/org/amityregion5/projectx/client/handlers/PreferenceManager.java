@@ -19,18 +19,36 @@
  */
 package org.amityregion5.projectx.client.handlers;
 
+import java.util.prefs.Preferences;
+
 /**
- * Handles user preferences
+ * Manages and retrieves persistent user preferences.
  * 
  * @author Daniel Centore
- * 
+ * @author Joe Stein
  */
 public class PreferenceManager {
+    private static Preferences prefs;
 
-    // TODO: finish this
+    static
+    {
+        // gets the Project X preferences
+        prefs = Preferences.userRoot().node("org/amityregion5/projectx");
+    }
+
+    /**
+     * Returns this user's preferred username, or null if the user has not
+     * set a preferred username.
+     * @return
+     */
     public static String getUsername()
     {
-        return "USERNAME";
+        return prefs.get("username", null);
+    }
+
+    public static void setUsername(String username)
+    {
+        prefs.put("username", username);
     }
 
 }

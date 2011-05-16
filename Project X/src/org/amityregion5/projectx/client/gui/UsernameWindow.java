@@ -17,12 +17,14 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
-
 package org.amityregion5.projectx.client.gui;
 
 import java.awt.Frame;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JDialog;
+import javax.swing.SwingUtilities;
+import org.amityregion5.projectx.client.handlers.PreferenceManager;
 
 /**
  * Handles username selection
@@ -33,14 +35,21 @@ import javax.swing.JDialog;
 public class UsernameWindow extends JDialog {
 
     private static final long serialVersionUID = 1L;
-    
+
     /**
      * Creates new form UsernameWindow
+     * @param welcome whether or not to include a welcome message, i.e. if the
+     * user is using Project X for the first time
      */
-    public UsernameWindow(Frame parent, boolean modal)
+    public UsernameWindow(Frame parent, boolean modal, boolean welcome)
     {
         super(parent, modal);
         initComponents();
+        if (welcome)
+        {
+            headText.setText("Welcome to Project X! Enter a username:");
+        }
+        this.setVisible(true);
     }
 
     /** This method is called from within the constructor to
@@ -51,18 +60,30 @@ public class UsernameWindow extends JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        headText = new javax.swing.JLabel();
         usernameField = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        okBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Change Username");
 
-        jLabel1.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Please enter a username:");
+        headText.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
+        headText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        headText.setText("Please enter a username:");
 
-        jButton1.setText("OK");
+        usernameField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                usernameFieldKeyPressed(evt);
+            }
+        });
+
+        okBtn.setText("OK");
+        okBtn.setEnabled(false);
+        okBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                okBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -71,37 +92,86 @@ public class UsernameWindow extends JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(usernameField, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE))
+                        .addComponent(okBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(headText, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(headText)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(okBtn))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void okBtnActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_okBtnActionPerformed
+    {//GEN-HEADEREND:event_okBtnActionPerformed
+        PreferenceManager.setUsername(usernameField.getText());
+        this.dispose();
+    }//GEN-LAST:event_okBtnActionPerformed
+
+    private void usernameFieldKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_usernameFieldKeyPressed
+    {//GEN-HEADEREND:event_usernameFieldKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_BACK_SPACE
+                && usernameField.getText().length() <= 1)
+        {
+            SwingUtilities.invokeLater(new Runnable() {
+
+                public void run()
+                {
+                    okBtn.setEnabled(false);
+                }
+            });
+        }
+        else if(evt.getKeyCode() == KeyEvent.VK_ENTER)
+        {
+            if(usernameField.getText().length() < 1)
+            {
+                evt.consume();
+            }
+            else
+            {
+                PreferenceManager.setUsername(usernameField.getText());
+                this.dispose();
+            }
+        }
+        else
+        {
+            SwingUtilities.invokeLater(new Runnable() {
+
+                public void run()
+                {
+                    okBtn.setEnabled(true);
+                }
+            });
+        }
+    }//GEN-LAST:event_usernameFieldKeyPressed
+
     /**
-    * @param args the command line arguments
-    */
-    public static void main(String args[]) {
+     * @param args the command line arguments
+     */
+    public static void main(String args[])
+    {
         java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                UsernameWindow dialog = new UsernameWindow(new javax.swing.JFrame(), true);
+
+            public void run()
+            {
+                UsernameWindow dialog = new UsernameWindow(new javax.swing.JFrame(), true, true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
+
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e)
+                    {
                         System.exit(0);
                     }
                 });
@@ -109,11 +179,9 @@ public class UsernameWindow extends JDialog {
             }
         });
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel headText;
+    private javax.swing.JButton okBtn;
     private javax.swing.JTextField usernameField;
     // End of variables declaration//GEN-END:variables
-
 }
