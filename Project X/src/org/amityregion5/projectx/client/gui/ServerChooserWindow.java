@@ -29,8 +29,10 @@ import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 import org.amityregion5.projectx.client.communication.CommunicationHandler;
+import org.amityregion5.projectx.client.communication.MulticastCommunicationHandler;
 import org.amityregion5.projectx.client.handlers.PreferenceManager;
 import org.amityregion5.projectx.common.communication.DatagramListener;
 import org.amityregion5.projectx.common.communication.messages.ActivePlayersMessage;
@@ -288,6 +290,24 @@ public class ServerChooserWindow extends JFrame implements DatagramListener {
             hash = 97 * hash + (this.name != null ? this.name.hashCode() : 0);
             hash = 97 * hash + (this.ip != null ? this.ip.hashCode() : 0);
             return hash;
+        }
+    }
+
+    public static void main(String[] args)
+    {
+        final ServerChooserWindow chooser = new ServerChooserWindow();
+
+        MulticastCommunicationHandler mch = new MulticastCommunicationHandler();
+        mch.registerListener(chooser);
+        mch.start();
+
+        try
+        {
+            // default look and feel for prettiness :D
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e)
+        {
+            // ignore
         }
     }
 }
