@@ -23,7 +23,6 @@ import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.net.ConnectException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -48,7 +47,8 @@ import org.amityregion5.projectx.common.communication.messages.ReplyMessage;
 public class ServerChooserWindow extends JFrame implements DatagramListener {
 
     private static final long serialVersionUID = 1L;
-    private DefaultListModel dlm = new DefaultListModel();
+
+    private DefaultListModel dlm = new DefaultListModel(); // the list model for ips
 
     /**
      * Creates new form ServerChooserWindow
@@ -195,20 +195,6 @@ public class ServerChooserWindow extends JFrame implements DatagramListener {
         });
 
     }// GEN-LAST:event_serverListValueChanged
-
-    // /**
-    // * @param args the command line arguments
-    // */
-    // public static void main(String args[])
-    // {
-    // java.awt.EventQueue.invokeLater(new Runnable() {
-    //
-    // public void run()
-    // {
-    // new ServerChooserWindow().setVisible(true);
-    // }
-    // });
-    // }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

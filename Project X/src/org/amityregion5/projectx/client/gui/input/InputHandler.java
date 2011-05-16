@@ -23,6 +23,7 @@ package org.amityregion5.projectx.client.gui.input;
  * Handles inputs as they come in
  * 
  * @author Michael Wenke
+ * @author Daniel Centore
  */
 public class InputHandler {
 

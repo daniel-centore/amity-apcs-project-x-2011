@@ -32,13 +32,16 @@ import org.amityregion5.projectx.common.communication.DatagramListener;
 /**
  * A class for listening for multicast packets.
  * 
+ * NOTE: Make sure you start() it!
+ * 
  * @author Joe Stein
+ * @author Daniel Centore
  */
 public class MulticastCommunicationHandler extends Thread {
 
-    private boolean keepListening = true;
-    private ArrayList<DatagramListener> dgListeners = new ArrayList<DatagramListener>();
-    private MulticastSocket sock;
+    private boolean keepListening = true; // should we be listening for more servers?
+    private ArrayList<DatagramListener> dgListeners = new ArrayList<DatagramListener>(); // things listening for multicast replies
+    private MulticastSocket sock; // the socket we listen on
 
     @Override
     public void run()
@@ -63,7 +66,7 @@ public class MulticastCommunicationHandler extends Thread {
         }
     }
 
-    private void firePacketReceived(DatagramPacket pack)
+    private void firePacketReceived(DatagramPacket pack) // helper
     {
         for (DatagramListener dgl : dgListeners)
         {
@@ -71,11 +74,19 @@ public class MulticastCommunicationHandler extends Thread {
         }
     }
 
+    /**
+     * Registers a listener for multicast stuff
+     * @param listener The DatagramListener
+     */
     public void registerListener(DatagramListener listener)
     {
         dgListeners.add(listener);
     }
 
+    /**
+     * Un-registers a listener
+     * @param listener The DatagramListener
+     */
     public void removeListener(DatagramListener listener)
     {
         dgListeners.remove(listener);

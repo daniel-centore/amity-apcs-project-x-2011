@@ -40,14 +40,18 @@ import org.amityregion5.projectx.common.communication.messages.Message;
  */
 public class CommunicationHandler extends Thread {
 
-    public static final int TIMEOUT_SECS = 6;
+    private String serverIP; // IP to work with
+    private Socket socket = null; // socket we create
+    private boolean keepReading = true; // should we be reading from the server?
+    private ArrayList<MessageListener> listeners = new ArrayList<MessageListener>(); // listens for messages
+    private volatile List<ReplyWaiting> replies = new ArrayList<ReplyWaiting>(); // list of places to check for replies
 
-    private String serverIP;
-    private Socket socket = null;
-    private boolean keepReading = true;
-    private ArrayList<MessageListener> listeners = new ArrayList<MessageListener>();
-    private volatile List<ReplyWaiting> replies = new ArrayList<ReplyWaiting>();
-
+    /**
+     * Creates and initializes communications with a server
+     * 
+     * @param serverIP The server to connect to
+     * @throws IOException If the server rejects our communication on Constants.PORT
+     */
     public CommunicationHandler(String serverIP) throws IOException
     {
         this.serverIP = serverIP;
@@ -66,6 +70,7 @@ public class CommunicationHandler extends Thread {
 
             while (keepReading)
             {
+                // TODO: handle communication interrupts here
                 Message m = (Message) input.readObject();
                 handle(m);
             }
@@ -87,6 +92,11 @@ public class CommunicationHandler extends Thread {
         }
     }
 
+    /**
+     * Handles received messages (should not need further modification - just add a listener)
+     * 
+     * @param m The message to handler
+     */
     private void handle(Message m)
     {
         if (m instanceof BlockingMessage)
@@ -108,22 +118,38 @@ public class CommunicationHandler extends Thread {
 
             throw new RuntimeException("Got BlockingMessage that didn't need reply?");
         }
+
         for (MessageListener mh : listeners)
         {
             mh.handle(m);
         }
     }
 
+    /**
+     * Registers a listener for communications
+     * 
+     * @param mh The MessageListener to register
+     */
     public void registerListener(MessageListener mh)
     {
         listeners.add(mh);
     }
 
+    /**
+     * Removes a listener
+     * 
+     * @param mh MessageListener to remove
+     */
     public void removeListener(MessageListener mh)
     {
         listeners.remove(mh);
     }
 
+    /**
+     * Sends a message to the server
+     * 
+     * @param m The Message to send
+     */
     public void send(Message m)
     {
         try
@@ -139,6 +165,12 @@ public class CommunicationHandler extends Thread {
         }
     }
 
+    /**
+     * Gets a reply from the Server
+     * 
+     * @param m Message to send
+     * @return The reply from the server
+     */
     public Message requestReply(Message m)
     {
         BlockingMessage bm = new BlockingMessage(m);
@@ -166,20 +198,33 @@ public class CommunicationHandler extends Thread {
 
     }
 
+    /**
+     * @return The IP address we are connected to
+     */
     public String getServerIP()
     {
         return serverIP;
     }
 
+    /**
+     * @return The Socket to the server
+     */
     public Socket getSocket()
     {
         return socket;
     }
 
+    /**
+     * Handles replies that we wait for
+     * 
+     * @author Daniel Centore
+     * 
+     */
     private class ReplyWaiting {
-        private Thread thread;
-        private int message;
-        private Message reply;
+
+        private Thread thread; // The thread that is (im)patiently waiting for us
+        private int message; // The number reply we will get
+        private Message reply; // The reply (gets filled in eventually)
 
         /**
          * Creates a marker that we are waiting for a reply
@@ -194,11 +239,17 @@ public class CommunicationHandler extends Thread {
             this.message = message;
         }
 
+        /**
+         * @return Returns the reply to this message
+         */
         public Message getReply()
         {
             return reply;
         }
 
+        /**
+         * @param reply Sets the reply for this message
+         */
         public void setReply(Message reply)
         {
             this.reply = reply;

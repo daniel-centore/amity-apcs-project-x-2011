@@ -25,8 +25,7 @@ import java.awt.Frame;
 import javax.swing.JDialog;
 
 /**
- * UsernameWindow.java
- * Created on May 11, 2011, 5:12:05 PM
+ * Handles username selection
  *
  * @author Joe Stein
  * @author Daniel Centore

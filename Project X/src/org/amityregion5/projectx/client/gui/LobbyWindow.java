@@ -34,6 +34,7 @@ import org.amityregion5.projectx.common.communication.messages.Message;
 
 /**
  * The game lobby
+ * TODO: finish implementing it!
  * 
  * @author Daniel Centore
  * @author Joe Stein

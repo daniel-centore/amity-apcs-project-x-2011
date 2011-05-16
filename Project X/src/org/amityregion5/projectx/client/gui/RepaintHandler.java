@@ -26,35 +26,37 @@ import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 
 /**
- * Class documentation.
- *
- * @author wenke
+ * Handles repainting
+ * 
+ * @author Daniel Centore
+ * @author Mike DiBuduo
  */
-public class RepaintHandler extends Thread{
-   /**
-    * Returns a flat image of the map with all the entities painted on it.
-    *
-    * @return a flat image of the map with its entities
-    */
-   private Image getMapFlatImage()
-   {
-      Image img = Gui.createImage();
-      Graphics2D g = (Graphics2D) img.getGraphics();
+public class RepaintHandler extends Thread {
 
-      AbstractMap map = Gui.getMap();
-      Image k = map.getBackground();
+    /**
+     * Returns a flat image of the map with all the entities painted on it.
+     * 
+     * @return a flat image of the map with its entities
+     */
+    public static Image getMapFlatImage()
+    {
+        Image img = Gui.createImage();
+        Graphics2D g = (Graphics2D) img.getGraphics();
 
-      if (k != null)
-      {
-         g.drawImage(k, 0, 0, null);
-      }
+        AbstractMap map = Gui.getMap();
+        Image k = map.getBackground();
 
-      for (Entity e : map.getEntities())
-      {
-         g.drawImage(e.getImage(), e.getX(), e.getY(), null);
-      }
+        if (k != null)
+        {
+            g.drawImage(k, 0, 0, null);
+        }
 
-      return img;
-   }
+        for (Entity e : map.getEntities())
+        {
+            g.drawImage(e.getImage(), e.getX(), e.getY(), null);
+        }
+
+        return img;
+    }
 
 }
