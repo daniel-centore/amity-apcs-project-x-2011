@@ -25,6 +25,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import org.amityregion5.projectx.client.messagehandlers.MessageHandlersHandler;
 
 import org.amityregion5.projectx.common.communication.Constants;
 import org.amityregion5.projectx.common.communication.MessageListener;
@@ -61,6 +62,8 @@ public class CommunicationHandler extends Thread {
         socket = new Socket(serverIP, Constants.PORT);
         outObjects = new ObjectOutputStream(socket.getOutputStream());
 
+        MessageHandlersHandler.registerHandlers();
+        
         this.start();
     }
 
