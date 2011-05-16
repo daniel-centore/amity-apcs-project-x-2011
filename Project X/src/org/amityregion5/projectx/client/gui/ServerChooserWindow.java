@@ -56,7 +56,6 @@ public class ServerChooserWindow extends JFrame implements DatagramListener {
      */
     public ServerChooserWindow()
     {
-
         initComponents();
         dlm.addElement("Manual/Internet...");
 
