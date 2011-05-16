@@ -19,6 +19,7 @@
  */
 package org.amityregion5.projectx.client.main;
 
+import javax.swing.UIManager;
 import org.amityregion5.projectx.client.communication.MulticastCommunicationHandler;
 import org.amityregion5.projectx.client.gui.ServerChooserWindow;
 import org.amityregion5.projectx.client.gui.SplashScreen;
@@ -27,14 +28,24 @@ import org.amityregion5.projectx.client.gui.SplashScreen;
  * Main class for loading the Client
  * 
  * @author Daniel Centore
- * 
+ * @author Joe Stein
  */
 public class Main {
 
-    public static final int SPLASH_TIME = 1000; // how long to show the splash screen (ms)
+    public static final int SPLASH_TIME = 1500; // how long to show the splash screen (ms)
 
     public static void main(String[] args)
     {
+        try
+        {
+            // default look and feel for prettiness :D
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        }
+        catch(Exception e)
+        {
+            // ignore
+        }
+
         final ServerChooserWindow chooser = new ServerChooserWindow();
 
         MulticastCommunicationHandler mch = new MulticastCommunicationHandler();
@@ -45,12 +56,12 @@ public class Main {
         try
         {
             Thread.sleep(SPLASH_TIME);
-        } catch (InterruptedException e)
+        }
+        catch(InterruptedException e)
         {
         }
 
         s.setVisible(false);
         chooser.setVisible(true);
     }
-
 }

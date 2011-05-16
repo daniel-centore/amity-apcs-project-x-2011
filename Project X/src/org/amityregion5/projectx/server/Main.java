@@ -19,6 +19,8 @@
  */
 package org.amityregion5.projectx.server;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import org.amityregion5.projectx.server.gui.ServerNameWindow;
 
 /**
@@ -31,6 +33,37 @@ public class Main {
 
     public static void main(String[] args)
     {
-        new ServerNameWindow();
+        ArrayList<String> ar = new ArrayList<String>();
+        ar.addAll(Arrays.asList(args));
+        boolean gui = true;
+        String name = null;
+        if(ar.contains("--nogui"))
+        {
+            gui = false;
+        }
+        int ind = ar.indexOf("--name");
+        if(ind > -1 && ind != ar.size() - 1)
+        {
+            name = ar.get(ind + 1);
+            if(name.startsWith("--") || name.startsWith("-"))
+            {
+                System.err.println("ERROR: You must include a valid server"
+                        + " name after the --name tag.");
+                System.exit(-1);
+            }
+        }
+
+        if(!gui && name != null)
+        {
+            new Server(name);
+        }
+        else if(!gui && name == null)
+        {
+            System.err.println("ERROR: You must include a valid server name"
+                    + " if you do not want to use the GUI.");
+        } else
+        {
+            new ServerNameWindow();
+        }
     }
 }

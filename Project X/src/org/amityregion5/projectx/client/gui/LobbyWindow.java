@@ -20,11 +20,17 @@
 
 package org.amityregion5.projectx.client.gui;
 
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import org.amityregion5.projectx.client.handlers.PreferenceManager;
 
 import org.amityregion5.projectx.common.communication.MessageListener;
 import org.amityregion5.projectx.common.communication.messages.ChatMessage;
@@ -44,6 +50,7 @@ public class LobbyWindow extends JFrame implements MessageListener {
     private static final long serialVersionUID = 1L;
     private DefaultListModel playerListModel;
     private Socket sock;
+    private ObjectOutputStream oos;
 
     /**
      * Creates a new LobbyWindow.
@@ -53,6 +60,14 @@ public class LobbyWindow extends JFrame implements MessageListener {
     {
         playerListModel = new DefaultListModel();
         this.sock = sock;
+        try
+        {
+            oos = new ObjectOutputStream(sock.getOutputStream());
+        }
+        catch(IOException ex)
+        {
+            Logger.getLogger(LobbyWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
         initComponents();
         playerList.setModel(playerListModel);
         this.setVisible(true);
@@ -83,13 +98,19 @@ public class LobbyWindow extends JFrame implements MessageListener {
 
         jScrollPane2.setViewportView(playerList);
 
-        jLabel1.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("SansSerif", 1, 18));
         jLabel1.setText("Chat");
 
-        jLabel2.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("SansSerif", 1, 18));
         jLabel2.setText("Players");
 
         sendBtn.setText("Send");
+        sendBtn.setEnabled(false);
+        sendBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sendBtnActionPerformed(evt);
+            }
+        });
 
         statusLabel.setText("Waiting for players...");
         statusLabel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Status", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP));
@@ -139,6 +160,11 @@ public class LobbyWindow extends JFrame implements MessageListener {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void sendBtnActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_sendBtnActionPerformed
+    {//GEN-HEADEREND:event_sendBtnActionPerformed
+        chatField.getText();
+    }//GEN-LAST:event_sendBtnActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField chatField;
     private javax.swing.JTextArea chatLogArea;
@@ -187,6 +213,22 @@ public class LobbyWindow extends JFrame implements MessageListener {
                 }
 
             });
+        }
+    }
+
+    private void sendChat()
+    {
+        try
+        {
+            ChatMessage chm = new ChatMessage(chatField.getText(),
+                    ChatMessage.Type.PUBLIC, PreferenceManager.getUsername());
+            oos.writeObject(chm);
+            oos.flush();
+        }
+        catch(IOException ex)
+        {
+            JOptionPane.showMessageDialog(this, "Couldn't send chat", "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 }

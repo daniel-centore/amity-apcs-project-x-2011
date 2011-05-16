@@ -55,6 +55,7 @@ public class ChatMessage extends TextualMessage {
     public ChatMessage(String cont, String from)
     {
         super(cont);
+        type = Type.PUBLIC;
         usernameFrom = from;
     }
 

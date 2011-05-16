@@ -62,7 +62,7 @@ public class Server {
             multicaster.setDaemon(true);
             System.out.println("Starting multicaster...");
             multicaster.start();
-           
+
         }
         catch(IOException e)
         {
@@ -77,6 +77,11 @@ public class Server {
         clients.put(username, c);
     }
 
+    public void removeClient(String username)
+    {
+        clients.remove(username);
+    }
+
     private void startListening()
     {
         new Thread(new ClientNetListener()).start();
@@ -85,7 +90,7 @@ public class Server {
     protected void kill()
     {
         listening = false;
-        for (Client client : clients.values())
+        for(Client client : clients.values())
         {
             client.send(new AnnounceMessage("Server shutting down!"));
         }
@@ -108,7 +113,7 @@ public class Server {
 
     public void relayChat(ChatMessage m)
     {
-        for (Client client : clients.values())
+        for(Client client : clients.values())
         {
             client.send(m);
         }

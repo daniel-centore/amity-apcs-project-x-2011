@@ -25,7 +25,7 @@ package org.amityregion5.projectx.client.handlers;
  * @author Daniel Centore
  * 
  */
-public class PreferenceHandler {
+public class PreferenceManager {
 
     // TODO: finish this
     public static String getUsername()

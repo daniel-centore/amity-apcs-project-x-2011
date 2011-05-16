@@ -19,16 +19,17 @@
  */
 package org.amityregion5.projectx.server;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import org.amityregion5.projectx.common.communication.messages.BlockingMessage;
+import org.amityregion5.projectx.common.communication.messages.BooleanReplyMessage;
 import org.amityregion5.projectx.common.communication.messages.ChatMessage;
 import org.amityregion5.projectx.common.communication.messages.IntroduceMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
-import org.amityregion5.projectx.common.communication.messages.ReplyMessage;
 import org.amityregion5.projectx.common.communication.messages.TextualMessage;
 
 /**
@@ -41,6 +42,7 @@ public class Client extends Thread {
 
     private Socket sock; // socket
     private Server server; // the server to which this Client belongs
+    private String username;
 
     /**
      * Creates a client
@@ -62,7 +64,7 @@ public class Client extends Thread {
 
             boolean quit = false;
 
-            while (!quit)
+            while(!quit)
             {
                 final Message m = (Message) inObject.readObject();
                 
@@ -78,10 +80,21 @@ public class Client extends Thread {
             inObject.close();
             sock.close();
 
-        } catch (IOException e)
+        }
+        catch(EOFException eof)
+        {
+            System.out.println("Client disconnected");
+            // remove this client from the server list
+            if(username != null) // this client gave us its username
+            {
+                server.removeClient(username); // take it off the server's list
+            }
+        }
+        catch(IOException e)
         {
             e.printStackTrace();
-        } catch (ClassNotFoundException e)
+        }
+        catch(ClassNotFoundException e)
         {
             e.printStackTrace();
         }
@@ -100,7 +113,8 @@ public class Client extends Thread {
             outObjects.writeObject(m);
 
             outObjects.flush();
-        } catch (IOException e)
+        }
+        catch(IOException e)
         {
             // This happens sometimes. I forget when though.
             e.printStackTrace();
@@ -109,38 +123,40 @@ public class Client extends Thread {
 
     private void processMessage(Message m)
     {
-        if (m instanceof BlockingMessage)
+        if(m instanceof BlockingMessage)
         {
             Message contained = ((BlockingMessage) m).getMessage();
 
-            if (contained instanceof IntroduceMessage)
+            if(contained instanceof IntroduceMessage)
             {
                 IntroduceMessage im = (IntroduceMessage) contained;
 
-                if (!server.hasClient(im.getText()))
+                if(!server.hasClient(im.getText()))
                 {
-                    server.addClient(im.getText(), this);
-                    sendReply((BlockingMessage) m, new ReplyMessage(true));
-                } else
+                    username = im.getText();
+                    server.addClient(username, this);
+                    sendReply((BlockingMessage) m, new BooleanReplyMessage(true));
+                }
+                else
                 {
-                    sendReply((BlockingMessage) m, new ReplyMessage(false));
+                    sendReply((BlockingMessage) m, new BooleanReplyMessage(false));
                 }
             }
-        } else if (m instanceof TextualMessage)
+        }
+        else if(m instanceof TextualMessage)
         {
             TextualMessage tm = (TextualMessage) m;
-            if (tm instanceof ChatMessage)
+            if(tm instanceof ChatMessage)
             {
                 server.relayChat((ChatMessage) tm);
             }
 
         }
-        // TODO message processing!! :P
+        // TODO more message processing!! :P
     }
-    
+
     private void sendReply(BlockingMessage original, Message reply)
     {
         send(new BlockingMessage(original, reply));
     }
-
 }
