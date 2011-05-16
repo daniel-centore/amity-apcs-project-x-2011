@@ -30,7 +30,6 @@ public class EntityMovedHandler implements MessageListener {
 
     public void handle(Message m)
     {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }
