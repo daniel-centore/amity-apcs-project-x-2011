@@ -20,9 +20,9 @@
 package org.amityregion5.projectx.server;
 
 /**
- * Class documentation.
  * 
- * @author Jenny Liu
+ * 
+ * TODO: Implement it!
  */
 public class CollisionDetection {
 

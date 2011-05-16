@@ -31,6 +31,8 @@ import org.amityregion5.projectx.common.maps.AbstractMap;
  * @author Mike DiBuduo
  */
 public class GameState {
+    
     private AbstractMap map;
     private ArrayList<Entity> entities;
+    
 }

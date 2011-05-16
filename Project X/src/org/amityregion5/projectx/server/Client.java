@@ -43,6 +43,7 @@ public class Client extends Thread {
     private Socket sock; // socket
     private Server server; // the server to which this Client belongs
     private String username;
+    private ObjectOutputStream outObjects;
 
     /**
      * Creates a client
@@ -53,6 +54,14 @@ public class Client extends Thread {
     {
         this.server = server;
         this.sock = sock;
+        
+        try
+        {
+            outObjects = new ObjectOutputStream(sock.getOutputStream());
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -109,7 +118,6 @@ public class Client extends Thread {
     {
         try
         {
-            ObjectOutputStream outObjects = new ObjectOutputStream(sock.getOutputStream());
             outObjects.writeObject(m);
 
             outObjects.flush();

@@ -32,6 +32,7 @@ import org.amityregion5.projectx.common.entities.items.field.FieldItem;
 public class FieldItemManager {
 
     private ArrayList<FieldItem> fieldItems;
+    
     private Thread managerThread = new Thread() {
 
         public void run()

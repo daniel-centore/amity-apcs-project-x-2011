@@ -45,6 +45,7 @@ public class CommunicationHandler extends Thread {
     private boolean keepReading = true; // should we be reading from the server?
     private ArrayList<MessageListener> listeners = new ArrayList<MessageListener>(); // listens for messages
     private volatile List<ReplyWaiting> replies = new ArrayList<ReplyWaiting>(); // list of places to check for replies
+    private ObjectOutputStream outObjects;
 
     /**
      * Creates and initializes communications with a server
@@ -57,6 +58,7 @@ public class CommunicationHandler extends Thread {
         this.serverIP = serverIP;
 
         socket = new Socket(serverIP, Constants.PORT);
+        outObjects = new ObjectOutputStream(socket.getOutputStream());
 
         this.start();
     }
@@ -154,7 +156,6 @@ public class CommunicationHandler extends Thread {
     {
         try
         {
-            ObjectOutputStream outObjects = new ObjectOutputStream(socket.getOutputStream());
             outObjects.writeObject(m);
 
             outObjects.flush();
