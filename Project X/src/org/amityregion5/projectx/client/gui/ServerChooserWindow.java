@@ -43,6 +43,7 @@ import org.amityregion5.projectx.common.communication.messages.IntroduceMessage;
  * 
  * @author Daniel Centore
  * @author Joe Stein
+ * @author Mike DiBuduo
  */
 public class ServerChooserWindow extends JFrame implements DatagramListener {
 
