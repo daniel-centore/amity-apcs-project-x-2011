@@ -44,6 +44,7 @@ public class Client extends Thread {
     private Server server; // the server to which this Client belongs
     private String username;
     private ObjectOutputStream outObjects;
+    private ObjectInputStream inObjects;
 
     /**
      * Creates a client
@@ -58,6 +59,7 @@ public class Client extends Thread {
         try
         {
             outObjects = new ObjectOutputStream(sock.getOutputStream());
+            inObjects = new ObjectInputStream(sock.getInputStream());
         } catch (IOException e)
         {
             e.printStackTrace();
@@ -69,16 +71,16 @@ public class Client extends Thread {
     {
         try
         {
-            ObjectInputStream inObject = new ObjectInputStream(sock.getInputStream());
 
             boolean quit = false;
 
             while(!quit)
             {
-                final Message m = (Message) inObject.readObject();
+                final Message m = (Message) inObjects.readObject();
                 
                 new Thread()
                 {
+                    @Override
                     public void run()
                     {
                         Client.this.processMessage(m);
@@ -86,7 +88,7 @@ public class Client extends Thread {
                 }.start();
             }
 
-            inObject.close();
+            inObjects.close();
             sock.close();
 
         }
