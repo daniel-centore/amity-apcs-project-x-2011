@@ -21,11 +21,13 @@ package org.amityregion5.projectx.server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.amityregion5.projectx.common.communication.Constants;
+import org.amityregion5.projectx.common.communication.messages.ActivePlayersMessage;
 import org.amityregion5.projectx.common.communication.messages.AnnounceMessage;
-import org.amityregion5.projectx.common.communication.messages.ChatMessage;
 import org.amityregion5.projectx.common.communication.messages.GoodbyeMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.server.communication.Multicaster;
@@ -139,6 +141,16 @@ public class Server {
         {
             client.send(m);
         }
+    }
+    
+    public ActivePlayersMessage getPlayersUpdate()
+    {
+        List<String> names = new ArrayList<String>();
+        
+        for(Client c : clients.values())
+            names.add(c.getUsername());
+        
+       return new ActivePlayersMessage(names);
     }
 
     private class ClientNetListener implements Runnable {

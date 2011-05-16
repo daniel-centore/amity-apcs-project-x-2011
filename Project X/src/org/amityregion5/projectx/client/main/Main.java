@@ -42,8 +42,7 @@ public class Main {
         {
             // default look and feel for prettiness :D
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        }
-        catch(Exception e)
+        } catch (Exception e)
         {
             // ignore
         }
@@ -61,11 +60,10 @@ public class Main {
             if (PreferenceManager.getUsername() == null)
             {
                 // user has never used Project X before!
-                
-                new UsernameWindow(s,true,true);
+
+                new UsernameWindow(s, true, true);
             }
-        }
-        catch(InterruptedException e)
+        } catch (InterruptedException e)
         {
         }
 

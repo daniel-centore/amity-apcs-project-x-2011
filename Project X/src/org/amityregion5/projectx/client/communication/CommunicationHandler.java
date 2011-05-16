@@ -44,7 +44,7 @@ public class CommunicationHandler extends Thread {
     private String serverIP; // IP to work with
     private Socket socket = null; // socket we create
     private boolean keepReading = true; // should we be reading from the server?
-    private ArrayList<MessageListener> listeners = new ArrayList<MessageListener>(); // listens for messages
+    private volatile ArrayList<MessageListener> listeners = new ArrayList<MessageListener>(); // listens for messages
     private volatile List<ReplyWaiting> replies = new ArrayList<ReplyWaiting>(); // list of places to check for replies
     private ObjectOutputStream outObjects;
 

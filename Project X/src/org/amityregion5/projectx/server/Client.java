@@ -26,6 +26,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketException;
 
+import org.amityregion5.projectx.common.communication.messages.ActivePlayersMessage;
 import org.amityregion5.projectx.common.communication.messages.BlockingMessage;
 import org.amityregion5.projectx.common.communication.messages.BooleanReplyMessage;
 import org.amityregion5.projectx.common.communication.messages.ChatMessage;
@@ -56,7 +57,7 @@ public class Client extends Thread {
     {
         this.server = server;
         this.sock = sock;
-        
+
         try
         {
             outObjects = new ObjectOutputStream(sock.getOutputStream());
@@ -75,12 +76,11 @@ public class Client extends Thread {
 
             boolean quit = false;
 
-            while(!quit)
+            while (!quit)
             {
                 final Message m = (Message) inObjects.readObject();
-                
-                new Thread()
-                {
+
+                new Thread() {
                     @Override
                     public void run()
                     {
@@ -93,30 +93,26 @@ public class Client extends Thread {
             inObjects.close();
             sock.close();
 
-        }
-        catch(EOFException eof)
+        } catch (EOFException eof)
         {
             System.out.println("Client disconnected");
             // remove this client from the server list
-            if(username != null) // this client gave us its username
+            if (username != null) // this client gave us its username
             {
                 server.removeClient(username); // take it off the server's list
             }
-        }
-        catch (SocketException se)
+        } catch (SocketException se)
         {
-           System.out.println("Client disconnected");
+            System.out.println("Client disconnected");
             // remove this client from the server list
-            if(username != null) // this client gave us its username
+            if (username != null) // this client gave us its username
             {
                 server.removeClient(username); // take it off the server's list
             }
-        }
-        catch(IOException e)
+        } catch (IOException e)
         {
             e.printStackTrace();
-        }
-        catch(ClassNotFoundException e)
+        } catch (ClassNotFoundException e)
         {
             e.printStackTrace();
         }
@@ -134,8 +130,7 @@ public class Client extends Thread {
             outObjects.writeObject(m);
 
             outObjects.flush();
-        }
-        catch(IOException e)
+        } catch (IOException e)
         {
             // This happens sometimes. I forget when though.
             e.printStackTrace();
@@ -144,31 +139,41 @@ public class Client extends Thread {
 
     private void processMessage(Message m)
     {
-        if(m instanceof BlockingMessage)
+        if (m instanceof BlockingMessage)
         {
             Message contained = ((BlockingMessage) m).getMessage();
 
-            if(contained instanceof IntroduceMessage)
+            if (contained instanceof IntroduceMessage)
             {
                 IntroduceMessage im = (IntroduceMessage) contained;
 
-                if(!server.hasClient(im.getText()))
+                if (!server.hasClient(im.getText()))
                 {
                     username = im.getText();
                     server.relayMessage(im);
+                    // server.sendPlayersUpdate();
+                    ActivePlayersMessage q = server.getPlayersUpdate();
                     server.addClient(username, this);
+
                     sendReply((BlockingMessage) m, new BooleanReplyMessage(true));
-                }
-                else
+
+                    try
+                    {
+                        Thread.sleep(1500); // allow LobbyWindow to initialize
+                    } catch (InterruptedException e)
+                    {
+                    }
+
+                    send(q);
+                } else
                 {
                     sendReply((BlockingMessage) m, new BooleanReplyMessage(false));
                 }
             }
-        }
-        else if(m instanceof TextualMessage)
+        } else if (m instanceof TextualMessage)
         {
             TextualMessage tm = (TextualMessage) m;
-            if(tm instanceof ChatMessage)
+            if (tm instanceof ChatMessage)
             {
                 server.relayMessage(tm);
             }
@@ -181,4 +186,10 @@ public class Client extends Thread {
     {
         send(new BlockingMessage(original, reply));
     }
+
+    public String getUsername()
+    {
+        return username;
+    }
+
 }

@@ -20,14 +20,16 @@
 package org.amityregion5.projectx.client.gui;
 
 import java.awt.event.KeyEvent;
+import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+
 import org.amityregion5.projectx.client.communication.CommunicationHandler;
 import org.amityregion5.projectx.client.handlers.PreferenceManager;
-
 import org.amityregion5.projectx.common.communication.MessageListener;
+import org.amityregion5.projectx.common.communication.messages.ActivePlayersMessage;
 import org.amityregion5.projectx.common.communication.messages.ChatMessage;
 import org.amityregion5.projectx.common.communication.messages.GoodbyeMessage;
 import org.amityregion5.projectx.common.communication.messages.IntroduceMessage;
@@ -196,12 +198,23 @@ public class LobbyWindow extends JFrame implements MessageListener {
 
         } else if (m instanceof IntroduceMessage)
         {
-            System.out.println("user joined");
             SwingUtilities.invokeLater(new Runnable() {
 
                 public void run()
                 {
                     playerListModel.addElement(((IntroduceMessage) m).getText());
+                }
+            });
+        } else if (m instanceof ActivePlayersMessage)
+        {
+            SwingUtilities.invokeLater(new Runnable() {
+
+                public void run()
+                {
+                    List<String> usernames = ((ActivePlayersMessage) m).getPlayers();
+
+                    for (String q : usernames)
+                        playerListModel.addElement(q);
                 }
             });
         } else if (m instanceof GoodbyeMessage)
