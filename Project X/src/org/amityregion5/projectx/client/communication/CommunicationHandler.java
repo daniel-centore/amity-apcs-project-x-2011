@@ -17,7 +17,6 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
-
 package org.amityregion5.projectx.client.communication;
 
 import java.io.IOException;
@@ -40,6 +39,7 @@ import org.amityregion5.projectx.common.communication.messages.Message;
  */
 public class CommunicationHandler extends Thread {
 
+    private static CommunicationHandler instance = null;
     private String serverIP; // IP to work with
     private Socket socket = null; // socket we create
     private boolean keepReading = true; // should we be reading from the server?
@@ -55,6 +55,7 @@ public class CommunicationHandler extends Thread {
      */
     public CommunicationHandler(String serverIP) throws IOException
     {
+        instance = this;
         this.serverIP = serverIP;
 
         socket = new Socket(serverIP, Constants.PORT);
@@ -70,17 +71,19 @@ public class CommunicationHandler extends Thread {
         {
             ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
 
-            while (keepReading)
+            while(keepReading)
             {
                 // TODO: handle communication interrupts here
                 Message m = (Message) input.readObject();
                 handle(m);
             }
 
-        } catch (IOException e1)
+        }
+        catch(IOException e1)
         {
             e1.printStackTrace();
-        } catch (ClassNotFoundException e)
+        }
+        catch(ClassNotFoundException e)
         {
             e.printStackTrace();
         }
@@ -88,7 +91,8 @@ public class CommunicationHandler extends Thread {
         try
         {
             socket.close();
-        } catch (IOException e)
+        }
+        catch(IOException e)
         {
             e.printStackTrace();
         }
@@ -101,16 +105,16 @@ public class CommunicationHandler extends Thread {
      */
     private void handle(Message m)
     {
-        if (m instanceof BlockingMessage)
+        if(m instanceof BlockingMessage)
         {
             BlockingMessage q = (BlockingMessage) m;
 
-            for (ReplyWaiting bm : replies)
+            for(ReplyWaiting bm : replies)
             {
-                if (bm.message == q.getMessageNumber())
+                if(bm.message == q.getMessageNumber())
                 {
                     bm.setReply(q.getMessage());
-                    synchronized (bm.thread)
+                    synchronized(bm.thread)
                     {
                         bm.thread.notify();
                     }
@@ -121,7 +125,7 @@ public class CommunicationHandler extends Thread {
             throw new RuntimeException("Got BlockingMessage that didn't need reply?");
         }
 
-        for (MessageListener mh : listeners)
+        for(MessageListener mh : listeners)
         {
             mh.handle(m);
         }
@@ -159,7 +163,8 @@ public class CommunicationHandler extends Thread {
             outObjects.writeObject(m);
 
             outObjects.flush();
-        } catch (IOException e)
+        }
+        catch(IOException e)
         {
             // This happens sometimes. I forget when though.
             e.printStackTrace();
@@ -181,18 +186,19 @@ public class CommunicationHandler extends Thread {
 
         send(bm);
 
-        synchronized (Thread.currentThread())
+        synchronized(Thread.currentThread())
         {
-            while (true)
+            while(true)
             {
                 try
                 {
                     Thread.currentThread().wait();
-                } catch (InterruptedException e)
+                }
+                catch(InterruptedException e)
                 {
                 }
 
-                if (wait.getReply() != null)
+                if(wait.getReply() != null)
                     return wait.getReply();
             }
         }
@@ -213,6 +219,14 @@ public class CommunicationHandler extends Thread {
     public Socket getSocket()
     {
         return socket;
+    }
+
+    /**
+     * @return The only instance of CommunicationHandler (or null)
+     */
+    public static CommunicationHandler getInstance()
+    {
+        return instance;
     }
 
     /**
@@ -256,5 +270,4 @@ public class CommunicationHandler extends Thread {
             this.reply = reply;
         }
     }
-
 }
