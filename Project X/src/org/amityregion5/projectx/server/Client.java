@@ -157,7 +157,7 @@ public class Client extends Thread {
         else if(m instanceof TextualMessage)
         {
             TextualMessage tm = (TextualMessage) m;
-            if(tm instanceof ChatMessage)
+            if(tm instanceof ChatMessage || tm instanceof IntroduceMessage)
             {
                 server.relayChat((ChatMessage) tm);
             }
