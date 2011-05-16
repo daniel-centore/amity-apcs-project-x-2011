@@ -212,7 +212,6 @@ public class LobbyWindow extends JFrame implements MessageListener {
 
     public void handle(final Message m)
     {
-        System.out.println(m.getClass());
         if(m instanceof ChatMessage)
         {
             ChatMessage cm = (ChatMessage) m;

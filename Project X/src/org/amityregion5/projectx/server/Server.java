@@ -26,6 +26,7 @@ import java.util.HashMap;
 import org.amityregion5.projectx.common.communication.Constants;
 import org.amityregion5.projectx.common.communication.messages.AnnounceMessage;
 import org.amityregion5.projectx.common.communication.messages.ChatMessage;
+import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.server.communication.Multicaster;
 
 /**
@@ -111,7 +112,7 @@ public class Server {
         return listening;
     }
 
-    public void relayChat(ChatMessage m)
+    public void relayMessage(Message m)
     {
         for(Client client : clients.values())
         {
