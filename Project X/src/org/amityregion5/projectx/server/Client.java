@@ -64,12 +64,15 @@ public class Client extends Thread {
 
             while (!quit)
             {
-                Message m = (Message) inObject.readObject();
-                this.processMessage(m);
-                // FIXME we may want to consider starting another thread for
-                // message processing, especially if we're gonna be having
-                // like 30 messages coming in per second
-                // ie if (m instanceof EntityMovedMessage) { ... }
+                final Message m = (Message) inObject.readObject();
+                
+                new Thread()
+                {
+                    public void run()
+                    {
+                        Client.this.processMessage(m);
+                    }
+                }.start();
             }
 
             inObject.close();
