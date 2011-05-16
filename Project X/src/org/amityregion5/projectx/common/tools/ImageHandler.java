@@ -26,11 +26,13 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 /**
- * Class documentation.
+ * Handles image loading
  * 
- * @author Mike DiBuduo
+ * @author Daniel Centore
+ * @author Mike Zuo
  */
 public class ImageHandler {
+    
     /**
      * Loads an image from a source specified by a string.
      * 
@@ -39,20 +41,7 @@ public class ImageHandler {
      */
     public BufferedImage loadImage(String str)
     {
-        if (looksLikeFilePath(str))
-            return loadFile(str);
-        return null;
-    }
-
-    /**
-     * Determines whether a given string seems to be a file path.
-     * 
-     * @param str The string to be tested.
-     * @return Whether the string should be treated as a file path.
-     */
-    private boolean looksLikeFilePath(String str)
-    {
-        return true;
+        return loadFile(str);
     }
 
     /**
@@ -66,8 +55,7 @@ public class ImageHandler {
         try
         {
             return ImageIO.read(new File(path));
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             return null;
         }
