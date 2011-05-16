@@ -155,9 +155,9 @@ public class Client extends Thread {
                 if(!server.hasClient(im.getText()))
                 {
                     username = im.getText();
+                    server.relayMessage(im);
                     server.addClient(username, this);
                     sendReply((BlockingMessage) m, new BooleanReplyMessage(true));
-                    server.relayMessage(im);
                 }
                 else
                 {
