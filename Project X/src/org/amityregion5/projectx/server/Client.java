@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 
 import org.amityregion5.projectx.common.communication.messages.BlockingMessage;
 import org.amityregion5.projectx.common.communication.messages.BooleanReplyMessage;
@@ -96,6 +97,15 @@ public class Client extends Thread {
         catch(EOFException eof)
         {
             System.out.println("Client disconnected");
+            // remove this client from the server list
+            if(username != null) // this client gave us its username
+            {
+                server.removeClient(username); // take it off the server's list
+            }
+        }
+        catch (SocketException se)
+        {
+           System.out.println("Client disconnected");
             // remove this client from the server list
             if(username != null) // this client gave us its username
             {

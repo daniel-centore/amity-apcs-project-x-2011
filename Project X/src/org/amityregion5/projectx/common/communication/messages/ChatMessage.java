@@ -43,7 +43,7 @@ public class ChatMessage extends TextualMessage {
     }
 
     private String usernameFrom; // who the message is from
-    private ArrayList<String> destUsers = new ArrayList<String>(); // the users to send it to
+    private String destUser = null; // the user to send it to (if private)
     private Type type; // type of message (see inner enum Type)
 
     /**
@@ -62,7 +62,7 @@ public class ChatMessage extends TextualMessage {
     /**
      * Creates a chat message
      * 
-     * @param cont The messahe
+     * @param cont The message
      * @param t The visibility (see enum type)
      * @param from Who it's from
      */
@@ -84,9 +84,9 @@ public class ChatMessage extends TextualMessage {
     /**
      * @return The users it's destined for
      */
-    public ArrayList<String> getDestUsers()
+    public String getDestUser()
     {
-        return destUsers;
+        return destUser;
     }
 
     /**

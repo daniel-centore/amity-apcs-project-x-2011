@@ -23,9 +23,23 @@ package org.amityregion5.projectx.common.communication.messages;
  *
  * @author Joe Stein
  */
-public class StatusUpdateMessage extends TextualMessage {
-    public StatusUpdateMessage(String status)
-    {
-        super(status);
-    }
+public class StatusUpdateMessage extends TextualMessage
+{
+   private Type type;
+   public enum Type
+   {
+      WAITING,
+      COUNTDOWN,
+      STARTING;
+   }
+   public StatusUpdateMessage(String status, StatusUpdateMessage.Type type)
+   {
+      super(status);
+      this.type = type;
+   }
+
+   public StatusUpdateMessage.Type getType()
+   {
+      return type;
+   }
 }

@@ -26,6 +26,7 @@ import java.util.HashMap;
 import org.amityregion5.projectx.common.communication.Constants;
 import org.amityregion5.projectx.common.communication.messages.AnnounceMessage;
 import org.amityregion5.projectx.common.communication.messages.ChatMessage;
+import org.amityregion5.projectx.common.communication.messages.GoodbyeMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.server.communication.Multicaster;
 
@@ -49,6 +50,10 @@ public class Server {
      */
     private HashMap<String, Client> clients = new HashMap<String, Client>();
 
+    /**
+     * Creates a new server.
+     * @param name the name of this server
+     */
     public Server(String name)
     {
         this.name = name;
@@ -73,14 +78,25 @@ public class Server {
         }
     }
 
+    /**
+     * Adds this client to this server.
+     * @param username
+     * @param c
+     */
     public void addClient(String username, Client c)
     {
         clients.put(username, c);
     }
 
+    /**
+     * Removes the client from this server, and notifies other clients that
+     * this client has left.
+     * @param username the username of the client to remove
+     */
     public void removeClient(String username)
     {
         clients.remove(username);
+        relayMessage(new GoodbyeMessage(username));
     }
 
     private void startListening()
@@ -97,6 +113,11 @@ public class Server {
         }
     }
 
+    /**
+     * Checks to see if this server already has a client by the given username.
+     * @param text the username to check
+     * @return whether or not 
+     */
     public boolean hasClient(String text)
     {
         return clients.containsKey(text);
