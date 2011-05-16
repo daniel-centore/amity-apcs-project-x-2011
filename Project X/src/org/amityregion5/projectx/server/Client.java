@@ -149,22 +149,13 @@ public class Client extends Thread {
 
                 if (!server.hasClient(im.getText()))
                 {
+                    // If there is no client 
                     username = im.getText();
                     server.relayMessage(im);
-                    // server.sendPlayersUpdate();
                     ActivePlayersMessage q = server.getPlayersUpdate();
                     server.addClient(username, this);
 
-                    sendReply((BlockingMessage) m, new BooleanReplyMessage(true));
-
-                    try
-                    {
-                        Thread.sleep(1500); // allow LobbyWindow to initialize
-                    } catch (InterruptedException e)
-                    {
-                    }
-
-                    send(q);
+                    sendReply((BlockingMessage) m, q);
                 } else
                 {
                     sendReply((BlockingMessage) m, new BooleanReplyMessage(false));

@@ -22,7 +22,7 @@ import org.amityregion5.projectx.common.communication.MessageListener;
 import org.amityregion5.projectx.common.communication.messages.Message;
 
 /**
- * Handles received
+ * Handles received EntityMovedMessages
  *
  * @author Daniel Centore
  */

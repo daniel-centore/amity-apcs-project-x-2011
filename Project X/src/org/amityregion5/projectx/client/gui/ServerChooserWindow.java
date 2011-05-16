@@ -33,8 +33,10 @@ import javax.swing.SwingUtilities;
 import org.amityregion5.projectx.client.communication.CommunicationHandler;
 import org.amityregion5.projectx.client.handlers.PreferenceManager;
 import org.amityregion5.projectx.common.communication.DatagramListener;
+import org.amityregion5.projectx.common.communication.messages.ActivePlayersMessage;
 import org.amityregion5.projectx.common.communication.messages.BooleanReplyMessage;
 import org.amityregion5.projectx.common.communication.messages.IntroduceMessage;
+import org.amityregion5.projectx.common.communication.messages.Message;
 
 /**
  * The window for choosing a server
@@ -177,19 +179,22 @@ public class ServerChooserWindow extends JFrame implements DatagramListener {
             return;
         }
 
-        BooleanReplyMessage reply = (BooleanReplyMessage) ch.requestReply(new IntroduceMessage(PreferenceManager.getUsername()));
-        if(!reply.isAffirmative())
+        Message reply = ch.requestReply(new IntroduceMessage(PreferenceManager.getUsername()));
+        // ActivePlayerUpdate message serves as an affirmative here.
+        if(reply instanceof BooleanReplyMessage)
         {
+
             JOptionPane.showMessageDialog(null, "Username already in use", "Error", JOptionPane.WARNING_MESSAGE);
             int choice = JOptionPane.showConfirmDialog(this, "Do you want to change your username?", "Do you want to change?", JOptionPane.YES_NO_OPTION);
             if (choice == JOptionPane.YES_OPTION)
                 new UsernameWindow(this, true, false);
         }
-        else
+        else if (reply instanceof ActivePlayersMessage)
         {
+            ActivePlayersMessage apm = (ActivePlayersMessage) reply;
             ServerChooserWindow.this.setVisible(false);
             ServerChooserWindow.this.dispose();
-            new LobbyWindow(ch);
+            new LobbyWindow(ch,apm.getPlayers());
         }
     }//GEN-LAST:event_joinBtnActionPerformed
 

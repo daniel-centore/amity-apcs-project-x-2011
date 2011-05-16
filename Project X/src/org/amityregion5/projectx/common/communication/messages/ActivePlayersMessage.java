@@ -32,6 +32,10 @@ public class ActivePlayersMessage extends Message {
         this.players = players;
     }
 
+    /**
+     * Gets the active players on the server in the form of a List of Strings.
+     * @return the active players on the server in a List<String>
+     */
     public List<String> getPlayers()
     {
         return players;

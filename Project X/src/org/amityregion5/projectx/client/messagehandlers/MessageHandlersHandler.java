@@ -22,6 +22,8 @@ import org.amityregion5.projectx.client.communication.CommunicationHandler;
 
 /**
  * Registers all of our message handlers!
+ * FIXME can't we just register directly with CommunicationHandler?!
+ * this is really convoluted ~ joe
  *
  * @author Daniel Centore
  */

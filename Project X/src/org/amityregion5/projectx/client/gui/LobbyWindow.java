@@ -52,8 +52,9 @@ public class LobbyWindow extends JFrame implements MessageListener {
      * Creates a new LobbyWindow.
      * 
      * @param sock the socket that was connected to the server after choosing
+     * @param players the players that were already in this lobby
      */
-    public LobbyWindow(CommunicationHandler ch)
+    public LobbyWindow(CommunicationHandler ch, List<String> players)
     {
         super("Project X Lobby");
 
@@ -62,6 +63,10 @@ public class LobbyWindow extends JFrame implements MessageListener {
         playerListModel = new DefaultListModel();
         initComponents();
         playerListModel.addElement(PreferenceManager.getUsername());
+        for (String player : players)
+        {
+            playerListModel.addElement(player);
+        }
         playerList.setModel(playerListModel);
         this.setVisible(true);
     }
