@@ -39,7 +39,8 @@ import org.amityregion5.projectx.common.communication.messages.Message;
  */
 public class CommunicationHandler extends Thread {
 
-    private static CommunicationHandler instance = null; // the main instance (TODO: unkludge this)
+    private static CommunicationHandler instance = null; // the latest instance
+
     private String serverIP; // IP to work with
     private Socket socket = null; // socket we create
     private boolean keepReading = true; // should we be reading from the server?
@@ -55,6 +56,9 @@ public class CommunicationHandler extends Thread {
      */
     public CommunicationHandler(String serverIP) throws IOException
     {
+        if (instance != null) // can happen if we leave after bad username
+            instance.keepReading = false;
+
         instance = this;
         this.serverIP = serverIP;
 
@@ -134,7 +138,7 @@ public class CommunicationHandler extends Thread {
      */
     private void die()
     {
-        for(MessageListener mh : listeners)
+        for (MessageListener mh : listeners)
         {
             mh.tellSocketClosed();
         }
