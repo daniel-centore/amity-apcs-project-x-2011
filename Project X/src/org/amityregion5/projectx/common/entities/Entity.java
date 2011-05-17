@@ -21,20 +21,27 @@ package org.amityregion5.projectx.common.entities;
 
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 
 /**
- * An entity.
+ * An entity. All should be created server-side to guarentee they each get unique ids.
  * 
  * @author Daniel Centore
  * @author Joe Stein
  */
-public abstract class Entity {
-    private static long NextUniqueID = 0;
+public abstract class Entity implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
+
+    private static long nextUniqueID = 0;   //so each entity has a unique ID
 
     private final long uniqueID; // necessary to check identity content changes.
-
-    private Point2D location;
-    private BufferedImage image;
+    private Point2D location;   //the entity's location
+    
+    private transient BufferedImage image;    //image representing the entity
+    //TODO: we do not transmit this field, so there needs to be an organized way of loading the image client and server side.
+    //Perhaps getImage() should check if image is null. If so, then load it using an abstract method getImagePath() or such..?
+    
     private int directionFacing; // Constants in EntityConstants
     private int directionMoving;
     private double moveSpeed;
@@ -46,7 +53,7 @@ public abstract class Entity {
      */
     public Entity()
     {
-        uniqueID = NextUniqueID++;
+        uniqueID = nextUniqueID++;
         location = new Point2D.Double(0, 0);
         image = null;
         directionFacing = 0;
