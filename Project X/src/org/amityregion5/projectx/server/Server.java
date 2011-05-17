@@ -23,7 +23,6 @@ import org.amityregion5.projectx.server.communication.Client;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -162,6 +161,10 @@ public class Server {
         {
             ChatMessage cm = (ChatMessage) m;
             controller.chatted(cm.getFrom(),cm.getText());
+        } else if (m instanceof AnnounceMessage)
+        {
+           AnnounceMessage am = (AnnounceMessage) m;
+           controller.chatted("[SERVER]",am.getText());
         }
         // relay to clients
         for(Client client : clients.values())
