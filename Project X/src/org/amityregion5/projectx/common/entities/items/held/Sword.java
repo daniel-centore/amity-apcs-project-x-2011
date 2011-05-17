@@ -27,6 +27,7 @@ import org.amityregion5.projectx.common.entities.items.DamageDealing;
  * @author Mike DiBuduo
  */
 public class Sword extends MeleeWeapon implements DamageDealing {
+    
     private static int SWORD_RATE = 42; // FIXME: arbitrary.
 
     private int damage;

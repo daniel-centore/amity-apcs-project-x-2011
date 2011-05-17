@@ -73,7 +73,6 @@ public class CommunicationHandler extends Thread {
 
             while (keepReading)
             {
-                // TODO: handle communication interrupts here
                 Message m = (Message) input.readObject();
                 handle(m);
             }
@@ -81,6 +80,7 @@ public class CommunicationHandler extends Thread {
         } catch (IOException e1)
         {
             e1.printStackTrace();
+            System.exit(-1);
         } catch (ClassNotFoundException e)
         {
             e.printStackTrace();
