@@ -197,6 +197,9 @@ public class ServerChooserWindow extends JFrame implements DatagramListener
             if (choice == JOptionPane.YES_OPTION)
             {
                new UsernameWindow(this, true, false);
+            } else
+            {
+               joined = true;
             }
          } else if (reply instanceof ActivePlayersMessage)
          {

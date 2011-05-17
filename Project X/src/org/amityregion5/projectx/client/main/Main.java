@@ -47,12 +47,6 @@ public class Main {
             // ignore
         }
 
-        final ServerChooserWindow chooser = new ServerChooserWindow();
-
-        MulticastCommunicationHandler mch = new MulticastCommunicationHandler();
-        mch.registerListener(chooser);
-        mch.start();
-
         SplashScreen s = new SplashScreen();
         try
         {
@@ -66,6 +60,12 @@ public class Main {
         } catch (InterruptedException e)
         {
         }
+
+        final ServerChooserWindow chooser = new ServerChooserWindow();
+
+        MulticastCommunicationHandler mch = new MulticastCommunicationHandler();
+        mch.registerListener(chooser);
+        mch.start();
 
         s.setVisible(false);
         chooser.setVisible(true);
