@@ -30,26 +30,24 @@ import java.io.Serializable;
  * @author Joe Stein
  */
 public abstract class Entity implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
 
-    private static long nextUniqueID = 0;   //so each entity has a unique ID
+    private static long nextUniqueID = 0; // so each entity has a unique ID
 
     private final long uniqueID; // necessary to check identity content changes.
-    private Point2D location;   //the entity's location
-    
-    private transient BufferedImage image;    //image representing the entity
-    //TODO: we do not transmit this field, so there needs to be an organized way of loading the image client and server side.
-    //Perhaps getImage() should check if image is null. If so, then load it using an abstract method getImagePath() or such..?
-    
+    private Point2D location; // the entity's location
+
+    private transient BufferedImage image; // image representing the entity
+    // TODO: we do not transmit this field, so there needs to be an organized way of loading the image client and server side.
+    // Perhaps getImage() should check if image is null. If so, then load it using an abstract method getImagePath() or such..?
+
     private int directionFacing; // Constants in EntityConstants
-    private int directionMoving;
-    private double moveSpeed;
+    private int directionMoving; // The direction we are moving in
+    private double moveSpeed; // How fast we move in pixels per ?
 
     /**
-     * Default entity constructor.
-     * Sets sane (but not really useful) default values.
-     * Use this directly as little as possible.
+     * Default entity constructor. Sets sane (but not really useful) default values. Use this directly as little as possible.
      */
     public Entity()
     {
@@ -185,7 +183,7 @@ public abstract class Entity implements Serializable {
 
     /**
      * Checks if two Entities are the same using uniquely-assigned ids.
-     *
+     * 
      * @param e The other Entity.
      * @return The equivalence of the two Entities' ids.
      */

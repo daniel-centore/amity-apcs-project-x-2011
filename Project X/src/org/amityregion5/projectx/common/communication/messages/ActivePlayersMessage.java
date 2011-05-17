@@ -33,6 +33,10 @@ public class ActivePlayersMessage extends Message {
 
     private List<String> players; // player list
 
+    /**
+     * Creates an ActivePlayersMessage
+     * @param players List of players
+     */
     public ActivePlayersMessage(List<String> players)
     {
         this.players = players;
@@ -48,6 +52,10 @@ public class ActivePlayersMessage extends Message {
         return players;
     }
 
+    /**
+     * Sets the list of players
+     * @param players The list
+     */
     public void setPlayers(List<String> players)
     {
         this.players = players;

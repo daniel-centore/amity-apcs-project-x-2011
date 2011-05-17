@@ -30,6 +30,10 @@ public class IntroduceMessage extends TextualMessage {
     
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Creates an IntroduceMessage
+     * @param username Username of person to introduce
+     */
     public IntroduceMessage(String username)
     {
         super(username);

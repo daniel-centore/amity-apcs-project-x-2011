@@ -25,6 +25,7 @@ package org.amityregion5.projectx.common.entities;
  * @author Mike DiBuduo
  */
 public class EntityConstants {
+
     public final int NORTH = 0;
     public final int EAST = 90;
     public final int SOUTH = 180;
@@ -33,4 +34,5 @@ public class EntityConstants {
     public final int SOUTH_EAST = 135;
     public final int SOUTH_WEST = 225;
     public final int NORTH_WEST = 315;
+
 }

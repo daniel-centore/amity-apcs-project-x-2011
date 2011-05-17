@@ -17,34 +17,14 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
-package org.amityregion5.projectx.common.entities.characters;
-
-import org.amityregion5.projectx.common.entities.items.held.Weapon;
+package org.amityregion5.projectx.common.maps;
 
 /**
- * Character controlled by a Client which fights Enemies. Capable of using multiple weapons.
+ * Stub
  * 
- * @author Mike DiBuduo
+ * @author Daniel Centore
+ *
  */
-public class Player extends Character {
-    
-    private static final long serialVersionUID = 1L;
+public class TestingMap extends AbstractMap {
 
-    private static final int MAX_HEALTH = 100; // Player's health should be 100
-
-    public Player()
-    {
-        this(MAX_HEALTH);
-    }
-
-    public Player(int health)
-    {
-        super(health, MAX_HEALTH);
-    }
-
-    public Player(int health, Weapon wp)
-    {
-        this(health);
-        addWeapon(wp);
-    }
 }

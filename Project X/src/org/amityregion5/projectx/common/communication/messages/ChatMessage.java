@@ -19,7 +19,6 @@
  */
 package org.amityregion5.projectx.common.communication.messages;
 
-import java.util.ArrayList;
 
 /**
  * A chat message.

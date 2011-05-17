@@ -24,18 +24,26 @@ package org.amityregion5.projectx.common.communication.messages;
  * Only contains a boolean.
  *
  * @author Joe Stein
+ * @author Daniel Centore
  */
 public class BooleanReplyMessage extends Message {
     
     private static final long serialVersionUID = 1L;
 
-    private boolean reply;
+    private boolean reply;  //reply to send
 
+    /**
+     * Creates a BooleanReplyMessage
+     * @param r The boolean
+     */
     public BooleanReplyMessage(boolean r)
     {
         reply = r;
     }
 
+    /**
+     * @return Does it contain true?
+     */
     public boolean isAffirmative()
     {
         return reply;

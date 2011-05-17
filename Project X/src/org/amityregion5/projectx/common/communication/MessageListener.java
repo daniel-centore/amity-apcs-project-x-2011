@@ -31,6 +31,10 @@ public interface MessageListener {
      * Handles/processes a message.
      * @param m the message to be handled
      */
+    /**
+     * Handles a message that just came from either the server or client
+     * @param m Message to handle
+     */
     public void handle(Message m);
 
     /**

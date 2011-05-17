@@ -28,6 +28,10 @@ public class GoodbyeMessage extends TextualMessage {
     
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Creates a GoodbyeMessage
+     * @param username Username of person who left
+     */
     public GoodbyeMessage(String username)
     {
         super(username);

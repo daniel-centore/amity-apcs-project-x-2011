@@ -27,7 +27,10 @@ package org.amityregion5.projectx.common.communication;
  */
 public class Constants {
     
+    //TCP/IP Stuff
     public static final int PORT = 27182;
+    
+    //Multicast Stuff
     public static final int UDPORT = 4567;
     public static final String UDPGROUP = "230.0.0.1";
     public static final int MULTICAST_INTERVAL = 2000;

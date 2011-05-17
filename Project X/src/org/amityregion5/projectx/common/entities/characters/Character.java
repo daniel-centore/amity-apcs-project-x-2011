@@ -33,7 +33,8 @@ import org.amityregion5.projectx.common.entities.items.held.Weapon;
  */
 public abstract class Character extends Entity
 {
-
+    private static final long serialVersionUID = 1L;
+    
     private ArrayList<Weapon> weapons;
     private int currWeapon;
     private int hp;

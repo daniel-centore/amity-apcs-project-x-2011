@@ -20,26 +20,28 @@ package org.amityregion5.projectx.common.communication.messages;
 
 /**
  * A status update from the server to clients.
- *
+ * 
  * @author Joe Stein
  */
-public class StatusUpdateMessage extends TextualMessage
-{
-   private Type type;
-   public enum Type
-   {
-      WAITING,
-      COUNTDOWN,
-      STARTING;
-   }
-   public StatusUpdateMessage(String status, StatusUpdateMessage.Type type)
-   {
-      super(status);
-      this.type = type;
-   }
+public class StatusUpdateMessage extends TextualMessage {
 
-   public StatusUpdateMessage.Type getType()
-   {
-      return type;
-   }
+    private static final long serialVersionUID = 1L;
+
+    private Type type;
+
+    public enum Type
+    {
+        WAITING, COUNTDOWN, STARTING;
+    }
+
+    public StatusUpdateMessage(String status, StatusUpdateMessage.Type type)
+    {
+        super(status);
+        this.type = type;
+    }
+
+    public StatusUpdateMessage.Type getType()
+    {
+        return type;
+    }
 }

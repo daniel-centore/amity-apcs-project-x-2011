@@ -28,11 +28,13 @@ import org.amityregion5.projectx.common.entities.items.held.Weapon;
  */
 public class Enemy extends Character {
 
-   /**
-    * Creates an enemy with specified health.
-    *
-    * @param health
-    */
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * Creates an enemy with specified health.
+     * 
+     * @param health
+     */
     public Enemy(int health, int max)
     {
         super(health, max);

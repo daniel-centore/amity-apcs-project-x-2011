@@ -28,6 +28,10 @@ import java.net.DatagramPacket;
  */
 public interface DatagramListener {
     
+    /**
+     * Handles an incoming DatagramPacket
+     * @param packet The packet to handle
+     */
     public void handle(DatagramPacket packet);
     
 }

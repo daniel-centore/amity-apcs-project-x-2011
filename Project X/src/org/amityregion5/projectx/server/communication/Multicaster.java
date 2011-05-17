@@ -27,25 +27,27 @@ import java.util.logging.Logger;
 import org.amityregion5.projectx.common.communication.Constants;
 
 /**
- * Multicasts this server's name so players on the intranet
- * can connect easily.
- *
+ * Multicasts this server's name so players on the intranet can connect easily.
+ * 
  * @author Joe Stein
  */
 public class Multicaster extends Thread {
 
-    private boolean keepBroadcasting = true;
+    private boolean keepBroadcasting = true; // should we keep broadcasting?
     private String name; // the name to broadcast
-    private MulticastSocket sock;
+    private MulticastSocket sock; // the socket to broadcast on
 
+    /**
+     * Creates a Multicaster
+     * @param name The name of the server to broadcast
+     */
     public Multicaster(String name)
     {
         this.name = name;
         try
         {
             sock = new MulticastSocket();
-        }
-        catch(IOException ex)
+        } catch (IOException ex)
         {
             Logger.getLogger(Multicaster.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -56,7 +58,7 @@ public class Multicaster extends Thread {
      */
     public void startMulticasting()
     {
-        if(!keepBroadcasting)
+        if (!keepBroadcasting)
         {
             keepBroadcasting = true;
             start();
@@ -75,25 +77,22 @@ public class Multicaster extends Thread {
     @Override
     public void run()
     {
-        while(keepBroadcasting)
+        while (keepBroadcasting)
         {
             try
             {
                 byte[] buf = name.getBytes();
 
                 InetAddress group = InetAddress.getByName(Constants.UDPGROUP);
-                DatagramPacket packet = new DatagramPacket(buf, buf.length,
-                        group, Constants.UDPORT);
+                DatagramPacket packet = new DatagramPacket(buf, buf.length, group, Constants.UDPORT);
                 sock.send(packet);
 
                 sleep(Constants.MULTICAST_INTERVAL);
-            }
-            catch(InterruptedException ex)
+            } catch (InterruptedException ex)
             {
                 keepBroadcasting = false;
                 ex.printStackTrace();
-            }
-            catch(IOException e)
+            } catch (IOException e)
             {
                 keepBroadcasting = false;
                 e.printStackTrace();
