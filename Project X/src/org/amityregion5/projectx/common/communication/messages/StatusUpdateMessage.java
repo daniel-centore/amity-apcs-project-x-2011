@@ -22,6 +22,7 @@ package org.amityregion5.projectx.common.communication.messages;
  * A status update from the server to clients.
  * 
  * @author Joe Stein
+ * @author Daniel Centore
  */
 public class StatusUpdateMessage extends TextualMessage {
 
@@ -34,13 +35,30 @@ public class StatusUpdateMessage extends TextualMessage {
         WAITING, COUNTDOWN, STARTING;
     }
 
-    public StatusUpdateMessage(String status, StatusUpdateMessage.Type type)
+    /**
+     * Creates a StatusUpdateMessage without a status
+     * @param type Type of message
+     */
+    public StatusUpdateMessage(Type type)
+    {
+        this(null,  type);
+    }
+
+    /**
+     * Creates a StatusUpdateMessage
+     * @param status The status to show in the Lobby
+     * @param type Type of message
+     */
+    public StatusUpdateMessage(String status, Type type)
     {
         super(status);
         this.type = type;
     }
 
-    public StatusUpdateMessage.Type getType()
+    /**
+     * @return The type of message (see enum Type)
+     */
+    public Type getType()
     {
         return type;
     }

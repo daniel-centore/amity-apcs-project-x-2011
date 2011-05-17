@@ -22,6 +22,8 @@ package org.amityregion5.projectx.client.gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.event.WindowEvent;
 
@@ -42,21 +44,20 @@ import org.amityregion5.projectx.common.maps.AbstractMap;
 public class Gui extends JFrame {
 
     private static final long serialVersionUID = 1L;
-
     public static final int GAME_WIDTH = 1024; // the game size we will draw at before resizing
     public static final int GAME_HEIGHT = 768;
-
     private static Gui instance; // the instance of Gui
     private static AbstractMap map; // the current game map
     private static JComponent panel; // the panel we will draw on
     private static Image buffer; // the image the panel should draw
+    private boolean fullscreen;
 
     public Gui(AbstractMap map)
     {
         super("Amity Project X");
 
+        fullscreen = false;
         instance = this;
-
         Gui.map = map;
 
         this.setBackground(Color.black);
@@ -66,7 +67,6 @@ public class Gui extends JFrame {
             @Override
             public void windowClosing(WindowEvent arg0)
             {
-                // TODO: make this close connections and such
                 System.exit(0);
             }
         });
@@ -79,7 +79,7 @@ public class Gui extends JFrame {
             // called when we run RepaintHandler.fireUpdateRequired()
             public void paintComponent(Graphics g)
             {
-                if (buffer == null)
+                if(buffer == null)
                 {
                     return;
                 }
@@ -115,19 +115,19 @@ public class Gui extends JFrame {
             @Override
             public void run()
             {
-                while (true)
+                while(true)
                 {
                     panel.requestFocusInWindow();
                     try
                     {
                         Thread.sleep(1000);
-                    } catch (InterruptedException e)
+                    }
+                    catch(InterruptedException e)
                     {
                     }
                 }
             }
         }.start();
-
     }
 
     /**
@@ -148,13 +148,14 @@ public class Gui extends JFrame {
         int x = 0;
         int y = 0;
 
-        if (thumbRatio < aspectRatio)
+        if(thumbRatio < aspectRatio)
         {
             y = newHeight;
             newHeight = (int) (newWidth / aspectRatio);
             y /= 2;
             y -= newHeight / 2;
-        } else
+        }
+        else
         {
             x = newWidth;
             newWidth = (int) (newHeight * aspectRatio);
@@ -163,7 +164,9 @@ public class Gui extends JFrame {
         }
 
         return new int[]
-        { newWidth, newHeight, x, y };
+                {
+                    newWidth, newHeight, x, y
+                };
     }
 
     /**

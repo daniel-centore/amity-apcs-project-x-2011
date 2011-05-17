@@ -39,6 +39,7 @@ import org.amityregion5.projectx.common.communication.messages.GoodbyeMessage;
 import org.amityregion5.projectx.common.communication.messages.IntroduceMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.common.communication.messages.StatusUpdateMessage;
+import org.amityregion5.projectx.common.maps.TestingMap;
 
 /**
  * The game lobby 
@@ -253,7 +254,10 @@ public class LobbyWindow extends JFrame implements MessageListener {
             final StatusUpdateMessage sum = (StatusUpdateMessage) m;
             if(sum.getType() == StatusUpdateMessage.Type.STARTING)
             {
-                // TODO starting the game!
+                this.setVisible(false);
+
+                //TODO: add system for selecting map
+                new Gui(new TestingMap());
             }
             SwingUtilities.invokeLater(new Runnable() {
 

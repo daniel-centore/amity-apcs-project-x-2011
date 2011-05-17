@@ -75,10 +75,10 @@
                           <Group type="102" attributes="0">
                               <Component id="jScrollPane1" min="-2" pref="100" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jScrollPane2" pref="317" max="32767" attributes="0"/>
+                              <Component id="jScrollPane2" pref="324" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
-                              <Component id="announceField" pref="334" max="32767" attributes="0"/>
+                              <Component id="announceField" pref="343" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="announceBtn" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -92,8 +92,8 @@
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jScrollPane2" alignment="0" pref="253" max="32767" attributes="0"/>
-                          <Component id="jScrollPane1" alignment="0" pref="253" max="32767" attributes="0"/>
+                          <Component id="jScrollPane2" alignment="0" pref="252" max="32767" attributes="0"/>
+                          <Component id="jScrollPane1" alignment="0" pref="252" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -166,7 +166,7 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="343" max="32767" attributes="0"/>
+                      <EmptySpace pref="351" max="32767" attributes="0"/>
                       <Component id="haltButton" min="-2" max="-2" attributes="1"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -178,7 +178,7 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="161" max="32767" attributes="0"/>
+                      <EmptySpace pref="224" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -192,7 +192,7 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="startGameBtn" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="193" max="32767" attributes="0"/>
+                      <EmptySpace pref="226" max="32767" attributes="0"/>
                       <Component id="haltButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -221,7 +221,6 @@
             <Component class="javax.swing.JButton" name="startGameBtn">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Start Game"/>
-                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="startGameBtnActionPerformed"/>
@@ -250,9 +249,9 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="portLabel" pref="218" max="32767" attributes="0"/>
-                          <Component id="ipLabel" pref="218" max="32767" attributes="1"/>
-                          <Component id="nameLabel" alignment="0" pref="218" max="32767" attributes="1"/>
+                          <Component id="portLabel" pref="250" max="32767" attributes="0"/>
+                          <Component id="ipLabel" pref="250" max="32767" attributes="1"/>
+                          <Component id="nameLabel" alignment="0" pref="250" max="32767" attributes="1"/>
                       </Group>
                       <EmptySpace min="-2" pref="106" max="-2" attributes="0"/>
                   </Group>
@@ -276,7 +275,7 @@
                           <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="portLabel" alignment="3" min="-2" pref="18" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="218" max="32767" attributes="0"/>
+                      <EmptySpace pref="228" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

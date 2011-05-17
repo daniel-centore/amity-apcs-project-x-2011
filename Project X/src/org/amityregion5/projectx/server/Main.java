@@ -24,7 +24,6 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import org.amityregion5.projectx.server.gui.ServerNameWindow;
 
 /**
