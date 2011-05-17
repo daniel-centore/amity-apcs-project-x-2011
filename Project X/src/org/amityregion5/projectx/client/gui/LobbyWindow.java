@@ -256,6 +256,7 @@ public class LobbyWindow extends JFrame implements MessageListener {
             {
                 this.setVisible(false);
 
+
                 //TODO: add system for selecting map
                 new Gui(new TestingMap());
             }
