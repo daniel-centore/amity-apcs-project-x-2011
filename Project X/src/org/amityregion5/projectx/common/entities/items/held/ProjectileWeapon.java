@@ -34,12 +34,13 @@ public abstract class ProjectileWeapon extends Weapon {
     private int mags;
 
     public ProjectileWeapon(int range, int startAmmo, int _maxAmmo, int rate,
-            int rpm)
+            int rpm, int mags)
     {
         super(range, rate);
         ammo = startAmmo;
         maxAmmo = _maxAmmo;
         roundsPerMag = rpm;
+        this.mags = mags;
     }
 
     public int getAmmo()

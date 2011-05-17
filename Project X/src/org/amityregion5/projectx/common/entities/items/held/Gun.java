@@ -27,9 +27,10 @@ package org.amityregion5.projectx.common.entities.items.held;
 public class Gun extends ProjectileWeapon
 {
 
-   public Gun(int range, int ammo, int maxAmmo, int fireRate, int roundsPerMag)
+   public Gun(int range, int ammo, int maxAmmo, int fireRate, int roundsPerMag, int mags)
    {
-      super(range, ammo, maxAmmo, fireRate, roundsPerMag);
+      super(range, ammo, maxAmmo, 
+              fireRate, roundsPerMag, mags);
    }
 
    public int getDamage()
