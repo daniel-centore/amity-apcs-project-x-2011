@@ -66,7 +66,7 @@ public class ServerChooserWindow extends JFrame implements DatagramListener {
         serverList.setModel(dlm);
 
         serverList.setSelectedIndex(0);
-
+        this.setVisible(true);
         userBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
             {
@@ -305,12 +305,6 @@ public class ServerChooserWindow extends JFrame implements DatagramListener {
 
     public static void main(String[] args)
     {
-        final ServerChooserWindow chooser = new ServerChooserWindow();
-
-        MulticastCommunicationHandler mch = new MulticastCommunicationHandler();
-        mch.registerListener(chooser);
-        mch.start();
-
         try
         {
             // default look and feel for prettiness :D
@@ -319,5 +313,13 @@ public class ServerChooserWindow extends JFrame implements DatagramListener {
         {
             // ignore
         }
+        
+        final ServerChooserWindow chooser = new ServerChooserWindow();
+
+        MulticastCommunicationHandler mch = new MulticastCommunicationHandler();
+        mch.registerListener(chooser);
+        mch.start();
+
+        
     }
 }

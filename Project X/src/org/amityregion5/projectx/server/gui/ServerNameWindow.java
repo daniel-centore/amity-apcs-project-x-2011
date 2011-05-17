@@ -101,9 +101,15 @@ public class ServerNameWindow extends javax.swing.JFrame {
 
     private void okBtnActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_okBtnActionPerformed
     {//GEN-HEADEREND:event_okBtnActionPerformed
-        new Server(serverNameField.getText());
-        this.dispose();
+        startServer();
     }//GEN-LAST:event_okBtnActionPerformed
+
+    private void startServer()
+    {
+        Server s = new Server(serverNameField.getText());
+        s.setController(new GUIServerController(s));
+        this.dispose();
+    }
 
     private void serverNameFieldKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_serverNameFieldKeyPressed
     {//GEN-HEADEREND:event_serverNameFieldKeyPressed
@@ -114,8 +120,7 @@ public class ServerNameWindow extends javax.swing.JFrame {
                 evt.consume();
             } else
             {
-                new Server(serverNameField.getText());
-                this.dispose();
+                startServer();
             }
         } else if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE &&
                 serverNameField.getText().length() <= 1)

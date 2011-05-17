@@ -19,8 +19,11 @@
  */
 package org.amityregion5.projectx.server;
 
+import org.amityregion5.projectx.server.communication.Client;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +31,7 @@ import java.util.List;
 import org.amityregion5.projectx.common.communication.Constants;
 import org.amityregion5.projectx.common.communication.messages.ActivePlayersMessage;
 import org.amityregion5.projectx.common.communication.messages.AnnounceMessage;
+import org.amityregion5.projectx.common.communication.messages.ChatMessage;
 import org.amityregion5.projectx.common.communication.messages.GoodbyeMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.server.communication.Multicaster;
@@ -44,6 +48,7 @@ public class Server {
     private boolean listening = true;
     private ServerSocket servSock;
     private Multicaster multicaster; // for multicasting IP and String
+    private ServerController controller; // controls the server
 
     /*
      * A HashMap of the connected Clients to this Server.
@@ -58,6 +63,7 @@ public class Server {
      */
     public Server(String name)
     {
+        System.out.println("Initializing server...");
         this.name = name;
         try
         {
@@ -81,12 +87,22 @@ public class Server {
     }
 
     /**
+     * Sets this server's controller.
+     * @param sc the ServerController that will control this server
+     */
+    public void setController(ServerController sc)
+    {
+        controller = sc;
+    }
+
+    /**
      * Adds this client to this server.
-     * @param username
-     * @param c
+     * @param username the username of this client
+     * @param c the Client object that handles connections to this client
      */
     public void addClient(String username, Client c)
     {
+        controller.clientJoined(username);
         clients.put(username, c);
     }
 
@@ -97,6 +113,7 @@ public class Server {
      */
     public void removeClient(String username)
     {
+        controller.clientLeft(username);
         clients.remove(username);
         relayMessage(new GoodbyeMessage(username));
     }
@@ -106,12 +123,16 @@ public class Server {
         new Thread(new ClientNetListener()).start();
     }
 
-    protected void kill()
+    /**
+     * Halts the server.
+     */
+    public void kill()
     {
         listening = false;
         for(Client client : clients.values())
         {
-            client.send(new AnnounceMessage("Server shutting down!"));
+            client.send(new AnnounceMessage("Server shutting down now!"));
+            client.kill();
         }
     }
 
@@ -137,20 +158,54 @@ public class Server {
 
     public void relayMessage(Message m)
     {
+        // hook for the controller
+        if (m instanceof ChatMessage)
+        {
+            ChatMessage cm = (ChatMessage) m;
+            controller.chatted(cm.getFrom(),cm.getText());
+        }
+        // relay to clients
         for(Client client : clients.values())
         {
             client.send(m);
         }
     }
-    
+
     public ActivePlayersMessage getPlayersUpdate()
     {
         List<String> names = new ArrayList<String>();
-        
+
         for(Client c : clients.values())
             names.add(c.getUsername());
-        
-       return new ActivePlayersMessage(names);
+
+        return new ActivePlayersMessage(names);
+    }
+
+    public boolean hasClientWithIP(String ip)
+    {
+        for(Client client : clients.values())
+        {
+            if(client.getIP().equals(ip))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public InetAddress getInetAddress()
+    {
+        return servSock.getInetAddress();
+    }
+
+    public int getPort()
+    {
+        return servSock.getLocalPort();
+    }
+
+    public String getName()
+    {
+        return name;
     }
 
     private class ClientNetListener implements Runnable {
@@ -161,9 +216,9 @@ public class Server {
             {
                 while(listening)
                 {
-                    System.out.println("Waiting for clients...");
-                    new Client(servSock.accept(), Server.this).start();
-                    System.out.println("Accepted new client.");
+                    Client newc = new Client(servSock.accept(), Server.this);
+                    newc.start();
+                    controller.clientConnected(newc.getIP());
                 }
             }
             catch(IOException e)

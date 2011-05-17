@@ -55,7 +55,8 @@ public class Main {
 
         if(!gui && name != null)
         {
-            new Server(name);
+            Server s = new Server(name);
+            s.setController(new CommandServerController(s));
         }
         else if(!gui && name == null)
         {
@@ -64,6 +65,7 @@ public class Main {
         } else
         {
             new ServerNameWindow();
+            
         }
     }
 }

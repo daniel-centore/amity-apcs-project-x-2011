@@ -17,7 +17,7 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
-package org.amityregion5.projectx.server;
+package org.amityregion5.projectx.server.communication;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -25,6 +25,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.amityregion5.projectx.common.communication.messages.ActivePlayersMessage;
 import org.amityregion5.projectx.common.communication.messages.BlockingMessage;
@@ -33,6 +35,7 @@ import org.amityregion5.projectx.common.communication.messages.ChatMessage;
 import org.amityregion5.projectx.common.communication.messages.IntroduceMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.common.communication.messages.TextualMessage;
+import org.amityregion5.projectx.server.Server;
 
 /**
  * Represents a client in the game
@@ -47,6 +50,7 @@ public class Client extends Thread {
     private String username;
     private ObjectOutputStream outObjects;
     private ObjectInputStream inObjects;
+    private boolean quit = false;
 
     /**
      * Creates a client
@@ -62,7 +66,8 @@ public class Client extends Thread {
         {
             outObjects = new ObjectOutputStream(sock.getOutputStream());
             inObjects = new ObjectInputStream(sock.getInputStream());
-        } catch (IOException e)
+        }
+        catch(IOException e)
         {
             e.printStackTrace();
         }
@@ -74,13 +79,12 @@ public class Client extends Thread {
         try
         {
 
-            boolean quit = false;
-
-            while (!quit)
+            while(!quit)
             {
                 final Message m = (Message) inObjects.readObject();
 
                 new Thread() {
+
                     @Override
                     public void run()
                     {
@@ -93,29 +97,38 @@ public class Client extends Thread {
             inObjects.close();
             sock.close();
 
-        } catch (EOFException eof)
+        }
+        catch(EOFException eof)
         {
             System.out.println("Client disconnected");
             // remove this client from the server list
-            if (username != null) // this client gave us its username
+            if(username != null) // this client gave us its username
             {
                 server.removeClient(username); // take it off the server's list
             }
-        } catch (SocketException se)
+        }
+        catch(SocketException se)
         {
             System.out.println("Client disconnected");
             // remove this client from the server list
-            if (username != null) // this client gave us its username
+            if(username != null) // this client gave us its username
             {
                 server.removeClient(username); // take it off the server's list
             }
-        } catch (IOException e)
-        {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e)
+        }
+        catch(IOException e)
         {
             e.printStackTrace();
         }
+        catch(ClassNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public String getIP()
+    {
+        return sock.getInetAddress().getHostAddress();
     }
 
     /**
@@ -130,7 +143,8 @@ public class Client extends Thread {
             outObjects.writeObject(m);
 
             outObjects.flush();
-        } catch (IOException e)
+        }
+        catch(IOException e)
         {
             // This happens sometimes. I forget when though.
             e.printStackTrace();
@@ -139,15 +153,15 @@ public class Client extends Thread {
 
     private void processMessage(Message m)
     {
-        if (m instanceof BlockingMessage)
+        if(m instanceof BlockingMessage)
         {
             Message contained = ((BlockingMessage) m).getMessage();
 
-            if (contained instanceof IntroduceMessage)
+            if(contained instanceof IntroduceMessage)
             {
                 IntroduceMessage im = (IntroduceMessage) contained;
 
-                if (!server.hasClient(im.getText()))
+                if(!server.hasClient(im.getText()))
                 {
                     // If there is no client 
                     username = im.getText();
@@ -156,15 +170,17 @@ public class Client extends Thread {
                     server.addClient(username, this);
 
                     sendReply((BlockingMessage) m, q);
-                } else
+                }
+                else
                 {
                     sendReply((BlockingMessage) m, new BooleanReplyMessage(false));
                 }
             }
-        } else if (m instanceof TextualMessage)
+        }
+        else if(m instanceof TextualMessage)
         {
             TextualMessage tm = (TextualMessage) m;
-            if (tm instanceof ChatMessage)
+            if(tm instanceof ChatMessage)
             {
                 server.relayMessage(tm);
             }
@@ -183,4 +199,16 @@ public class Client extends Thread {
         return username;
     }
 
+    public void kill()
+    {
+        try
+        {
+            quit = true;
+            sock.close();
+        }
+        catch(IOException ex)
+        {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

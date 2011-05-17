@@ -88,6 +88,7 @@ public class CommunicationHandler extends Thread {
 
         try
         {
+            die();
             socket.close();
         } catch (IOException e)
         {
@@ -125,6 +126,17 @@ public class CommunicationHandler extends Thread {
         for (MessageListener mh : listeners)
         {
             mh.handle(m);
+        }
+    }
+
+    /**
+     * To be used if the connection dies or is closed.
+     */
+    private void die()
+    {
+        for(MessageListener mh : listeners)
+        {
+            mh.tellSocketClosed();
         }
     }
 

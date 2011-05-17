@@ -16,26 +16,16 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
-package org.amityregion5.projectx.common.communication;
-
-import org.amityregion5.projectx.common.communication.messages.Message;
+package org.amityregion5.projectx.server;
 
 /**
- * An interface whose implementing classes must be able to handle messages.
+ * Class documentation.
  *
  * @author Joe Stein
  */
-public interface MessageListener {
-
-    /**
-     * Handles/processes a message.
-     * @param m the message to be handled
-     */
-    public void handle(Message m);
-
-    /**
-     * Notifies the listener that the socket closed.
-     */
-    public void tellSocketClosed();
-    
+public interface ServerController {
+    public void clientJoined(String username);
+    public void clientLeft(String username);
+    public void clientConnected(String ip);
+    public void chatted(String username, String chat);
 }
