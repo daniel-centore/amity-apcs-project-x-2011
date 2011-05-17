@@ -23,7 +23,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.UIManager;
+
+import org.amityregion5.projectx.server.gui.GUIServerController;
 import org.amityregion5.projectx.server.gui.ServerNameWindow;
 
 /**
@@ -31,56 +34,56 @@ import org.amityregion5.projectx.server.gui.ServerNameWindow;
  * 
  * @author Jenny Liu
  * @author Joe Stein
+ * @author Daniel Centore
  */
 public class Main {
 
     public static void main(String[] args)
     {
+        try
+        {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception ex)
+        {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
         ArrayList<String> ar = new ArrayList<String>();
         ar.addAll(Arrays.asList(args));
         boolean gui = true;
         String name = null;
-        if(ar.contains("--nogui"))
+        if (ar.contains("--nogui"))
         {
             gui = false;
         }
         int ind = ar.indexOf("--name");
-        if(ind > -1 && ind != ar.size() - 1)
+        if (ind > -1 && ind != ar.size() - 1)
         {
             name = ar.get(ind + 1);
-            if(name.startsWith("--") || name.startsWith("-"))
+            if (name.startsWith("--") || name.startsWith("-"))
             {
-                System.err.println("ERROR: You must include a valid server"
-                        + " name after the --name tag.");
+                System.err.println("ERROR: You must include a valid server" + " name after the --name tag.");
                 System.exit(-1);
             }
         }
 
-        if(!gui && name != null)
+        if (!gui && name != null)
         {
             Server s = new Server(name);
             CommandServerController csc = new CommandServerController(s);
             s.setController(csc);
             csc.start();
-        }
-        else if(!gui && name == null)
+        } else if (!gui && name == null)
         {
-            System.err.println("ERROR: You must include a valid server name"
-                    + " if you do not want to use the GUI.");
+            System.err.println("ERROR: You must include a valid server name" + " if you do not want to use the GUI.");
+        } else if (gui && name != null)
+        {
+            Server s = new Server(name);
+            GUIServerController gsc = new GUIServerController(s);
+            s.setController(gsc);
         } else
         {
-            try
-            {
-                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            }
-            catch(Exception ex)
-            {
-                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-            } finally
-            {
-                new ServerNameWindow();
-            }
-            
+            new ServerNameWindow();
         }
     }
 }

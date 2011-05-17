@@ -186,7 +186,6 @@ public class Client extends Thread {
             }
 
         }
-        // TODO more message processing!! :P
     }
 
     private void sendReply(BlockingMessage original, Message reply)
