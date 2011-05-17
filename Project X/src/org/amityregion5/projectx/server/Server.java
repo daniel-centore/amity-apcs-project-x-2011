@@ -91,7 +91,6 @@ public class Server {
      */
     public void setController(ServerController sc)
     {
-        System.out.println("set controller");
         controller = sc;
     }
 

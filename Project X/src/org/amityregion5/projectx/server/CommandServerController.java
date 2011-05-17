@@ -63,7 +63,7 @@ public class CommandServerController extends Thread implements ServerController 
                     // implode the rest of the args to make the message string
                     for(int i = 1;i < args.length;i++)
                     {
-                        msg += args[i];
+                        msg += args[i] + " ";
                     }
                     AnnounceMessage m = new AnnounceMessage(msg);
                     server.relayMessage(m);

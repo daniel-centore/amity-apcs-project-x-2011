@@ -33,6 +33,7 @@ import org.amityregion5.projectx.client.communication.CommunicationHandler;
 import org.amityregion5.projectx.client.handlers.PreferenceManager;
 import org.amityregion5.projectx.common.communication.MessageListener;
 import org.amityregion5.projectx.common.communication.messages.ActivePlayersMessage;
+import org.amityregion5.projectx.common.communication.messages.AnnounceMessage;
 import org.amityregion5.projectx.common.communication.messages.ChatMessage;
 import org.amityregion5.projectx.common.communication.messages.GoodbyeMessage;
 import org.amityregion5.projectx.common.communication.messages.IntroduceMessage;
@@ -259,6 +260,19 @@ public class LobbyWindow extends JFrame implements MessageListener {
                 public void run()
                 {
                     statusLabel.setText(sum.getText());
+                }
+            });
+        }
+        else if (m instanceof AnnounceMessage)
+        {
+            final AnnounceMessage am = (AnnounceMessage) m;
+            SwingUtilities.invokeLater(new Runnable() {
+
+                public void run()
+                {
+                    chatLogArea.append("[SERVER] " + am.getText() + "\n");
+                    // automatically scroll down
+                    chatLogArea.setCaretPosition(chatLogArea.getDocument().getLength());
                 }
             });
         }
