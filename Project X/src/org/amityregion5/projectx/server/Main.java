@@ -63,7 +63,7 @@ public class Main {
             if (name.startsWith("--") || name.startsWith("-"))
             {
                 System.err.println("ERROR: You must include a valid server" + " name after the --name tag.");
-                System.exit(-1);
+                System.exit(1);
             }
         }
 
@@ -72,7 +72,6 @@ public class Main {
             Server s = new Server(name);
             CommandServerController csc = new CommandServerController(s);
             s.setController(csc);
-            csc.start();
         } else if (!gui && name == null)
         {
             System.err.println("ERROR: You must include a valid server name" + " if you do not want to use the GUI.");

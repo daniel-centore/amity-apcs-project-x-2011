@@ -37,6 +37,7 @@ public class CommandServerController extends Thread implements ServerController 
     {
         scan = new Scanner(System.in);
         server = serv;
+        this.start();
     }
 
     @Override

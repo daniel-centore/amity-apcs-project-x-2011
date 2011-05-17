@@ -89,7 +89,7 @@ public class CommunicationHandler extends Thread {
         } catch (IOException e1)
         {
             e1.printStackTrace();
-            System.exit(-1);
+            System.exit(1);
         } catch (ClassNotFoundException e)
         {
             e.printStackTrace();
@@ -251,6 +251,8 @@ public class CommunicationHandler extends Thread {
     }
 
     /**
+     * XXX: kluge, probably needs refactoring.
+     *
      * @return The only instance of CommunicationHandler (or null)
      */
     public static CommunicationHandler getInstance()
