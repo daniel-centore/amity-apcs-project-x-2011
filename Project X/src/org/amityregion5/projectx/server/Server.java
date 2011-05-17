@@ -76,7 +76,6 @@ public class Server {
             multicaster.setDaemon(true);
             System.out.println("Starting multicaster...");
             multicaster.start();
-
         }
         catch(IOException e)
         {
@@ -92,6 +91,7 @@ public class Server {
      */
     public void setController(ServerController sc)
     {
+        System.out.println("set controller");
         controller = sc;
     }
 

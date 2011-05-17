@@ -21,6 +21,10 @@ package org.amityregion5.projectx.server;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import org.amityregion5.projectx.server.gui.ServerNameWindow;
 
 /**
@@ -56,7 +60,9 @@ public class Main {
         if(!gui && name != null)
         {
             Server s = new Server(name);
-            s.setController(new CommandServerController(s));
+            CommandServerController csc = new CommandServerController(s);
+            s.setController(csc);
+            csc.start();
         }
         else if(!gui && name == null)
         {
@@ -64,7 +70,17 @@ public class Main {
                     + " if you do not want to use the GUI.");
         } else
         {
-            new ServerNameWindow();
+            try
+            {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            }
+            catch(Exception ex)
+            {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            } finally
+            {
+                new ServerNameWindow();
+            }
             
         }
     }

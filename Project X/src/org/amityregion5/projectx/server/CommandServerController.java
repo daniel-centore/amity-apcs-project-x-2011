@@ -31,7 +31,7 @@ public class CommandServerController extends Thread implements ServerController 
 
     private Scanner scan;
     private Server server;
-    private boolean keepReading;
+    private boolean keepReading = true;
 
     public CommandServerController(Server serv)
     {
