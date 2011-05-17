@@ -25,7 +25,7 @@ package org.amityregion5.projectx.common.entities.items.held;
  * 
  * @author Mike DiBuduo
  * @author Joe Stein
- * @author Mike Wenke
+ * @author Michael Wenke
  */
 public abstract class ProjectileWeapon extends Weapon {
     private int ammo;
@@ -64,6 +64,11 @@ public abstract class ProjectileWeapon extends Weapon {
     public int getMags()
     {
         return mags;
+    }
+
+    public void setMags(int mags)
+    {
+        this.mags = mags;
     }
 
     public void reload()

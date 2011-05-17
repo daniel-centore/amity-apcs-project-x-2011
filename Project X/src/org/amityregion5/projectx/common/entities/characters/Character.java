@@ -21,6 +21,7 @@
 package org.amityregion5.projectx.common.entities.characters;
 
 import java.util.ArrayList;
+import org.amityregion5.projectx.common.entities.Damageable;
 
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
@@ -30,8 +31,9 @@ import org.amityregion5.projectx.common.entities.items.held.Weapon;
  * Has health and a set of Weapons.
  *
  * @author Mike DiBuduo
+ * @author Mike Wenke
  */
-public abstract class Character extends Entity
+public abstract class Character extends Entity implements Damageable
 {
     private static final long serialVersionUID = 1L;
     
