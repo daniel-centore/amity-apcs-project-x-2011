@@ -19,6 +19,7 @@
  */
 package org.amityregion5.projectx.common.entities.characters;
 
+import org.amityregion5.projectx.common.entities.Damageable;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
 
 /**
@@ -26,7 +27,7 @@ import org.amityregion5.projectx.common.entities.items.held.Weapon;
  * 
  * @author Mike DiBuduo
  */
-public class Player extends Character {
+public class Player extends Character implements Damageable{
     
     private static final long serialVersionUID = 1L;
 

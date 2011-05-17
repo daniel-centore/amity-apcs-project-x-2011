@@ -19,12 +19,14 @@
  */
 package org.amityregion5.projectx.common.entities.items.field;
 
+import org.amityregion5.projectx.common.entities.Damageable;
+
 /**
  * Main fortress wall.
  *
  * @author Mike DiBuduo
  */
-public class Wall extends Block {
+public class Wall extends Block implements Damageable{
     public Wall(int health)
     {
         super(health);

@@ -19,12 +19,14 @@
  */
 package org.amityregion5.projectx.common.entities.items.field;
 
+import org.amityregion5.projectx.common.entities.Damageable;
+
 /**
  * Lesser wall-style protection.
  *
  * @author Mike DiBuduo
  */
-public class Fence extends Block {
+public class Fence extends Block implements Damageable{
     public Fence(int health)
     {
         super(health);
