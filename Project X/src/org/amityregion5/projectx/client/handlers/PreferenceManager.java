@@ -28,6 +28,9 @@ import java.util.prefs.Preferences;
  * @author Joe Stein
  */
 public class PreferenceManager {
+    
+    public static final String USERNAME = "username";
+    
     private static Preferences prefs;
 
     static
@@ -37,18 +40,21 @@ public class PreferenceManager {
     }
 
     /**
-     * Returns this user's preferred username, or null if the user has not
+     * @return this user's preferred username, or null if the user has not
      * set a preferred username.
-     * @return
      */
     public static String getUsername()
     {
-        return prefs.get("username", null);
+        return prefs.get(USERNAME, null);
     }
 
+    /**
+     * Sets the user's default username
+     * @param username Username to set
+     */
     public static void setUsername(String username)
     {
-        prefs.put("username", username);
+        prefs.put(USERNAME, username);
     }
 
 }

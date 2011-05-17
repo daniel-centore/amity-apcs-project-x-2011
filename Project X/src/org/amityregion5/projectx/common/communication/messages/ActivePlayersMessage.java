@@ -21,12 +21,18 @@ package org.amityregion5.projectx.common.communication.messages;
 
 import java.util.List;
 
+/**
+ * Has a list of active players on the server
+ * 
+ * @author Daniel Centore
+ * 
+ */
 public class ActivePlayersMessage extends Message {
 
     private static final long serialVersionUID = 1L;
-    
-    private List<String> players;
-    
+
+    private List<String> players; // player list
+
     public ActivePlayersMessage(List<String> players)
     {
         this.players = players;
@@ -34,6 +40,7 @@ public class ActivePlayersMessage extends Message {
 
     /**
      * Gets the active players on the server in the form of a List of Strings.
+     * 
      * @return the active players on the server in a List<String>
      */
     public List<String> getPlayers()
@@ -45,6 +52,5 @@ public class ActivePlayersMessage extends Message {
     {
         this.players = players;
     }
-    
 
 }

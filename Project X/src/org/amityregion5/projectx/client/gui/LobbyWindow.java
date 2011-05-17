@@ -37,7 +37,8 @@ import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.common.communication.messages.StatusUpdateMessage;
 
 /**
- * The game lobby TODO: finish implementing it!
+ * The game lobby 
+ * TODO: finish implementing it! (I mean with initializing the game and such)
  * 
  * @author Daniel Centore
  * @author Joe Stein
@@ -45,15 +46,15 @@ import org.amityregion5.projectx.common.communication.messages.StatusUpdateMessa
 public class LobbyWindow extends JFrame implements MessageListener {
 
     private static final long serialVersionUID = 1L;
-    private DefaultListModel playerListModel;
-    private CommunicationHandler ch;
+
+    private DefaultListModel playerListModel; // the model we change for players
+    private CommunicationHandler ch; // the communication with the server
 
     /**
      * Creates a new LobbyWindow.
      * 
      * @param sock the socket that was connected to the server after choosing
-     * @param players the players that were already in this lobby.
-     * Can be empty or null.
+     * @param players the players that were already in this lobby. Can be empty or null.
      */
     public LobbyWindow(CommunicationHandler ch, List<String> players)
     {
@@ -189,6 +190,7 @@ public class LobbyWindow extends JFrame implements MessageListener {
 
     // End of variables declaration//GEN-END:variables
 
+    @Override
     public void handle(final Message m)
     {
         if (m instanceof ChatMessage)
