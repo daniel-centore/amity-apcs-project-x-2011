@@ -33,6 +33,7 @@
                   <Component id="jScrollPane1" alignment="0" pref="195" max="32767" attributes="1"/>
                   <Component id="jLabel1" alignment="0" pref="195" max="32767" attributes="0"/>
                   <Component id="joinBtn" alignment="1" pref="195" max="32767" attributes="0"/>
+                  <Component id="userBtn" alignment="0" pref="195" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -47,6 +48,8 @@
               <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="joinBtn" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="userBtn" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -96,5 +99,10 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JButton" name="userBtn">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Change Username"/>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>

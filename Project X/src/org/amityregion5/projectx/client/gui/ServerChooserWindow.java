@@ -20,6 +20,8 @@
 package org.amityregion5.projectx.client.gui;
 
 import java.awt.HeadlessException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
@@ -65,6 +67,15 @@ public class ServerChooserWindow extends JFrame implements DatagramListener {
 
         serverList.setSelectedIndex(0);
 
+        userBtn.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                new UsernameWindow(ServerChooserWindow.this, true, false);
+            }
+
+        })
+        ;
     }
 
     /**
@@ -77,6 +88,7 @@ public class ServerChooserWindow extends JFrame implements DatagramListener {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         serverList = new javax.swing.JList();
+        userBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Join a Server");
@@ -109,6 +121,8 @@ public class ServerChooserWindow extends JFrame implements DatagramListener {
         });
         jScrollPane1.setViewportView(serverList);
 
+        userBtn.setText("Change Username");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -118,7 +132,8 @@ public class ServerChooserWindow extends JFrame implements DatagramListener {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
-                    .addComponent(joinBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE))
+                    .addComponent(joinBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
+                    .addComponent(userBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -130,6 +145,8 @@ public class ServerChooserWindow extends JFrame implements DatagramListener {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(joinBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(userBtn)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -223,6 +240,7 @@ public class ServerChooserWindow extends JFrame implements DatagramListener {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton joinBtn;
     private javax.swing.JList serverList;
+    private javax.swing.JButton userBtn;
     // End of variables declaration//GEN-END:variables
 
     @Override
