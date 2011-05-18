@@ -17,7 +17,7 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
-package org.amityregion5.projectx.client.handlers;
+package org.amityregion5.projectx.preferences;
 
 import java.util.ArrayList;
 import java.util.prefs.Preferences;

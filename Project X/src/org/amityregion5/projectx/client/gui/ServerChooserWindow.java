@@ -35,7 +35,7 @@ import javax.swing.UIManager;
 
 import org.amityregion5.projectx.client.communication.CommunicationHandler;
 import org.amityregion5.projectx.client.communication.MulticastCommunicationHandler;
-import org.amityregion5.projectx.client.handlers.PreferenceManager;
+import org.amityregion5.projectx.preferences.PreferenceManager;
 import org.amityregion5.projectx.common.communication.DatagramListener;
 import org.amityregion5.projectx.common.communication.messages.ActivePlayersMessage;
 import org.amityregion5.projectx.common.communication.messages.BooleanReplyMessage;
