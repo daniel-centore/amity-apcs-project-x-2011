@@ -25,20 +25,24 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane1" pref="447" max="32767" attributes="1"/>
+                  <Component id="jScrollPane1" pref="437" max="32767" attributes="1"/>
                   <Component id="jLabel1" alignment="0" min="-2" pref="114" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="chatField" min="-2" pref="384" max="-2" attributes="1"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="sendBtn" pref="57" max="32767" attributes="0"/>
+                      <Component id="sendBtn" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="statusLabel" pref="172" max="32767" attributes="1"/>
-                  <Component id="jScrollPane2" pref="172" max="32767" attributes="1"/>
+                  <Component id="statusLabel" pref="182" max="32767" attributes="1"/>
+                  <Component id="jScrollPane2" pref="182" max="32767" attributes="1"/>
                   <Component id="jLabel2" alignment="0" min="-2" pref="114" max="-2" attributes="0"/>
-                  <Component id="BackToServerChooserButton" alignment="0" pref="172" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="readyButton" min="-2" pref="86" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="BackToServerChooserButton" min="-2" pref="84" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -65,9 +69,10 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="chatField" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="sendBtn" alignment="3" max="32767" attributes="1"/>
+                  <Component id="readyButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="BackToServerChooserButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -147,10 +152,18 @@
     </Component>
     <Component class="javax.swing.JButton" name="BackToServerChooserButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Back to Server Chooser"/>
+        <Property name="text" type="java.lang.String" value="Exit"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BackToServerChooserButtonActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="readyButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Ready"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="readyButtonActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
