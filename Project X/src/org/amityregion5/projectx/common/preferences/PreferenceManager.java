@@ -20,19 +20,23 @@
 package org.amityregion5.projectx.common.preferences;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 /**
  * Manages and retrieves persistent user preferences.
- * 
+ *
  * @author Daniel Centore
  * @author Joe Stein
  */
-public class PreferenceManager {
-   private ArrayList<PrefListener> listeners = new ArrayList<PrefListener>();
-    
+public class PreferenceManager
+{
+
+    private static ArrayList<PrefListener> listeners = new ArrayList<PrefListener>();
     public static final String USERNAME = "username";
-    
+    public static final String KEY_CSV = "keycsv";
     private static Preferences prefs;
 
     static
@@ -57,6 +61,44 @@ public class PreferenceManager {
     public static void setUsername(String username)
     {
         prefs.put(USERNAME, username);
+        flush();
+        for (PrefListener pl : listeners)
+        {
+            pl.usernameChanged(username);
+        }
     }
 
+    private static void flush()
+    {
+        try
+        {
+            prefs.flush();
+        } catch (BackingStoreException ex)
+        {
+            Logger.getLogger(PreferenceManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * Registers a PrefListener.
+     * @param listener the listener to register
+     */
+    public static void registerListener(PrefListener listener)
+    {
+        listeners.add(listener);
+    }
+
+    /**
+     * Removes a PrefListener.
+     * @param listener the listener to remove
+     */
+    public static void removeListener(PrefListener listener)
+    {
+        listeners.remove(listener);
+    }
+
+    public static String getKeys()
+    {
+        return prefs.get(KEY_CSV, "w,a,s,d");
+    }
 }
