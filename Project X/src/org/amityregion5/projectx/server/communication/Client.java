@@ -34,6 +34,7 @@ import org.amityregion5.projectx.common.communication.messages.BooleanReplyMessa
 import org.amityregion5.projectx.common.communication.messages.ChatMessage;
 import org.amityregion5.projectx.common.communication.messages.IntroduceMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
+import org.amityregion5.projectx.common.communication.messages.ReadyMessage;
 import org.amityregion5.projectx.common.communication.messages.TextualMessage;
 import org.amityregion5.projectx.server.Server;
 
@@ -66,8 +67,7 @@ public class Client extends Thread {
         {
             outObjects = new ObjectOutputStream(sock.getOutputStream());
             inObjects = new ObjectInputStream(sock.getInputStream());
-        }
-        catch(IOException e)
+        } catch (IOException e)
         {
             e.printStackTrace();
         }
@@ -79,7 +79,7 @@ public class Client extends Thread {
         try
         {
 
-            while(!quit)
+            while (!quit)
             {
                 final Message m = (Message) inObjects.readObject();
 
@@ -97,30 +97,26 @@ public class Client extends Thread {
             inObjects.close();
             sock.close();
 
-        }
-        catch(EOFException eof)
+        } catch (EOFException eof)
         {
             System.out.println("Client disconnected");
             // remove this client from the server list
-            if(username != null) // this client gave us its username
+            if (username != null) // this client gave us its username
             {
                 server.removeClient(username); // take it off the server's list
             }
-        }
-        catch(SocketException se)
+        } catch (SocketException se)
         {
             System.out.println("Client disconnected");
             // remove this client from the server list
-            if(username != null) // this client gave us its username
+            if (username != null) // this client gave us its username
             {
                 server.removeClient(username); // take it off the server's list
             }
-        }
-        catch(IOException e)
+        } catch (IOException e)
         {
             e.printStackTrace();
-        }
-        catch(ClassNotFoundException e)
+        } catch (ClassNotFoundException e)
         {
             e.printStackTrace();
         }
@@ -143,8 +139,7 @@ public class Client extends Thread {
             outObjects.writeObject(m);
 
             outObjects.flush();
-        }
-        catch(IOException e)
+        } catch (IOException e)
         {
             // This happens sometimes. I forget when though.
             e.printStackTrace();
@@ -153,38 +148,53 @@ public class Client extends Thread {
 
     private void processMessage(Message m)
     {
-        if(m instanceof BlockingMessage)
+        if (m instanceof BlockingMessage)
         {
             Message contained = ((BlockingMessage) m).getMessage();
 
-            if(contained instanceof IntroduceMessage)
+            if (contained instanceof IntroduceMessage)
             {
                 IntroduceMessage im = (IntroduceMessage) contained;
 
-                if(!server.hasClient(im.getText()))
+                if (!server.hasClient(im.getText()))
                 {
-                    // If there is no client 
+                    // If there is no client
                     username = im.getText();
                     server.relayMessage(im);
                     ActivePlayersMessage q = server.getPlayersUpdate();
                     server.addClient(username, this);
 
                     sendReply((BlockingMessage) m, q);
-                }
-                else
+
+                    // below here is for sending initialization -after- lobby window has been created
+                    // TODO: unkludge it
+                    try
+                    {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e)
+                    {
+                    }
+
+                    server.incrementWaiting();
+                } else
                 {
                     sendReply((BlockingMessage) m, new BooleanReplyMessage(false));
                 }
             }
-        }
-        else if(m instanceof TextualMessage)
+        } else if (m instanceof TextualMessage)
         {
             TextualMessage tm = (TextualMessage) m;
-            if(tm instanceof ChatMessage)
+            if (tm instanceof ChatMessage)
             {
                 server.relayMessage(tm);
             }
-
+        } else if (m instanceof ReadyMessage)
+        {
+            ReadyMessage rm = (ReadyMessage) m;
+            if (rm.isAffirmative())
+                server.decrementWaiting();
+            else
+                server.incrementWaiting();
         }
     }
 
@@ -204,8 +214,7 @@ public class Client extends Thread {
         {
             quit = true;
             sock.close();
-        }
-        catch(IOException ex)
+        } catch (IOException ex)
         {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }

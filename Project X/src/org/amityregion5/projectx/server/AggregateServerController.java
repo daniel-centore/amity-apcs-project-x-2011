@@ -24,39 +24,43 @@ import org.amityregion5.projectx.server.gui.GUIServerController;
 
 /**
  * Class documentation.
- *
+ * 
  * @author Michael Zuo
  */
-public class AggregateServerController
-    extends ArrayList<ServerController>
-    implements ServerController
-{
-    public AggregateServerController(Server s) {
+public class AggregateServerController extends ArrayList<ServerController> implements ServerController {
+    public AggregateServerController(Server s)
+    {
         add(new CommandServerController(s));
         add(new GUIServerController(s));
     }
-    public AggregateServerController(ServerController... ctls) {
+
+    public AggregateServerController(ServerController... ctls)
+    {
         for (ServerController ctl : ctls)
             add(ctl);
     }
 
-    public void clientJoined(String username) {
+    public void clientJoined(String username)
+    {
         for (ServerController ctl : this)
             ctl.clientJoined(username);
     }
 
-    public void clientLeft(String username) {
+    public void clientLeft(String username)
+    {
         for (ServerController ctl : this)
             ctl.clientLeft(username);
     }
 
-    public void clientConnected(String ip) {
+    public void clientConnected(String ip)
+    {
         for (ServerController ctl : this)
             ctl.clientConnected(ip);
     }
 
-    public void chatted(String username, String chat) {
+    public void chatted(String username, String chat)
+    {
         for (ServerController ctl : this)
-            ctl.chatted(username,chat);
+            ctl.chatted(username, chat);
     }
 }

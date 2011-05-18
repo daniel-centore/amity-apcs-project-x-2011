@@ -19,6 +19,7 @@
  */
 package org.amityregion5.projectx.client.gui;
 
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -39,6 +40,7 @@ import org.amityregion5.projectx.common.communication.messages.ChatMessage;
 import org.amityregion5.projectx.common.communication.messages.GoodbyeMessage;
 import org.amityregion5.projectx.common.communication.messages.IntroduceMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
+import org.amityregion5.projectx.common.communication.messages.ReadyMessage;
 import org.amityregion5.projectx.common.communication.messages.StatusUpdateMessage;
 import org.amityregion5.projectx.common.maps.TestingMap;
 
@@ -54,6 +56,7 @@ public class LobbyWindow extends JFrame implements MessageListener {
 
     private DefaultListModel playerListModel; // the model we change for players
     private CommunicationHandler ch; // the communication with the server
+    private boolean ready;
 
     /**
      * Creates a new LobbyWindow.
@@ -65,6 +68,7 @@ public class LobbyWindow extends JFrame implements MessageListener {
     {
         super("Project X Lobby");
 
+        ready = false;
         // adds a window listener so we can tell the server when we leave
         this.addWindowListener(new CustomWindowAdapter());
 
@@ -201,6 +205,18 @@ public class LobbyWindow extends JFrame implements MessageListener {
     private void readyButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_readyButtonActionPerformed
     {//GEN-HEADEREND:event_readyButtonActionPerformed
         
+        if(ready)
+        {
+            readyButton.setText("Ready");
+            CommunicationHandler.getInstance().send(new ReadyMessage(false));
+        }
+        else
+        {
+            readyButton.setText("Not Ready");
+            CommunicationHandler.getInstance().send(new ReadyMessage(true));
+        }
+        
+        ready = !ready;
     }//GEN-LAST:event_readyButtonActionPerformed
 
     private void BackToServerChooserButtonActionPerformed(java.awt.event.ActionEvent evt)
@@ -320,6 +336,7 @@ public class LobbyWindow extends JFrame implements MessageListener {
         } else if (m instanceof StatusUpdateMessage)
         {
             final StatusUpdateMessage sum = (StatusUpdateMessage) m;
+            System.out.println(sum);
             if (sum.getType() == StatusUpdateMessage.Type.STARTING)
             {
                 this.setVisible(false);

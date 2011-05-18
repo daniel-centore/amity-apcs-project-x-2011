@@ -19,7 +19,6 @@
  */
 package org.amityregion5.projectx.server;
 
-import org.amityregion5.projectx.server.communication.Client;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -33,6 +32,8 @@ import org.amityregion5.projectx.common.communication.messages.AnnounceMessage;
 import org.amityregion5.projectx.common.communication.messages.ChatMessage;
 import org.amityregion5.projectx.common.communication.messages.GoodbyeMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
+import org.amityregion5.projectx.common.communication.messages.StatusUpdateMessage;
+import org.amityregion5.projectx.server.communication.Client;
 import org.amityregion5.projectx.server.communication.Multicaster;
 
 /**
@@ -48,6 +49,7 @@ public class Server {
     private ServerSocket servSock;
     private Multicaster multicaster; // for multicasting IP and String
     private ServerController controller; // controls the server
+    private int waiting; // how many people we are waiting for
 
     /*
      * A HashMap of the connected Clients to this Server.
@@ -58,6 +60,7 @@ public class Server {
 
     /**
      * Creates a new server.
+     * 
      * @param name the name of this server
      */
     public Server(String name)
@@ -75,8 +78,7 @@ public class Server {
             multicaster.setDaemon(true);
             System.out.println("Starting multicaster...");
             multicaster.start();
-        }
-        catch(IOException e)
+        } catch (IOException e)
         {
             // usually means a server is already running
             e.printStackTrace();
@@ -86,6 +88,7 @@ public class Server {
 
     /**
      * Sets this server's controller.
+     * 
      * @param sc the ServerController that will control this server
      */
     public void setController(ServerController sc)
@@ -95,25 +98,35 @@ public class Server {
 
     /**
      * Adds this client to this server.
+     * 
      * @param username the username of this client
      * @param c the Client object that handles connections to this client
      */
     public void addClient(String username, Client c)
     {
+        // waiting++; //handled in Client so we wait for Lobby initialization
         controller.clientJoined(username);
         clients.put(username, c);
+        this.updateWaitingStatus();
     }
 
     /**
-     * Removes the client from this server, and notifies other clients that
-     * this client has left.
+     * Removes the client from this server, and notifies other clients that this client has left.
+     * 
      * @param username the username of the client to remove
      */
     public void removeClient(String username)
     {
+        waiting--;
         controller.clientLeft(username);
         clients.remove(username);
         relayMessage(new GoodbyeMessage(username));
+        this.updateWaitingStatus();
+    }
+
+    private void updateWaitingStatus()
+    {
+        this.relayMessage(new StatusUpdateMessage("Waiting for " + waiting + " people...", StatusUpdateMessage.Type.WAITING));
     }
 
     private void startListening()
@@ -127,7 +140,7 @@ public class Server {
     public void kill()
     {
         listening = false;
-        for(Client client : clients.values())
+        for (Client client : clients.values())
         {
             client.send(new AnnounceMessage("Server shutting down now!"));
             client.kill();
@@ -136,8 +149,9 @@ public class Server {
 
     /**
      * Checks to see if this server already has a client by the given username.
+     * 
      * @param text the username to check
-     * @return whether or not 
+     * @return whether or not
      */
     public boolean hasClient(String text)
     {
@@ -160,14 +174,14 @@ public class Server {
         if (m instanceof ChatMessage)
         {
             ChatMessage cm = (ChatMessage) m;
-            controller.chatted(cm.getFrom(),cm.getText());
+            controller.chatted(cm.getFrom(), cm.getText());
         } else if (m instanceof AnnounceMessage)
         {
-           AnnounceMessage am = (AnnounceMessage) m;
-           controller.chatted("[SERVER]",am.getText());
+            AnnounceMessage am = (AnnounceMessage) m;
+            controller.chatted("[SERVER]", am.getText());
         }
         // relay to clients
-        for(Client client : clients.values())
+        for (Client client : clients.values())
         {
             client.send(m);
         }
@@ -177,7 +191,7 @@ public class Server {
     {
         List<String> names = new ArrayList<String>();
 
-        for(Client c : clients.values())
+        for (Client c : clients.values())
             names.add(c.getUsername());
 
         return new ActivePlayersMessage(names);
@@ -185,9 +199,9 @@ public class Server {
 
     public boolean hasClientWithIP(String ip)
     {
-        for(Client client : clients.values())
+        for (Client client : clients.values())
         {
-            if(client.getIP().equals(ip))
+            if (client.getIP().equals(ip))
             {
                 return true;
             }
@@ -210,20 +224,32 @@ public class Server {
         return name;
     }
 
+    public void incrementWaiting()
+    {
+        waiting++;
+        this.updateWaitingStatus();
+    }
+
+    public void decrementWaiting()
+    {
+        waiting--;
+        this.updateWaitingStatus();
+        // TODO: if 0, start game
+    }
+
     private class ClientNetListener implements Runnable {
 
         public void run()
         {
             try
             {
-                while(listening)
+                while (listening)
                 {
                     Client newc = new Client(servSock.accept(), Server.this);
                     newc.start();
                     controller.clientConnected(newc.getIP());
                 }
-            }
-            catch(IOException e)
+            } catch (IOException e)
             {
                 listening = false;
             }
