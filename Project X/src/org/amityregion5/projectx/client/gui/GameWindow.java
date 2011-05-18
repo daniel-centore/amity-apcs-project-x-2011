@@ -39,24 +39,24 @@ import org.amityregion5.projectx.common.maps.AbstractMap;
  * @author Mike DiBuduo
  * 
  */
-public class Gui extends JFrame {
+public class GameWindow extends JFrame {
 
     private static final long serialVersionUID = 1L;
     public static final int GAME_WIDTH = 1024; // the game size we will draw at before resizing
     public static final int GAME_HEIGHT = 768;
-    private static Gui instance; // the instance of Gui
+    private static GameWindow instance; // the instance of Gui
     private static AbstractMap map; // the current game map
     private static JComponent panel; // the panel we will draw on
     private static Image buffer; // the image the panel should draw
     private boolean fullscreen;
 
-    public Gui(AbstractMap map)
+    public GameWindow(AbstractMap map)
     {
         super("Amity Project X");
 
         fullscreen = false;
         instance = this;
-        Gui.map = map;
+        GameWindow.map = map;
 
         this.setBackground(Color.black);
 
@@ -190,7 +190,7 @@ public class Gui extends JFrame {
     /**
      * @return The instance of Gui
      */
-    public static Gui getInstance()
+    public static GameWindow getInstance()
     {
         return instance;
     }

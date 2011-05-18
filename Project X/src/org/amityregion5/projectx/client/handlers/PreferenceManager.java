@@ -19,6 +19,7 @@
  */
 package org.amityregion5.projectx.client.handlers;
 
+import java.util.ArrayList;
 import java.util.prefs.Preferences;
 
 /**
@@ -28,6 +29,7 @@ import java.util.prefs.Preferences;
  * @author Joe Stein
  */
 public class PreferenceManager {
+   private ArrayList<PrefListener> listeners = new ArrayList<PrefListener>();
     
     public static final String USERNAME = "username";
     

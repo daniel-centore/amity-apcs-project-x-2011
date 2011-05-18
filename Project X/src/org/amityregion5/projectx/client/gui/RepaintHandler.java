@@ -40,10 +40,10 @@ public class RepaintHandler extends Thread {
      */
     public static Image getMapFlatImage()
     {
-        Image img = Gui.createImage();
+        Image img = GameWindow.createImage();
         Graphics2D g = (Graphics2D) img.getGraphics();
 
-        AbstractMap map = Gui.getMap();
+        AbstractMap map = GameWindow.getMap();
         Image k = map.getBackground();
 
         if (k != null)

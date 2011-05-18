@@ -63,6 +63,8 @@ public class ServerChooserWindow extends JFrame implements DatagramListener
       initComponents();
       dlm.addElement("Manual/Internet...");
 
+      joinBtn.setText("Join as " + PreferenceManager.getUsername());
+
       serverList.setModel(dlm);
 
       serverList.setSelectedIndex(0);

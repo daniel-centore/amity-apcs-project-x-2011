@@ -21,11 +21,8 @@ package org.amityregion5.projectx.client.gui;
 
 import java.awt.Frame;
 import java.awt.event.KeyEvent;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.swing.JDialog;
-import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import org.amityregion5.projectx.client.handlers.PreferenceManager;
 
@@ -147,11 +144,10 @@ public class UsernameWindow extends JDialog
              PreferenceManager.setUsername(usernameField.getText());
              this.dispose();
           }
-       } else
+       } else if (!evt.isShiftDown() && !evt.isActionKey())
        {
           SwingUtilities.invokeLater(new Runnable()
           {
-
              public void run()
              {
                 okBtn.setEnabled(true);

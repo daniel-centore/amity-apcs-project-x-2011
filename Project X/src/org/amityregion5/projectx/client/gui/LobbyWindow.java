@@ -191,7 +191,7 @@ public class LobbyWindow extends JFrame implements MessageListener {
                     }
                 });
             }
-        } else
+        } else if (!evt.isShiftDown() && !evt.isActionKey())
         {
             if (!sendBtn.isEnabled())
             {
@@ -274,7 +274,7 @@ public class LobbyWindow extends JFrame implements MessageListener {
                 this.setVisible(false);
 
                 // TODO: add system for selecting map
-                new Gui(new TestingMap());
+                new GameWindow(new TestingMap());
             }
             SwingUtilities.invokeLater(new Runnable() {
 

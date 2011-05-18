@@ -24,7 +24,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import org.amityregion5.projectx.client.gui.Gui;
+import org.amityregion5.projectx.client.gui.GameWindow;
 
 /**
  * Controls mouse inputs. They should be handled in InputHandler.
@@ -93,11 +93,11 @@ public class MouseInput implements MouseMotionListener, MouseListener {
      */
     public static Point fix(int x, int y)
     {
-        int width = Gui.getCurrentWidth();
-        int height = Gui.getCurrentHeight();
+        int width = GameWindow.getCurrentWidth();
+        int height = GameWindow.getCurrentHeight();
 
-        int newX = Gui.GAME_WIDTH * x / width;
-        int newY = Gui.GAME_HEIGHT * y / height;
+        int newX = GameWindow.GAME_WIDTH * x / width;
+        int newY = GameWindow.GAME_HEIGHT * y / height;
 
         return new Point(newX, newY);
     }
