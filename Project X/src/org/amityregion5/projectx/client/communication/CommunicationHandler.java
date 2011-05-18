@@ -19,6 +19,7 @@
  */
 package org.amityregion5.projectx.client.communication;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -83,9 +84,15 @@ public class CommunicationHandler extends Thread {
                 handle(m);
             }
 
-        } catch (SocketException e) {
-            //Occurs if we call kill() while this is running
+        } catch (SocketException e)
+        {
+            // Occurs if we call kill() while this is running
             return;
+        } catch (EOFException e)
+        {
+            // thrown when the server dies
+            // TODO: perhaps return to the server chooser?
+            System.exit(1);
         } catch (IOException e1)
         {
             e1.printStackTrace();
@@ -252,7 +259,7 @@ public class CommunicationHandler extends Thread {
 
     /**
      * XXX: kluge, probably needs refactoring.
-     *
+     * 
      * @return The only instance of CommunicationHandler (or null)
      */
     public static CommunicationHandler getInstance()
