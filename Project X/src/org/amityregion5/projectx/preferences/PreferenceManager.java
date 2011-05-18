@@ -28,11 +28,11 @@ import java.util.prefs.Preferences;
  * @author Daniel Centore
  * @author Joe Stein
  */
-public class PreferenceManager {
-   private ArrayList<PrefListener> listeners = new ArrayList<PrefListener>();
-    
+public class PreferenceManager
+{
+
+    private static ArrayList<PrefListener> listeners = new ArrayList<PrefListener>();
     public static final String USERNAME = "username";
-    
     private static Preferences prefs;
 
     static
@@ -57,6 +57,27 @@ public class PreferenceManager {
     public static void setUsername(String username)
     {
         prefs.put(USERNAME, username);
+        for (PrefListener pl : listeners)
+        {
+            pl.usernameChanged(username);
+        }
     }
 
+    /**
+     * Registers a PrefListener.
+     * @param listener the listener to register
+     */
+    public static void registerListener(PrefListener listener)
+    {
+        listeners.add(listener);
+    }
+
+    /**
+     * Removes a PrefListener.
+     * @param listener the listener to remove
+     */
+    public static void removeListener(PrefListener listener)
+    {
+        listeners.remove(listener);
+    }
 }
