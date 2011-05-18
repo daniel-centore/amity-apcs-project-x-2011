@@ -44,6 +44,9 @@ import org.amityregion5.projectx.server.communication.Multicaster;
  */
 public class Server {
 
+    public static final int MIN_PLAYERS = 2; // minimum number of players to have a game
+    public static final int MAX_PLAYERS = 2; // maximum number of players to allow to connect
+
     private String name; // the text name of the server
     private boolean listening = true;
     private ServerSocket servSock;
@@ -102,9 +105,13 @@ public class Server {
      * @param username the username of this client
      * @param c the Client object that handles connections to this client
      */
-    public void addClient(String username, Client c)
+    public synchronized void addClient(String username, Client c)
     {
         // waiting++; //handled in Client so we wait for Lobby initialization
+        
+        if (clients.size() == MAX_PLAYERS) // TODO: handle this more politely
+            c.kill();
+
         controller.clientJoined(username);
         clients.put(username, c);
         this.updateWaitingStatus();
@@ -115,11 +122,12 @@ public class Server {
      * 
      * @param username the username of the client to remove
      */
-    public void removeClient(String username)
+    public synchronized void removeClient(String username)
     {
-        waiting--;
         controller.clientLeft(username);
-        clients.remove(username);
+        Client c = clients.remove(username);
+        if(c.isWaiting())
+            waiting--;  //only if we were waiting on them should we count ir
         relayMessage(new GoodbyeMessage(username));
         this.updateWaitingStatus();
     }
@@ -137,7 +145,7 @@ public class Server {
     /**
      * Halts the server.
      */
-    public void kill()
+    public synchronized void kill()
     {
         listening = false;
         for (Client client : clients.values())
@@ -168,7 +176,7 @@ public class Server {
         return listening;
     }
 
-    public void relayMessage(Message m)
+    public synchronized void relayMessage(Message m)
     {
         // hook for the controller
         if (m instanceof ChatMessage)
@@ -191,13 +199,16 @@ public class Server {
     {
         List<String> names = new ArrayList<String>();
 
-        for (Client c : clients.values())
-            names.add(c.getUsername());
+        synchronized(this)
+        {
+            for (Client c : clients.values())
+                names.add(c.getUsername());
+        }
 
         return new ActivePlayersMessage(names);
     }
 
-    public boolean hasClientWithIP(String ip)
+    public synchronized boolean hasClientWithIP(String ip)
     {
         for (Client client : clients.values())
         {
@@ -233,8 +244,16 @@ public class Server {
     public void decrementWaiting()
     {
         waiting--;
-        this.updateWaitingStatus();
-        // TODO: if 0, start game
+
+        if (waiting == 0 && clients.size() >= MIN_PLAYERS)
+            startGame();
+        else
+            this.updateWaitingStatus();
+    }
+
+    public void startGame()
+    {
+        relayMessage(new StatusUpdateMessage(StatusUpdateMessage.Type.STARTING));
     }
 
     private class ClientNetListener implements Runnable {
@@ -255,4 +274,5 @@ public class Server {
             }
         }
     }
+
 }

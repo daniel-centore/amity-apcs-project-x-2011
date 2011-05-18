@@ -52,6 +52,7 @@ public class Client extends Thread {
     private ObjectOutputStream outObjects;
     private ObjectInputStream inObjects;
     private boolean quit = false;
+    private boolean waiting = true; // are we waiting on this client?
 
     /**
      * Creates a client
@@ -78,7 +79,6 @@ public class Client extends Thread {
     {
         try
         {
-
             while (!quit)
             {
                 final Message m = (Message) inObjects.readObject();
@@ -142,7 +142,8 @@ public class Client extends Thread {
         } catch (IOException e)
         {
             // This happens sometimes. I forget when though.
-            e.printStackTrace();
+            // e.printStackTrace();
+            kill();
         }
     }
 
@@ -192,9 +193,15 @@ public class Client extends Thread {
         {
             ReadyMessage rm = (ReadyMessage) m;
             if (rm.isAffirmative())
+            {
+                waiting = false;
                 server.decrementWaiting();
+            }
             else
+            {
+                waiting = true;
                 server.incrementWaiting();
+            }
         }
     }
 
@@ -218,5 +225,10 @@ public class Client extends Thread {
         {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public boolean isWaiting()
+    {
+        return waiting;
     }
 }

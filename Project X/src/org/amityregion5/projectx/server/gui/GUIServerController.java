@@ -268,9 +268,7 @@ public class GUIServerController extends javax.swing.JFrame implements ServerCon
 
     private void startGameBtnActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_startGameBtnActionPerformed
     {//GEN-HEADEREND:event_startGameBtnActionPerformed
-       // TODO start the game here
-       // re-enable button in GUI designer after coding this
-       server.relayMessage(new StatusUpdateMessage(StatusUpdateMessage.Type.STARTING));
+       server.startGame();
     }//GEN-LAST:event_startGameBtnActionPerformed
 
     private void announceBtnActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_announceBtnActionPerformed
