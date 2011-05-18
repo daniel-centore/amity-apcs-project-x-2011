@@ -18,12 +18,13 @@
  * by the Free Software Foundation.
  */
 package org.amityregion5.projectx.client.gui.input;
-
+import java.awt.event.KeyEvent;
 /**
  * Handles inputs as they come in
  * 
  * @author Michael Wenke
  * @author Daniel Centore
+ * @author Cameron Simpson
  */
 public class InputHandler {
 
@@ -45,6 +46,7 @@ public class InputHandler {
 
     public static void keyPressed(int keyCode) // this includes key repeats
     {
+        
     }
 
     public static void keyReleased(int keyCode) // only when key is released
