@@ -23,10 +23,7 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.SwingUtilities;
 
-import org.amityregion5.projectx.server.AggregateServerController;
-import org.amityregion5.projectx.server.CommandServerController;
 import org.amityregion5.projectx.server.Server;
-import org.amityregion5.projectx.server.ServerController;
 
 /**
  *
@@ -110,8 +107,12 @@ public class ServerNameWindow extends javax.swing.JFrame {
     private void startServer()
     {
         Server s = new Server(serverNameField.getText());
-        AggregateServerController asc = new AggregateServerController(s);
-        s.setController(asc);
+//        AggregateServerController asc = new AggregateServerController(s);
+//        s.setController(asc);
+        
+        GUIServerController gsc = new GUIServerController(s);
+        s.setController(gsc);
+        
         this.dispose();
     }
 
