@@ -24,7 +24,7 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.JDialog;
 import javax.swing.SwingUtilities;
-import org.amityregion5.projectx.preferences.PreferenceManager;
+import org.amityregion5.projectx.common.preferences.PreferenceManager;
 
 /**
  * Handles username selection
