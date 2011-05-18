@@ -26,7 +26,6 @@ import java.util.logging.Logger;
 
 import javax.swing.UIManager;
 
-import org.amityregion5.projectx.server.gui.GUIServerController;
 import org.amityregion5.projectx.server.gui.ServerNameWindow;
 
 /**
@@ -78,7 +77,7 @@ public class Main {
         } else if (gui && name != null)
         {
             Server s = new Server(name);
-            GUIServerController gsc = new GUIServerController(s);
+            ServerController gsc = new AggregateServerController(s);
             s.setController(gsc);
         } else
         {
