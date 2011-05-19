@@ -29,19 +29,19 @@ import org.amityregion5.projectx.common.preferences.PreferenceManager;
 public class Keys {
     // Note: key CSV's are in the format:
     // <up>,<left>,<down>,<right>
-    public static int UP_KEY = KeyEvent.VK_UP;
-    public static int DOWN_KEY = KeyEvent.VK_DOWN;
-    public static int LEFT_KEY = KeyEvent.VK_LEFT;
-    public static int RIGHT_KEY = KeyEvent.VK_RIGHT;
+    public static int UP = KeyEvent.VK_UP;
+    public static int DOWN = KeyEvent.VK_DOWN;
+    public static int LEFT = KeyEvent.VK_LEFT;
+    public static int RIGHT = KeyEvent.VK_RIGHT;
 
     public static void updateKeys()
     {
         String csv = PreferenceManager.getKeys();
         String[] vals = csv.split(",");
-        UP_KEY = Integer.parseInt(vals[0]);
-        LEFT_KEY = Integer.parseInt(vals[1]);
-        DOWN_KEY = Integer.parseInt(vals[2]);
-        RIGHT_KEY = Integer.parseInt(vals[3]);
+        UP = Integer.parseInt(vals[0]);
+        LEFT = Integer.parseInt(vals[1]);
+        DOWN = Integer.parseInt(vals[2]);
+        RIGHT = Integer.parseInt(vals[3]);
 
     }
 }
