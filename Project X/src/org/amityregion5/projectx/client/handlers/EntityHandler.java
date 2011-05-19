@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.text.html.parser.Entity;
 import org.amityregion5.projectx.common.communication.MessageListener;
+import org.amityregion5.projectx.common.communication.messages.EntityMovedMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
 
 /**
@@ -61,7 +62,11 @@ public class EntityHandler implements MessageListener {
 
     public void handle(Message m)
     {
-        // TODO: register this class and handle entity moved messages
+        if(m instanceof EntityMovedMessage)
+        {
+            EntityMovedMessage em = (EntityMovedMessage) m;
+            //TODO: do something here (don't take this literally mike z)
+        }
     }
 
     public void tellSocketClosed()
