@@ -16,7 +16,6 @@ import javax.swing.SwingUtilities;
 import org.amityregion5.projectx.common.communication.messages.AnnounceMessage;
 import org.amityregion5.projectx.common.communication.messages.StatusUpdateMessage;
 import org.amityregion5.projectx.server.Server;
-import org.amityregion5.projectx.server.ServerController;
 
 /**
  *

@@ -19,6 +19,7 @@
  */
 package org.amityregion5.projectx.server;
 
+import org.amityregion5.projectx.server.controllers.ServerController;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -46,7 +47,6 @@ public class Server {
 
     public static final int MIN_PLAYERS = 1; // minimum number of players to have a game
     public static final int MAX_PLAYERS = 4; // maximum number of players to allow to connect
-
     private String name; // the text name of the server
     private boolean listening = true;
     private ServerSocket servSock;
@@ -81,7 +81,8 @@ public class Server {
             multicaster.setDaemon(true);
             System.out.println("Starting multicaster...");
             multicaster.start();
-        } catch (IOException e)
+        }
+        catch(IOException e)
         {
             // usually means a server is already running
             e.printStackTrace();
@@ -108,8 +109,8 @@ public class Server {
     public synchronized void addClient(String username, Client c)
     {
         // waiting++; //handled in Client so we wait for Lobby initialization
-        
-        if (clients.size() == MAX_PLAYERS) // TODO: handle this more politely
+
+        if(clients.size() == MAX_PLAYERS) // TODO: handle this more politely
             c.kill();
 
         controller.clientJoined(username);
@@ -132,12 +133,12 @@ public class Server {
         this.updateWaitingStatus();
     }
 
-    private void updateWaitingStatus()
+    private void updateWaitingStatus()  //updates all client's status
     {
         this.relayMessage(new StatusUpdateMessage("Waiting for " + waiting + " people...", StatusUpdateMessage.Type.WAITING));
     }
 
-    private void startListening()
+    private void startListening()   //starts listening for clients
     {
         new Thread(new ClientNetListener()).start();
     }
@@ -148,7 +149,7 @@ public class Server {
     public synchronized void kill()
     {
         listening = false;
-        for (Client client : clients.values())
+        for(Client client : clients.values())
         {
             client.send(new AnnounceMessage("Server shutting down now!"));
             client.kill();
@@ -166,53 +167,73 @@ public class Server {
         return clients.containsKey(text);
     }
 
+    /**
+     * Tells the server whether or not to listen for client
+     * @param listening True if it should; false otherwise
+     */
     public void setListening(boolean listening)
     {
         this.listening = listening;
     }
 
+    /**
+     * @return Are we listening for clients?
+     */
     public boolean isListening()
     {
         return listening;
     }
 
+    /**
+     * Sends a message to all active clients
+     * @param m Message to send
+     */
     public synchronized void relayMessage(Message m)
     {
         // hook for the controller
-        if (m instanceof ChatMessage)
+        if(m instanceof ChatMessage)
         {
             ChatMessage cm = (ChatMessage) m;
             controller.chatted(cm.getFrom(), cm.getText());
-        } else if (m instanceof AnnounceMessage)
+        }
+        else if(m instanceof AnnounceMessage)
         {
             AnnounceMessage am = (AnnounceMessage) m;
             controller.chatted("[SERVER]", am.getText());
         }
         // relay to clients
-        for (Client client : clients.values())
+        for(Client client : clients.values())
         {
             client.send(m);
         }
     }
 
+    /**
+     * @return A Message of all active players
+     */
     public ActivePlayersMessage getPlayersUpdate()
     {
         List<String> names = new ArrayList<String>();
 
         synchronized(this)
         {
-            for (Client c : clients.values())
+            for(Client c : clients.values())
                 names.add(c.getUsername());
         }
 
         return new ActivePlayersMessage(names);
     }
 
+    /**
+     * Checks if we already have a client with a certain IP
+     * @param ip IP to check
+     * @return True if we do; false otherwise
+     */
     public synchronized boolean hasClientWithIP(String ip)
     {
-        for (Client client : clients.values())
+        for(Client client : clients.values())
         {
-            if (client.getIP().equals(ip))
+            if(client.getIP().equals(ip))
             {
                 return true;
             }
@@ -220,37 +241,55 @@ public class Server {
         return false;
     }
 
+    /**
+     * @return Gets the address of the server (pointless)
+     */
     public InetAddress getInetAddress()
     {
         return servSock.getInetAddress();
     }
 
+    /**
+     * @return The port the server is running on
+     */
     public int getPort()
     {
         return servSock.getLocalPort();
     }
 
+    /**
+     * @return The name of the server
+     */
     public String getName()
     {
         return name;
     }
 
+    /**
+     * Tells the server we are waiting on one more person
+     */
     public void incrementWaiting()
     {
         waiting++;
         this.updateWaitingStatus();
     }
 
+    /**
+     * Tells the server we are waiting for one less person
+     */
     public void decrementWaiting()
     {
         waiting--;
 
-        if (waiting == 0 && clients.size() >= MIN_PLAYERS)
+        if(waiting == 0 && clients.size() >= MIN_PLAYERS)
             startGame();
         else
             this.updateWaitingStatus();
     }
 
+    /**
+     * Notifies all clients that it's time to begin!
+     */
     public void startGame()
     {
         relayMessage(new StatusUpdateMessage(StatusUpdateMessage.Type.STARTING));
@@ -262,17 +301,17 @@ public class Server {
         {
             try
             {
-                while (listening)
+                while(listening)
                 {
                     Client newc = new Client(servSock.accept(), Server.this);
                     newc.start();
                     controller.clientConnected(newc.getIP());
                 }
-            } catch (IOException e)
+            }
+            catch(IOException e)
             {
                 listening = false;
             }
         }
     }
-
 }

@@ -21,7 +21,6 @@ package org.amityregion5.projectx.server.controllers;
 import java.util.Scanner;
 import org.amityregion5.projectx.common.communication.messages.AnnounceMessage;
 import org.amityregion5.projectx.server.Server;
-import org.amityregion5.projectx.server.ServerController;
 
 /**
  * A class that reads commands from the command line, interprets them, and
