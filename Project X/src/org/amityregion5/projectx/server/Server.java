@@ -44,8 +44,8 @@ import org.amityregion5.projectx.server.communication.Multicaster;
  */
 public class Server {
 
-    public static final int MIN_PLAYERS = 2; // minimum number of players to have a game
-    public static final int MAX_PLAYERS = 2; // maximum number of players to allow to connect
+    public static final int MIN_PLAYERS = 1; // minimum number of players to have a game
+    public static final int MAX_PLAYERS = 4; // maximum number of players to allow to connect
 
     private String name; // the text name of the server
     private boolean listening = true;
