@@ -28,19 +28,20 @@ import org.amityregion5.projectx.common.entities.items.DamageDealing;
  * @author Michael Wenke
  */
 public class Trap extends FieldItem implements DamageDealing{
-   private int damage;
-   private boolean active;
+    private static final long serialVersionUID = 1L;
+    private int damage;
+    private boolean active;
 
-   public Trap(int dm)
-   {
-       damage = dm;
-       active = false;
-   }
+    public Trap(int dm)
+    {
+        damage = dm;
+        active = false;
+    }
 
     public int getDamage() {
         return damage;
     }
-    
+
     public boolean isActivated()
     {
         return active;

@@ -26,7 +26,9 @@ import org.amityregion5.projectx.common.entities.Damageable;
  *
  * @author Mike DiBuduo
  */
-public class Wall extends Block implements Damageable{
+public class Wall extends Block implements Damageable {
+    private static final long serialVersionUID = 1L;
+
     public Wall(int health)
     {
         super(health);

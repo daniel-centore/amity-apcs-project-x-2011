@@ -28,11 +28,12 @@ import org.amityregion5.projectx.common.entities.items.DamageDealing;
  */
 public class Sword extends MeleeWeapon implements DamageDealing
 {
+    private static final long serialVersionUID = 1L;
 
-   private static int SWORD_RATE = 42; // FIXME: arbitrary.
+    private static int SWORD_RATE = 42; // FIXME: arbitrary.
 
-   public Sword()
-   {
-      super(SWORD_RATE);
-   }
+    public Sword()
+    {
+        super(SWORD_RATE);
+    }
 }

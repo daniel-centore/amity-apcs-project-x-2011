@@ -28,6 +28,7 @@ import org.amityregion5.projectx.common.entities.items.DamageDealing;
  * @author Mike DiBuduo
  */
 public class Bullet extends Projectile implements DamageDealing {
+    private static final long serialVersionUID = 1L;
 
     public Bullet(int dm)
     {

@@ -112,6 +112,8 @@ public class ServerChooserWindow extends JFrame implements DatagramListener, Pre
 
         serverList.setFont(new java.awt.Font("SansSerif", 0, 15));
         serverList.setModel(new javax.swing.AbstractListModel() {
+            private static final long serialVersionUID = 1L;
+
             String[] strings =
             { "Manual/Internet..." };
 

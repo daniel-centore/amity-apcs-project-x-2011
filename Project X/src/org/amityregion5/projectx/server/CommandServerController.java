@@ -28,6 +28,7 @@ import org.amityregion5.projectx.common.communication.messages.AnnounceMessage;
  * @author Joe Stein
  */
 public class CommandServerController extends Thread implements ServerController {
+    private static final long serialVersionUID = 1L;
 
     private Scanner scan;
     private Server server;

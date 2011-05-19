@@ -28,6 +28,8 @@ import org.amityregion5.projectx.server.gui.GUIServerController;
  * @author Michael Zuo
  */
 public class AggregateServerController extends ArrayList<ServerController> implements ServerController {
+    private static final long serialVersionUID = 1L;
+
     public AggregateServerController(Server s)
     {
         add(new CommandServerController(s));

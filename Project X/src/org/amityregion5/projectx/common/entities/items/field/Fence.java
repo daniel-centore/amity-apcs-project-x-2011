@@ -27,6 +27,8 @@ import org.amityregion5.projectx.common.entities.Damageable;
  * @author Mike DiBuduo
  */
 public class Fence extends Block implements Damageable{
+    private static final long serialVersionUID = 1L;
+
     public Fence(int health)
     {
         super(health);
