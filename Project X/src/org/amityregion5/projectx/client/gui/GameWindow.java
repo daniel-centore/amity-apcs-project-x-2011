@@ -24,6 +24,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -183,6 +184,14 @@ public class GameWindow extends JFrame {
     public static Image createImage()
     {
         return instance.createImage(GAME_WIDTH, GAME_HEIGHT);
+    }
+
+    /**
+     * @return A new BufferedImage the size and width of the screen
+     */
+    public static BufferedImage createBuffered()
+    {
+        return new BufferedImage(GAME_WIDTH, GAME_HEIGHT, BufferedImage.TYPE_INT_ARGB);
     }
 
     /**
