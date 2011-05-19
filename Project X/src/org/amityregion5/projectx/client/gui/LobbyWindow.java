@@ -19,7 +19,6 @@
  */
 package org.amityregion5.projectx.client.gui;
 
-import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -32,7 +31,6 @@ import javax.swing.SwingUtilities;
 
 import org.amityregion5.projectx.client.communication.CommunicationHandler;
 import org.amityregion5.projectx.client.communication.MulticastCommunicationHandler;
-import org.amityregion5.projectx.common.preferences.PreferenceManager;
 import org.amityregion5.projectx.common.communication.MessageListener;
 import org.amityregion5.projectx.common.communication.messages.ActivePlayersMessage;
 import org.amityregion5.projectx.common.communication.messages.AnnounceMessage;
@@ -43,6 +41,7 @@ import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.common.communication.messages.ReadyMessage;
 import org.amityregion5.projectx.common.communication.messages.StatusUpdateMessage;
 import org.amityregion5.projectx.common.maps.TestingMap;
+import org.amityregion5.projectx.common.preferences.PreferenceManager;
 
 /**
  * The game lobby TODO: finish implementing it! (I mean with initializing the game and such)
@@ -369,6 +368,9 @@ public class LobbyWindow extends JFrame implements MessageListener {
         }
     }
 
+    /**
+     * What to do if the server dies
+     */
     public void tellSocketClosed()
     {
         JOptionPane.showMessageDialog(this, "Server disconnected unexpectedly", "Connection closed", JOptionPane.WARNING_MESSAGE);
@@ -386,6 +388,9 @@ public class LobbyWindow extends JFrame implements MessageListener {
         });
     }
 
+    /**
+     * Sends the chat that is currently in the box
+     */
     private void sendChat()
     {
         ChatMessage chm = new ChatMessage(chatField.getText(), ChatMessage.Type.PUBLIC, PreferenceManager.getUsername());

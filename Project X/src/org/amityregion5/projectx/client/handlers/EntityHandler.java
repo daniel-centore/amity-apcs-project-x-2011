@@ -26,23 +26,34 @@ import org.amityregion5.projectx.common.communication.messages.Message;
 
 /**
  * Stores all current entities
- *
+ * 
  * @author Daniel Centore
  */
 public class EntityHandler implements MessageListener {
 
-    private static List<Entity> entities = new ArrayList<Entity>();
+    private static List<Entity> entities = new ArrayList<Entity>(); // the list of current entities
 
+    /**
+     * Adds an enity to the list
+     * @param e Entity to add
+     */
     public static synchronized void addEntity(Entity e)
     {
         entities.add(e);
     }
 
+    /**
+     * Removes an entity from the list
+     * @param e Entity to remove
+     */
     public static synchronized void removedEntity(Entity e)
     {
         entities.remove(e);
     }
 
+    /**
+     * @return The list of entities
+     */
     public static synchronized List<Entity> getEntities()
     {
         return entities;
@@ -50,7 +61,7 @@ public class EntityHandler implements MessageListener {
 
     public void handle(Message m)
     {
-        //TODO: register this class and handle entity moved messages
+        // TODO: register this class and handle entity moved messages
     }
 
     public void tellSocketClosed()

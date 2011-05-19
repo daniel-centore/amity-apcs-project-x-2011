@@ -49,7 +49,7 @@ public class CommunicationHandler extends Thread {
     private volatile ArrayList<MessageListener> listeners = new ArrayList<MessageListener>(); // listens for messages
     private volatile List<ReplyWaiting> replies = new ArrayList<ReplyWaiting>(); // list of places to check for replies
     private ObjectOutputStream outObjects; // what we write to
-    private ObjectInputStream inObjects;
+    private ObjectInputStream inObjects; // what we read from
 
     /**
      * Creates and initializes communications with a server
@@ -145,6 +145,9 @@ public class CommunicationHandler extends Thread {
         }
     }
 
+    /**
+     * Kills the communications!
+     */
     public void kill()
     {
         try
@@ -259,6 +262,7 @@ public class CommunicationHandler extends Thread {
 
     /**
      * XXX: kluge, probably needs refactoring.
+     * ^^So why don't you refactor it? (note that it can be instantiated multiple times w/ username conflicts)
      * 
      * @return The only instance of CommunicationHandler (or null)
      */

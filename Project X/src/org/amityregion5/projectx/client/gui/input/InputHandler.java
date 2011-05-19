@@ -18,7 +18,6 @@
  * by the Free Software Foundation.
  */
 package org.amityregion5.projectx.client.gui.input;
-import java.awt.event.KeyEvent;
 /**
  * Handles inputs as they come in
  * 

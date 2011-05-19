@@ -48,13 +48,11 @@ public class GameWindow extends JFrame {
     private static AbstractMap map; // the current game map
     private static JComponent panel; // the panel we will draw on
     private static Image buffer; // the image the panel should draw
-    private boolean fullscreen;
 
     public GameWindow(AbstractMap map)
     {
         super("Amity Project X");
 
-        fullscreen = false;
         instance = this;
         GameWindow.map = map;
 

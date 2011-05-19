@@ -36,8 +36,7 @@ public class UsernameWindow extends JDialog
 {
 
    private static final long serialVersionUID = 1L;
-   protected String hasReturned = null;
-
+   
    /**
     * Creates new form UsernameWindow
     * @param welcome whether or not to include a welcome message, i.e. if the
@@ -156,30 +155,31 @@ public class UsernameWindow extends JDialog
        }
     }//GEN-LAST:event_usernameFieldKeyPressed
 
-   /**
-    * @param args the command line arguments
-    */
-   public static void main(String args[])
-   {
-      java.awt.EventQueue.invokeLater(new Runnable()
-      {
-
-         public void run()
-         {
-            UsernameWindow dialog = new UsernameWindow(new javax.swing.JFrame(), true, true);
-            dialog.addWindowListener(new java.awt.event.WindowAdapter()
-            {
-
-               @Override
-               public void windowClosing(java.awt.event.WindowEvent e)
-               {
-                  System.exit(0);
-               }
-            });
-            dialog.setVisible(true);
-         }
-      });
-   }
+//   /**
+//    * @param args the command line arguments
+//    */
+//   public static void main(String args[])
+//   {
+//      java.awt.EventQueue.invokeLater(new Runnable()
+//      {
+//
+//         public void run()
+//         {
+//            UsernameWindow dialog = new UsernameWindow(new javax.swing.JFrame(), true, true);
+//            dialog.addWindowListener(new java.awt.event.WindowAdapter()
+//            {
+//
+//               @Override
+//               public void windowClosing(java.awt.event.WindowEvent e)
+//               {
+//                  System.exit(0);
+//               }
+//            });
+//            dialog.setVisible(true);
+//         }
+//      });
+//   }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel headText;
     private javax.swing.JButton okBtn;
