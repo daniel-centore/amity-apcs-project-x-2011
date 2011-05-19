@@ -40,7 +40,6 @@ public class GUIServerController extends javax.swing.JFrame implements ServerCon
       ipLabel.setText(server.getInetAddress().getCanonicalHostName());
       nameLabel.setText(server.getName());
       this.setVisible(true);
-      System.err.println("okay, gsc open");
    }
 
    /** This method is called from within the constructor to
