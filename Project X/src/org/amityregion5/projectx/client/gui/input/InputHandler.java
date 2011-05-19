@@ -18,14 +18,39 @@
  * by the Free Software Foundation.
  */
 package org.amityregion5.projectx.client.gui.input;
+
+import java.util.ArrayList;
+import org.amityregion5.projectx.client.GameInputListener;
+
 /**
  * Handles inputs as they come in
  * 
  * @author Michael Wenke
  * @author Daniel Centore
  * @author Cameron Simpson
+ * @author Joe Stein
  */
 public class InputHandler {
+    private static ArrayList<GameInputListener> gils = new ArrayList<GameInputListener>();
+
+
+    /**
+     * Registers the given GameInputListener with the input handler
+     * @param gil the GameInputListener to register
+     */
+    public static void registerListener(GameInputListener gil)
+    {
+        gils.add(gil);
+    }
+
+    /**
+     * Unregisters the given GameInputListener.
+     * @param gil the GameInputListener to unregister
+     */
+    public static void removeListener(GameInputListener gil)
+    {
+        gils.remove(gil);
+    }
 
     public static void mouseDragged(int x, int y)
     {

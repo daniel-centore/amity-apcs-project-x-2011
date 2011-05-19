@@ -2,8 +2,7 @@
  * Copyright (c) 2011 Amity AP CS A Students of 2010-2011.
  *
  * ex: set filetype=java expandtab tabstop=4 shiftwidth=4 :
- *
- * This program is free software: you can redistribute it and/or
+ * * This program is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of
  * the License, or (at your option) any later version.
@@ -17,26 +16,13 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
-package org.amityregion5.projectx.common.maps;
-
-import java.awt.Image;
-
+package org.amityregion5.projectx.common.entities.characters;
 
 /**
- * An abstract map.
- * 
- * @author Mike DiBuduo
- * @author Daniel Centore
+ * A player unique to the client.
+ *
+ * @author Joe Stein
  */
-public abstract class AbstractMap {
+public class MePlayer extends Player {
 
-    private Image bgImage; // the image of the actual scenery/map/whatever
-
-    /**
-     * @return The background image (or null for default background)
-     */
-    public Image getBackground()
-    {
-        return bgImage;
-    }
 }
