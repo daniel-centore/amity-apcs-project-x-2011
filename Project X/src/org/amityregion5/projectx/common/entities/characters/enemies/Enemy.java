@@ -17,9 +17,10 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
-package org.amityregion5.projectx.common.entities.characters;
+package org.amityregion5.projectx.common.entities.characters.enemies;
 
 import org.amityregion5.projectx.common.entities.Damageable;
+import org.amityregion5.projectx.common.entities.characters.Character;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
 
 /**
@@ -27,27 +28,19 @@ import org.amityregion5.projectx.common.entities.items.held.Weapon;
  * 
  * @author Mike DiBuduo
  */
-public class Enemy extends Character implements Damageable{
-
+public class Enemy extends Character implements Damageable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Creates an enemy
+     * Creates an enemy with specified health.
      * 
-     * @param health Current health
-     * @param max Maximum possible health
+     * @param health
      */
     public Enemy(int health, int max)
     {
         super(health, max);
     }
 
-    /**
-     * Creates an enemy
-     * @param health Current health
-     * @param max Maximum possible health
-     * @param wp Default weapon
-     */
     public Enemy(int health, int max, Weapon wp)
     {
         this(health, max);
