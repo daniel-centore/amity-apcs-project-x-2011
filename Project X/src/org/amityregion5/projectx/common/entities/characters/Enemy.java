@@ -32,15 +32,22 @@ public class Enemy extends Character implements Damageable{
     private static final long serialVersionUID = 1L;
 
     /**
-     * Creates an enemy with specified health.
+     * Creates an enemy
      * 
-     * @param health
+     * @param health Current health
+     * @param max Maximum possible health
      */
     public Enemy(int health, int max)
     {
         super(health, max);
     }
 
+    /**
+     * Creates an enemy
+     * @param health Current health
+     * @param max Maximum possible health
+     * @param wp Default weapon
+     */
     public Enemy(int health, int max, Weapon wp)
     {
         this(health, max);

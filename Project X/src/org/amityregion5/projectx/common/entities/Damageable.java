@@ -25,7 +25,21 @@ package org.amityregion5.projectx.common.entities;
  * @author Michael Wenke
  */
 public interface Damageable {
+
+    /**
+     * Deals damage to the entity
+     * @param damage Damage to apply
+     */
     public void damage(int damage);
+
+    /**
+     * Heals the enemy
+     * @param health Amount to heal
+     */
     public void heal(int health);
+
+    /**
+     * Kills the entity
+     */
     public void killed();
 }

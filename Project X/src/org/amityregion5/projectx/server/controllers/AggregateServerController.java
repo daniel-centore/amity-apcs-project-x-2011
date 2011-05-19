@@ -16,11 +16,13 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
-package org.amityregion5.projectx.server;
+package org.amityregion5.projectx.server.controllers;
 
 import java.util.ArrayList;
+import org.amityregion5.projectx.server.Server;
+import org.amityregion5.projectx.server.ServerController;
 
-import org.amityregion5.projectx.server.gui.GUIServerController;
+import org.amityregion5.projectx.server.controllers.GUIServerController;
 
 /**
  * Class documentation.

@@ -19,6 +19,11 @@
  */
 package org.amityregion5.projectx.common.communication.messages;
 
+/**
+ * Tells the server that a client is ready
+ *
+ * @author Daniel Centore
+ */
 public class ReadyMessage extends BooleanReplyMessage {
 
     private static final long serialVersionUID = 1L;

@@ -48,10 +48,10 @@ public class Client extends Thread {
 
     private Socket sock; // socket
     private Server server; // the server to which this Client belongs
-    private String username;
-    private ObjectOutputStream outObjects;
-    private ObjectInputStream inObjects;
-    private boolean quit = false;
+    private String username;    // the client's username
+    private ObjectOutputStream outObjects;  //what we write to
+    private ObjectInputStream inObjects;    //what we read from
+    private boolean quit = false;   //should we quit?
     private boolean waiting = true; // are we waiting on this client?
 
     /**
@@ -68,7 +68,8 @@ public class Client extends Thread {
         {
             outObjects = new ObjectOutputStream(sock.getOutputStream());
             inObjects = new ObjectInputStream(sock.getInputStream());
-        } catch (IOException e)
+        }
+        catch(IOException e)
         {
             e.printStackTrace();
         }
@@ -79,7 +80,7 @@ public class Client extends Thread {
     {
         try
         {
-            while (!quit)
+            while(!quit)
             {
                 final Message m = (Message) inObjects.readObject();
 
@@ -97,31 +98,38 @@ public class Client extends Thread {
             inObjects.close();
             sock.close();
 
-        } catch (EOFException eof)
+        }
+        catch(EOFException eof)
         {
             System.out.println("Client disconnected");
             // remove this client from the server list
-            if (username != null) // this client gave us its username
+            if(username != null) // this client gave us its username
             {
                 server.removeClient(username); // take it off the server's list
             }
-        } catch (SocketException se)
+        }
+        catch(SocketException se)
         {
             System.out.println("Client disconnected");
             // remove this client from the server list
-            if (username != null) // this client gave us its username
+            if(username != null) // this client gave us its username
             {
                 server.removeClient(username); // take it off the server's list
             }
-        } catch (IOException e)
+        }
+        catch(IOException e)
         {
             e.printStackTrace();
-        } catch (ClassNotFoundException e)
+        }
+        catch(ClassNotFoundException e)
         {
             e.printStackTrace();
         }
     }
 
+    /**
+     * @return IP address of this client
+     */
     public String getIP()
     {
         return sock.getInetAddress().getHostAddress();
@@ -139,7 +147,8 @@ public class Client extends Thread {
             outObjects.writeObject(m);
 
             outObjects.flush();
-        } catch (IOException e)
+        }
+        catch(IOException e)
         {
             // This happens sometimes. I forget when though.
             // e.printStackTrace();
@@ -147,17 +156,17 @@ public class Client extends Thread {
         }
     }
 
-    private void processMessage(Message m)
+    private void processMessage(Message m)  //helper
     {
-        if (m instanceof BlockingMessage)
+        if(m instanceof BlockingMessage)
         {
             Message contained = ((BlockingMessage) m).getMessage();
 
-            if (contained instanceof IntroduceMessage)
+            if(contained instanceof IntroduceMessage)
             {
                 IntroduceMessage im = (IntroduceMessage) contained;
 
-                if (!server.hasClient(im.getText()))
+                if(!server.hasClient(im.getText()))
                 {
                     // If there is no client
                     username = im.getText();
@@ -172,27 +181,31 @@ public class Client extends Thread {
                     try
                     {
                         Thread.sleep(500);
-                    } catch (InterruptedException e)
+                    }
+                    catch(InterruptedException e)
                     {
                     }
 
                     server.incrementWaiting();
-                } else
+                }
+                else
                 {
                     sendReply((BlockingMessage) m, new BooleanReplyMessage(false));
                 }
             }
-        } else if (m instanceof TextualMessage)
+        }
+        else if(m instanceof TextualMessage)
         {
             TextualMessage tm = (TextualMessage) m;
-            if (tm instanceof ChatMessage)
+            if(tm instanceof ChatMessage)
             {
                 server.relayMessage(tm);
             }
-        } else if (m instanceof ReadyMessage)
+        }
+        else if(m instanceof ReadyMessage)
         {
             ReadyMessage rm = (ReadyMessage) m;
-            if (rm.isAffirmative())
+            if(rm.isAffirmative())
             {
                 waiting = false;
                 server.decrementWaiting();
@@ -205,28 +218,40 @@ public class Client extends Thread {
         }
     }
 
+    //helper
     private void sendReply(BlockingMessage original, Message reply)
     {
         send(new BlockingMessage(original, reply));
     }
 
+    /**
+     * @return The client's username
+     */
     public String getUsername()
     {
         return username;
     }
 
+    /**
+     * Rudely kills the connection
+     */
     public void kill()
     {
         try
         {
             quit = true;
             sock.close();
-        } catch (IOException ex)
+        }
+        catch(IOException ex)
         {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    /**
+     * Are we waiting for the client to press "ready?"
+     * @return True if so; false otherwise
+     */
     public boolean isWaiting()
     {
         return waiting;

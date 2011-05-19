@@ -17,26 +17,13 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
-package org.amityregion5.projectx.server;
-
-import java.util.ArrayList;
-
-import org.amityregion5.projectx.common.entities.items.field.FieldItem;
+package org.amityregion5.projectx.server.game;
 
 /**
  * Class documentation.
  * 
  * @author Jenny Liu
- * @author Mike DiBuduo
  */
-public class FieldItemManager {
+public class UpdateHandler extends Thread {
 
-    private ArrayList<FieldItem> fieldItems;
-    
-    private Thread managerThread = new Thread() {
-
-        public void run()
-        {
-        }
-    };
 }

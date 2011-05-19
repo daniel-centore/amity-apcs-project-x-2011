@@ -17,13 +17,16 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
-package org.amityregion5.projectx.server;
+package org.amityregion5.projectx.server.game;
 
 /**
  * Class documentation.
  * 
  * @author Jenny Liu
+ * @author Mike DiBuduo
  */
-public class UpdateHandler extends Thread {
+public class EnemyManager {
+
+    private GeneratorThread gen;
 
 }

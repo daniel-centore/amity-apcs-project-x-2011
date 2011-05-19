@@ -192,11 +192,17 @@ public abstract class Entity implements Serializable {
         return this.uniqueID == e.uniqueID;
     }
 
+    /**
+     * @return The width of the image
+     */
     public int getWidth()
     {
         return image.getWidth();
     }
 
+    /**
+     * @return The height of the image
+     */
     public int getHeight()
     {
         return image.getHeight();

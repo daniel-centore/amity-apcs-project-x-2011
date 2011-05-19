@@ -33,14 +33,13 @@ import org.amityregion5.projectx.common.entities.items.held.Weapon;
  * @author Mike DiBuduo
  * @author Mike Wenke
  */
-public abstract class Character extends Entity implements Damageable
-{
+public abstract class Character extends Entity implements Damageable {
+
     private static final long serialVersionUID = 1L;
-    
-    private ArrayList<Weapon> weapons;
-    private int currWeapon;
-    private int hp;
-    private int maxHealth;
+    private ArrayList<Weapon> weapons;  // The weapons the character owns
+    private int currWeapon; //currently active weapon
+    private int hp; //hitpoints
+    private int maxHealth;  //maximum possible hea1h (generally 100)
 
     /**
      * Create a character.
@@ -129,7 +128,7 @@ public abstract class Character extends Entity implements Damageable
      */
     public void killed()
     {
-        if (hp <= 0)
+        if(hp <= 0)
         {
             //perhaps we need to rethink this, but calling the client is entirely wrong.
         }
@@ -153,7 +152,7 @@ public abstract class Character extends Entity implements Damageable
     public void heal(int health)
     {
         hp += health;
-        if (hp > maxHealth)
+        if(hp > maxHealth)
             hp = maxHealth;
     }
 }

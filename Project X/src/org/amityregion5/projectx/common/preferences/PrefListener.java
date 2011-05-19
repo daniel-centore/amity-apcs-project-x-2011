@@ -24,5 +24,7 @@ package org.amityregion5.projectx.common.preferences;
  * @author Joe Stein
  */
 public interface PrefListener {
+
    public void usernameChanged(String username);
+   
 }
