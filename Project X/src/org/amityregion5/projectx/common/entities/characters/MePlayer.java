@@ -24,5 +24,5 @@ package org.amityregion5.projectx.common.entities.characters;
  * @author Joe Stein
  */
 public class MePlayer extends Player {
-
+    private static final long serialVersionUID = 1L;
 }

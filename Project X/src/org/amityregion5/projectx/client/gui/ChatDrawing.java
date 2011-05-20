@@ -57,6 +57,8 @@ public class ChatDrawing {
         ChatDrawing.drawChat("[SERVER] update in 5!");
         ChatDrawing.drawChat("Another Test");
         JPanel p = new JPanel(){
+            private static final long serialVersionUID = 1L;
+
             @Override
             public void paintComponent(Graphics g)
             {
