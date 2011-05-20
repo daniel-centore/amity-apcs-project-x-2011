@@ -38,6 +38,7 @@ import org.amityregion5.projectx.common.communication.messages.ChatMessage;
 import org.amityregion5.projectx.common.communication.messages.GoodbyeMessage;
 import org.amityregion5.projectx.common.communication.messages.IntroduceMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
+import org.amityregion5.projectx.common.communication.messages.NotifyMessage;
 import org.amityregion5.projectx.common.communication.messages.ReadyMessage;
 import org.amityregion5.projectx.common.communication.messages.StatusUpdateMessage;
 import org.amityregion5.projectx.common.maps.TestingMap;
@@ -85,6 +86,8 @@ public class LobbyWindow extends JFrame implements MessageListener {
         }
         playerList.setModel(playerListModel);
         this.setVisible(true);
+        
+        ch.send(new NotifyMessage(NotifyMessage.LOBBY_READY));
     }
 
     /**

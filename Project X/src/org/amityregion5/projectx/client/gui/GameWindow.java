@@ -110,26 +110,7 @@ public class GameWindow extends JFrame {
 
         this.setVisible(true);
 
-        // FIXME this is kind of obnoxious to the user... is it necessary?
-        // makes sure game has focus always, even if we add menus and such later
-        new Thread() {
-
-            @Override
-            public void run()
-            {
-                while(true)
-                {
-                    panel.requestFocusInWindow();
-                    try
-                    {
-                        Thread.sleep(1000);
-                    }
-                    catch(InterruptedException e)
-                    {
-                    }
-                }
-            }
-        }.start();
+        panel.requestFocusInWindow();
     }
 
     /**

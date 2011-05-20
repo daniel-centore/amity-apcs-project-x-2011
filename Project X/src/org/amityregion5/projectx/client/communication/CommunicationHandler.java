@@ -261,10 +261,7 @@ public class CommunicationHandler extends Thread {
     }
 
     /**
-     * XXX: kluge, probably needs refactoring.
-     * ^^So why don't you refactor it? (note that it can be instantiated multiple times w/ username conflicts)
-     * 
-     * @return The only instance of CommunicationHandler (or null)
+     * @return The most recent instance of CommunicationHandler (or null)
      */
     public static CommunicationHandler getInstance()
     {

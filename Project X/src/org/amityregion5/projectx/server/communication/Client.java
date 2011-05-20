@@ -34,6 +34,7 @@ import org.amityregion5.projectx.common.communication.messages.BooleanReplyMessa
 import org.amityregion5.projectx.common.communication.messages.ChatMessage;
 import org.amityregion5.projectx.common.communication.messages.IntroduceMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
+import org.amityregion5.projectx.common.communication.messages.NotifyMessage;
 import org.amityregion5.projectx.common.communication.messages.ReadyMessage;
 import org.amityregion5.projectx.common.communication.messages.TextualMessage;
 import org.amityregion5.projectx.server.Server;
@@ -175,18 +176,6 @@ public class Client extends Thread {
                     server.addClient(username, this);
 
                     sendReply((BlockingMessage) m, q);
-
-                    // below here is for sending initialization -after- lobby window has been created
-                    // TODO: unkludge it
-                    try
-                    {
-                        Thread.sleep(500);
-                    }
-                    catch(InterruptedException e)
-                    {
-                    }
-
-                    server.incrementWaiting();
                 }
                 else
                 {
@@ -214,6 +203,17 @@ public class Client extends Thread {
             {
                 waiting = true;
                 server.incrementWaiting();
+            }
+        }
+        else if(m instanceof NotifyMessage)
+        {
+            NotifyMessage nm = (NotifyMessage) m;
+            
+            switch(nm.getWhat())
+            {
+            case NotifyMessage.LOBBY_READY:
+                server.incrementWaiting();
+                break;
             }
         }
     }

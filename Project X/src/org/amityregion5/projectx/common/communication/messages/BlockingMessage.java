@@ -23,7 +23,7 @@ package org.amityregion5.projectx.common.communication.messages;
  * Acts as a container for Message with an ID, so we can receive replies
  * 
  * NOTE: This relies on having unique messageNumbers.
- * So, if you are going to implement this client-->server-->client then make a new class for it
+ * So, if you are going to reimplement this server-->client-->server then make a new class for it
  * 
  * @author Daniel Centore
  * 
