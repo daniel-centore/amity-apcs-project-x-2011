@@ -28,6 +28,7 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import org.amityregion5.projectx.client.gui.GameWindow;
 import org.amityregion5.projectx.client.gui.LobbyWindow;
 import org.amityregion5.projectx.client.gui.ServerChooserWindow;
 
@@ -91,6 +92,7 @@ public class CommunicationHandler extends Thread {
         {
             JOptionPane.showMessageDialog(null, "Server has Closed. You have been disconnected", "Disconnected", JOptionPane.OK_OPTION);
             LobbyWindow.getInstance().setVisible(false);
+            GameWindow.getInstance().setVisible(false);
             new ServerChooserWindow();
         } catch (ClassNotFoundException e)
         {
