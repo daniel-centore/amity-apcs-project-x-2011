@@ -91,8 +91,12 @@ public class CommunicationHandler extends Thread {
         } catch (IOException e1)
         {
             JOptionPane.showMessageDialog(null, "Server has Closed. You have been disconnected", "Disconnected", JOptionPane.OK_OPTION);
-            LobbyWindow.getInstance().setVisible(false);
-            GameWindow.getInstance().setVisible(false);
+
+            if (LobbyWindow.getInstance() != null)
+                LobbyWindow.getInstance().setVisible(false);
+            if (GameWindow.getInstance() != null)
+                GameWindow.getInstance().setVisible(false);
+
             new ServerChooserWindow();
         } catch (ClassNotFoundException e)
         {

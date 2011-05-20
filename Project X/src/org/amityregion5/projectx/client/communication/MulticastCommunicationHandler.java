@@ -76,6 +76,7 @@ public class MulticastCommunicationHandler extends Thread {
 
     /**
      * Registers a listener for multicast stuff
+     * 
      * @param listener The DatagramListener
      */
     public void registerListener(DatagramListener listener)
@@ -85,6 +86,7 @@ public class MulticastCommunicationHandler extends Thread {
 
     /**
      * Un-registers a listener
+     * 
      * @param listener The DatagramListener
      */
     public void removeListener(DatagramListener listener)
