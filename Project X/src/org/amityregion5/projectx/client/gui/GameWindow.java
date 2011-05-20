@@ -29,6 +29,8 @@ import java.awt.image.BufferedImage;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
+import org.amityregion5.projectx.client.Game;
+import org.amityregion5.projectx.client.communication.CommunicationHandler;
 import org.amityregion5.projectx.client.gui.input.KeyboardInput;
 import org.amityregion5.projectx.client.gui.input.MouseInput;
 import org.amityregion5.projectx.common.maps.AbstractMap;
@@ -49,6 +51,7 @@ public class GameWindow extends JFrame {
     private static AbstractMap map; // the current game map
     private static JComponent panel; // the panel we will draw on
     private static Image buffer; // the image the panel should draw
+    private static Game game;
 
     public GameWindow(AbstractMap map)
     {
@@ -56,6 +59,8 @@ public class GameWindow extends JFrame {
 
         instance = this;
         GameWindow.map = map;
+        
+        game = new Game(CommunicationHandler.getInstance(), map);
 
         this.setBackground(Color.black);
 

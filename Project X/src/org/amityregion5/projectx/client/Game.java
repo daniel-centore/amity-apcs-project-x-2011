@@ -21,6 +21,7 @@ package org.amityregion5.projectx.client;
 import java.util.ArrayList;
 import org.amityregion5.projectx.client.communication.CommunicationHandler;
 import org.amityregion5.projectx.client.gui.ChatDrawing;
+import org.amityregion5.projectx.client.gui.input.InputHandler;
 import org.amityregion5.projectx.common.communication.MessageListener;
 import org.amityregion5.projectx.common.communication.messages.ChatMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
@@ -33,7 +34,8 @@ import org.amityregion5.projectx.common.maps.AbstractMap;
  *
  * @author Joe Stein
  */
-public class Game implements GameInputListener, MessageListener{
+public class Game implements GameInputListener, MessageListener {
+    
     private MePlayer me;
     private CommunicationHandler ch;
     private AbstractMap map;
@@ -42,6 +44,7 @@ public class Game implements GameInputListener, MessageListener{
     public Game(CommunicationHandler ch, AbstractMap m)
     {
         this.ch = ch;
+        InputHandler.registerListener(this);
     }
 
 

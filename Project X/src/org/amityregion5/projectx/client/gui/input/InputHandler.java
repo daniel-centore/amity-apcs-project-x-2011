@@ -20,6 +20,8 @@
 package org.amityregion5.projectx.client.gui.input;
 
 import java.util.ArrayList;
+
+import org.amityregion5.projectx.client.Game;
 import org.amityregion5.projectx.client.GameInputListener;
 
 /**
@@ -54,27 +56,38 @@ public class InputHandler {
 
     public static void mouseDragged(int x, int y)
     {
+        for(GameInputListener g : gils)
+            g.mouseDragged(x, y);
     }
 
     public static void mouseMoved(int x, int y)
     {
+        for(GameInputListener g : gils)
+            g.mouseMoved(x, y);
     }
 
     public static void mousePressed(int x, int y, int button)
     {
+        for(GameInputListener g : gils)
+            g.mousePressed(x, y, button);
     }
 
     public static void mouseReleased(int x, int y, int button)
     {
+        for(GameInputListener g : gils)
+            g.mouseReleased(x, y, button);
     }
 
     public static void keyPressed(int keyCode) // this includes key repeats
     {
-        
+        for(GameInputListener g : gils)
+            g.keyPressed(keyCode);
     }
 
     public static void keyReleased(int keyCode) // only when key is released
     {
+        for(GameInputListener g : gils)
+            g.keyReleased(keyCode);
     }
 
 }
