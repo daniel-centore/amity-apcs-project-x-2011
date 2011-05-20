@@ -23,6 +23,8 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
 
+import org.amityregion5.projectx.common.tools.ImageHandler;
+
 /**
  * An entity. All should be created server-side to guarentee they each get unique ids.
  * 
@@ -57,6 +59,7 @@ public abstract class Entity implements Serializable {
         directionFacing = 0;
         directionMoving = 0;
         moveSpeed = 0;
+        selectImage();
     }
 
     /**
@@ -206,5 +209,23 @@ public abstract class Entity implements Serializable {
     public int getHeight()
     {
         return image.getHeight();
+    }
+
+    /**
+     * Gets an appropriate image for this entity.
+     */
+    public void selectImage()
+    {
+        //TODO/FIXME: nothing to do here.
+    }
+
+    /**
+     * Sets the image of this entity to that from a particular source.
+     *
+     * @param src A String representing the source.
+     */
+    public void selectImage(String src)
+    {
+        image = ImageHandler.loadImage(src);
     }
 }

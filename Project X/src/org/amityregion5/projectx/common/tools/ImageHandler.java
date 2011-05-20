@@ -39,9 +39,10 @@ public class ImageHandler {
      * @param str A String representing the image source.
      * @return An image, or null if none could be found or read.
      */
-    public BufferedImage loadImage(String str)
+    public static BufferedImage loadImage(String str)
     {
-        return loadFile(str);
+        //FIXME: make this actually figure out what directory to look in.
+        return loadFile("../resources/" + str);
     }
 
     /**
@@ -50,7 +51,7 @@ public class ImageHandler {
      * @param path The filesystem path to the image.
      * @return The image in the file, or null if reading failed.
      */
-    public BufferedImage loadFile(String path)
+    public static BufferedImage loadFile(String path)
     {
         try
         {
