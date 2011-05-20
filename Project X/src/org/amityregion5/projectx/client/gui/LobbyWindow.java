@@ -44,7 +44,7 @@ import org.amityregion5.projectx.common.maps.TestingMap;
 import org.amityregion5.projectx.common.preferences.PreferenceManager;
 
 /**
- * The game lobby TODO: finish implementing it! (I mean with initializing the game and such)
+ * The game lobby
  * 
  * @author Daniel Centore
  * @author Joe Stein
