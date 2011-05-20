@@ -64,6 +64,7 @@ public class ChatDrawing {
                 g2d.drawImage(ChatDrawing.getChat(), 0, 0, null);
             }
         };
+        p.setBackground(Color.red);
         frame.add(p);
         frame.setVisible(true);
     }
