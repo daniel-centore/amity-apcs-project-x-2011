@@ -16,13 +16,34 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
-package org.amityregion5.projectx.common.entities.characters;
+package org.amityregion5.projectx.server.game;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import org.amityregion5.projectx.common.entities.characters.Player;
+import org.amityregion5.projectx.server.Server;
+import org.amityregion5.projectx.server.communication.Client;
 
 /**
- * A player unique to the client.
+ * Handles the game running
  *
- * @author Joe Stein
+ * @author Daniel Centore
  */
-public class MePlayer extends Player {
-    private static final long serialVersionUID = 1L;
+public class GameController {
+
+    private List<Player> players;
+    private Collection<Client> clients;
+    
+    public GameController(Server server)
+    {
+        players = new ArrayList<Player>();
+        clients = server.getClients().values();
+
+        for(Client c : clients)
+        {
+            //TODO: create players and send them to the clients
+        }
+    }
+
 }

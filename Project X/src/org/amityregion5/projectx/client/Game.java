@@ -22,11 +22,12 @@ import java.util.ArrayList;
 import org.amityregion5.projectx.client.communication.CommunicationHandler;
 import org.amityregion5.projectx.client.gui.ChatDrawing;
 import org.amityregion5.projectx.client.gui.input.InputHandler;
+import org.amityregion5.projectx.client.handlers.EntityHandler;
 import org.amityregion5.projectx.common.communication.MessageListener;
 import org.amityregion5.projectx.common.communication.messages.ChatMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.common.entities.Entity;
-import org.amityregion5.projectx.common.entities.characters.MePlayer;
+import org.amityregion5.projectx.common.entities.characters.Player;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 
 /**
@@ -36,15 +37,17 @@ import org.amityregion5.projectx.common.maps.AbstractMap;
  */
 public class Game implements GameInputListener, MessageListener {
     
-    private MePlayer me;
+    private Player me;
     private CommunicationHandler ch;
     private AbstractMap map;
     private ArrayList<Entity> entities = new ArrayList<Entity>();
 
-    public Game(CommunicationHandler ch, AbstractMap m)
+    public Game(CommunicationHandler ch, AbstractMap m, Player me)
     {
+        this.me = me;
         this.ch = ch;
         InputHandler.registerListener(this);
+        EntityHandler.initialize(ch);
     }
 
 

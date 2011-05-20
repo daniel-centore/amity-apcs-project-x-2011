@@ -36,6 +36,7 @@ import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.common.communication.messages.StatusUpdateMessage;
 import org.amityregion5.projectx.server.communication.Client;
 import org.amityregion5.projectx.server.communication.Multicaster;
+import org.amityregion5.projectx.server.game.GameController;
 
 /**
  * Accepts incoming connections and makes Clients for them
@@ -292,7 +293,15 @@ public class Server {
      */
     public void startGame()
     {
+        //TODO: make it so we stop accepting clients
+        //but if wveryone leaves, begin accepting again
         relayMessage(new StatusUpdateMessage(StatusUpdateMessage.Type.STARTING));
+        new GameController(this);
+    }
+
+    public HashMap<String, Client> getClients()
+    {
+        return clients;
     }
 
     private class ClientNetListener implements Runnable {

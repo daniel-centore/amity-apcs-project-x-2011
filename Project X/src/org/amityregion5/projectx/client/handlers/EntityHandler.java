@@ -21,6 +21,8 @@ package org.amityregion5.projectx.client.handlers;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.text.html.parser.Entity;
+import org.amityregion5.projectx.client.communication.CommunicationHandler;
+import org.amityregion5.projectx.client.gui.input.InputHandler;
 import org.amityregion5.projectx.common.communication.MessageListener;
 import org.amityregion5.projectx.common.communication.messages.EntityMovedMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
@@ -34,6 +36,10 @@ public class EntityHandler implements MessageListener {
 
     private static List<Entity> entities = new ArrayList<Entity>(); // the list of current entities
 
+    public static void initialize(CommunicationHandler ch)
+    {
+        ch.registerListener(new EntityHandler());
+    }
     /**
      * Adds an enity to the list
      * @param e Entity to add
