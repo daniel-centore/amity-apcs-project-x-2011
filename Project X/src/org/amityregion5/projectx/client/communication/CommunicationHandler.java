@@ -27,6 +27,9 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
+import org.amityregion5.projectx.client.gui.LobbyWindow;
+import org.amityregion5.projectx.client.gui.ServerChooserWindow;
 
 import org.amityregion5.projectx.common.communication.Constants;
 import org.amityregion5.projectx.common.communication.MessageListener;
@@ -84,19 +87,11 @@ public class CommunicationHandler extends Thread {
                 handle(m);
             }
 
-        } catch (SocketException e)
-        {
-            // Occurs if we call kill() while this is running
-            return;
-        } catch (EOFException e)
-        {
-            // thrown when the server dies
-            // TODO: perhaps return to the server chooser?
-            System.exit(1);
         } catch (IOException e1)
         {
-            e1.printStackTrace();
-            System.exit(1);
+            JOptionPane.showMessageDialog(null, "Server has Closed. You have been disconnected", "Disconnected", JOptionPane.OK_OPTION);
+            LobbyWindow.getInstance().setVisible(false);
+            new ServerChooserWindow();
         } catch (ClassNotFoundException e)
         {
             e.printStackTrace();

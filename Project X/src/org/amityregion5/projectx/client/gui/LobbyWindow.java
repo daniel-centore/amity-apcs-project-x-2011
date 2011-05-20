@@ -54,6 +54,8 @@ public class LobbyWindow extends JFrame implements MessageListener {
 
     private static final long serialVersionUID = 1L;
 
+    private static LobbyWindow instance;
+    
     private DefaultListModel playerListModel; // the model we change for players
     private CommunicationHandler ch; // the communication with the server
     private boolean ready;
@@ -67,6 +69,8 @@ public class LobbyWindow extends JFrame implements MessageListener {
     public LobbyWindow(CommunicationHandler ch, List<String> players)
     {
         super("Project X Lobby");
+
+        instance = this;
 
         ready = false;
         // adds a window listener so we can tell the server when we leave
@@ -343,7 +347,6 @@ public class LobbyWindow extends JFrame implements MessageListener {
             {
                 this.setVisible(false);
 
-                // TODO: add system for selecting map
                 new GameWindow(new TestingMap());
             }
             SwingUtilities.invokeLater(new Runnable() {
@@ -418,6 +421,10 @@ public class LobbyWindow extends JFrame implements MessageListener {
         {
             ch.send(new GoodbyeMessage(PreferenceManager.getUsername()));
         }
+    }
 
+    public static LobbyWindow getInstance()
+    {
+        return instance;
     }
 }
