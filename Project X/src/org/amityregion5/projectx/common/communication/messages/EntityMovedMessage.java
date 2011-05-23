@@ -26,9 +26,6 @@ import org.amityregion5.projectx.common.entities.Entity;
 /**
  * Notes that a change in the positions of entities has occured.
  * 
- * TODO: make this use the uniqueID instead of an entity for identification.
- * Also Fix corresponding code. It should compile (Mike Z...)
- * 
  * @author Michael Zuo <sreservoir@gmail.com>
  * @author Joe Stein
  * @author Daniel Centore
@@ -37,9 +34,23 @@ public class EntityMovedMessage extends Message {
 
     private static final long serialVersionUID = 1L;
 
-    private Entity entity; // The entity that moved
+    private long entityID; // The entity that moved
     private Point2D newLoc; // Where it moved to
     private int newDir; // the new direction the entity is facing
+
+    /**
+     * Note that an entity has moved and/or turned.
+     * 
+     * @param entityID the id entity in question
+     * @param newLoc the entity's new location. null indicates destruction
+     * @param dir the entity's new location
+     */
+    public EntityMovedMessage(long entityID, Point2D newLoc, int dir)
+    {
+        newDir = dir;
+        this.entityID = entityID;
+        this.newLoc = newLoc;
+    }
 
     /**
      * Note that an entity has moved and/or turned.
@@ -50,9 +61,7 @@ public class EntityMovedMessage extends Message {
      */
     public EntityMovedMessage(Entity entity, Point2D newLoc, int dir)
     {
-        newDir = dir;
-        this.entity = entity;
-        this.newLoc = newLoc;
+        this(entity.getUniqueID(), newLoc, dir);
     }
 
     /**
@@ -74,7 +83,7 @@ public class EntityMovedMessage extends Message {
      */
     public EntityMovedMessage(Entity entity, int dir)
     {
-        this(entity, null, dir);
+        this(entity, entity.getLocation(), dir);
     }
 
     /**
@@ -86,11 +95,11 @@ public class EntityMovedMessage extends Message {
     }
 
     /**
-     * @return The entity that was changed
+     * @return The id of the entity that was changed
      */
-    public Entity getEntity()
+    public long getEntityID()
     {
-        return entity;
+        return entityID;
     }
 
     /**

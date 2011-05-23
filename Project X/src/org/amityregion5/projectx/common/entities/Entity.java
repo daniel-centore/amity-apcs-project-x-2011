@@ -188,6 +188,17 @@ public abstract class Entity implements Serializable {
     }
 
     /**
+     * Checks if two the Entity has a given id.
+     * 
+     * @param id The id to check for.
+     * @return The equivalence of the id to the Entity's.
+     */
+    public boolean equals(long id)
+    {
+        return uniqueID == id;
+    }
+
+    /**
      * Checks if two Entities are the same using uniquely-assigned ids.
      * 
      * @param e The other Entity.
