@@ -47,6 +47,7 @@ public class GameController {
         {
             Player p = new Player();
             players.add(p);
+            c.setPlayer(p);
             
             c.send(new AddMeMessage(p));
         }
