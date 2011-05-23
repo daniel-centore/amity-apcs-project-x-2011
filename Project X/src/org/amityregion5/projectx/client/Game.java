@@ -21,6 +21,7 @@ package org.amityregion5.projectx.client;
 import org.amityregion5.projectx.client.communication.CommunicationHandler;
 import org.amityregion5.projectx.client.gui.ChatDrawing;
 import org.amityregion5.projectx.client.gui.input.InputHandler;
+import org.amityregion5.projectx.client.gui.input.Keys;
 import org.amityregion5.projectx.client.handlers.EntityHandler;
 import org.amityregion5.projectx.common.communication.MessageListener;
 import org.amityregion5.projectx.common.communication.messages.AddMeMessage;
@@ -39,10 +40,12 @@ public class Game implements GameInputListener, MessageListener {
 
     private CommunicationHandler ch;
     private AbstractMap map;
+    private Player me;
 
     public Game(CommunicationHandler ch, AbstractMap m)
     {
         this.ch = ch;
+        ch.registerListener(this);
         EntityHandler.initialize(ch);
         InputHandler.registerListener(this);
     }
@@ -54,10 +57,12 @@ public class Game implements GameInputListener, MessageListener {
     public void mouseMoved(int x, int y)
     {
         // send to server and let server deal with it
-        // int x1 = me.getX();
-        // int y1 = me.getY();
-        // int angle = (int) Math.atan2(y - y1, x - x1);
-        // me.setDirectionFacing(angle);
+        if (me == null)
+            return;
+        int x1 = me.getX();
+        int y1 = me.getY();
+        int angle = (int) Math.atan2(y - y1, x - x1);
+        me.setDirectionFacing(angle);
     }
 
     public void mousePressed(int x, int y, int button)
@@ -72,6 +77,10 @@ public class Game implements GameInputListener, MessageListener {
 
     public void keyPressed(int keyCode)
     {
+        if (keyCode == Keys.UP)
+        {
+            // ...
+        }
     }
 
     public void keyReleased(int keyCode)
@@ -89,11 +98,26 @@ public class Game implements GameInputListener, MessageListener {
         {
             ChatMessage cm = (ChatMessage) m;
             ChatDrawing.drawChat(cm.getFrom() + ": " + cm.getText());
+        } else if (m instanceof AddMeMessage)
+        {
+            AddMeMessage amm = (AddMeMessage) m;
+
+            me = (Player) amm.getEntity();
         }
     }
 
     public void tellSocketClosed()
     {
+    }
+
+    public Player getMe()
+    {
+        return me;
+    }
+
+    public void setMe(Player me)
+    {
+        this.me = me;
     }
 
 }

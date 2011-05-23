@@ -21,14 +21,46 @@ package org.amityregion5.projectx.client.gui.input;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Controls keyboard inputs. They should be handled in InputHandler.
- *
+ * 
  * @author Michael Wenke
  * @author Daniel Centore
  */
-public class KeyboardInput implements KeyListener{
+public class KeyboardInput implements KeyListener {
+
+    private List<Integer> depressed = new ArrayList<Integer>(); // keys currently pressed down
+
+    /**
+     * Initializes the KeyHandler run thread
+     */
+    public KeyboardInput()
+    {
+        new Thread() {
+            @Override
+            public void run()
+            {
+                while (true)
+                {
+                    synchronized (KeyboardInput.this)
+                    {
+                        for (int i = 0; i < depressed.size(); i++)
+                            InputHandler.keyPressed(depressed.get(i));
+                    }
+
+                    try
+                    {
+                        Thread.sleep(1);
+                    } catch (InterruptedException e)
+                    {
+                    }
+                }
+            }
+        }.start();
+    }
 
     public void keyTyped(KeyEvent e)
     {
@@ -37,11 +69,13 @@ public class KeyboardInput implements KeyListener{
 
     public void keyPressed(KeyEvent e)
     {
-        InputHandler.keyPressed(e.getKeyCode());
+        if (!depressed.contains(e.getKeyCode()))
+            depressed.add(e.getKeyCode());
     }
 
     public void keyReleased(KeyEvent e)
     {
+        depressed.remove((Integer) e.getKeyCode()); // cast so we're removing object, not index
         InputHandler.keyReleased(e.getKeyCode());
     }
 

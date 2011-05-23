@@ -19,11 +19,13 @@
  */
 package org.amityregion5.projectx.common.entities;
 
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.Serializable;
 
+import org.amityregion5.projectx.client.gui.GameWindow;
 import org.amityregion5.projectx.common.tools.ImageHandler;
 
 /**
@@ -41,9 +43,8 @@ public abstract class Entity implements Serializable {
     private final long uniqueID; // necessary to check identity content changes.
     private Point2D location; // the entity's location
 
-    private transient BufferedImage image; // image representing the entity
-    // TODO: we do not transmit this field, so there needs to be an organized way of loading the image client and server side.
-    // Perhaps getImage() should check if image is null. If so, then load it using an abstract method getImagePath() or such..?
+    private transient BufferedImage image; // default image representing the entity
+    private transient BufferedImage currentImage; // current image (ie including rotation)
 
     private int directionFacing; // Constants in EntityConstants
     private int directionMoving; // The direction we are moving in
@@ -118,7 +119,7 @@ public abstract class Entity implements Serializable {
      */
     public BufferedImage getImage()
     {
-        return image;
+        return currentImage;
     }
 
     /**
@@ -129,6 +130,7 @@ public abstract class Entity implements Serializable {
     public void setImage(BufferedImage image)
     {
         this.image = image;
+        updateImage();
     }
 
     /**
@@ -147,6 +149,7 @@ public abstract class Entity implements Serializable {
     public void setDirectionFacing(int directionFacing)
     {
         this.directionFacing = directionFacing;
+        updateImage();
     }
 
     /**
@@ -201,7 +204,7 @@ public abstract class Entity implements Serializable {
      */
     public int getWidth()
     {
-        return image.getWidth();
+        return currentImage.getWidth();
     }
 
     /**
@@ -209,7 +212,7 @@ public abstract class Entity implements Serializable {
      */
     public int getHeight()
     {
-        return image.getHeight();
+        return currentImage.getHeight();
     }
 
     /**
@@ -219,10 +222,33 @@ public abstract class Entity implements Serializable {
      */
     public void selectImage(String src)
     {
-//        System.out.println(new File(RESOURCES + src + ".png").exists());
+        // System.out.println(new File(RESOURCES + src + ".png").exists());
         image = ImageHandler.loadImage(src);
+        updateImage();
     }
-    
+
+    private void updateImage() // updates image including rotation, etc
+    {
+        currentImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = (Graphics2D) currentImage.getGraphics();
+
+        AffineTransform affineTransform = new AffineTransform();
+
+        // TODO: make this rotate based on direction
+        affineTransform.rotate(Math.toRadians(90), getCenterX(), getCenterY());
+        g2.drawImage(image, affineTransform, null);
+    }
+
+    public int getCenterX()
+    {
+        return getX() + (getWidth() / 2);
+    }
+
+    public int getCenterY()
+    {
+        return getY() + (getHeight() / 2);
+    }
+
     /**
      * @return Returns a String representation of the default image
      */
