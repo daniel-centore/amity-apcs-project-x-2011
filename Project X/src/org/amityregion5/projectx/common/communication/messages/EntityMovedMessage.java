@@ -28,6 +28,7 @@ import org.amityregion5.projectx.common.entities.Entity;
  * 
  * @author Michael Zuo <sreservoir@gmail.com>
  * @author Joe Stein
+ * @author Daniel Centore
  */
 public class EntityMovedMessage extends Message {
 
@@ -50,6 +51,30 @@ public class EntityMovedMessage extends Message {
         this.entity = entity;
         this.newLoc = newLoc;
     }
+    
+    /**
+     * Note that an entity has moved
+     * 
+     * @param entity the entity in question
+     * @param newLoc the entity's new location. null indicates destruction
+     */
+    public EntityMovedMessage(Entity entity, Point2D newLoc)
+    {
+        this(entity, newLoc, entity.getDirectionFacing());
+    }
+    
+    /**
+     * Note that an entity has turned.
+     * 
+     * @param entity the entity in question
+     * @param dir the entity's new location
+     */
+    public EntityMovedMessage(Entity entity, int dir)
+    {
+        this(entity, null, dir);
+    }
+
+
 
     /**
      * @return Gets the new entity location
