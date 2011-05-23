@@ -21,7 +21,6 @@ package org.amityregion5.projectx.client.gui.input;
 
 import java.util.ArrayList;
 
-import org.amityregion5.projectx.client.Game;
 import org.amityregion5.projectx.client.GameInputListener;
 
 /**

@@ -1,6 +1,20 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Copyright (c) 2011 Amity AP CS A Students of 2010-2011.
+ *
+ * ex: set filetype=java expandtab tabstop=4 shiftwidth=4 :
+ * * This program is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version.
+ *
+ * This code is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * This code is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published
+ * by the Free Software Foundation.
  */
 
 /*
@@ -14,7 +28,6 @@ import java.awt.event.KeyEvent;
 import javax.swing.DefaultListModel;
 import javax.swing.SwingUtilities;
 import org.amityregion5.projectx.common.communication.messages.AnnounceMessage;
-import org.amityregion5.projectx.common.communication.messages.StatusUpdateMessage;
 import org.amityregion5.projectx.server.Server;
 
 /**
@@ -289,11 +302,11 @@ public class GUIServerController extends javax.swing.JFrame implements ServerCon
     private void announceFieldKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_announceFieldKeyPressed
     {//GEN-HEADEREND:event_announceFieldKeyPressed
        int code = evt.getKeyCode();
-       switch (code)
-       {
-          case KeyEvent.VK_ENTER:
-             if (!announceField.getText().equals(""))
-             {
+       int keycode = evt.getKeyCode();
+        if (keycode == KeyEvent.VK_ENTER)
+        {
+            if (announceField.getText().length() > 0)
+            {
                 server.relayMessage(new AnnounceMessage(announceField.getText()));
                 SwingUtilities.invokeLater(new Runnable()
                 {
@@ -304,42 +317,32 @@ public class GUIServerController extends javax.swing.JFrame implements ServerCon
                       announceField.setText("");
                    }
                 });
-             }
-             break;
-          case KeyEvent.VK_BACK_SPACE:
-             if (announceField.getText().length() <= 1)
-             {
-                SwingUtilities.invokeLater(new Runnable()
-                {
+            }
+        } else if (keycode == KeyEvent.VK_BACK_SPACE && announceField.getText().length() <= 1)
+        {
+            if (announceBtn.isEnabled())
+            {
+                SwingUtilities.invokeLater(new Runnable() {
 
-                   public void run()
-                   {
-                      announceBtn.setEnabled(false);
-                   }
+                    public void run()
+                    {
+                        announceBtn.setEnabled(false);
+                    }
                 });
-             } else
-             {
-                SwingUtilities.invokeLater(new Runnable()
-                {
+            }
+        } else if (!evt.isShiftDown() && !evt.isActionKey())
+        {
+            if (!announceBtn.isEnabled())
+            {
+                SwingUtilities.invokeLater(new Runnable() {
 
-                   public void run()
-                   {
-                      announceBtn.setEnabled(true);
-                   }
+                    public void run()
+                    {
+                        announceBtn.setEnabled(true);
+                    }
                 });
-             }
-             break;
-          default:
-             SwingUtilities.invokeLater(new Runnable()
-             {
-
-                public void run()
-                {
-                   announceBtn.setEnabled(true);
-                }
-             });
-             break;
-       }
+            }
+        }
     }//GEN-LAST:event_announceFieldKeyPressed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton announceBtn;
