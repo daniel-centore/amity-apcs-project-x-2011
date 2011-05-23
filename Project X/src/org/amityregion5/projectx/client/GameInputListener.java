@@ -19,7 +19,7 @@
 package org.amityregion5.projectx.client;
 
 /**
- * Class documentation.
+ * Listens for game events
  *
  * @author Joe Stein
  */

@@ -29,32 +29,37 @@ import org.amityregion5.projectx.server.Server;
 import org.amityregion5.projectx.server.communication.Client;
 
 /**
- * Handles the game running
- *
+ * Handles the game running.
+ * 
  * @author Daniel Centore
  */
 public class GameController {
 
-    private List<Player> players;
-    private Collection<Client> clients;
-    
+    private List<Player> players; // List of current Players (do we even need this..?)
+    private Collection<Client> clients; // List of current Clients
+
+    /**
+     * Creates and initializes the game controlling
+     * 
+     * @param server The Server we are based from
+     */
     public GameController(Server server)
     {
         players = new ArrayList<Player>();
         clients = server.getClients().values();
 
-        for(Client c : clients)
+        for (Client c : clients)
         {
             Player p = new Player();
             players.add(p);
             c.setPlayer(p);
-            
+
             c.send(new AddMeMessage(p));
         }
-        
-        for(Client c : clients)
+
+        for (Client c : clients)
         {
-            for(Player p : players)
+            for (Player p : players)
                 c.send(new AddEntityMessage(p));
         }
     }

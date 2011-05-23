@@ -25,7 +25,7 @@ import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 
 /**
- * Class documentation.
+ * Has the GameState
  * 
  * @author Jenny Liu
  * @author Mike DiBuduo

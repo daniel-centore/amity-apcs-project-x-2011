@@ -25,6 +25,10 @@ package org.amityregion5.projectx.client.preferences;
  */
 public interface PrefListener {
 
+    /**
+     * Called if a player's username was changed
+     * @param username Username it was changed to
+     */
    public void usernameChanged(String username);
    
 }

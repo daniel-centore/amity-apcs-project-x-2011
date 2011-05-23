@@ -27,13 +27,12 @@ import java.util.prefs.Preferences;
 
 /**
  * Manages and retrieves persistent user preferences.
- *
+ * 
  * @author Daniel Centore
  * @author Joe Stein
  */
-public class PreferenceManager
-{
-
+public class PreferenceManager {
+    
     private static ArrayList<PrefListener> listeners = new ArrayList<PrefListener>();
     public static final String USERNAME = "username";
     public static final String KEY_CSV = "keycsv";
@@ -46,8 +45,7 @@ public class PreferenceManager
     }
 
     /**
-     * @return this user's preferred username, or null if the user has not
-     * set a preferred username.
+     * @return this user's preferred username, or null if the user has not set a preferred username.
      */
     public static String getUsername()
     {
@@ -56,6 +54,7 @@ public class PreferenceManager
 
     /**
      * Sets the user's default username
+     * 
      * @param username Username to set
      */
     public static void setUsername(String username)
@@ -81,6 +80,7 @@ public class PreferenceManager
 
     /**
      * Registers a PrefListener.
+     * 
      * @param listener the listener to register
      */
     public static void registerListener(PrefListener listener)
@@ -90,6 +90,7 @@ public class PreferenceManager
 
     /**
      * Removes a PrefListener.
+     * 
      * @param listener the listener to remove
      */
     public static void removeListener(PrefListener listener)

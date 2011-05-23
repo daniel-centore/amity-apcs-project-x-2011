@@ -19,9 +19,14 @@
  */
 package org.amityregion5.projectx.common.communication.messages;
 
-import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.characters.Player;
 
+/**
+ * Tells the client what its Player is
+ * 
+ * @author Daniel Centore
+ *
+ */
 public class AddMeMessage extends AddEntityMessage {
 
     private static final long serialVersionUID = 1L;

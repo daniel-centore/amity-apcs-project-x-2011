@@ -28,6 +28,10 @@ public class ReadyMessage extends BooleanReplyMessage {
 
     private static final long serialVersionUID = 1L;
     
+    /**
+     * Initalizer
+     * @param r True if we are ready; false otherwise
+     */
     public ReadyMessage(boolean r)
     {
         super(r);

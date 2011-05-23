@@ -58,7 +58,8 @@ public class ImageHandler {
             return ImageIO.read(new File(path));
         } catch (IOException e)
         {
-            return null;
+            throw new RuntimeException("FAILED TO FIND GRAPHICS AT: "+path);
+//            return null;
         }
     }
 }

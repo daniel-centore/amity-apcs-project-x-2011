@@ -38,125 +38,126 @@ import org.amityregion5.projectx.common.maps.AbstractMap;
  * @author Joe Stein
  * @author Daniel Centore
  */
-public class Game implements GameInputListener, MessageListener
-{
+public class Game implements GameInputListener, MessageListener {
 
-   private CommunicationHandler ch; // current CommunicationHandler
-   private AbstractMap map; // current AbstractMap
-   private Player me; // current Player (null at initialization!)
-   private EntityHandler entityHandler;
+    private CommunicationHandler ch; // current CommunicationHandler
+    private AbstractMap map; // current AbstractMap
+    private Player me; // current Player (null at initialization!)
+    private EntityHandler entityHandler; // current EntityHandler
 
-   public Game(CommunicationHandler ch, AbstractMap m)
-   {
-       entityHandler = new EntityHandler();
-      this.ch = ch;
-      me = null;
+    public Game(CommunicationHandler ch, AbstractMap m)
+    {
+        entityHandler = new EntityHandler();
+        this.ch = ch;
+        me = null;
 
-      ch.registerListener(this);
-      InputHandler.registerListener(this);
-   }
+        ch.registerListener(this);
+        InputHandler.registerListener(this);
+    }
 
-   public void mouseDragged(int x, int y)
-   {
-   }
+    public void mouseDragged(int x, int y)
+    {
+    }
 
-   public void mouseMoved(int x, int y)
-   {
-      // send to server and let server deal with it
-      if (me == null)
-      {
-         return;
-      }
-      int x1 = me.getX();
-      int y1 = me.getY();
-      int angle = (int) Math.atan2(y - y1, x - x1);
-      me.setDirectionFacing(angle);
-   }
+    public void mouseMoved(int x, int y)
+    {
+        // send to server and let server deal with it
+        if (me == null)
+        {
+            return;
+        }
+        int x1 = me.getX();
+        int y1 = me.getY();
+        int angle = (int) Math.atan2(y - y1, x - x1);
+        me.setDirectionFacing(angle);
+    }
 
-   public void mousePressed(int x, int y, int button)
-   {
-      // TODO start firing
-   }
+    public void mousePressed(int x, int y, int button)
+    {
+        // TODO start firing
+    }
 
-   public void mouseReleased(int x, int y, int button)
-   {
-      // TODO stop firing
-   }
+    public void mouseReleased(int x, int y, int button)
+    {
+        // TODO stop firing
+    }
 
-   public void keyPressed(int keyCode)
-   {
-      if (me == null)
-      {
-         return;
-      }
-      ClientMovedMessage c = null;
-      double k = me.getMoveSpeed();
+    public void keyPressed(int keyCode)
+    {
+        if (me == null)
+        {
+            return;
+        }
+        ClientMovedMessage c = null;
+        double k = me.getMoveSpeed();
 
-      if (keyCode == Keys.UP)
-      {
-         c = new ClientMovedMessage(0, -k);
-      } else if (keyCode == Keys.DOWN)
-      {
-         c = new ClientMovedMessage(0, k);
-      }
-      else if (keyCode == Keys.LEFT)
-      {
-         c = new ClientMovedMessage(-k, 0);
-      }
-      else if (keyCode == Keys.RIGHT)
-      {
-         c = new ClientMovedMessage(k, 0);
-      }
-      ch.send(c);
-   }
+        if (keyCode == Keys.UP)
+        {
+            c = new ClientMovedMessage(0, -k);
+        } else if (keyCode == Keys.DOWN)
+        {
+            c = new ClientMovedMessage(0, k);
+        } else if (keyCode == Keys.LEFT)
+        {
+            c = new ClientMovedMessage(-k, 0);
+        } else if (keyCode == Keys.RIGHT)
+        {
+            c = new ClientMovedMessage(k, 0);
+        }
+        ch.send(c);
+    }
 
-   public void keyReleased(int keyCode)
-   {
-   }
+    public void keyReleased(int keyCode)
+    {
+    }
 
-   /**
-    * @returnm Current map
-    */
-   public AbstractMap getMap()
-   {
-      return map;
-   }
+    /**
+     * @returnm Current map
+     */
+    public AbstractMap getMap()
+    {
+        return map;
+    }
 
-   public void handle(Message m)
-   {
-      if (m instanceof ChatMessage)
-      {
-         ChatMessage cm = (ChatMessage) m;
-         ChatDrawing.drawChat(cm.getFrom() + ": " + cm.getText());
-      } else if (m instanceof AddMeMessage)
-      {
-         AddMeMessage amm = (AddMeMessage) m;
+    public void handle(Message m)
+    {
+        if (m instanceof ChatMessage)
+        {
+            ChatMessage cm = (ChatMessage) m;
+            ChatDrawing.drawChat(cm.getFrom() + ": " + cm.getText());
+        } else if (m instanceof AddMeMessage)
+        {
+            AddMeMessage amm = (AddMeMessage) m;
 
-         me = (Player) amm.getEntity();
-      }
-   }
+            me = (Player) amm.getEntity();
+        }
+    }
 
-   public void tellSocketClosed()
-   {
-   }
+    public void tellSocketClosed()
+    {
+    }
 
-   /**
-    * @return Current Player
-    */
-   public Player getMe()
-   {
-      return me;
-   }
+    /**
+     * @return Current Player
+     */
+    public Player getMe()
+    {
+        return me;
+    }
 
-   /**
-    * Sets current player
-    * @param me Player to set it to
-    */
-   public void setMe(Player me)
-   {
-      this.me = me;
-   }
+    /**
+     * Sets current player
+     * 
+     * @param me Player to set it to
+     */
+    public void setMe(Player me)
+    {
+        this.me = me;
+    }
 
+    /**
+     * @return Current list of entities
+     */
     public Iterable<Entity> getEntities()
     {
         return entityHandler.getEntities();

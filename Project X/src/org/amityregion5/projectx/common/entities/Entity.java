@@ -234,19 +234,27 @@ public abstract class Entity implements Serializable {
         g2.drawImage(image, getAffineTransform(), null);
     }
 
+    /**
+     * @return The transformation you should use to transform images
+     */
     public AffineTransform getAffineTransform()
     {
         AffineTransform at = new AffineTransform();
-        at.rotate(Math.toRadians(getDirectionFacing()),
-                getCenterX(), getCenterY());
+        at.rotate(Math.toRadians(getDirectionFacing()), getCenterX(), getCenterY());
         return at;
     }
 
+    /**
+     * @return The center X of this entity
+     */
     public int getCenterX()
     {
         return getX() + (getWidth() / 2);
     }
 
+    /**
+     * @return The center Y of this entity
+     */
     public int getCenterY()
     {
         return getY() + (getHeight() / 2);
@@ -257,16 +265,26 @@ public abstract class Entity implements Serializable {
      */
     public abstract String getDefaultImage();
 
+    /**
+     * @return The unique ID of this entity
+     */
     public long getUniqueID()
     {
         return uniqueID;
     }
 
+    /**
+     * @return The location of this entity
+     */
     public Point2D getLocation()
     {
         return location;
     }
 
+    /**
+     * Sets the location of this entity
+     * @param location Location to set it to
+     */
     public void setLocation(Point2D location)
     {
         this.location = location;

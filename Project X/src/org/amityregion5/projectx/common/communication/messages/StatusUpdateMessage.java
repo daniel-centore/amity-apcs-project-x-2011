@@ -28,7 +28,7 @@ public class StatusUpdateMessage extends TextualMessage {
 
     private static final long serialVersionUID = 1L;
 
-    private Type type;
+    private Type type; // the type of status message
 
     public enum Type
     {
@@ -37,15 +37,17 @@ public class StatusUpdateMessage extends TextualMessage {
 
     /**
      * Creates a StatusUpdateMessage without a status
+     * 
      * @param type Type of message
      */
     public StatusUpdateMessage(Type type)
     {
-        this(null,  type);
+        this(null, type);
     }
 
     /**
      * Creates a StatusUpdateMessage
+     * 
      * @param status The status to show in the Lobby
      * @param type Type of message
      */

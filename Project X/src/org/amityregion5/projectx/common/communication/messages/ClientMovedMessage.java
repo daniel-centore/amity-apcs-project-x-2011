@@ -19,43 +19,47 @@
 package org.amityregion5.projectx.common.communication.messages;
 
 /**
- * Class documentation.
- *
+ * Tells the server that client received a move request TODO: Implement this Server-side (then send EntityMovedMessage to all clients)
+ * 
  * @author Mike DiBuduo
+ * @author Daniel Centore
  */
-public class ClientMovedMessage extends Message
-{
+public class ClientMovedMessage extends Message {
 
-   private double offSetX;
-   private double offSetY;
+    private static final long serialVersionUID = 1L;
 
-   public ClientMovedMessage(double x, double y)
-   {
-      offSetX = x;
-      offSetY = y;
-   }
+    private double offSetX; // how much to offset X
+    private double offSetY; // how much to offset Y
 
-   public double getOffSetX()
-   {
-      return offSetX;
-   }
+    /**
+     * Intializer
+     * @param x X offset
+     * @param y Y offset
+     */
+    public ClientMovedMessage(double x, double y)
+    {
+        offSetX = x;
+        offSetY = y;
+    }
 
-   public void setOffSetX(double offSetX)
-   {
-      this.offSetX = offSetX;
-   }
+    public double getOffSetX()
+    {
+        return offSetX;
+    }
 
-   public double getOffSetY()
-   {
-      return offSetY;
-   }
+    public void setOffSetX(double offSetX)
+    {
+        this.offSetX = offSetX;
+    }
 
-   public void setOffSetY(double offSetY)
-   {
-      this.offSetY = offSetY;
-   }
+    public double getOffSetY()
+    {
+        return offSetY;
+    }
 
-
-
+    public void setOffSetY(double offSetY)
+    {
+        this.offSetY = offSetY;
+    }
 
 }

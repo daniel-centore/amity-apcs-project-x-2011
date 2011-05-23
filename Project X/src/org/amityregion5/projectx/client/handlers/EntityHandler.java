@@ -22,22 +22,17 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.amityregion5.projectx.client.communication.CommunicationHandler;
 import org.amityregion5.projectx.client.gui.GameWindow;
-import org.amityregion5.projectx.common.communication.MessageListener;
-import org.amityregion5.projectx.common.communication.messages.AddEntityMessage;
-import org.amityregion5.projectx.common.communication.messages.EntityMovedMessage;
-import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.common.entities.Entity;
 
 /**
  * Stores all current entities
  * 
  * @author Daniel Centore
+ * @author Joe Stein
  */
-public class EntityHandler
-{
-
+public class EntityHandler {
+    
     private List<Entity> entities = new ArrayList<Entity>(); // the list of current entities
 
     private synchronized void addEntity(Entity e) // adds an entity (should receive request from server)
@@ -72,16 +67,29 @@ public class EntityHandler
     {
     }
 
-    public void updateEntity(Entity entity, Point2D newLoc, int newDir)
+    /**
+     * Updates an entity
+     * 
+     * @param entity Entity to compare it against (by ID)
+     * @param newLoc New location to put it at (or null to skip)
+     * @param newDir New direction to have it face (or null to skip)
+     */
+    public void updateEntity(Entity entity, Point2D newLoc, Integer newDir)
     {
         for (Entity q : entities)
         {
             if (q.getUniqueID() == entity.getUniqueID())
             {
-                q.setLocation(newLoc);
-                q.setDirectionFacing(newDir);
+                if (newLoc != null)
+                    q.setLocation(newLoc);
+
+                if (newDir != null)
+                    q.setDirectionFacing(newDir);
+
                 return;
             }
         }
+
+        throw new RuntimeException("No entity had this ID!");
     }
 }

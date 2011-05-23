@@ -29,7 +29,8 @@ public class NotifyMessage extends Message {
 
     private static final long serialVersionUID = 1L;
 
-    public enum Type {
+    public enum Type
+    {
         LOBBY_READY,
     }
 
