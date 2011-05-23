@@ -206,7 +206,7 @@ public class Client extends Thread
 
          switch (nm.getWhat())
          {
-            case NotifyMessage.LOBBY_READY:
+            case LOBBY_READY:
                server.incrementWaiting();
                break;
          }

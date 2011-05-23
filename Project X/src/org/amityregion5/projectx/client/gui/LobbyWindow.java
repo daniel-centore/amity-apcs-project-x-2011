@@ -91,7 +91,7 @@ public class LobbyWindow extends JFrame implements MessageListener {
         playerList.setModel(playerListModel);
         this.setVisible(true);
 
-        ch.send(new NotifyMessage(NotifyMessage.LOBBY_READY));
+        ch.send(new NotifyMessage(NotifyMessage.Type.LOBBY_READY));
     }
 
     /**

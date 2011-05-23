@@ -29,16 +29,18 @@ public class NotifyMessage extends Message {
 
     private static final long serialVersionUID = 1L;
 
-    public static final int LOBBY_READY = 0; // the lobby is ready!
+    public enum Type {
+        LOBBY_READY,
+    }
 
-    private int what; // what kind of notify message it is
+    private Type what; // what kind of notify message it is
 
     /**
      * Creates a notify window
      * 
      * @param what ID to set it to
      */
-    public NotifyMessage(int what)
+    public NotifyMessage(Type what)
     {
         this.what = what;
     }
@@ -46,7 +48,7 @@ public class NotifyMessage extends Message {
     /**
      * @return ID of the notification
      */
-    public int getWhat()
+    public Type getWhat()
     {
         return what;
     }
@@ -56,7 +58,7 @@ public class NotifyMessage extends Message {
      * 
      * @param what What to set it to
      */
-    public void setWhat(int what)
+    public void setWhat(Type what)
     {
         this.what = what;
     }
