@@ -22,11 +22,10 @@ package org.amityregion5.projectx.client.gui;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
+
 import org.amityregion5.projectx.client.Game;
 import org.amityregion5.projectx.client.handlers.EntityHandler;
-
 import org.amityregion5.projectx.common.entities.Entity;
-import org.amityregion5.projectx.common.maps.AbstractMap;
 
 /**
  * Handles repainting
@@ -35,13 +34,14 @@ import org.amityregion5.projectx.common.maps.AbstractMap;
  * @author Mike DiBuduo
  */
 public class RepaintHandler extends Thread {
-    
+
     private static Game game;
 
     public RepaintHandler(Game g)
     {
         game = g;
     }
+
     /**
      * Returns a flat image of the map with all the entities painted on it.
      * 
@@ -51,17 +51,18 @@ public class RepaintHandler extends Thread {
     {
         Image img = GameWindow.createImage();
         Graphics2D g = (Graphics2D) img.getGraphics();
-        
+
         g.setColor(Color.white);
         g.fillRect(0, 0, GameWindow.GAME_WIDTH, GameWindow.GAME_HEIGHT);
 
-//        AbstractMap map = game.getMap();
-//        Image k = map.getBackground();
-//
-//        if (k != null)
-//        {
-//            g.drawImage(k, 0, 0, null);
-//        }
+        // TODO: implement the map!
+        // AbstractMap map = game.getMap();
+        // Image k = map.getBackground();
+        //
+        // if (k != null)
+        // {
+        // g.drawImage(k, 0, 0, null);
+        // }
 
         for (Entity e : EntityHandler.getEntities())
         {

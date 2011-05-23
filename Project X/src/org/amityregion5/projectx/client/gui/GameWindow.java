@@ -51,7 +51,7 @@ public class GameWindow extends JFrame {
     private static AbstractMap map; // the current game map
     private static JComponent panel; // the panel we will draw on
     private static Image buffer; // the image the panel should draw
-    private static Game game;
+    private static Game game; // the current game
 
     public GameWindow(AbstractMap map)
     {
@@ -60,7 +60,6 @@ public class GameWindow extends JFrame {
         instance = this;
         GameWindow.map = map;
 
-        //TODO: start the game once we get the player from the server
         game = new Game(CommunicationHandler.getInstance(), map);
 
         this.setBackground(Color.black);
@@ -82,7 +81,7 @@ public class GameWindow extends JFrame {
             // called when we run RepaintHandler.fireUpdateRequired()
             public void paintComponent(Graphics g)
             {
-                if(buffer == null)
+                if (buffer == null)
                 {
                     return;
                 }
@@ -132,14 +131,13 @@ public class GameWindow extends JFrame {
         int x = 0;
         int y = 0;
 
-        if(thumbRatio < aspectRatio)
+        if (thumbRatio < aspectRatio)
         {
             y = newHeight;
             newHeight = (int) (newWidth / aspectRatio);
             y /= 2;
             y -= newHeight / 2;
-        }
-        else
+        } else
         {
             x = newWidth;
             newWidth = (int) (newHeight * aspectRatio);
@@ -148,9 +146,7 @@ public class GameWindow extends JFrame {
         }
 
         return new int[]
-                {
-                    newWidth, newHeight, x, y
-                };
+        { newWidth, newHeight, x, y };
     }
 
     /**

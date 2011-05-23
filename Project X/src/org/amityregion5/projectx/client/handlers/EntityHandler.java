@@ -38,24 +38,29 @@ public class EntityHandler implements MessageListener {
 
     private static List<Entity> entities = new ArrayList<Entity>(); // the list of current entities
 
+    /**
+     * Initializes the EntityHandler
+     * 
+     * @param ch CommunicationHandler to register it with
+     */
     public static void initialize(CommunicationHandler ch)
     {
         ch.registerListener(new EntityHandler());
     }
 
-    private static synchronized void addEntity(Entity e)
+    private static synchronized void addEntity(Entity e) // adds an entity (should receive request from server)
     {
         for (Entity q : entities)
         {
             if (e.getUniqueID() == q.getUniqueID()) // already exists
-               return;
+                return;
         }
-        
+
         e.selectImage(e.getDefaultImage());
         entities.add(e);
     }
 
-    private static synchronized void removedEntity(Entity e)
+    private static synchronized void removedEntity(Entity e) // receive an entity (should receive request from server)
     {
         entities.remove(e);
     }

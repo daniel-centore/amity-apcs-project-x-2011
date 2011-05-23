@@ -51,6 +51,7 @@ import org.amityregion5.projectx.common.preferences.PreferenceManager;
 public class ServerChooserWindow extends JFrame implements DatagramListener, PrefListener {
 
     private static final long serialVersionUID = 1L;
+    
     private DefaultListModel dlm = new DefaultListModel(); // the list model for ips
 
     /**

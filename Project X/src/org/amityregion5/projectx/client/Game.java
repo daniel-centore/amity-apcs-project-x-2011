@@ -38,13 +38,15 @@ import org.amityregion5.projectx.common.maps.AbstractMap;
  */
 public class Game implements GameInputListener, MessageListener {
 
-    private CommunicationHandler ch;
-    private AbstractMap map;
-    private Player me;
+    private CommunicationHandler ch; // current CommunicationHandler
+    private AbstractMap map; // current AbstractMap
+    private Player me; // current Player (null at initialization!)
 
     public Game(CommunicationHandler ch, AbstractMap m)
     {
         this.ch = ch;
+        me = null;
+        
         ch.registerListener(this);
         EntityHandler.initialize(ch);
         InputHandler.registerListener(this);
@@ -87,6 +89,9 @@ public class Game implements GameInputListener, MessageListener {
     {
     }
 
+    /**
+     * @returnm Current map
+     */
     public AbstractMap getMap()
     {
         return map;
@@ -110,11 +115,18 @@ public class Game implements GameInputListener, MessageListener {
     {
     }
 
+    /**
+     * @return Current Player
+     */
     public Player getMe()
     {
         return me;
     }
 
+    /**
+     * Sets current player 
+     * @param me Player to set it to
+     */
     public void setMe(Player me)
     {
         this.me = me;
