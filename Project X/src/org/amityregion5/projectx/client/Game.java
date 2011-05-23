@@ -23,6 +23,7 @@ import org.amityregion5.projectx.client.gui.ChatDrawing;
 import org.amityregion5.projectx.client.gui.input.InputHandler;
 import org.amityregion5.projectx.client.handlers.EntityHandler;
 import org.amityregion5.projectx.common.communication.MessageListener;
+import org.amityregion5.projectx.common.communication.messages.AddMeMessage;
 import org.amityregion5.projectx.common.communication.messages.ChatMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.common.entities.characters.Player;
@@ -52,14 +53,11 @@ public class Game implements GameInputListener, MessageListener {
 
     public void mouseMoved(int x, int y)
     {
-        if(3 == 3)  //until we set "me"
-            return;
-        
-        //send to server and let server deal with it
-//        int x1 = me.getX();
-//        int y1 = me.getY();
-//        int angle = (int) Math.atan2(y - y1, x - x1);
-//        me.setDirectionFacing(angle);
+        // send to server and let server deal with it
+        // int x1 = me.getX();
+        // int y1 = me.getY();
+        // int angle = (int) Math.atan2(y - y1, x - x1);
+        // me.setDirectionFacing(angle);
     }
 
     public void mousePressed(int x, int y, int button)

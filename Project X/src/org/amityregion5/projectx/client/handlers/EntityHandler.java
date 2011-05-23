@@ -45,6 +45,12 @@ public class EntityHandler implements MessageListener {
 
     private static synchronized void addEntity(Entity e)
     {
+        for (Entity q : entities)
+        {
+            if (e.getUniqueID() == q.getUniqueID()) // already exists
+               return;
+        }
+        
         e.selectImage(e.getDefaultImage());
         entities.add(e);
     }

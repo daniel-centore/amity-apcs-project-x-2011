@@ -23,6 +23,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.amityregion5.projectx.common.communication.messages.AddEntityMessage;
+import org.amityregion5.projectx.common.communication.messages.AddMeMessage;
 import org.amityregion5.projectx.common.entities.characters.Player;
 import org.amityregion5.projectx.server.Server;
 import org.amityregion5.projectx.server.communication.Client;
@@ -43,7 +44,12 @@ public class GameController {
         clients = server.getClients().values();
 
         for(Client c : clients)
-            players.add(new Player());
+        {
+            Player p = new Player();
+            players.add(p);
+            
+            c.send(new AddMeMessage(p));
+        }
         
         for(Client c : clients)
         {
