@@ -26,6 +26,7 @@ import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 import org.amityregion5.projectx.common.communication.Constants;
 import org.amityregion5.projectx.common.communication.messages.ActivePlayersMessage;
@@ -295,6 +296,9 @@ public class Server {
     {
         //TODO: make it so we stop accepting clients
         //but if wveryone leaves, begin accepting again
+
+        listening = false;
+        
         relayMessage(new StatusUpdateMessage(StatusUpdateMessage.Type.STARTING));
 
         new GameController(this);
@@ -314,6 +318,10 @@ public class Server {
                 while(listening)
                 {
                     Client newc = new Client(servSock.accept(), Server.this);
+                    if(!listening)
+                    {
+                        newc.kill();
+                    }
                     newc.start();
                     controller.clientConnected(newc.getIP());
                 }

@@ -32,6 +32,8 @@ public class GoodbyeMessage extends TextualMessage {
      * Creates a GoodbyeMessage
      * @param username Username of person who left
      */
+
+    //TODO: fix disconnected message displaying in option pane ("phantom window")
     public GoodbyeMessage(String username)
     {
         super(username);
