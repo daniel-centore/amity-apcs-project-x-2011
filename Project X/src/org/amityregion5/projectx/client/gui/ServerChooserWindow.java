@@ -38,8 +38,8 @@ import org.amityregion5.projectx.common.communication.messages.ActivePlayersMess
 import org.amityregion5.projectx.common.communication.messages.BooleanReplyMessage;
 import org.amityregion5.projectx.common.communication.messages.IntroduceMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
-import org.amityregion5.projectx.common.preferences.PrefListener;
-import org.amityregion5.projectx.common.preferences.PreferenceManager;
+import org.amityregion5.projectx.client.preferences.PrefListener;
+import org.amityregion5.projectx.client.preferences.PreferenceManager;
 
 /**
  * The window for choosing a server

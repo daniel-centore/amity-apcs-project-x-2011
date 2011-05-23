@@ -19,7 +19,7 @@
 package org.amityregion5.projectx.client.gui.input;
 
 import java.awt.event.KeyEvent;
-import org.amityregion5.projectx.common.preferences.PreferenceManager;
+import org.amityregion5.projectx.client.preferences.PreferenceManager;
 
 /**
  * A class with key codes.

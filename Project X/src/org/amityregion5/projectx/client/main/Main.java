@@ -24,7 +24,7 @@ import org.amityregion5.projectx.client.communication.MulticastCommunicationHand
 import org.amityregion5.projectx.client.gui.ServerChooserWindow;
 import org.amityregion5.projectx.client.gui.SplashScreen;
 import org.amityregion5.projectx.client.gui.UsernameWindow;
-import org.amityregion5.projectx.common.preferences.PreferenceManager;
+import org.amityregion5.projectx.client.preferences.PreferenceManager;
 
 /**
  * Main class for loading the Client
