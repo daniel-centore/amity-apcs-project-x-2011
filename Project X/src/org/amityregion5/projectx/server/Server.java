@@ -295,7 +295,7 @@ public class Server {
     public void startGame()
     {
         //TODO: make it so we stop accepting clients
-        //but if wveryone leaves, begin accepting again
+        //but if everyone leaves, begin accepting again
 
         listening = false;
         

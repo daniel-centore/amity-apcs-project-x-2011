@@ -24,7 +24,6 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 
 import org.amityregion5.projectx.client.Game;
-import org.amityregion5.projectx.client.handlers.EntityHandler;
 import org.amityregion5.projectx.common.entities.Entity;
 
 /**
@@ -64,7 +63,7 @@ public class RepaintHandler extends Thread {
         // g.drawImage(k, 0, 0, null);
         // }
 
-        for (Entity e : EntityHandler.getEntities())
+        for (Entity e : game.getEntities())
         {
             g.drawImage(e.getImage(), e.getX(), e.getY(), null);
         }

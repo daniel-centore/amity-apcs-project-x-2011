@@ -18,6 +18,7 @@
  */
 package org.amityregion5.projectx.client.handlers;
 
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,33 +35,27 @@ import org.amityregion5.projectx.common.entities.Entity;
  * 
  * @author Daniel Centore
  */
-public class EntityHandler implements MessageListener {
+public class EntityHandler
+{
 
-    private static List<Entity> entities = new ArrayList<Entity>(); // the list of current entities
+    private List<Entity> entities = new ArrayList<Entity>(); // the list of current entities
 
-    /**
-     * Initializes the EntityHandler
-     * 
-     * @param ch CommunicationHandler to register it with
-     */
-    public static void initialize(CommunicationHandler ch)
-    {
-        ch.registerListener(new EntityHandler());
-    }
-
-    private static synchronized void addEntity(Entity e) // adds an entity (should receive request from server)
+    private synchronized void addEntity(Entity e) // adds an entity (should receive request from server)
     {
         for (Entity q : entities)
         {
             if (e.getUniqueID() == q.getUniqueID()) // already exists
+            {
                 return;
+            }
         }
 
         e.selectImage(e.getDefaultImage());
         entities.add(e);
+        GameWindow.fireRepaintRequired();
     }
 
-    private static synchronized void removedEntity(Entity e) // receive an entity (should receive request from server)
+    private synchronized void removedEntity(Entity e) // receive an entity (should receive request from server)
     {
         entities.remove(e);
     }
@@ -68,38 +63,25 @@ public class EntityHandler implements MessageListener {
     /**
      * @return The list of entities
      */
-    public static synchronized List<Entity> getEntities()
+    public synchronized List<Entity> getEntities()
     {
         return entities;
-    }
-
-    public void handle(Message m)
-    {
-        if (m instanceof EntityMovedMessage)
-        {
-            EntityMovedMessage em = (EntityMovedMessage) m;
-
-            Entity e = em.getEntity();
-
-            for (Entity q : entities)
-                if (q.getUniqueID() == e.getUniqueID())
-                {
-                    q.setLocation(em.getNewLoc());
-                    return;
-                }
-
-            throw new RuntimeException("BAD MOVE REQUEST: NON-EXISTANT ENTITY!");
-        } else if (m instanceof AddEntityMessage)
-        {
-            System.out.println("added");
-            AddEntityMessage aem = (AddEntityMessage) m;
-            addEntity(aem.getEntity());
-            GameWindow.fireRepaintRequired();
-        }
     }
 
     public void tellSocketClosed()
     {
     }
 
+    public void updateEntity(Entity entity, Point2D newLoc, int newDir)
+    {
+        for (Entity q : entities)
+        {
+            if (q.getUniqueID() == entity.getUniqueID())
+            {
+                q.setLocation(newLoc);
+                q.setDirectionFacing(newDir);
+                return;
+            }
+        }
+    }
 }

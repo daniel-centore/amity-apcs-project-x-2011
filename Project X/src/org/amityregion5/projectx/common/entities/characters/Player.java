@@ -30,7 +30,6 @@ import org.amityregion5.projectx.common.entities.items.held.Weapon;
 public class Player extends Character implements Damageable {
     
     private static final long serialVersionUID = 1L;
-
     private static final int MAX_HEALTH = 100; // Player's health should be 100
 
     public Player()

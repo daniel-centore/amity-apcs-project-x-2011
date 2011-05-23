@@ -25,11 +25,10 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
 
-import org.amityregion5.projectx.client.gui.GameWindow;
 import org.amityregion5.projectx.common.tools.ImageHandler;
 
 /**
- * An entity. All should be created server-side to guarentee they each get unique ids.
+ * An entity. All should be created server-side to guarantee they each get unique ids.
  * 
  * @author Daniel Centore
  * @author Joe Stein
@@ -43,8 +42,8 @@ public abstract class Entity implements Serializable {
     private final long uniqueID; // necessary to check identity content changes.
     private Point2D location; // the entity's location
 
-    private transient BufferedImage image; // default image representing the entity
-    private transient BufferedImage currentImage; // current image (ie including rotation)
+    protected transient BufferedImage image; // default image representing the entity
+    protected transient BufferedImage currentImage; // current image (ie including rotation)
 
     private int directionFacing; // Constants in EntityConstants
     private int directionMoving; // The direction we are moving in
@@ -227,16 +226,20 @@ public abstract class Entity implements Serializable {
         updateImage();
     }
 
-    private void updateImage() // updates image including rotation, etc
+    protected void updateImage() // updates image including rotation, etc
     {
         currentImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = (Graphics2D) currentImage.getGraphics();
 
-        AffineTransform affineTransform = new AffineTransform();
+        g2.drawImage(image, getAffineTransform(), null);
+    }
 
-        // TODO: make this rotate based on direction
-        affineTransform.rotate(Math.toRadians(90), getCenterX(), getCenterY());
-        g2.drawImage(image, affineTransform, null);
+    public AffineTransform getAffineTransform()
+    {
+        AffineTransform at = new AffineTransform();
+        at.rotate(Math.toRadians(getDirectionFacing()),
+                getCenterX(), getCenterY());
+        return at;
     }
 
     public int getCenterX()

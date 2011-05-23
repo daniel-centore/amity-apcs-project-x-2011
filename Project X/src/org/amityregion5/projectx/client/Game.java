@@ -28,6 +28,7 @@ import org.amityregion5.projectx.common.communication.messages.AddMeMessage;
 import org.amityregion5.projectx.common.communication.messages.ChatMessage;
 import org.amityregion5.projectx.common.communication.messages.ClientMovedMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
+import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.characters.Player;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 
@@ -43,14 +44,15 @@ public class Game implements GameInputListener, MessageListener
    private CommunicationHandler ch; // current CommunicationHandler
    private AbstractMap map; // current AbstractMap
    private Player me; // current Player (null at initialization!)
+   private EntityHandler entityHandler;
 
    public Game(CommunicationHandler ch, AbstractMap m)
    {
+       entityHandler = new EntityHandler();
       this.ch = ch;
       me = null;
 
       ch.registerListener(this);
-      EntityHandler.initialize(ch);
       InputHandler.registerListener(this);
    }
 
@@ -154,4 +156,9 @@ public class Game implements GameInputListener, MessageListener
    {
       this.me = me;
    }
+
+    public Iterable<Entity> getEntities()
+    {
+        return entityHandler.getEntities();
+    }
 }

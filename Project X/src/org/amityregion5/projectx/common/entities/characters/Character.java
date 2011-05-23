@@ -20,6 +20,8 @@
  */
 package org.amityregion5.projectx.common.entities.characters;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import org.amityregion5.projectx.common.entities.Damageable;
@@ -51,6 +53,7 @@ public abstract class Character extends Entity implements Damageable {
     {
         this.maxHealth = maxHealth;
         this.hp = health;
+        currWeapon = 0;
     }
 
     /**
@@ -154,5 +157,19 @@ public abstract class Character extends Entity implements Damageable {
         hp += health;
         if(hp > maxHealth)
             hp = maxHealth;
+    }
+
+    @Override
+    protected void updateImage()
+    {
+        super.updateImage();
+
+        if (weapons == null || weapons.size() > currWeapon) // no weapons :(
+        {
+            return;
+        }
+        BufferedImage wepImg = weapons.get(currWeapon).getImage();
+        Graphics2D g2 = (Graphics2D) currentImage.getGraphics();
+        g2.drawImage(wepImg, getAffineTransform(), null);
     }
 }

@@ -48,7 +48,6 @@ public class GameWindow extends JFrame {
     public static final int GAME_WIDTH = 1024; // the game size we will draw at before resizing
     public static final int GAME_HEIGHT = 768;
     private static GameWindow instance; // the instance of Gui
-    private static AbstractMap map; // the current game map
     private static JComponent panel; // the panel we will draw on
     private static Image buffer; // the image the panel should draw
     private static Game game; // the current game
@@ -58,7 +57,6 @@ public class GameWindow extends JFrame {
         super("Amity Project X");
 
         instance = this;
-        GameWindow.map = map;
 
         game = new Game(CommunicationHandler.getInstance(), map);
 
@@ -199,13 +197,5 @@ public class GameWindow extends JFrame {
     public static int getCurrentHeight()
     {
         return panel.getHeight();
-    }
-
-    /**
-     * @return The current map of the game
-     */
-    public static AbstractMap getMap()
-    {
-        return map;
     }
 }
