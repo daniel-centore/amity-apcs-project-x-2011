@@ -26,6 +26,9 @@ import org.amityregion5.projectx.common.entities.Entity;
 /**
  * Notes that a change in the positions of entities has occured.
  * 
+ * TODO: make this use the uniqueID instead of an entity for identification.
+ * Also Fix corresponding code. It should compile (Mike Z...)
+ * 
  * @author Michael Zuo <sreservoir@gmail.com>
  * @author Joe Stein
  * @author Daniel Centore
@@ -51,7 +54,7 @@ public class EntityMovedMessage extends Message {
         this.entity = entity;
         this.newLoc = newLoc;
     }
-    
+
     /**
      * Note that an entity has moved
      * 
@@ -62,7 +65,7 @@ public class EntityMovedMessage extends Message {
     {
         this(entity, newLoc, entity.getDirectionFacing());
     }
-    
+
     /**
      * Note that an entity has turned.
      * 
@@ -73,8 +76,6 @@ public class EntityMovedMessage extends Message {
     {
         this(entity, null, dir);
     }
-
-
 
     /**
      * @return Gets the new entity location
