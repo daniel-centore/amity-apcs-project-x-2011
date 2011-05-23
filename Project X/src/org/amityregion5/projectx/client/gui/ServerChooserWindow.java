@@ -329,25 +329,6 @@ public class ServerChooserWindow extends JFrame implements DatagramListener, Pre
         }
     }
 
-//    public static void main(String[] args)
-//    {
-//        try
-//        {
-//            // default look and feel for prettiness :D
-//            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//        } catch (Exception e)
-//        {
-//            // ignore
-//        }
-//
-//        final ServerChooserWindow chooser = new ServerChooserWindow();
-//
-//        MulticastCommunicationHandler mch = new MulticastCommunicationHandler();
-//        mch.registerListener(chooser);
-//        mch.start();
-//
-//    }
-
     @Override
     public void usernameChanged(String username)
     {

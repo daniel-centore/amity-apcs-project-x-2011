@@ -46,28 +46,4 @@ public class ChatDrawing {
         chats.add(chat);
 
     }
-
-    public static void main(String[] args)
-    {
-        JFrame frame = new JFrame();
-
-        frame.setSize(700,200);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ChatDrawing.drawChat("hello");
-        ChatDrawing.drawChat("[SERVER] update in 5!");
-        ChatDrawing.drawChat("Another Test");
-        JPanel p = new JPanel(){
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void paintComponent(Graphics g)
-            {
-                Graphics2D g2d = (Graphics2D) g;
-                g2d.drawImage(ChatDrawing.getChat(), 0, 0, null);
-            }
-        };
-        p.setBackground(Color.red);
-        frame.add(p);
-        frame.setVisible(true);
-    }
 }
