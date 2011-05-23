@@ -72,4 +72,11 @@ public class Block extends FieldItem implements Damageable
             //Remove self from game
         }
     }
+
+    @Override
+    public String getDefaultImage()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

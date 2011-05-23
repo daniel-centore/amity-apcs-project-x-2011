@@ -47,6 +47,13 @@ public class Trap extends FieldItem implements DamageDealing{
         return active;
     }
 
+    @Override
+    public String getDefaultImage()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 
 
 }

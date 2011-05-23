@@ -46,4 +46,10 @@ public class Enemy extends Character implements Damageable {
         this(health, max);
         addWeapon(wp);
     }
+
+    @Override
+    public String getDefaultImage()
+    {
+        return "Enemy";
+    }
 }

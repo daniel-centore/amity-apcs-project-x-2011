@@ -19,19 +19,18 @@
  */
 package org.amityregion5.projectx.client.communication;
 
-import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.JOptionPane;
+
 import org.amityregion5.projectx.client.gui.GameWindow;
 import org.amityregion5.projectx.client.gui.LobbyWindow;
 import org.amityregion5.projectx.client.gui.ServerChooserWindow;
-
 import org.amityregion5.projectx.common.communication.Constants;
 import org.amityregion5.projectx.common.communication.MessageListener;
 import org.amityregion5.projectx.common.communication.messages.BlockingMessage;
@@ -140,9 +139,10 @@ public class CommunicationHandler extends Thread {
             throw new RuntimeException("Got BlockingMessage that didn't need reply?");
         }
 
-        for (MessageListener mh : listeners)
+        synchronized (this)
         {
-            mh.handle(m);
+            for (int i = 0; i < listeners.size(); i++)
+                listeners.get(i).handle(m);
         }
     }
 
@@ -165,7 +165,7 @@ public class CommunicationHandler extends Thread {
     /**
      * To be used if the connection dies or is closed.
      */
-    private void die()
+    private synchronized void die()
     {
         for (MessageListener mh : listeners)
         {
@@ -178,7 +178,7 @@ public class CommunicationHandler extends Thread {
      * 
      * @param mh The MessageListener to register
      */
-    public void registerListener(MessageListener mh)
+    public synchronized void registerListener(MessageListener mh)
     {
         listeners.add(mh);
     }
@@ -188,7 +188,7 @@ public class CommunicationHandler extends Thread {
      * 
      * @param mh MessageListener to remove
      */
-    public void removeListener(MessageListener mh)
+    public synchronized void removeListener(MessageListener mh)
     {
         listeners.remove(mh);
     }

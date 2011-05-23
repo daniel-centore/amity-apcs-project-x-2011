@@ -38,4 +38,11 @@ public class Gun extends ProjectileWeapon
     {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    @Override
+    public String getDefaultImage()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

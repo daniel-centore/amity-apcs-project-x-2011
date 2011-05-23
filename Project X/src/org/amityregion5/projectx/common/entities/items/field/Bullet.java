@@ -34,4 +34,11 @@ public class Bullet extends Projectile implements DamageDealing {
     {
         super(dm);
     }
+
+    @Override
+    public String getDefaultImage()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

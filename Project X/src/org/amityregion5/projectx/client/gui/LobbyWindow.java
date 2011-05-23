@@ -368,9 +368,6 @@ public class LobbyWindow extends JFrame implements MessageListener {
                     chatLogArea.setCaretPosition(chatLogArea.getDocument().getLength());
                 }
             });
-        } else
-        {
-            System.err.println("Unknown message type received!");
         }
     }
 

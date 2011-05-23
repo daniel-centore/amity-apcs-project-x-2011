@@ -32,7 +32,7 @@ import javax.imageio.ImageIO;
  * @author Mike Zuo
  */
 public class ImageHandler {
-    
+
     /**
      * Loads an image from a source specified by a string.
      * 
@@ -41,8 +41,8 @@ public class ImageHandler {
      */
     public static BufferedImage loadImage(String str)
     {
-        //FIXME: make this actually figure out what directory to look in.
-        return loadFile("../resources/" + str);
+        // FIXME: make this actually figure out what directory to look in.
+        return loadFile("./resources/" + str + ".png");
     }
 
     /**

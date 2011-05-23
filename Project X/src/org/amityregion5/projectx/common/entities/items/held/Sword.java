@@ -36,4 +36,11 @@ public class Sword extends MeleeWeapon implements DamageDealing
     {
         super(SWORD_RATE);
     }
+
+    @Override
+    public String getDefaultImage()
+    {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

@@ -296,6 +296,7 @@ public class Server {
         //TODO: make it so we stop accepting clients
         //but if wveryone leaves, begin accepting again
         relayMessage(new StatusUpdateMessage(StatusUpdateMessage.Type.STARTING));
+
         new GameController(this);
     }
 

@@ -27,7 +27,7 @@ import org.amityregion5.projectx.common.entities.items.held.Weapon;
  * 
  * @author Mike DiBuduo
  */
-public class Player extends Character implements Damageable{
+public class Player extends Character implements Damageable {
     
     private static final long serialVersionUID = 1L;
 
@@ -47,5 +47,11 @@ public class Player extends Character implements Damageable{
     {
         this(health);
         addWeapon(wp);
+    }
+
+    @Override
+    public String getDefaultImage()
+    {
+        return "Player";
     }
 }

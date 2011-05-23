@@ -20,12 +20,14 @@ package org.amityregion5.projectx.client.handlers;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.text.html.parser.Entity;
+
 import org.amityregion5.projectx.client.communication.CommunicationHandler;
-import org.amityregion5.projectx.client.gui.input.InputHandler;
+import org.amityregion5.projectx.client.gui.GameWindow;
 import org.amityregion5.projectx.common.communication.MessageListener;
+import org.amityregion5.projectx.common.communication.messages.AddEntityMessage;
 import org.amityregion5.projectx.common.communication.messages.EntityMovedMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
+import org.amityregion5.projectx.common.entities.Entity;
 
 /**
  * Stores all current entities
@@ -40,20 +42,14 @@ public class EntityHandler implements MessageListener {
     {
         ch.registerListener(new EntityHandler());
     }
-    /**
-     * Adds an enity to the list
-     * @param e Entity to add
-     */
-    public static synchronized void addEntity(Entity e)
+
+    private static synchronized void addEntity(Entity e)
     {
+        e.selectImage(e.getDefaultImage());
         entities.add(e);
     }
 
-    /**
-     * Removes an entity from the list
-     * @param e Entity to remove
-     */
-    public static synchronized void removedEntity(Entity e)
+    private static synchronized void removedEntity(Entity e)
     {
         entities.remove(e);
     }
@@ -68,10 +64,26 @@ public class EntityHandler implements MessageListener {
 
     public void handle(Message m)
     {
-        if(m instanceof EntityMovedMessage)
+        if (m instanceof EntityMovedMessage)
         {
             EntityMovedMessage em = (EntityMovedMessage) m;
-            //TODO: do something here (don't take this literally mike z)
+
+            Entity e = em.getEntity();
+
+            for (Entity q : entities)
+                if (q.getUniqueID() == e.getUniqueID())
+                {
+                    q.setLocation(em.getNewLoc());
+                    return;
+                }
+
+            throw new RuntimeException("BAD MOVE REQUEST: NON-EXISTANT ENTITY!");
+        } else if (m instanceof AddEntityMessage)
+        {
+            System.out.println("added");
+            AddEntityMessage aem = (AddEntityMessage) m;
+            addEntity(aem.getEntity());
+            GameWindow.fireRepaintRequired();
         }
     }
 

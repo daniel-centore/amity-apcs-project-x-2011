@@ -21,15 +21,29 @@ package org.amityregion5.projectx.common.communication.messages;
 import org.amityregion5.projectx.common.entities.Entity;
 
 /**
- * Class documentation.
+ * Tells the client it needs to add a new entity!
  *
  * @author Joe Stein
+ * @author Daniel Centore
  */
-public class AddEntityMessage {
+public class AddEntityMessage extends Message {
+    
+    private static final long serialVersionUID = 1L;
+    
     private Entity entity;
 
-    public AddEntityMessage(Entity e)
+    public AddEntityMessage(Entity entity)
     {
-        
+        this.entity = entity;
+    }
+
+    public Entity getEntity()
+    {
+        return entity;
+    }
+
+    public void setEntity(Entity entity)
+    {
+        this.entity = entity;
     }
 }

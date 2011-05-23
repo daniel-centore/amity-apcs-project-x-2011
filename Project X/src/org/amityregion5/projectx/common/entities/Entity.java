@@ -21,6 +21,7 @@ package org.amityregion5.projectx.common.entities;
 
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.Serializable;
 
 import org.amityregion5.projectx.common.tools.ImageHandler;
@@ -59,7 +60,7 @@ public abstract class Entity implements Serializable {
         directionFacing = 0;
         directionMoving = 0;
         moveSpeed = 0;
-        selectImage();
+        selectImage(getDefaultImage());
     }
 
     /**
@@ -212,20 +213,33 @@ public abstract class Entity implements Serializable {
     }
 
     /**
-     * Gets an appropriate image for this entity.
-     */
-    public void selectImage()
-    {
-        //TODO/FIXME: nothing to do here.
-    }
-
-    /**
      * Sets the image of this entity to that from a particular source.
-     *
-     * @param src A String representing the source.
+     * 
+     * @param src A String representing the source (ie "Player" for "./resources/Player.png")
      */
     public void selectImage(String src)
     {
+//        System.out.println(new File(RESOURCES + src + ".png").exists());
         image = ImageHandler.loadImage(src);
+    }
+    
+    /**
+     * @return Returns a String representation of the default image
+     */
+    public abstract String getDefaultImage();
+
+    public long getUniqueID()
+    {
+        return uniqueID;
+    }
+
+    public Point2D getLocation()
+    {
+        return location;
+    }
+
+    public void setLocation(Point2D location)
+    {
+        this.location = location;
     }
 }

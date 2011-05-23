@@ -61,7 +61,7 @@ public class GameWindow extends JFrame {
         GameWindow.map = map;
 
         //TODO: start the game once we get the player from the server
-        //game = new Game(CommunicationHandler.getInstance(), map);
+        game = new Game(CommunicationHandler.getInstance(), map);
 
         this.setBackground(Color.black);
 
