@@ -239,6 +239,7 @@ public abstract class Entity implements Serializable {
 
     protected void updateImage() // updates image including rotation, etc
     {
+        if (image == null) return;
         currentImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = (Graphics2D) currentImage.getGraphics();
 

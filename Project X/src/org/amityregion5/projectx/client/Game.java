@@ -20,6 +20,7 @@ package org.amityregion5.projectx.client;
 
 import org.amityregion5.projectx.client.communication.CommunicationHandler;
 import org.amityregion5.projectx.client.gui.ChatDrawing;
+import org.amityregion5.projectx.client.gui.GameWindow;
 import org.amityregion5.projectx.client.gui.input.InputHandler;
 import org.amityregion5.projectx.client.gui.input.Keys;
 import org.amityregion5.projectx.client.handlers.EntityHandler;
@@ -31,6 +32,7 @@ import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.characters.Player;
 import org.amityregion5.projectx.common.maps.AbstractMap;
+import org.amityregion5.projectx.common.maps.TestingMap;
 
 /**
  * Class documentation.
@@ -161,5 +163,10 @@ public class Game implements GameInputListener, MessageListener {
     public Iterable<Entity> getEntities()
     {
         return entityHandler.getEntities();
+    }
+
+    public void initWindow()
+    {
+        new GameWindow(map);
     }
 }

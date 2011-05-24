@@ -50,15 +50,12 @@ public class GameWindow extends JFrame {
     private static GameWindow instance; // the instance of Gui
     private static JComponent panel; // the panel we will draw on
     private static Image buffer; // the image the panel should draw
-    private static Game game; // the current game
 
     public GameWindow(AbstractMap map)
     {
         super("Amity Project X");
 
         instance = this;
-
-        game = new Game(CommunicationHandler.getInstance(), map);
 
         this.setBackground(Color.black);
 

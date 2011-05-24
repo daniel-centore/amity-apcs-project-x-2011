@@ -28,6 +28,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import org.amityregion5.projectx.client.Game;
 
 import org.amityregion5.projectx.client.communication.CommunicationHandler;
 import org.amityregion5.projectx.client.communication.MulticastCommunicationHandler;
@@ -310,7 +311,8 @@ public class LobbyWindow extends JFrame implements MessageListener {
             {
                 this.setVisible(false);
 
-                new GameWindow(new TestingMap());
+                Game g = new Game(ch,new TestingMap());
+                g.initWindow();
             }
             SwingUtilities.invokeLater(new Runnable() {
 
