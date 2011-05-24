@@ -18,6 +18,8 @@
  */
 package org.amityregion5.projectx.client;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.amityregion5.projectx.client.communication.CommunicationHandler;
 import org.amityregion5.projectx.client.gui.ChatDrawing;
 import org.amityregion5.projectx.client.gui.GameWindow;
@@ -55,6 +57,25 @@ public class Game implements GameInputListener, MessageListener {
 
         ch.registerListener(this);
         InputHandler.registerListener(this);
+        Thread t = new Thread()
+        {
+            @Override
+            public void run()
+            {
+                while (true)
+                {
+                    try
+                    {
+                        Thread.sleep(250);
+                        GameWindow.fireRepaintRequired();
+                    } catch (Exception ex)
+                    {
+                        //Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        };
+        t.start();
     }
 
     public void mouseDragged(int x, int y)

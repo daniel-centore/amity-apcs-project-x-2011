@@ -25,6 +25,7 @@ import java.awt.Image;
 
 import org.amityregion5.projectx.client.Game;
 import org.amityregion5.projectx.common.entities.Entity;
+import org.amityregion5.projectx.common.maps.AbstractMap;
 
 /**
  * Handles repainting
@@ -54,17 +55,18 @@ public class RepaintHandler extends Thread {
         g.setColor(Color.white);
         g.fillRect(0, 0, GameWindow.GAME_WIDTH, GameWindow.GAME_HEIGHT);
 
-        // TODO: implement the map!
-        // AbstractMap map = game.getMap();
-        // Image k = map.getBackground();
-        //
-        // if (k != null)
-        // {
-        // g.drawImage(k, 0, 0, null);
-        // }
+        //TODO: implement the map!
+        AbstractMap map = game.getMap();
+        Image k = map.getBackground();
+        
+        if (k != null)
+        {
+            g.drawImage(k, 0, 0, null);
+        }
 
         for (Entity e : game.getEntities())
         {
+            if (e.getImage() == null) System.out.println("wtf");
             g.drawImage(e.getImage(), e.getX(), e.getY(), null);
         }
 

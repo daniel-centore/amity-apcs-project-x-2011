@@ -150,7 +150,7 @@ public class GameWindow extends JFrame {
     public static void fireRepaintRequired()
     {
         buffer = RepaintHandler.getMapFlatImage();
-
+        System.out.println("repainting");
         panel.repaint();
     }
 
