@@ -19,6 +19,13 @@
  */
 package org.amityregion5.projectx.common.maps;
 
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+
 /**
  * Stub
  * 
@@ -26,5 +33,17 @@ package org.amityregion5.projectx.common.maps;
  *
  */
 public class TestingMap extends AbstractMap {
-
+    @Override
+    public Image getBackground()
+    {
+        try
+        {
+            return ImageIO.read(new File("resources/maps/TestMap.png"));
+        }
+        catch(IOException ex)
+        {  
+            Logger.getLogger(TestingMap.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 }

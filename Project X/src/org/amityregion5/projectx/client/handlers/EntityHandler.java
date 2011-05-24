@@ -18,7 +18,6 @@
  */
 package org.amityregion5.projectx.client.handlers;
 
-import java.awt.geom.Point2D;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +26,7 @@ import org.amityregion5.projectx.client.gui.GameWindow;
 import org.amityregion5.projectx.common.entities.Entity;
 
 /**
- * Stores all current entities
+ * Stores all current entities for the client-side Game
  * 
  * @author Daniel Centore
  * @author Joe Stein
@@ -36,7 +35,7 @@ import org.amityregion5.projectx.common.entities.Entity;
 public class EntityHandler {
     private Map<Long,Entity> entities = new HashMap<Long,Entity>(); // the set of current entities
 
-    private synchronized void addEntity(Entity e) // adds an entity (should receive request from server)
+    public synchronized void addEntity(Entity e) // adds an entity (should receive request from game)
     {
         if (entities.containsKey(e.getUniqueID()))
             return;
@@ -48,7 +47,7 @@ public class EntityHandler {
         GameWindow.fireRepaintRequired();
     }
 
-    private synchronized Entity removeEntity(Entity e) // receive an entity (should receive request from server)
+    public synchronized Entity removeEntity(Entity e) // receive an entity (should receive request from game)
     {
         return entities.remove(e.getUniqueID());
     }
@@ -71,7 +70,7 @@ public class EntityHandler {
 
     public void tellSocketClosed()
     {
-        //TODO: implement
+        //TODO: implement what to do if the socket closes
     }
 
     /**

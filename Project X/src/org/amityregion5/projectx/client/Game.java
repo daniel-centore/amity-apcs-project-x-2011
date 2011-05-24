@@ -18,11 +18,10 @@
  */
 package org.amityregion5.projectx.client;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.amityregion5.projectx.client.communication.CommunicationHandler;
 import org.amityregion5.projectx.client.gui.ChatDrawing;
 import org.amityregion5.projectx.client.gui.GameWindow;
+import org.amityregion5.projectx.client.gui.RepaintHandler;
 import org.amityregion5.projectx.client.gui.input.InputHandler;
 import org.amityregion5.projectx.client.gui.input.Keys;
 import org.amityregion5.projectx.client.handlers.EntityHandler;
@@ -34,7 +33,6 @@ import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.characters.Player;
 import org.amityregion5.projectx.common.maps.AbstractMap;
-import org.amityregion5.projectx.common.maps.TestingMap;
 
 /**
  * Class documentation.
@@ -54,28 +52,11 @@ public class Game implements GameInputListener, MessageListener {
         entityHandler = new EntityHandler();
         this.ch = ch;
         me = null;
+        map = m;
 
         ch.registerListener(this);
         InputHandler.registerListener(this);
-        Thread t = new Thread()
-        {
-            @Override
-            public void run()
-            {
-                while (true)
-                {
-                    try
-                    {
-                        Thread.sleep(250);
-                        GameWindow.fireRepaintRequired();
-                    } catch (Exception ex)
-                    {
-                        //Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            }
-        };
-        t.start();
+        RepaintHandler.setGame(this);
     }
 
     public void mouseDragged(int x, int y)
@@ -84,15 +65,17 @@ public class Game implements GameInputListener, MessageListener {
 
     public void mouseMoved(int x, int y)
     {
-        // send to server and let server deal with it
+        // send to server and let server deal with it?
         if (me == null)
         {
             return;
         }
         int x1 = me.getX();
         int y1 = me.getY();
-        int angle = (int) Math.atan2(y - y1, x - x1);
+        int angle = (int) Math.toDegrees(Math.atan2(y - y1, x - x1));
         me.setDirectionFacing(angle);
+        System.out.println("new angle: " + angle);
+        GameWindow.fireRepaintRequired();
     }
 
     public void mousePressed(int x, int y, int button)
@@ -151,8 +134,8 @@ public class Game implements GameInputListener, MessageListener {
         } else if (m instanceof AddMeMessage)
         {
             AddMeMessage amm = (AddMeMessage) m;
-
             me = (Player) amm.getEntity();
+            entityHandler.addEntity(me);
         }
     }
 

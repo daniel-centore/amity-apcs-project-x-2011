@@ -25,6 +25,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -150,7 +152,6 @@ public class GameWindow extends JFrame {
     public static void fireRepaintRequired()
     {
         buffer = RepaintHandler.getMapFlatImage();
-        System.out.println("repainting");
         panel.repaint();
     }
 

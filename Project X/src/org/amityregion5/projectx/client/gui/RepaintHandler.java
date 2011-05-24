@@ -37,7 +37,7 @@ public class RepaintHandler extends Thread {
 
     private static Game game;
 
-    public RepaintHandler(Game g)
+    public static void setGame(Game g)
     {
         game = g;
     }
@@ -66,7 +66,6 @@ public class RepaintHandler extends Thread {
 
         for (Entity e : game.getEntities())
         {
-            if (e.getImage() == null) System.out.println("wtf");
             g.drawImage(e.getImage(), e.getX(), e.getY(), null);
         }
 
