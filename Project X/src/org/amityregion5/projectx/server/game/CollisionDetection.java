@@ -28,7 +28,8 @@ import org.amityregion5.projectx.common.entities.Entity;
  * 
  * @author Daniel Centore
  */
-public class CollisionDetection {
+public class CollisionDetection
+{
 
     // what level of opacity (0 = transparent, 255 = completely opaque) is considered opaque for pixel collisions
     public static final int OPACITY_THRESHOLD = 100;
@@ -58,13 +59,13 @@ public class CollisionDetection {
      */
     public static boolean hasRectangleCollision(Entity a, int xOffset, int yOffset, Entity b)
     {
-        int x = a.getX() + xOffset;
-        int y = a.getY() + yOffset;
+        double x = a.getX() + xOffset;
+        double y = a.getY() + yOffset;
 
-        int x1 = Math.max(x, b.getX());
-        int y1 = Math.max(y, b.getY());
-        int x2 = Math.min(x + a.getWidth(), b.getX() + b.getWidth());
-        int y2 = Math.min(y + a.getHeight(), b.getY() + b.getHeight());
+        double x1 = Math.max(x, b.getX());
+        double y1 = Math.max(y, b.getY());
+        double x2 = Math.min(x + a.getWidth(), b.getX() + b.getWidth());
+        double y2 = Math.min(y + a.getHeight(), b.getY() + b.getHeight());
 
         return (x2 - x1 > 0 && y2 - y1 > 0);
     }
@@ -80,7 +81,7 @@ public class CollisionDetection {
      */
     public static boolean hasPixelCollision(Entity a, int xOffset, int yOffset, Entity b)
     {
-        return isPixelCollide(a.getX() + xOffset, a.getY() + yOffset, a.getImage(), b.getX(), b.getY(), b.getImage());
+        return isPixelCollide((int) a.getX() + xOffset, (int) a.getY() + yOffset, a.getImage(), (int) b.getX(), (int) b.getY(), b.getImage());
     }
 
 //    // credits http://www.gamedev.net/topic/329033-pixel-perfect-collision-detection/
@@ -124,7 +125,6 @@ public class CollisionDetection {
 //        }
 //        return false;
 //    }
-
     // original credits: http://www.gamedev.net/topic/329033-pixel-perfect-collision-detection/
     // NOTE: there should not have been all those offsets by 1
     private static boolean isPixelCollide(int x1, int y1, BufferedImage image1, int x2, int y2, BufferedImage image2)
@@ -165,5 +165,4 @@ public class CollisionDetection {
         }
         return false;
     }
-
 }

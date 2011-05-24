@@ -45,7 +45,7 @@ public class EntityMovedMessage extends Message {
      * @param newLoc the entity's new location. null indicates destruction
      * @param dir the entity's new location
      */
-    public EntityMovedMessage(long entityID, Point2D newLoc, int dir)
+    private EntityMovedMessage(long entityID, Point2D newLoc, int dir)
     {
         newDir = dir;
         this.entityID = entityID;
@@ -53,37 +53,13 @@ public class EntityMovedMessage extends Message {
     }
 
     /**
-     * Note that an entity has moved and/or turned.
+     * Note that an entity has changed
      * 
      * @param entity the entity in question
-     * @param newLoc the entity's new location. null indicates destruction
-     * @param dir the entity's new location
      */
-    public EntityMovedMessage(Entity entity, Point2D newLoc, int dir)
+    public EntityMovedMessage(Entity entity)
     {
-        this(entity.getUniqueID(), newLoc, dir);
-    }
-
-    /**
-     * Note that an entity has moved
-     * 
-     * @param entity the entity in question
-     * @param newLoc the entity's new location. null indicates destruction
-     */
-    public EntityMovedMessage(Entity entity, Point2D newLoc)
-    {
-        this(entity, newLoc, entity.getDirectionFacing());
-    }
-
-    /**
-     * Note that an entity has turned.
-     * 
-     * @param entity the entity in question
-     * @param dir the entity's new location
-     */
-    public EntityMovedMessage(Entity entity, int dir)
-    {
-        this(entity, entity.getLocation(), dir);
+        this(entity.getUniqueID(), entity.getLocation(), entity.getDirectionFacing());
     }
 
     /**

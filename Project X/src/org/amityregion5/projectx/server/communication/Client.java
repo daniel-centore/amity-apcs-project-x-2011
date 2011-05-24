@@ -32,6 +32,8 @@ import org.amityregion5.projectx.common.communication.messages.ActivePlayersMess
 import org.amityregion5.projectx.common.communication.messages.BlockingMessage;
 import org.amityregion5.projectx.common.communication.messages.BooleanReplyMessage;
 import org.amityregion5.projectx.common.communication.messages.ChatMessage;
+import org.amityregion5.projectx.common.communication.messages.ClientMovedMessage;
+import org.amityregion5.projectx.common.communication.messages.EntityMovedMessage;
 import org.amityregion5.projectx.common.communication.messages.IntroduceMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.common.communication.messages.NotifyMessage;
@@ -47,7 +49,8 @@ import org.amityregion5.projectx.server.Server;
  * @author Joe Stein
  * @author Mike DiBuduo
  */
-public class Client extends Thread {
+public class Client extends Thread
+{
 
     private Socket sock; // socket
     private Server server; // the server to which this Client belongs
@@ -60,7 +63,7 @@ public class Client extends Thread {
 
     /**
      * Creates a client
-     * 
+     *
      * @param sock Socket for communications
      */
     public Client(Socket sock, Server server)
@@ -88,7 +91,8 @@ public class Client extends Thread {
             {
                 final Message m = (Message) inObjects.readObject();
 
-                new Thread() {
+                new Thread()
+                {
 
                     @Override
                     public void run()
@@ -137,7 +141,7 @@ public class Client extends Thread {
 
     /**
      * Sends a message
-     * 
+     *
      * @param m Message to send
      */
     public void send(Message m)
@@ -204,10 +208,18 @@ public class Client extends Thread {
 
             switch (nm.getWhat())
             {
-            case LOBBY_READY:
-                server.incrementWaiting();
-                break;
+                case LOBBY_READY:
+                    server.incrementWaiting();
+                    break;
             }
+        } else if (m instanceof ClientMovedMessage)
+        {
+            ClientMovedMessage cmm = (ClientMovedMessage) m;
+            //TODO: implement incrementX and Y
+            //player.incrementX(cmm.getOffSetX());
+            //player.incrementY(cmm.getOffSetY());
+            EntityMovedMessage emm = new EntityMovedMessage(player);
+            server.relayMessage(emm);
         }
     }
 
@@ -242,7 +254,7 @@ public class Client extends Thread {
 
     /**
      * Are we waiting for the client to press "ready?"
-     * 
+     *
      * @return True if so; false otherwise
      */
     public boolean isWaiting()

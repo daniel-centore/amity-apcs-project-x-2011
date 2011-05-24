@@ -19,7 +19,8 @@
 package org.amityregion5.projectx.common.communication.messages;
 
 /**
- * Tells the server that client received a move request TODO: Implement this Server-side (then send EntityMovedMessage to all clients)
+ * Tells the server that client received a move request
+ * TODO: Implement this Server-side (then send EntityMovedMessage to all clients)
  * 
  * @author Mike DiBuduo
  * @author Daniel Centore
