@@ -19,7 +19,7 @@
  */
 package org.amityregion5.projectx.server.game;
 
-import java.util.ArrayList;
+import java.util.Map;
 
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.maps.AbstractMap;
@@ -33,6 +33,6 @@ import org.amityregion5.projectx.common.maps.AbstractMap;
 public class GameState {
     
     private AbstractMap map;
-    private ArrayList<Entity> entities;
+    private Map<Long,Entity> entities;
     
 }

@@ -19,8 +19,9 @@
 package org.amityregion5.projectx.client.handlers;
 
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.amityregion5.projectx.client.gui.GameWindow;
 import org.amityregion5.projectx.common.entities.Entity;
@@ -30,66 +31,63 @@ import org.amityregion5.projectx.common.entities.Entity;
  * 
  * @author Daniel Centore
  * @author Joe Stein
+ * @author Michael Zuo
  */
 public class EntityHandler {
-    
-    private List<Entity> entities = new ArrayList<Entity>(); // the list of current entities
+    private Map<Long,Entity> entities = new HashMap<Long,Entity>(); // the set of current entities
 
     private synchronized void addEntity(Entity e) // adds an entity (should receive request from server)
     {
-        for (Entity q : entities)
-        {
-            if (e.getUniqueID() == q.getUniqueID()) // already exists
-            {
-                return;
-            }
-        }
+        if (entities.containsKey(e.getUniqueID()))
+            return;
 
         e.selectImage(e.getDefaultImage());
-        entities.add(e);
+
+        entities.put(e.getUniqueID(), e);
+
         GameWindow.fireRepaintRequired();
     }
 
-    private synchronized void removedEntity(Entity e) // receive an entity (should receive request from server)
+    private synchronized Entity removeEntity(Entity e) // receive an entity (should receive request from server)
     {
-        entities.remove(e);
+        return entities.remove(e.getUniqueID());
     }
 
     /**
-     * @return The list of entities
+     * @return A collection of entities.
      */
-    public synchronized List<Entity> getEntities()
+    public synchronized Collection<Entity> getEntities()
     {
-        return entities;
+        return entities.values();
+    }
+
+    /**
+     * @return A collection of entity ids.
+     */
+    public synchronized Collection<Long> getEntityIDs()
+    {
+        return entities.keySet();
     }
 
     public void tellSocketClosed()
     {
+        //TODO: implement
     }
 
     /**
-     * Updates an entity
+     * Updates an entity.
      * 
-     * @param entity Entity to compare it against (by ID)
-     * @param newLoc New location to put it at (or null to skip)
-     * @param newDir New direction to have it face (or null to skip)
+     * @param entity Entity to compare (by id) and update to.
+     *
+     * @return whether such an entity was properly updated.
      */
-    public void updateEntity(Entity entity, Point2D newLoc, Integer newDir)
+    public boolean updateEntity(Entity entity)
     {
-        for (Entity q : entities)
-        {
-            if (q.getUniqueID() == entity.getUniqueID())
-            {
-                if (newLoc != null)
-                    q.setLocation(newLoc);
-
-                if (newDir != null)
-                    q.setDirectionFacing(newDir);
-
-                return;
-            }
+        if (entities.containsKey(entity.getUniqueID())) {
+            entities.put(entity.getUniqueID(), entity);
+            return true;
         }
 
-        throw new RuntimeException("No entity had this ID!");
+        return false;
     }
 }
