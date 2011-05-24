@@ -215,10 +215,11 @@ public class Client extends Thread
         } else if (m instanceof ClientMovedMessage)
         {
             ClientMovedMessage cmm = (ClientMovedMessage) m;
-            //TODO: implement incrementX and Y
-            //player.incrementX(cmm.getOffSetX());
-            //player.incrementY(cmm.getOffSetY());
+            player.incrementX(cmm.getOffSetX());
+            player.incrementY(cmm.getOffSetY());
             EntityMovedMessage emm = new EntityMovedMessage(player);
+            System.out.println("relaying to move to (" + emm.getNewLoc().getX()
+                    + "," + emm.getNewLoc().getY() + ")");
             server.relayMessage(emm);
         }
     }

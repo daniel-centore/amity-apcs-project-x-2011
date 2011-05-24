@@ -53,6 +53,16 @@ public class EntityHandler {
     }
 
     /**
+     * Gets an entity from this EntityHandler's list.
+     * @param uniqueId the unique id of the entity to get
+     * @return the entity, or null if unique id was not matched
+     */
+    public Entity getEntity(long uniqueId)
+    {
+        return entities.get(uniqueId);
+    }
+
+    /**
      * @return A collection of entities.
      */
     public synchronized Collection<Entity> getEntities()

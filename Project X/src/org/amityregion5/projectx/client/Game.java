@@ -29,6 +29,7 @@ import org.amityregion5.projectx.common.communication.MessageListener;
 import org.amityregion5.projectx.common.communication.messages.AddMeMessage;
 import org.amityregion5.projectx.common.communication.messages.ChatMessage;
 import org.amityregion5.projectx.common.communication.messages.ClientMovedMessage;
+import org.amityregion5.projectx.common.communication.messages.EntityMovedMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.characters.Player;
@@ -74,7 +75,6 @@ public class Game implements GameInputListener, MessageListener {
         int y1 = me.getY();
         int angle = (int) Math.toDegrees(Math.atan2(y - y1, x - x1));
         me.setDirectionFacing(angle);
-        System.out.println("new angle: " + angle);
         GameWindow.fireRepaintRequired();
     }
 
@@ -136,6 +136,13 @@ public class Game implements GameInputListener, MessageListener {
             AddMeMessage amm = (AddMeMessage) m;
             me = (Player) amm.getEntity();
             entityHandler.addEntity(me);
+        } else if (m instanceof EntityMovedMessage)
+        {
+            EntityMovedMessage emm = (EntityMovedMessage) m;
+            Entity ent = entityHandler.getEntity(emm.getEntityID());
+            ent.setLocation(emm.getNewLoc());
+            ent.setDirectionMoving(emm.getNewDir());
+            GameWindow.fireRepaintRequired();
         }
     }
 

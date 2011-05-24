@@ -306,7 +306,6 @@ public class LobbyWindow extends JFrame implements MessageListener {
         } else if (m instanceof StatusUpdateMessage)
         {
             final StatusUpdateMessage sum = (StatusUpdateMessage) m;
-            System.out.println(sum);
             if (sum.getType() == StatusUpdateMessage.Type.STARTING)
             {
                 this.setVisible(false);

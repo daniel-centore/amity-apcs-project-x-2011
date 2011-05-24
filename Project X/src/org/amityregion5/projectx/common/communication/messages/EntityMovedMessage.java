@@ -19,6 +19,7 @@
  */
 package org.amityregion5.projectx.common.communication.messages;
 
+import java.awt.Point;
 import java.awt.geom.Point2D;
 
 import org.amityregion5.projectx.common.entities.Entity;
@@ -35,7 +36,8 @@ public class EntityMovedMessage extends Message {
     private static final long serialVersionUID = 1L;
 
     private long entityID; // The entity that moved
-    private Point2D newLoc; // Where it moved to
+    private double newX; // new x coord
+    private double newY; // new y coord
     private int newDir; // the new direction the entity is facing
 
     /**
@@ -49,7 +51,8 @@ public class EntityMovedMessage extends Message {
     {
         newDir = dir;
         this.entityID = entityID;
-        this.newLoc = newLoc;
+        this.newX = newLoc.getX();
+        this.newY = newLoc.getY();
     }
 
     /**
@@ -67,7 +70,7 @@ public class EntityMovedMessage extends Message {
      */
     public Point2D getNewLoc()
     {
-        return newLoc;
+        return new Point2D.Double(newX,newY);
     }
 
     /**

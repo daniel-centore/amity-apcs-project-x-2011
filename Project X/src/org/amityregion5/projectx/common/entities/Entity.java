@@ -88,14 +88,15 @@ public abstract class Entity implements Serializable {
     /**
      * Sets the X coord.
      * 
-     * @param x
+     * @param x the new x-coordinate
      */
-    public void setX(int x)
+    public void setX(double x)
     {
         location.setLocation(x, location.getY());
     }
 
     /**
+     * Returns the y-coordinate of this Entity.
      * @return Y coordinate
      */
     public int getY()
@@ -106,14 +107,16 @@ public abstract class Entity implements Serializable {
     /**
      * Sets the Y coord.
      * 
-     * @param y
+     * @param y the new y-coordinate
      */
-    public void setY(int y)
+    public void setY(double y)
     {
         location.setLocation(location.getX(), y);
     }
 
     /**
+     * Returns the image of this entity.
+     * 
      * @return The image of this entity
      */
     public BufferedImage getImage()

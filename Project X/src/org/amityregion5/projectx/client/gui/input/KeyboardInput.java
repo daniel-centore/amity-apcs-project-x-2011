@@ -32,24 +32,22 @@ import java.util.List;
  */
 public class KeyboardInput implements KeyListener {
 
-    private List<Integer> depressed = new ArrayList<Integer>(); // keys currently pressed down
+    private volatile List<Integer> depressed = new ArrayList<Integer>(); // keys currently pressed down
 
     /**
      * Initializes the KeyHandler run thread
      */
     public KeyboardInput()
     {
-        new Thread() {
+        // FIXME: Manual key repeat isn't working. I suggest getting rid of it -Joe
+        /*new Thread() {
             @Override
             public void run()
             {
                 while (true)
                 {
-                    synchronized (KeyboardInput.this)
-                    {
-                        for (int i = 0; i < depressed.size(); i++)
-                            InputHandler.keyPressed(depressed.get(i));
-                    }
+                    for (int i = 0; i < depressed.size(); i++)
+                        InputHandler.keyPressed(depressed.get(i));
 
                     try
                     {
@@ -59,7 +57,7 @@ public class KeyboardInput implements KeyListener {
                     }
                 }
             }
-        }.start();
+        }.start(); */
     }
 
     public void keyTyped(KeyEvent e)
@@ -71,11 +69,13 @@ public class KeyboardInput implements KeyListener {
     {
         if (!depressed.contains(e.getKeyCode()))
             depressed.add(e.getKeyCode());
+        InputHandler.keyPressed(e.getKeyCode());
     }
 
     public void keyReleased(KeyEvent e)
     {
         depressed.remove((Integer) e.getKeyCode()); // cast so we're removing object, not index
+        System.out.println("... " + depressed.size());
         InputHandler.keyReleased(e.getKeyCode());
     }
 

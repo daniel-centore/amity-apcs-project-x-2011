@@ -26,9 +26,10 @@ import org.amityregion5.projectx.common.entities.items.held.Weapon;
  * Character controlled by a Client which fights Enemies. Capable of using multiple weapons.
  * 
  * @author Mike DiBuduo
+ * @author Joe Stein
  */
 public class Player extends Character implements Damageable {
-    
+    private static final int INITIAL_SPEED = 10; // initial move speed
     private static final long serialVersionUID = 1L;
     private static final int MAX_HEALTH = 100; // Player's health should be 100
 
@@ -40,6 +41,7 @@ public class Player extends Character implements Damageable {
     public Player(int health)
     {
         super(health, MAX_HEALTH);
+        this.setMoveSpeed(INITIAL_SPEED);
     }
 
     public Player(int health, Weapon wp)
@@ -52,5 +54,15 @@ public class Player extends Character implements Damageable {
     public String getDefaultImage()
     {
         return "sprites/Player";
+    }
+
+    public void incrementX(double offSetX)
+    {
+        setX(getX() + offSetX);
+    }
+
+    public void incrementY(double offSetY)
+    {
+        setY(getY() + offSetY);
     }
 }

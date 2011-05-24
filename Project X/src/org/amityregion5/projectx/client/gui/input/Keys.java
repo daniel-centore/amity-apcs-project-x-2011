@@ -23,6 +23,7 @@ import org.amityregion5.projectx.client.preferences.PreferenceManager;
 
 /**
  * A class with key codes.
+ * Key CSVs are in the format: up,left,down,right
  *
  * @author Joe Stein
  */
@@ -34,7 +35,7 @@ public class Keys {
     public static int LEFT = KeyEvent.VK_LEFT;
     public static int RIGHT = KeyEvent.VK_RIGHT;
 
-    public static void updateKeys()
+    public static void refreshKeyPrefs()
     {
         String csv = PreferenceManager.getKeys();
         String[] vals = csv.split(",");

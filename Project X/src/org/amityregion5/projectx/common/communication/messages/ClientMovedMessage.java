@@ -63,4 +63,9 @@ public class ClientMovedMessage extends Message {
         this.offSetY = offSetY;
     }
 
+    @Override
+    public String toString()
+    {
+        return "(" + offSetX + "," + offSetY + ")";
+    }
 }
