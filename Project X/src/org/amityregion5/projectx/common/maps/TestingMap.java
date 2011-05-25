@@ -27,23 +27,30 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 /**
- * Stub
+ * Testing map
  * 
  * @author Daniel Centore
  *
  */
 public class TestingMap extends AbstractMap {
-    @Override
-    public Image getBackground()
+    
+    private Image image;
+    
+    public TestingMap()
     {
         try
         {
-            return ImageIO.read(new File("resources/maps/TestMap.png"));
+            image = ImageIO.read(new File("resources/maps/TestMap.png"));
         }
         catch(IOException ex)
         {  
             Logger.getLogger(TestingMap.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+    }
+    
+    @Override
+    public Image getBackground()
+    {
+        return image;
     }
 }
