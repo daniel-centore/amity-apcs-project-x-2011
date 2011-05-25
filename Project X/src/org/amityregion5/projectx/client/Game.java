@@ -30,7 +30,7 @@ import org.amityregion5.projectx.client.handlers.EntityHandler;
 import org.amityregion5.projectx.common.communication.MessageListener;
 import org.amityregion5.projectx.common.communication.messages.AddMeMessage;
 import org.amityregion5.projectx.common.communication.messages.ChatMessage;
-import org.amityregion5.projectx.common.communication.messages.ClientMovedMessage;
+import org.amityregion5.projectx.common.communication.messages.ClientPositionMessage;
 import org.amityregion5.projectx.common.communication.messages.ClientMovingMessage;
 import org.amityregion5.projectx.common.communication.messages.EntityMovingMessage;
 import org.amityregion5.projectx.common.communication.messages.EntityMovedMessage;

@@ -32,7 +32,7 @@ import org.amityregion5.projectx.common.communication.messages.ActivePlayersMess
 import org.amityregion5.projectx.common.communication.messages.BlockingMessage;
 import org.amityregion5.projectx.common.communication.messages.BooleanReplyMessage;
 import org.amityregion5.projectx.common.communication.messages.ChatMessage;
-import org.amityregion5.projectx.common.communication.messages.ClientMovedMessage;
+import org.amityregion5.projectx.common.communication.messages.ClientPositionMessage;
 import org.amityregion5.projectx.common.communication.messages.ClientMovingMessage;
 import org.amityregion5.projectx.common.communication.messages.EntityMovedMessage;
 import org.amityregion5.projectx.common.communication.messages.IntroduceMessage;
@@ -213,9 +213,9 @@ public class Client extends Thread
                     server.incrementWaiting();
                     break;
             }
-        } else if (m instanceof ClientMovedMessage)
+        } else if (m instanceof ClientPositionMessage)
         {
-            ClientMovedMessage cmm = (ClientMovedMessage) m;
+            ClientPositionMessage cmm = (ClientPositionMessage) m;
             player.incrementX(cmm.getOffSetX());
             player.incrementY(cmm.getOffSetY());
             EntityMovedMessage emm = new EntityMovedMessage(player);
