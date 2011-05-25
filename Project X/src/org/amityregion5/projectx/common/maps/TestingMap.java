@@ -67,7 +67,7 @@ public class TestingMap extends AbstractMap {
 
         try
         {
-            image = ImageHandler.loadImage("maps/Map");
+            image = ImageHandler.loadImage("maps/TestMap");
         }
         catch(RuntimeException ex)
         {  
