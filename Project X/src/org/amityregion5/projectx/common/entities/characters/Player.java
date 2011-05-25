@@ -53,7 +53,7 @@ public class Player extends Character implements Damageable {
     @Override
     public String getDefaultImage()
     {
-        return "Player";
+        return "sprites/Player";
     }
 
     public void incrementX(double offSetX)
