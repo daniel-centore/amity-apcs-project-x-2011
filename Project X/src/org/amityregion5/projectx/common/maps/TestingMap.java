@@ -52,7 +52,7 @@ public class TestingMap extends AbstractMap {
 
         try
         {
-            image = ImageIO.read(new File("resources/maps/Map.png"));
+            image = ImageIO.read(new File("resources/maps/TestMap.png"));
         }
         catch(IOException ex)
         {  
