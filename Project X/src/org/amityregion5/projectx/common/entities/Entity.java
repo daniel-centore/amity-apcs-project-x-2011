@@ -97,6 +97,7 @@ public abstract class Entity implements Serializable {
 
     /**
      * Returns the y-coordinate of this Entity.
+     * 
      * @return Y coordinate
      */
     public int getY()
@@ -242,7 +243,8 @@ public abstract class Entity implements Serializable {
 
     protected void updateImage() // updates image including rotation, etc
     {
-        if (image == null) return;
+        if (image == null)
+            return;
         currentImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = (Graphics2D) currentImage.getGraphics();
 
@@ -255,7 +257,7 @@ public abstract class Entity implements Serializable {
     public AffineTransform getAffineTransform()
     {
         AffineTransform at = new AffineTransform();
-        at.rotate(Math.toRadians(getDirectionFacing()), getCenterX(), getCenterY());
+        at.rotate(Math.toRadians(getDirectionFacing()), (getWidth() / 2), (getHeight() / 2));
         return at;
     }
 
@@ -298,6 +300,7 @@ public abstract class Entity implements Serializable {
 
     /**
      * Sets the location of this entity
+     * 
      * @param location Location to set it to
      */
     public void setLocation(Point2D location)
