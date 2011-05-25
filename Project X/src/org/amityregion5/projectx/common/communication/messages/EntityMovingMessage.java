@@ -26,6 +26,8 @@ package org.amityregion5.projectx.common.communication.messages;
  * @author Joe Stein
  */
 public class EntityMovingMessage extends Message {
+    private static final long serialVersionUID = 1L;
+
     private long id;
     private int speed;
     private int dir;
