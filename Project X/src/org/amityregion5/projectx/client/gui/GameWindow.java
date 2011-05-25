@@ -23,16 +23,13 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
-import org.amityregion5.projectx.client.Game;
-import org.amityregion5.projectx.client.communication.CommunicationHandler;
 import org.amityregion5.projectx.client.gui.input.KeyboardInput;
 import org.amityregion5.projectx.client.gui.input.MouseInput;
 import org.amityregion5.projectx.common.maps.AbstractMap;
@@ -61,7 +58,7 @@ public class GameWindow extends JFrame {
 
         this.setBackground(Color.black);
 
-        this.addWindowListener(new AbstractWindowListener() {
+        this.addWindowListener(new WindowAdapter() {
 
             @Override
             public void windowClosing(WindowEvent arg0)
