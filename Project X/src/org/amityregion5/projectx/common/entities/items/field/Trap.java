@@ -34,6 +34,7 @@ public class Trap extends FieldItem implements DamageDealing{
 
     public Trap(int dm)
     {
+        super(0, 0);    //TODO
         damage = dm;
         active = false;
     }

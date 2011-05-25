@@ -28,14 +28,20 @@ import org.amityregion5.projectx.common.entities.Damageable;
  * @author Mike DiBuduo
  * @author Mike Wenke
  */
-public class Block extends FieldItem implements Damageable
-{
-    private static final long serialVersionUID = 1L;
+public class Block extends FieldItem implements Damageable {
 
+    private static final long serialVersionUID = 1L;
+    public static final int DEFAULT_HEALTH = 100;
     private int hp;
 
-    public Block(int health)
+    public Block(int x, int y)
     {
+        this(x, y, DEFAULT_HEALTH);
+    }
+
+    public Block(int x, int y, int health)
+    {
+        super(x, y);
         hp = health;
     }
 
@@ -49,7 +55,8 @@ public class Block extends FieldItem implements Damageable
         this.hp = hp;
     }
 
-    public void damage(int damage) {
+    public void damage(int damage)
+    {
         hp -= damage;
         killed();
     }
@@ -59,14 +66,16 @@ public class Block extends FieldItem implements Damageable
      * Perhaps a fence has a max health and a wall can be infinitely upgraded?
      * @param health amount to be healed by
      */
-    public void heal(int health) {
+    public void heal(int health)
+    {
         hp += health;
     }
 
     /**
      * If hp drops to zero, the block is destroyed and removed
      */
-    public void killed() {
+    public void killed()
+    {
         if(hp <= 0)
         {
             //Remove self from game
@@ -76,7 +85,6 @@ public class Block extends FieldItem implements Damageable
     @Override
     public String getDefaultImage()
     {
-        // TODO Auto-generated method stub
         return "sprites/Wall";
     }
 }

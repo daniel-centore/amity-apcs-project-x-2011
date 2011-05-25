@@ -23,7 +23,17 @@ import org.amityregion5.projectx.common.entities.Entity;
  * The basic outline for all Items.
  *
  * @author Joe Stein
+ * @author Daniel Centore
  */
 public abstract class Item extends Entity {
 
+    public Item(int x, int y)
+    {
+        super(x, y);
+    }
+
+    public Item()
+    {
+        super();
+    }
 }

@@ -23,18 +23,18 @@ package org.amityregion5.projectx.common.entities.items.field;
  *
  * @author Mike DiBuduo
  */
-public abstract class Projectile extends FieldItem
-{
+public abstract class Projectile extends FieldItem {
 
-   private int damage;
+    private int damage;
 
-   public Projectile(int dm)
-   {
-      damage = dm;
-   }
+    public Projectile(int dm)
+    {
+        super(0, 0); //TODO
+        damage = dm;
+    }
 
-   public int getDamage()
-   {
-      return damage;
-   }
+    public int getDamage()
+    {
+        return damage;
+    }
 }

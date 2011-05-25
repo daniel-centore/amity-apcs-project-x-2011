@@ -66,6 +66,19 @@ public abstract class Entity implements Serializable {
     }
 
     /**
+     * Creates an entity
+     * @param x X coordinate to put it at
+     * @param y Y coordinate to put it at
+     */
+    public Entity(int x, int y)
+    {
+        this();
+        
+        setX(x);
+        setY(y);
+    }
+
+    /**
      * Creates a new entity with the important information set.
      * 
      * @param image Image to represent it.

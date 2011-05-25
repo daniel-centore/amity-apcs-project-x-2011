@@ -22,22 +22,34 @@ package org.amityregion5.projectx.common.maps;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import org.amityregion5.projectx.common.entities.Entity;
+import org.amityregion5.projectx.common.entities.items.field.Area;
+import org.amityregion5.projectx.common.entities.items.field.Wall;
 
 /**
  * Testing map
  * 
  * @author Daniel Centore
+ * @author Joseph Stein
  *
  */
 public class TestingMap extends AbstractMap {
     
     private Image image;
+    private final List<Entity> entities;
     
     public TestingMap()
     {
+        entities = new ArrayList<Entity>();
+
+        entities.add(new Area(0, 0));
+        entities.add(new Wall());
+
         try
         {
             image = ImageIO.read(new File("resources/maps/Map.png"));
@@ -52,5 +64,11 @@ public class TestingMap extends AbstractMap {
     public Image getBackground()
     {
         return image;
+    }
+
+    @Override
+    public List<Entity> getEntities()
+    {
+        return entities;
     }
 }

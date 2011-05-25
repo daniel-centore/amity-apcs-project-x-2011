@@ -57,18 +57,22 @@ public class RepaintHandler extends Thread {
 
         AbstractMap map = game.getMap();
         Image k = map.getBackground();
-        
-        if (k != null)
+
+        if(k != null)
         {
             g.drawImage(k, 0, 0, null);
         }
 
-        for (Entity e : game.getEntities())
+        for(Entity e : map.getEntities())  //draw constant entities
+        {
+            g.drawImage(e.getImage(), e.getX(), e.getY(), null);
+        }
+
+        for(Entity e : game.getEntities())    //draw temporary entities
         {
             g.drawImage(e.getImage(), e.getX(), e.getY(), null);
         }
 
         return img;
     }
-
 }

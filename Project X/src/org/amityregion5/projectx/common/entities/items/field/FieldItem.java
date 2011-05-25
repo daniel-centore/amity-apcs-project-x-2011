@@ -25,6 +25,12 @@ import org.amityregion5.projectx.common.entities.items.Item;
  * Items that are placed on or pass through field.
  *
  * @author Mike DiBuduo
+ * @author Daniel Centore
  */
 public abstract class FieldItem extends Item {
+
+    public FieldItem(int x, int y)
+    {
+        super(x, y);
+    }
 }

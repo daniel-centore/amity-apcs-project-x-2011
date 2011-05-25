@@ -20,6 +20,8 @@
 package org.amityregion5.projectx.common.maps;
 
 import java.awt.Image;
+import java.util.List;
+import org.amityregion5.projectx.common.entities.Entity;
 
 
 /**
@@ -32,6 +34,11 @@ public abstract class AbstractMap {
 
     private Image bgImage; // the image of the actual scenery/map/whatever
 
+    /**
+     * @return A list of all permanent entities (ie Area)
+     */
+    public abstract List<Entity> getEntities();
+    
     /**
      * @return The background image (or null for default background)
      */
