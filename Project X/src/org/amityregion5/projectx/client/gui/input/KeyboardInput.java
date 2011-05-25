@@ -40,7 +40,7 @@ public class KeyboardInput implements KeyListener {
     public KeyboardInput()
     {
         // FIXME: Manual key repeat isn't working. I suggest getting rid of it -Joe
-        /*new Thread() {
+        new Thread() {
             @Override
             public void run()
             {
@@ -51,13 +51,13 @@ public class KeyboardInput implements KeyListener {
 
                     try
                     {
-                        Thread.sleep(1);
+                        Thread.sleep(10);
                     } catch (InterruptedException e)
                     {
                     }
                 }
             }
-        }.start(); */
+        }.start();
     }
 
     public void keyTyped(KeyEvent e)
@@ -69,14 +69,14 @@ public class KeyboardInput implements KeyListener {
     {
         if (!depressed.contains(e.getKeyCode()))
             depressed.add(e.getKeyCode());
-        InputHandler.keyPressed(e.getKeyCode());
+//        InputHandler.keyPressed(e.getKeyCode());
     }
 
     public void keyReleased(KeyEvent e)
     {
         depressed.remove((Integer) e.getKeyCode()); // cast so we're removing object, not index
         System.out.println("... " + depressed.size());
-        InputHandler.keyReleased(e.getKeyCode());
+//        InputHandler.keyReleased(e.getKeyCode());
     }
 
 }
