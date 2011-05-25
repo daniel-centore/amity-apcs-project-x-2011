@@ -71,9 +71,9 @@ public class Game implements GameInputListener, MessageListener {
         {
             return;
         }
-        int x1 = me.getX();
-        int y1 = me.getY();
-        int angle = (int) Math.toDegrees(Math.atan2(y - y1, x - x1));
+        int x1 = me.getCenterX(); // TODO: why does this not find the angle from the center (but rather 0,0?)
+        int y1 = me.getCenterY();
+        int angle = (int) Math.toDegrees(Math.atan2(y - y1, x - x1)) + 90;
         me.setDirectionFacing(angle);
         GameWindow.fireRepaintRequired();
     }
