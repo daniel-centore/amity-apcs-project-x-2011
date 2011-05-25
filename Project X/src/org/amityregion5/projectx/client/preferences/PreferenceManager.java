@@ -100,6 +100,6 @@ public class PreferenceManager {
 
     public static String getKeys()
     {
-        return prefs.get(KEY_CSV, "w,a,s,d");
+        return prefs.get(KEY_CSV, "w,a,s,d,t");
     }
 }

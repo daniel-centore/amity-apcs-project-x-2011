@@ -34,6 +34,7 @@ public class Keys {
     public static int DOWN = KeyEvent.VK_DOWN;
     public static int LEFT = KeyEvent.VK_LEFT;
     public static int RIGHT = KeyEvent.VK_RIGHT;
+    public static int CHAT = KeyEvent.VK_T;
 
     public static void refreshKeyPrefs()
     {
@@ -43,6 +44,6 @@ public class Keys {
         LEFT = Integer.parseInt(vals[1]);
         DOWN = Integer.parseInt(vals[2]);
         RIGHT = Integer.parseInt(vals[3]);
-
+        CHAT = Integer.parseInt(vals[4]);
     }
 }
