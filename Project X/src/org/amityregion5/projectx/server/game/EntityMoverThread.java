@@ -20,7 +20,6 @@ package org.amityregion5.projectx.server.game;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.amityregion5.projectx.client.handlers.EntityHandler;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.EntityConstants;
 

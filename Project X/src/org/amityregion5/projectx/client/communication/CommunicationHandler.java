@@ -19,6 +19,7 @@
  */
 package org.amityregion5.projectx.client.communication;
 
+import org.amityregion5.projectx.common.communication.RawListener;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;

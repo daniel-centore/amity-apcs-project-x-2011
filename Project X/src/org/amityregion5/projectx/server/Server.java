@@ -35,6 +35,7 @@ import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.common.communication.messages.StatusUpdateMessage;
 import org.amityregion5.projectx.server.communication.Client;
 import org.amityregion5.projectx.server.communication.Multicaster;
+import org.amityregion5.projectx.server.communication.RawServer;
 import org.amityregion5.projectx.server.controllers.ServerController;
 import org.amityregion5.projectx.server.game.GameController;
 
@@ -51,6 +52,7 @@ public class Server {
     private String name; // the text name of the server
     private boolean listening = true; // should we be listening for clients?
     private ServerSocket servSock; // Server Socket
+    private RawServer rawServ; // Server socket for raw connections
     private Multicaster multicaster; // for multicasting IP and String
     private ServerController controller; // controls the server
     private int waiting; // how many people we are waiting for
@@ -83,6 +85,10 @@ public class Server {
             multicaster.setDaemon(true);
             System.out.println("Starting multicaster...");
             multicaster.start();
+            System.out.println("Creating raw server...");
+            rawServ = new RawServer(Constants.RAW_PORT);
+            rawServ.start();
+            System.out.println("Raw listening on port " + Constants.RAW_PORT);
         }
         catch(IOException e)
         {
