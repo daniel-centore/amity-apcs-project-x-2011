@@ -30,10 +30,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.items.field.Area;
 import org.amityregion5.projectx.common.entities.items.field.Wall;
+
+import org.amityregion5.projectx.common.tools.ImageHandler;
 
 /**
  * Testing map
@@ -66,9 +67,9 @@ public class TestingMap extends AbstractMap {
 
         try
         {
-            image = ImageIO.read(new File("resources/maps/TestMap.png"));
+            image = ImageHandler.loadImage("maps/Map");
         }
-        catch(IOException ex)
+        catch(RuntimeException ex)
         {  
             Logger.getLogger(TestingMap.class.getName()).log(Level.SEVERE, null, ex);
         }

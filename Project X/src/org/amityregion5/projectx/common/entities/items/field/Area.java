@@ -24,6 +24,7 @@ package org.amityregion5.projectx.common.entities.items.field;
  * @author Daniel Centore
  */
 public class Area extends FieldItem {
+    private static final long serialVersionUID = 1L;
 
     public Area(int x, int y)
     {
