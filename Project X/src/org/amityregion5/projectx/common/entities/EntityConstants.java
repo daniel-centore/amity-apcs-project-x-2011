@@ -34,5 +34,9 @@ public class EntityConstants {
     public final int SOUTH_EAST = 135;
     public final int SOUTH_WEST = 225;
     public final int NORTH_WEST = 315;
-
+    /**
+     * Number of milliseconds between moves. Move speed is number of linear
+     * pixels per this number of milliseconds.
+     */
+    public static final int MOVE_UPDATE_TIME = 100;
 }

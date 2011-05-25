@@ -33,6 +33,7 @@ import org.amityregion5.projectx.common.communication.messages.BlockingMessage;
 import org.amityregion5.projectx.common.communication.messages.BooleanReplyMessage;
 import org.amityregion5.projectx.common.communication.messages.ChatMessage;
 import org.amityregion5.projectx.common.communication.messages.ClientMovedMessage;
+import org.amityregion5.projectx.common.communication.messages.ClientMovingMessage;
 import org.amityregion5.projectx.common.communication.messages.EntityMovedMessage;
 import org.amityregion5.projectx.common.communication.messages.IntroduceMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
@@ -219,6 +220,13 @@ public class Client extends Thread
             player.incrementY(cmm.getOffSetY());
             EntityMovedMessage emm = new EntityMovedMessage(player);
             server.relayMessage(emm);
+        } else if (m instanceof ClientMovingMessage)
+        {
+            ClientMovingMessage cmm = (ClientMovingMessage) m;
+            player.setMoveSpeed(cmm.getSpeed());
+            player.setDirectionMoving(cmm.getDir());
+            // just update speed and direction, EntityMoverThread will take
+            // care of the rest
         }
     }
 

@@ -18,6 +18,8 @@
  */
 package org.amityregion5.projectx.client;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.amityregion5.projectx.client.communication.CommunicationHandler;
 import org.amityregion5.projectx.client.gui.ChatDrawing;
 import org.amityregion5.projectx.client.gui.GameWindow;
@@ -29,6 +31,8 @@ import org.amityregion5.projectx.common.communication.MessageListener;
 import org.amityregion5.projectx.common.communication.messages.AddMeMessage;
 import org.amityregion5.projectx.common.communication.messages.ChatMessage;
 import org.amityregion5.projectx.common.communication.messages.ClientMovedMessage;
+import org.amityregion5.projectx.common.communication.messages.ClientMovingMessage;
+import org.amityregion5.projectx.common.communication.messages.EntityMovingMessage;
 import org.amityregion5.projectx.common.communication.messages.EntityMovedMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.common.entities.Entity;
@@ -47,6 +51,7 @@ public class Game implements GameInputListener, MessageListener {
     private AbstractMap map; // current AbstractMap
     private Player me; // current Player (null at initialization!)
     private EntityHandler entityHandler; // current EntityHandler
+    private List<Integer> depressedKeys = new ArrayList<Integer>();
 
     public Game(CommunicationHandler ch, AbstractMap m)
     {
@@ -94,27 +99,70 @@ public class Game implements GameInputListener, MessageListener {
         {
             return;
         }
-        ClientMovedMessage c = null;
-        double k = me.getMoveSpeed();
 
-        if (keyCode == Keys.UP)
+        if (!depressedKeys.contains(keyCode))
         {
-            c = new ClientMovedMessage(0, -k);
+            depressedKeys.add(keyCode);
+        } else // key already pressed, don't need to do anything!
+        {
+            return;
+        }
+        int deg = calcMeDeg();
+/*        if (keyCode == Keys.UP)
+        {
+            if (!depressedKeys.contains(keyCode))
+                depressedKeys.add(keyCode);
+//            c = new ClientMovedMessage(0, -k);
         } else if (keyCode == Keys.DOWN)
         {
-            c = new ClientMovedMessage(0, k);
+//            c = new ClientMovedMessage(0, k);
         } else if (keyCode == Keys.LEFT)
         {
-            c = new ClientMovedMessage(-k, 0);
+//            c = new ClientMovedMessage(-k, 0);
         } else if (keyCode == Keys.RIGHT)
         {
-            c = new ClientMovedMessage(k, 0);
-        }
+//            c = new ClientMovedMessage(k, 0);
+        } */
+        ClientMovingMessage c = new ClientMovingMessage(Player.INITIAL_SPEED,deg);
         ch.send(c);
     }
 
+    private int calcMeDeg()
+    {
+        int numPressed = depressedKeys.size();
+        if (numPressed == 0)
+            return 0;
+        List<Integer> degs = new ArrayList<Integer>();
+        if (depressedKeys.contains(Keys.LEFT))
+        {
+            degs.add(-90);
+        }
+        if (depressedKeys.contains(Keys.RIGHT))
+        {
+            degs.add(90);
+        }
+        if (depressedKeys.contains(Keys.DOWN))
+        {
+            degs.add(180);
+        }
+        int sum = 0;
+        for (Integer i : degs)
+        {
+            sum += i;
+        }
+        int deg = sum / numPressed;
+        return deg;
+    }
     public void keyReleased(int keyCode)
     {
+        int speed = Player.INITIAL_SPEED;
+        if (depressedKeys.contains(keyCode))
+            depressedKeys.remove((Integer) keyCode);
+        if (depressedKeys.isEmpty()) // stop moving
+            speed = 0;
+        int deg = calcMeDeg();
+        ClientMovingMessage c = new ClientMovingMessage(speed,deg);
+        ch.send(c);
     }
 
     /**

@@ -19,7 +19,6 @@
  */
 package org.amityregion5.projectx.common.communication.messages;
 
-import java.awt.Point;
 import java.awt.geom.Point2D;
 
 import org.amityregion5.projectx.common.entities.Entity;

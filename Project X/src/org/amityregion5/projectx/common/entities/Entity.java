@@ -47,7 +47,9 @@ public abstract class Entity implements Serializable {
 
     private int directionFacing; // Constants in EntityConstants
     private int directionMoving; // The direction we are moving in
-    private double moveSpeed; // How fast we move in pixels per ?
+
+    // How fast we move in pixels per time period as defined in EntityConstants
+    private double moveSpeed;
 
     /**
      * Default entity constructor. Sets sane (but not really useful) default values. Use this directly as little as possible.
