@@ -55,14 +55,13 @@ public class RepaintHandler extends Thread {
         g.setColor(Color.white);
         g.fillRect(0, 0, GameWindow.GAME_WIDTH, GameWindow.GAME_HEIGHT);
 
-        //TODO: implement the map!
-//        AbstractMap map = game.getMap();
-//        Image k = map.getBackground();
-//        
-//        if (k != null)
-//        {
-//            g.drawImage(k, 0, 0, null);
-//        }
+        AbstractMap map = game.getMap();
+        Image k = map.getBackground();
+        
+        if (k != null)
+        {
+            g.drawImage(k, 0, 0, null);
+        }
 
         for (Entity e : game.getEntities())
         {
