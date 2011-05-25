@@ -20,12 +20,11 @@ package org.amityregion5.projectx.common.communication.messages;
 
 /**
  * Tells the server that client received a move request
- * TODO: Implement this Server-side (then send EntityMovedMessage to all clients)
  * 
  * @author Mike DiBuduo
  * @author Daniel Centore
  */
-public class ClientMovedMessage extends Message {
+public class ClientPositionMessage extends Message {
 
     private static final long serialVersionUID = 1L;
 
@@ -37,7 +36,7 @@ public class ClientMovedMessage extends Message {
      * @param x X offset
      * @param y Y offset
      */
-    public ClientMovedMessage(double x, double y)
+    public ClientPositionMessage(double x, double y)
     {
         offSetX = x;
         offSetY = y;
