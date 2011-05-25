@@ -77,6 +77,6 @@ public class Block extends FieldItem implements Damageable
     public String getDefaultImage()
     {
         // TODO Auto-generated method stub
-        return null;
+        return "sprites/Wall";
     }
 }
