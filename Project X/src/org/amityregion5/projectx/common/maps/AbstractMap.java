@@ -20,6 +20,9 @@
 package org.amityregion5.projectx.common.maps;
 
 import java.awt.Image;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.util.ArrayList;
 import java.util.List;
 import org.amityregion5.projectx.common.entities.Entity;
 
@@ -29,10 +32,13 @@ import org.amityregion5.projectx.common.entities.Entity;
  * 
  * @author Mike DiBuduo
  * @author Daniel Centore
+ * @author Michael Wenke
  */
 public abstract class AbstractMap {
 
     private Image bgImage; // the image of the actual scenery/map/whatever
+    private Rectangle playArea;
+    private ArrayList<Point> playSpawn;
 
     /**
      * @return A list of all permanent entities (ie Area)
@@ -42,8 +48,30 @@ public abstract class AbstractMap {
     /**
      * @return The background image (or null for default background)
      */
+
     public Image getBackground()
     {
         return bgImage;
     }
+    
+    public void setPlayArea(Rectangle rect)
+    {
+        playArea = rect;
+    }
+    
+    public Rectangle getplayArea()
+    {
+        return playArea;
+    }
+    
+    public void setPlaySpawn()
+    {
+        
+    }
+    
+    public ArrayList<Point> getPlaySpawn()
+    {
+        return playSpawn;
+    }
+
 }
