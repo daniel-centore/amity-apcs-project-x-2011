@@ -20,6 +20,7 @@
 package org.amityregion5.projectx.common.entities.items.field;
 
 import org.amityregion5.projectx.common.entities.Damageable;
+import org.amityregion5.projectx.common.entities.Entity;
 
 /**
  * Main fortress wall.
@@ -39,5 +40,12 @@ public class Wall extends Block implements Damageable {
     public Wall(int health)
     {
         super(0, 0, health);    //TODO
+    }
+
+    public Wall(Entity e)
+    {
+        this();
+        setX(e.getX());
+        setY(e.getY());
     }
 }

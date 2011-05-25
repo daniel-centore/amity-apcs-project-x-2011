@@ -30,6 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.amityregion5.projectx.client.gui.GameWindow;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.items.field.Area;
 import org.amityregion5.projectx.common.entities.items.field.Wall;
@@ -42,16 +44,15 @@ import org.amityregion5.projectx.common.tools.ImageHandler;
  * @author Daniel Centore
  * @author Michael Wenke
  * @author Joseph Stein
- *
+ * 
  */
 public class TestingMap extends AbstractMap {
-    
+
     private Image image;
-    //This spawn area is completely arbitrary
-    final private Rectangle DEFAULT_PLAY_SPAWN = new Rectangle(300,400, 200,200);
+    // This spawn area is completely arbitrary
+    final private Rectangle DEFAULT_PLAY_SPAWN = new Rectangle(300, 400, 200, 200);
 
     private final List<Entity> entities;
-    
 
     public TestingMap()
     {
@@ -61,21 +62,26 @@ public class TestingMap extends AbstractMap {
 
         entities = new ArrayList<Entity>();
 
-        entities.add(new Area(0, 0));
-        entities.add(new Wall());
+        Area a = new Area(0, 0);
+        int x = GameWindow.GAME_WIDTH / 2 - a.getWidth() / 2;
+        int y = GameWindow.GAME_HEIGHT / 2 - a.getHeight() / 2;
+        
+        a.setX(x);
+        a.setY(y);
 
+        entities.add(a);
+        entities.add(new Wall(a));
 
         try
         {
             image = ImageHandler.loadImage("maps/TestMap");
-        }
-        catch(RuntimeException ex)
-        {  
+        } catch (RuntimeException ex)
+        {
             Logger.getLogger(TestingMap.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    //I (Mike Wenke) am going to work on this tonight.
+    // I (Mike Wenke) am going to work on this tonight.
     public ArrayList<Point> createPlaySpawns()
     {
         ArrayList<Point> spawns = new ArrayList<Point>();
