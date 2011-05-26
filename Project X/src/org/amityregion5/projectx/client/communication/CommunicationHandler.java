@@ -23,7 +23,9 @@ import org.amityregion5.projectx.common.communication.RawListener;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,7 +63,7 @@ public class CommunicationHandler extends Thread {
      * @param serverIP The server to connect to
      * @throws IOException If the server rejects our communication on Constants.PORT
      */
-    public CommunicationHandler(String serverIP) throws IOException
+    public CommunicationHandler(String serverIP) throws IOException, SocketTimeoutException
     {
         if (instance != null) // can happen if we leave after bad username
             instance.kill();
@@ -69,7 +71,9 @@ public class CommunicationHandler extends Thread {
         instance = this;
         this.serverIP = serverIP;
 
-        socket = new Socket(serverIP, Constants.PORT);
+        socket = new Socket();
+        socket.connect(new InetSocketAddress(serverIP, Constants.PORT), Constants.TIMEOUT);
+
         outObjects = new ObjectOutputStream(socket.getOutputStream());
 
         this.start();
@@ -160,6 +164,9 @@ public class CommunicationHandler extends Thread {
         } catch (IOException e)
         {
             e.printStackTrace();
+        } catch (NullPointerException e)
+        {
+
         }
     }
 

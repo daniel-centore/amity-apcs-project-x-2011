@@ -25,6 +25,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
+import java.net.Socket;
 import java.net.UnknownHostException;
 
 import javax.swing.DefaultListModel;
@@ -33,6 +34,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import org.amityregion5.projectx.client.communication.CommunicationHandler;
+import org.amityregion5.projectx.common.communication.Constants;
 import org.amityregion5.projectx.common.communication.DatagramListener;
 import org.amityregion5.projectx.common.communication.messages.ActivePlayersMessage;
 import org.amityregion5.projectx.common.communication.messages.BooleanReplyMessage;
@@ -51,7 +53,7 @@ import org.amityregion5.projectx.client.preferences.PreferenceManager;
 public class ServerChooserWindow extends JFrame implements DatagramListener, PrefListener {
 
     private static final long serialVersionUID = 1L;
-    
+
     private DefaultListModel dlm = new DefaultListModel(); // the list model for ips
 
     /**
@@ -161,21 +163,21 @@ public class ServerChooserWindow extends JFrame implements DatagramListener, Pre
             ServerListElement sle = (ServerListElement) serverList.getModel().getElementAt(selected);
             server = sle.getIP();
         }
-
-        try
-        {
-            if (!InetAddress.getByName(server).isReachable(2000))
-            {
-                JOptionPane.showMessageDialog(null, "Server Unavailable", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-        } catch (HeadlessException e)
-        {
-        } catch (UnknownHostException e)
-        {
-        } catch (IOException e)
-        {
-        }
+//
+//        try
+//        {
+//            if (!InetAddress.getByName(server).isReachable(5000))
+//            {
+//                JOptionPane.showMessageDialog(null, "Server Unavailable", "Error", JOptionPane.ERROR_MESSAGE);
+//                return;
+//            }
+//        } catch (HeadlessException e)
+//        {
+//        } catch (UnknownHostException e)
+//        {
+//        } catch (IOException e)
+//        {
+//        }
 
         CommunicationHandler ch = null;
         try
@@ -214,6 +216,7 @@ public class ServerChooserWindow extends JFrame implements DatagramListener, Pre
             }
         }
     }// GEN-LAST:event_joinBtnActionPerformed
+
 
     /**
      * What to do when the selected value/index on the server list changes.

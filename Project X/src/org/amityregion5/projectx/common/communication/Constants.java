@@ -30,6 +30,7 @@ public class Constants {
     //TCP/IP Stuff
     public static final int PORT = 27182;
     public static final int RAW_PORT = 27183;
+    public static final int TIMEOUT = 3000;
     
     //Multicast Stuff
     public static final int UDPORT = 4567;
