@@ -140,7 +140,10 @@ public class Game implements GameInputListener, MessageListener {
     
     public void keyPressed(KeyEvent e)
     {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (isChating && !e.isActionKey())
+        {
+            ChatDrawing.addLetter(e.getKeyChar());            
+        }
     }
 
     private int calcMeDeg()

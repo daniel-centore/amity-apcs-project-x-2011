@@ -24,6 +24,7 @@ import java.awt.event.KeyEvent;
  * Listens for game events
  *
  * @author Joe Stein
+ * @author Mike DiBuduo
  */
 public interface GameInputListener
 {
