@@ -60,9 +60,7 @@ public class TestingMap extends AbstractMap {
         a.setY(y);
         
         setPlayArea(new Rectangle(a.getX(), a.getY(), a.getWidth(), a.getHeight()));
-
-        setPlaySpawns(createPlaySpawns());
-        setEnemySpawns(createEnemySpawns());
+        
 
         entities.add(a);
         entities.add(new Wall(a));
@@ -74,43 +72,6 @@ public class TestingMap extends AbstractMap {
         {
             Logger.getLogger(TestingMap.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    /**
-     *
-     * @return random points within the playing area where the players spawn
-     */
-    private ArrayList<Point> createPlaySpawns()
-    {
-        ArrayList<Point> spawns = new ArrayList<Point>();
-        for(int i = 0; i < Server.MAX_PLAYERS; i++) //Would be better if we accessed the exact number of players instead
-        {
-            int x = (int)getPlayArea().getX() + (int)(Math.random() * getPlayArea().getWidth());
-            int y = (int)getPlayArea().getY() + (int)(Math.random() * getPlayArea().getHeight());
-            spawns.add(new Point(x,y));
-        }
-        return spawns;
-    }
-
-    /**
-     *
-     * @return all points on the edge of the window where enemies can spawn (not sorted)
-     */
-    private ArrayList<Point> createEnemySpawns()
-    {
-        ArrayList<Point> enemySpawns = new ArrayList<Point>();
-        for(int i = 0; i < GameWindow.GAME_HEIGHT; i++)
-        {
-            enemySpawns.add(new Point(0,i));
-            enemySpawns.add(new Point(GameWindow.GAME_WIDTH,i));
-        }
-        for(int i = 0; i < GameWindow.GAME_WIDTH; i++)
-        {
-            enemySpawns.add(new Point(i,0));
-            enemySpawns.add(new Point(i, GameWindow.GAME_HEIGHT));
-        }
-        return enemySpawns;
-
     }
 
     @Override
