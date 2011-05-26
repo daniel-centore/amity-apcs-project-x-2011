@@ -97,6 +97,7 @@ public class CommunicationHandler extends Thread {
 
             if (LobbyWindow.getInstance() != null)
                 LobbyWindow.getInstance().setVisible(false);
+            
             if (GameWindow.getInstance() != null)
                 GameWindow.getInstance().setVisible(false);
 
