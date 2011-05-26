@@ -6,22 +6,37 @@ package org.amityregion5.projectx.client.gui;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  *
  * @author Mike DiBuduo
  */
-public class ChatDrawing {
+public class ChatDrawing
+{
 
     private static final int NUM_CHATS = 3;
     private static ArrayList<String> chats = new ArrayList<String>();
+
+    static
+    {
+        for (int i = 1; i <= 3; i++)
+        {
+            chats.add("");
+        }
+    }
     private static Rectangle r = new Rectangle(0, 90, 600, 10);
     private static boolean isChating = false;
     private static String currChat = "";
+
     public static BufferedImage getChat()
     {
         BufferedImage result = new BufferedImage(600, 100, BufferedImage.TYPE_INT_ARGB);
@@ -32,10 +47,11 @@ public class ChatDrawing {
         int testHeight = g2.getFont().getSize();
         final int MARGIN = testHeight * 2;
         int j = 0;// used for printing chats lower than the last
-        for(int i = chats.size() - NUM_CHATS; i < chats.size(); i++)
+        for (int i = chats.size() - NUM_CHATS; i < chats.size(); i++)
         {
             g2.setColor(Color.BLACK);
-            g2.drawString(chats.get(chats.size() - NUM_CHATS), 20, j * DISTANCE_BETWEEN_CHATS + MARGIN);
+            System.out.println("printing: " + chats.get(i) + " chat number " + i);
+            g2.drawString(chats.get(i), 20, j * DISTANCE_BETWEEN_CHATS + MARGIN);
             j++;
         }
         if (isChating)
@@ -64,6 +80,7 @@ public class ChatDrawing {
         currChat = "";
         isChating = false;
     }
+
     public static String getTextChat()
     {
         return currChat;
@@ -77,5 +94,56 @@ public class ChatDrawing {
     public static void addLetter(char c)
     {
         currChat += String.valueOf(c);
+    }
+    static int i = 0;
+
+    public static void main(String[] args)
+    {
+        drawChat("Hello");
+        drawChat("Test");
+        drawChat("Word");
+        JFrame jf = new JFrame();
+        JPanel jp = new JPanel()
+        {
+
+            @Override
+            public void paintComponent(Graphics g)
+            {
+                g.drawImage(getChat(), 0, 0, null);
+            }
+        };
+        jp.addKeyListener(new KeyListener()
+        {
+
+            public void keyTyped(KeyEvent e)
+            {
+                // ignore
+            }
+
+            public void keyPressed(KeyEvent e)
+            {
+                if (e.getKeyCode() == KeyEvent.VK_T && !isChating)
+                {
+                    isChating = true;
+                }
+                else if(e.getKeyCode() == KeyEvent.VK_ENTER && isChating)
+                {
+                    drawChat(currChat);
+                    clearChat();
+                } else if (isChating && !e.isActionKey())
+                {
+                    addLetter(e.getKeyChar());
+                }
+            }
+
+            public void keyReleased(KeyEvent e)
+            {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+        });
+        jf.setSize(100, 200);
+        jf.add(jp);
+        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jf.setVisible(true);
     }
 }
