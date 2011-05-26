@@ -22,6 +22,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.EntityConstants;
+import org.amityregion5.projectx.server.communication.RawServer;
 
 /**
  * A thread that will move all Entities by need.
@@ -31,10 +32,12 @@ import org.amityregion5.projectx.common.entities.EntityConstants;
 public class EntityMoverThread extends Thread {
     private boolean keepRunning = true;
     private GameController gameController;
+    private RawServer rawServer;
 
-    public EntityMoverThread(GameController gc)
+    public EntityMoverThread(GameController gc, RawServer rawServ)
     {
         gameController = gc;
+        rawServer = rawServ;
     }
     
     @Override
@@ -69,10 +72,18 @@ public class EntityMoverThread extends Thread {
         // TODO decide on update messages
         // Should we send one message with all the entities, or one message
         // for each entity?
+        String send = "";
         for (Entity e : gameController.getEntities())
         {
-            gameController.sendRawUpdate(e);
+            send += "" + e.getUniqueID();
+            send += "," + e.getX();
+            send += "," + e.getY();
+            send += "," + e.getDirectionFacing();
+            send += ";";
         }
+        // trim last semicolon
+        send = send.substring(0, send.length() - 1);
+        rawServer.send(send);
     }
 
     public void kill()

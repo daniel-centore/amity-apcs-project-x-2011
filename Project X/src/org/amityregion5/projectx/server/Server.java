@@ -337,6 +337,11 @@ public class Server {
         return clients;
     }
 
+    public RawServer getRawServer()
+    {
+        return rawServ;
+    }
+
     /**
      * Listens for incoming clients
      */

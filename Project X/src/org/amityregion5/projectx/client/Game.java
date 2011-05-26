@@ -109,7 +109,7 @@ public class Game implements GameInputListener, MessageListener, RawListener
 
     public void keyPressed(int keyCode)
     {
-        System.out.println("key " + keyCode + " pressed");
+        //System.out.println("key " + keyCode + " pressed");
         if (!isChatting)
         {
             if (me == null)
@@ -270,13 +270,17 @@ public class Game implements GameInputListener, MessageListener, RawListener
 
     public void handle(String str)
     {
-        String[] arr = str.split(",");
-        Entity e = entityHandler.getEntity(Long.valueOf(arr[0]));
-        if (e != null)
+        String[] entStrs = str.split(";");
+        for (int i = 0; i < entStrs.length; i++)
         {
-            e.setX(Double.valueOf(arr[1]));
-            e.setY(Double.valueOf(arr[2]));
-            e.setDirectionFacing(Integer.valueOf(arr[3]));
+            String[] entVals = entStrs[i].split(",");
+            Entity e = entityHandler.getEntity(Long.valueOf(entVals[0]));
+            if (e != null)
+            {
+                e.setX(Double.valueOf(entVals[1]));
+                e.setY(Double.valueOf(entVals[2]));
+                e.setDirectionFacing(Integer.valueOf(entVals[3]));
+            }
         }
         if (GameWindow.createImage() != null)
         {

@@ -72,18 +72,13 @@ public class GameController {
                 c.send(new AddEntityMessage(p));
         }
 
-        entityMoverThread = new EntityMoverThread(this);
+        entityMoverThread = new EntityMoverThread(this,server.getRawServer());
         entityMoverThread.start();
     }
 
     public List<Entity> getEntities()
     {
         return entities;
-    }
-
-    public void sendRawUpdate(Entity e)
-    {
-        server.sendRawUpdate(e);
     }
 
     public Collection<Client> getClients()

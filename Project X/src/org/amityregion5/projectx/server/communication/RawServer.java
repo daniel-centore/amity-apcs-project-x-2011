@@ -92,12 +92,12 @@ public class RawServer extends Thread {
     }
     public void send(Entity e)
     {
+        String send = "" + e.getUniqueID();
+        send += "," + e.getX();
+        send += "," + e.getY();
+        send += "," + e.getDirectionFacing();
         for (RawClient out : rawClients)
         {
-            String send = "" + e.getUniqueID();
-            send += "," + e.getX();
-            send += "," + e.getY();
-            send += "," + e.getDirectionFacing();
             out.send(send + "\n");
         }
     }
