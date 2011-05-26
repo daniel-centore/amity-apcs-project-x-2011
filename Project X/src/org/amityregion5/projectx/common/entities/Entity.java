@@ -51,6 +51,8 @@ public abstract class Entity implements Serializable {
     // How fast we move in pixels per time period as defined in EntityConstants
     private double moveSpeed;
 
+    private transient boolean needUpdate; // do we need to resend the location?
+
     /**
      * Default entity constructor. Sets sane (but not really useful) default values. Use this directly as little as possible.
      */
@@ -321,5 +323,25 @@ public abstract class Entity implements Serializable {
     public void setLocation(Point2D location)
     {
         this.location = location;
+    }
+
+    /**
+     * Requests that the location be resent to clients.
+     */
+    public void requestUpdate() {
+        needUpdate = true;
+    }
+
+    /**
+     * Claims that an update has been completed.
+     *
+     * (there's a microoptimization possible here, yes)
+     *
+     * @return whether we need an update.
+     */
+    public boolean updateCheck() {
+        boolean pre = needUpdate;
+        needUpdate = false;
+        return pre;
     }
 }

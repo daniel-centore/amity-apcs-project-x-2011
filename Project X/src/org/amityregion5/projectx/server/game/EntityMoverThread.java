@@ -50,11 +50,14 @@ public class EntityMoverThread extends Thread {
             for (Entity e : gameController.getEntities())
             {
                 double r = e.getMoveSpeed();
-                double theta = e.getDirectionMoving();
-                double xOffset = r * Math.cos(Math.toRadians(theta));
-                double yOffset = r * Math.sin(Math.toRadians(theta));
-                e.setX(e.getX() + xOffset);
-                e.setY(e.getY() + yOffset);
+                if (r > 0) {
+                    double theta = e.getDirectionMoving();
+                    double deltaX = r * Math.cos(Math.toRadians(theta));
+                    double deltaY = r * Math.sin(Math.toRadians(theta));
+                    e.setX(e.getX() + deltaX);
+                    e.setY(e.getY() + deltaY);
+                    e.requestUpdate();
+                }
             }
             sendAggregateUpdateMessage();
             try
@@ -74,20 +77,23 @@ public class EntityMoverThread extends Thread {
 
         for (Entity e : gameController.getEntities())
         {
-            buf.append(e.getUniqueID());
-            buf.append(",");
-            buf.append(e.getX());
-            buf.append(",");
-            buf.append(e.getY());
-            buf.append(",");
-            buf.append(e.getDirectionFacing());
-            buf.append(";");
+            if (e.updateCheck()) {
+                buf.append(e.getUniqueID());
+                buf.append(",");
+                buf.append(e.getX());
+                buf.append(",");
+                buf.append(e.getY());
+                buf.append(",");
+                buf.append(e.getDirectionFacing());
+                buf.append(";");
+            }
         }
-        
-        // trim last semicolon
-        buf.deleteCharAt(buf.length() - 1);
 
-        rawServer.send(buf.toString());
+        if (buf.length() > 0) {
+            // trim last semicolon
+            buf.deleteCharAt(buf.length() - 1);
+            rawServer.send(buf.toString());
+        }
     }
 
     public void kill()
