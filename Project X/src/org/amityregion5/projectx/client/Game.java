@@ -131,7 +131,7 @@ public class Game implements GameInputListener, MessageListener {
             }
             else
             {
-                //TODO add char from KeyEvent to currChat
+                //handled in other keyPressed method
             }
             
         }
