@@ -18,6 +18,8 @@
  */
 package org.amityregion5.projectx.client;
 
+import java.awt.event.KeyEvent;
+
 /**
  * Listens for game events
  *
@@ -31,4 +33,5 @@ public interface GameInputListener
     public void mouseReleased(int x, int y, int button);
     public void keyPressed(int keyCode); // this includes key repeats
     public void keyReleased(int keyCode); // only when key is released
+    public void keyPressed(KeyEvent e);
 }

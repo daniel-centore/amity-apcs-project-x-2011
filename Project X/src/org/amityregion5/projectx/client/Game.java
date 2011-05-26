@@ -18,6 +18,7 @@
  */
 package org.amityregion5.projectx.client;
 
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import org.amityregion5.projectx.client.communication.CommunicationHandler;
@@ -123,8 +124,23 @@ public class Game implements GameInputListener, MessageListener {
             ch.send(c);
         } else
         {
-
+            
+            if (keyCode == KeyEvent.VK_ENTER)
+            {
+                ChatDrawing.drawChat(ChatDrawing.getTextChat());
+                ChatDrawing.clearChat();
+            }
+            else
+            {
+                //TODO add char from KeyEvent to currChat
+            }
+            
         }
+    }
+    
+    public void keyPressed(KeyEvent e)
+    {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     private int calcMeDeg()
@@ -239,4 +255,5 @@ public class Game implements GameInputListener, MessageListener {
     {
         new GameWindow(map);
     }
+
 }

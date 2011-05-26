@@ -19,6 +19,7 @@
  */
 package org.amityregion5.projectx.client.gui.input;
 
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import org.amityregion5.projectx.client.GameInputListener;
@@ -87,6 +88,12 @@ public class InputHandler {
     {
         for(GameInputListener g : gils)
             g.keyReleased(keyCode);
+    }
+    
+    public static void keyPressed(KeyEvent e)
+    {
+        for (GameInputListener g : gils)
+            g.keyPressed(e);
     }
 
 }
