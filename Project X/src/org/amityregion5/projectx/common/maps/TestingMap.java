@@ -50,9 +50,6 @@ public class TestingMap extends AbstractMap {
 
     public TestingMap()
     {
-        setPlaySpawns(createPlaySpawns());
-        setEnemySpawns(createEnemySpawns());
-
         entities = new ArrayList<Entity>();
 
         Area a = new Area(0, 0);
@@ -63,6 +60,9 @@ public class TestingMap extends AbstractMap {
         a.setY(y);
         
         setPlayArea(new Rectangle(a.getX(), a.getY(), a.getWidth(), a.getHeight()));
+
+        setPlaySpawns(createPlaySpawns());
+        setEnemySpawns(createEnemySpawns());
 
         entities.add(a);
         entities.add(new Wall(a));
