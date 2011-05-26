@@ -37,6 +37,7 @@ import org.amityregion5.projectx.common.entities.items.field.Area;
 import org.amityregion5.projectx.common.entities.items.field.Wall;
 
 import org.amityregion5.projectx.common.tools.ImageHandler;
+import org.amityregion5.projectx.server.Server;
 
 /**
  * Testing map
@@ -49,8 +50,8 @@ import org.amityregion5.projectx.common.tools.ImageHandler;
 public class TestingMap extends AbstractMap {
 
     private Image image;
-    // This spawn area is completely arbitrary
-    final private Rectangle DEFAULT_PLAY_SPAWN = new Rectangle(300, 400, 200, 200);
+    // I did some math, and this spawn area should be a 200x200 square in the center of a 1024x768 window
+    final private Rectangle DEFAULT_PLAY_SPAWN = new Rectangle(412, 284, 200, 200);
 
     private final List<Entity> entities;
 
@@ -58,7 +59,8 @@ public class TestingMap extends AbstractMap {
     {
 
         setPlayArea(DEFAULT_PLAY_SPAWN);
-        ArrayList<Point> playSpawns = new ArrayList<Point>();
+        setPlaySpawns(createPlaySpawns());
+        setEnemySpawns(createEnemySpawns());
 
         entities = new ArrayList<Entity>();
 
@@ -81,11 +83,41 @@ public class TestingMap extends AbstractMap {
         }
     }
 
-    // I (Mike Wenke) am going to work on this tonight.
-    public ArrayList<Point> createPlaySpawns()
+    /**
+     *
+     * @return random points within the playing area where the players spawn
+     */
+    private ArrayList<Point> createPlaySpawns()
     {
         ArrayList<Point> spawns = new ArrayList<Point>();
+        for(int i = 0; i < Server.MAX_PLAYERS; i++) //Would be better if we accessed the exact number of players instead
+        {
+            int x = (int)getPlayArea().getX() + (int)(Math.random() * getPlayArea().getWidth());
+            int y = (int)getPlayArea().getY() + (int)(Math.random() * getPlayArea().getHeight());
+            spawns.add(new Point(x,y));
+        }
         return spawns;
+    }
+
+    /**
+     *
+     * @return all points on the edge of the window where enemies can spawn (not sorted)
+     */
+    private ArrayList<Point> createEnemySpawns()
+    {
+        ArrayList<Point> enemySpawns = new ArrayList<Point>();
+        for(int i = 0; i < GameWindow.GAME_HEIGHT; i++)
+        {
+            enemySpawns.add(new Point(0,i));
+            enemySpawns.add(new Point(GameWindow.GAME_WIDTH,i));
+        }
+        for(int i = 0; i < GameWindow.GAME_WIDTH; i++)
+        {
+            enemySpawns.add(new Point(i,0));
+            enemySpawns.add(new Point(i, GameWindow.GAME_HEIGHT));
+        }
+        return enemySpawns;
+
     }
 
     @Override
