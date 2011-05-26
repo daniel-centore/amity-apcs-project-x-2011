@@ -35,6 +35,8 @@ import org.amityregion5.projectx.common.communication.messages.ChatMessage;
 import org.amityregion5.projectx.common.communication.messages.ClientPositionMessage;
 import org.amityregion5.projectx.common.communication.messages.ClientMovingMessage;
 import org.amityregion5.projectx.common.communication.messages.EntityMovedMessage;
+import org.amityregion5.projectx.common.communication.messages.FiredMessage;
+import org.amityregion5.projectx.common.communication.messages.FiringMessage;
 import org.amityregion5.projectx.common.communication.messages.IntroduceMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.common.communication.messages.NotifyMessage;
@@ -225,6 +227,15 @@ public class Client extends Thread {
             player.setDirectionMoving(cmm.getDir());
             // just update speed and direction, EntityMoverThread will take
             // care of the rest
+        } else if (m instanceof FiringMessage)
+        {
+            FiringMessage fm = (FiringMessage) m;
+            // TODO do stuff when the client starts or stops firing
+            // for now, relays one shot :/
+            if (fm.getFireStart()) // starting firing
+            {
+                server.relayMessage(new FiredMessage(player.getUniqueID()));
+            }
         }
     }
 

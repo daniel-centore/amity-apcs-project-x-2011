@@ -2,8 +2,7 @@
  * Copyright (c) 2011 Amity AP CS A Students of 2010-2011.
  *
  * ex: set filetype=java expandtab tabstop=4 shiftwidth=4 :
- *
- * This program is free software: you can redistribute it and/or
+ * * This program is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of
  * the License, or (at your option) any later version.
@@ -17,41 +16,28 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
-
-package org.amityregion5.projectx.common.entities.items.held;
+package org.amityregion5.projectx.common.communication.messages;
 
 /**
- * A HeldItem used to effect effects on a target.
- * The Weapon itself does not necessarily do damage.
+ * A message to indicate if a client has started or stopped firing.
+ * Sent from clients to server.
  *
  * @author Joe Stein
  */
-public abstract class Weapon extends HeldItem {
-    private int range; // Range (in pixels)
-    private int attackRate;
+public class FiringMessage extends Message {
+    private boolean starting;
+
+    public FiringMessage(boolean s)
+    {
+        starting = s;
+    }
+
     /**
-     * Degrees of spread from direction of fire. This is basically accuracy.
+     * Returns whether or not this message indicates a start of firing.
+     * @return true if start of firing, false if end of firing
      */
-    private int accuracySpread;
-
-    public Weapon(int range, int rate)
+    public boolean getFireStart()
     {
-        this.range = range;
-        this.attackRate = rate;
-    }
-
-    public int getRange()
-    {
-        return range;
-    }
-
-    public int getAttackRate()
-    {
-        return attackRate;
-    }
-
-    public int getAccuracySpread()
-    {
-        return accuracySpread;
+        return starting;
     }
 }

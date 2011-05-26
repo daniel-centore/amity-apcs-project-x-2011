@@ -19,12 +19,15 @@
  */
 package org.amityregion5.projectx.client.gui;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Stroke;
 
 import org.amityregion5.projectx.client.Game;
 import org.amityregion5.projectx.common.entities.Entity;
+import org.amityregion5.projectx.common.entities.characters.Player;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 
 /**
@@ -80,6 +83,30 @@ public class RepaintHandler extends Thread {
         for (Entity e : game.getEntities()) // draw temporary entities
         {
             g.drawImage(e.getImage(), e.getX(), e.getY(), null);
+            if (e instanceof Player)
+            {
+                // draw a laser sight for weapon direction
+                g.setColor(Color.red);
+                int x2 = (int) (Math.cos(Math.toRadians(e.getDirectionFacing()))
+                        * 800) + e.getCenterX();
+                int y2 = (int) (Math.sin(Math.toRadians(e.getDirectionFacing()))
+                        * 800) + e.getCenterY();
+                g.drawLine(e.getCenterX(), e.getCenterY(),
+                        x2, y2);
+                // TODO draw the weapon. we need sprites for this!
+
+                // TODO draw a fire if it just fired
+                if (e.getFired())
+                {
+                    Stroke old = g.getStroke();
+                    g.setStroke(new BasicStroke(4));
+                    g.setColor(Color.YELLOW);
+                    g.drawLine(e.getCenterX(), e.getCenterY(),
+                            x2, y2);
+                    g.setStroke(old);
+                    e.setFired(false);
+                }
+            }
         }
 
         return img;

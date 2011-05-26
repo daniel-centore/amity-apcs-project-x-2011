@@ -53,6 +53,7 @@ public abstract class Entity implements Serializable {
 
     private transient boolean needUpdate; // do we need to resend the location?
 
+    private transient boolean justFired; // did this client fire since the last repaint?
     /**
      * Default entity constructor. Sets sane (but not really useful) default values. Use this directly as little as possible.
      */
@@ -344,4 +345,16 @@ public abstract class Entity implements Serializable {
         needUpdate = false;
         return pre;
     }
+
+    public boolean getFired()
+    {
+        return justFired;
+    }
+
+    public void setFired(boolean justFired)
+    {
+        this.justFired = justFired;
+    }
+
+
 }

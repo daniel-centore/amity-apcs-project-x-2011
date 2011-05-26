@@ -38,6 +38,6 @@ public class EntityConstants {
      * Number of milliseconds between moves. Move speed is number of linear
      * pixels per this number of milliseconds.
      */
-    public static final int MOVE_UPDATE_TIME = 50;
-    public static final int DIR_UPDATE_TIME = 50;
+    public static final int MOVE_UPDATE_TIME = 50; // 20 times per second
+    public static final int DIR_UPDATE_TIME = 25; // about 40 times per second
 }

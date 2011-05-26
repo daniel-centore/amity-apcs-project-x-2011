@@ -40,6 +40,8 @@ import org.amityregion5.projectx.common.communication.messages.AddMeMessage;
 import org.amityregion5.projectx.common.communication.messages.ChatMessage;
 import org.amityregion5.projectx.common.communication.messages.ClientMovingMessage;
 import org.amityregion5.projectx.common.communication.messages.EntityMovedMessage;
+import org.amityregion5.projectx.common.communication.messages.FiredMessage;
+import org.amityregion5.projectx.common.communication.messages.FiringMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.EntityConstants;
@@ -89,6 +91,7 @@ public class Game implements GameInputListener, MessageListener, RawListener {
     {
         // TODO mouse dragged needs to turn the player just like
         // mouseMoved did
+        mouseMoved(x,y);
     }
 
     public void mouseMoved(int x, int y)
@@ -100,7 +103,7 @@ public class Game implements GameInputListener, MessageListener, RawListener {
         }
         int x1 = me.getCenterX();
         int y1 = me.getCenterY();
-        int angle = (int) Math.toDegrees(Math.atan2(y - y1, x - x1)) + 90;
+        int angle = (int) Math.toDegrees(Math.atan2(y - y1, x - x1));
 
         me.setDirectionFacing(angle);
         GameWindow.fireRepaintRequired();
@@ -109,11 +112,13 @@ public class Game implements GameInputListener, MessageListener, RawListener {
     public void mousePressed(int x, int y, int button)
     {
         // TODO start firing
+        ch.send(new FiringMessage(true));
     }
 
     public void mouseReleased(int x, int y, int button)
     {
         // TODO stop firing
+        ch.send(new FiringMessage(false));
     }
 
     public void keyPressed(int keyCode)
@@ -270,6 +275,10 @@ public class Game implements GameInputListener, MessageListener, RawListener {
             ent.setLocation(emm.getNewLoc());
             ent.setDirectionMoving(emm.getNewDir());
             GameWindow.fireRepaintRequired();
+        } else if (m instanceof FiredMessage)
+        {
+            FiredMessage fm = (FiredMessage) m;
+            entityHandler.getEntity(fm.getID()).setFired(true);
         }
     }
 
