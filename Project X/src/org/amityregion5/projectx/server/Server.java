@@ -355,9 +355,9 @@ public class Server {
                             Server.this.setListening(true);
                         else
                             newc.kill();
-                    } else
-                        newc.start();
+                    }
                     
+                    newc.start();
                     if (controller != null)
                     {
                         controller.clientConnected(newc.getIP());
