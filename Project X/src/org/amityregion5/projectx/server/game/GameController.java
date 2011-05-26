@@ -21,6 +21,7 @@ package org.amityregion5.projectx.server.game;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 
 import org.amityregion5.projectx.common.communication.messages.AddEntityMessage;
 import org.amityregion5.projectx.common.communication.messages.AddMeMessage;
@@ -52,9 +53,10 @@ public class GameController {
         clients = server.getClients().values();
         entities = new ArrayList<Entity>();
 
+        Random r = new Random();
         for (Client c : clients)
         {
-            Player p = new Player(50, 50);
+            Player p = new Player(r.nextInt(500), r.nextInt(500));
             players.add(p);
             entities.add(p);
             c.setPlayer(p);

@@ -28,6 +28,7 @@ import org.amityregion5.projectx.client.gui.input.InputHandler;
 import org.amityregion5.projectx.client.gui.input.Keys;
 import org.amityregion5.projectx.client.handlers.EntityHandler;
 import org.amityregion5.projectx.common.communication.MessageListener;
+import org.amityregion5.projectx.common.communication.messages.AddEntityMessage;
 import org.amityregion5.projectx.common.communication.messages.AddMeMessage;
 import org.amityregion5.projectx.common.communication.messages.ChatMessage;
 import org.amityregion5.projectx.common.communication.messages.ClientPositionMessage;
@@ -46,8 +47,7 @@ import org.amityregion5.projectx.common.maps.AbstractMap;
  * @author Daniel Centore
  * @author Mike DiBuduo
  */
-public class Game implements GameInputListener, MessageListener
-{
+public class Game implements GameInputListener, MessageListener {
 
     private CommunicationHandler ch; // current CommunicationHandler
     private AbstractMap map; // current AbstractMap
@@ -113,17 +113,17 @@ public class Game implements GameInputListener, MessageListener
             } else if (!depressedKeys.contains(keyCode))
             {
                 depressedKeys.add(keyCode);
-            } else // key already pressed, don't need to do anything!
+            } else
+            // key already pressed, don't need to do anything!
             {
                 return;
             }
             int deg = calcMeDeg();
             ClientMovingMessage c = new ClientMovingMessage(Player.INITIAL_SPEED, deg);
             ch.send(c);
-        }
-        else
+        } else
         {
-            
+
         }
     }
 
@@ -191,6 +191,10 @@ public class Game implements GameInputListener, MessageListener
             AddMeMessage amm = (AddMeMessage) m;
             me = (Player) amm.getEntity();
             entityHandler.addEntity(me);
+        } else if (m instanceof AddEntityMessage)
+        {
+            AddEntityMessage aem = (AddEntityMessage) m;
+            entityHandler.addEntity(aem.getEntity());
         } else if (m instanceof EntityMovedMessage)
         {
             EntityMovedMessage emm = (EntityMovedMessage) m;
