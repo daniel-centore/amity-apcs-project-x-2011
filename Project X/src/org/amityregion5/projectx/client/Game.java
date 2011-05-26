@@ -21,6 +21,7 @@ package org.amityregion5.projectx.client;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.amityregion5.projectx.client.communication.CommunicationHandler;
 import org.amityregion5.projectx.client.gui.ChatDrawing;
 import org.amityregion5.projectx.client.gui.GameWindow;
@@ -32,9 +33,7 @@ import org.amityregion5.projectx.common.communication.MessageListener;
 import org.amityregion5.projectx.common.communication.messages.AddEntityMessage;
 import org.amityregion5.projectx.common.communication.messages.AddMeMessage;
 import org.amityregion5.projectx.common.communication.messages.ChatMessage;
-import org.amityregion5.projectx.common.communication.messages.ClientPositionMessage;
 import org.amityregion5.projectx.common.communication.messages.ClientMovingMessage;
-import org.amityregion5.projectx.common.communication.messages.EntityMovingMessage;
 import org.amityregion5.projectx.common.communication.messages.EntityMovedMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.common.entities.Entity;
@@ -55,7 +54,7 @@ public class Game implements GameInputListener, MessageListener {
     private Player me; // current Player (null at initialization!)
     private EntityHandler entityHandler; // current EntityHandler
     private List<Integer> depressedKeys = new ArrayList<Integer>();
-    private boolean isChating = false;
+    private boolean isChatting = false;
 
     public Game(CommunicationHandler ch, AbstractMap m)
     {
@@ -100,16 +99,16 @@ public class Game implements GameInputListener, MessageListener {
 
     public void keyPressed(int keyCode)
     {
-        if (!isChating)
+        if (!isChatting)
         {
             if (me == null)
             {
                 return;
             }
 
-            if (keyCode == Keys.CHAT && !isChating)
+            if (keyCode == Keys.CHAT && !isChatting)
             {
-                isChating = true;
+                isChatting = true;
                 return;
             } else if (!depressedKeys.contains(keyCode))
             {
@@ -140,7 +139,7 @@ public class Game implements GameInputListener, MessageListener {
     
     public void keyPressed(KeyEvent e)
     {
-        if (isChating && !e.isActionKey())
+        if (isChatting && !e.isActionKey())
         {
             ChatDrawing.addLetter(e.getKeyChar());            
         }
