@@ -54,7 +54,7 @@ public class GameController {
 
         for (Client c : clients)
         {
-            Player p = new Player();
+            Player p = new Player(50, 50);
             players.add(p);
             entities.add(p);
             c.setPlayer(p);

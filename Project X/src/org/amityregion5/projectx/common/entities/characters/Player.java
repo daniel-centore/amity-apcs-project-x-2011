@@ -40,7 +40,7 @@ public class Player extends Character implements Damageable {
 
     public Player(int health)
     {
-        super(health, MAX_HEALTH);
+        super(health, MAX_HEALTH, 0, 0);
         this.setMoveSpeed(INITIAL_SPEED);
     }
 
@@ -48,6 +48,11 @@ public class Player extends Character implements Damageable {
     {
         this(health);
         addWeapon(wp);
+    }
+
+    public Player(int i, int j)
+    {
+        super(MAX_HEALTH, MAX_HEALTH, i, j);
     }
 
     @Override

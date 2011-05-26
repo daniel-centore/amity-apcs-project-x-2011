@@ -49,8 +49,9 @@ public abstract class Character extends Entity implements Damageable {
      * @param health The amount of health the character begins with.
      * @param max_health The most amount of health this character can have.
      */
-    public Character(int health, int maxHealth)
+    public Character(int health, int maxHealth, int x, int y)
     {
+        super(x, y);
         this.maxHealth = maxHealth;
         this.hp = health;
         currWeapon = 0;

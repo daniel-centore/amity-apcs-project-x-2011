@@ -49,6 +49,8 @@ public class GameWindow extends JFrame {
     private static GameWindow instance; // the instance of Gui
     private static JComponent panel; // the panel we will draw on
     private static Image buffer; // the image the panel should draw
+    private int xOffset; // how much screen is offset horizontally
+    private int yOffset; // how much screen is offset vertically
 
     public GameWindow(AbstractMap map)
     {
@@ -86,7 +88,7 @@ public class GameWindow extends JFrame {
                 int[] scale = scaleImage(buffer, w, h);
 
                 Image img = createImage(w, h);
-                img.getGraphics().drawImage(buffer, scale[2], scale[3], scale[0], scale[1], null);
+                img.getGraphics().drawImage(buffer, (xOffset = scale[2]), (yOffset = scale[3]), scale[0], scale[1], null);
 
                 g.drawImage(img, 0, 0, null);
             }
@@ -192,5 +194,15 @@ public class GameWindow extends JFrame {
     public static int getCurrentHeight()
     {
         return panel.getHeight();
+    }
+
+    public int getxOffset()
+    {
+        return xOffset;
+    }
+
+    public int getyOffset()
+    {
+        return yOffset;
     }
 }
