@@ -50,15 +50,11 @@ import org.amityregion5.projectx.server.Server;
 public class TestingMap extends AbstractMap {
 
     private Image image;
-    // I did some math, and this spawn area should be a 200x200 square in the center of a 1024x768 window
-    final private Rectangle DEFAULT_PLAY_SPAWN = new Rectangle(412, 284, 200, 200);
 
     private final List<Entity> entities;
 
     public TestingMap()
     {
-
-        setPlayArea(DEFAULT_PLAY_SPAWN);
         setPlaySpawns(createPlaySpawns());
         setEnemySpawns(createEnemySpawns());
 
@@ -70,6 +66,8 @@ public class TestingMap extends AbstractMap {
         
         a.setX(x);
         a.setY(y);
+        
+        setPlayArea(new Rectangle(a.getX(), a.getY(), a.getWidth(), a.getHeight()));
 
         entities.add(a);
         entities.add(new Wall(a));
