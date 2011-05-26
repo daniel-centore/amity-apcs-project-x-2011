@@ -20,13 +20,15 @@ package org.amityregion5.projectx.server.game;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.amityregion5.projectx.common.communication.messages.EntityMovedMessage;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.EntityConstants;
 import org.amityregion5.projectx.server.communication.RawServer;
 
 /**
  * A thread that will move all Entities by need.
- *
+ * 
  * @author Joe Stein
  */
 public class EntityMoverThread extends Thread {
@@ -39,7 +41,7 @@ public class EntityMoverThread extends Thread {
         gameController = gc;
         rawServer = rawServ;
     }
-    
+
     @Override
     public void run()
     {
@@ -58,8 +60,7 @@ public class EntityMoverThread extends Thread {
             try
             {
                 Thread.sleep(EntityConstants.MOVE_UPDATE_TIME);
-            }
-            catch(InterruptedException ex)
+            } catch (InterruptedException ex)
             {
                 Logger.getLogger(EntityMoverThread.class.getName()).log(Level.SEVERE, null, ex);
                 keepRunning = false;
@@ -69,18 +70,24 @@ public class EntityMoverThread extends Thread {
 
     private void sendAggregateUpdateMessage()
     {
-        String send = "";
+        StringBuffer buf = new StringBuffer();
+
         for (Entity e : gameController.getEntities())
         {
-            send += "" + e.getUniqueID();
-            send += "," + e.getX();
-            send += "," + e.getY();
-            send += "," + e.getDirectionFacing();
-            send += ";";
+            buf.append(e.getUniqueID());
+            buf.append(",");
+            buf.append(e.getX());
+            buf.append(",");
+            buf.append(e.getY());
+            buf.append(",");
+            buf.append(e.getDirectionFacing());
+            buf.append(";");
         }
+        
         // trim last semicolon
-        send = send.substring(0, send.length() - 1);
-        rawServer.send(send);
+        buf.deleteCharAt(buf.length() - 1);
+
+        rawServer.send(buf.toString());
     }
 
     public void kill()

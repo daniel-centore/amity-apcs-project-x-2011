@@ -81,6 +81,11 @@ public class GameController {
         return entities;
     }
 
+    public Server getServer()
+    {
+        return server;
+    }
+
     public Collection<Client> getClients()
     {
         return clients;
