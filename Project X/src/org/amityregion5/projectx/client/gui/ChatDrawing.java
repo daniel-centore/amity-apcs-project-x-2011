@@ -25,17 +25,19 @@ public class ChatDrawing
 
     private static final int NUM_CHATS = 3;
     private static ArrayList<String> chats = new ArrayList<String>();
+    private static Rectangle r = new Rectangle(0, 90, 600, 10);
+    private static boolean isChating = false;
+    private static StringBuffer currChat = new StringBuffer();
 
     static
     {
+        // adds three empty strings so we don't get an
+        // ArrayIndexOutOfBoundsException later
         for (int i = 1; i <= 3; i++)
         {
             chats.add("");
         }
     }
-    private static Rectangle r = new Rectangle(0, 90, 600, 10);
-    private static boolean isChating = false;
-    private static String currChat = "";
 
     public static BufferedImage getChat()
     {
@@ -50,7 +52,6 @@ public class ChatDrawing
         for (int i = chats.size() - NUM_CHATS; i < chats.size(); i++)
         {
             g2.setColor(Color.BLACK);
-            System.out.println("printing: " + chats.get(i) + " chat number " + i);
             g2.drawString(chats.get(i), 20, j * DISTANCE_BETWEEN_CHATS + MARGIN);
             j++;
         }
@@ -58,7 +59,7 @@ public class ChatDrawing
         {
             g2.setColor(Color.red);
             g2.draw(r);
-            g2.drawString(currChat, 95, 5);
+            g2.drawString(currChat.toString(), 95, 5);
             g2.setColor(Color.BLACK);
         }
 
@@ -77,23 +78,23 @@ public class ChatDrawing
 
     public static void clearChat()
     {
-        currChat = "";
+        currChat.delete(0, currChat.length());
         isChating = false;
     }
 
     public static String getTextChat()
     {
-        return currChat;
+        return currChat.toString();
     }
 
     public static void backspace()
     {
-        currChat = currChat.substring(0, currChat.length() - 2);
+        currChat.delete(currChat.length() - 1, currChat.length());
     }
 
     public static void addLetter(char c)
     {
-        currChat += String.valueOf(c);
+        currChat.append(c);
     }
     static int i = 0;
 
@@ -128,7 +129,7 @@ public class ChatDrawing
                 }
                 else if(e.getKeyCode() == KeyEvent.VK_ENTER && isChating)
                 {
-                    drawChat(currChat);
+                    drawChat(currChat.toString());
                     clearChat();
                 } else if (isChating && !e.isActionKey())
                 {
