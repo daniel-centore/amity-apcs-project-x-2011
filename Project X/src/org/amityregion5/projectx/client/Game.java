@@ -55,8 +55,7 @@ import org.amityregion5.projectx.server.Server;
  * @author Mike DiBuduo
  * @author Mike Wenke
  */
-public class Game implements GameInputListener, MessageListener, RawListener
-{
+public class Game implements GameInputListener, MessageListener, RawListener {
 
     private CommunicationHandler ch; // current CommunicationHandler
     private RawCommunicationHandler rch; // current raw communications handler
@@ -78,7 +77,6 @@ public class Game implements GameInputListener, MessageListener, RawListener
         rch = new RawCommunicationHandler(ch.getServerIP());
         dUpThread = new DirectionalUpdateThread();
         // do not start the dUpThread until me != null
-        
 
         rch.registerRawListener(this);
         rch.start();
@@ -120,7 +118,7 @@ public class Game implements GameInputListener, MessageListener, RawListener
 
     public void keyPressed(int keyCode)
     {
-        //System.out.println("key " + keyCode + " pressed");
+        // System.out.println("key " + keyCode + " pressed");
         if (!isChatting)
         {
             if (me == null)
@@ -141,29 +139,30 @@ public class Game implements GameInputListener, MessageListener, RawListener
                 return;
             }
             int deg = calcMeDeg();
+            if (deg == Integer.MIN_VALUE)
+                return;
             ClientMovingMessage c = new ClientMovingMessage(Player.INITIAL_SPEED, deg);
             ch.send(c);
         } else
         {
-            
+
             if (keyCode == KeyEvent.VK_ENTER)
             {
                 ChatDrawing.drawChat(ChatDrawing.getTextChat());
                 ChatDrawing.clearChat();
-            }
-            else
+            } else
             {
-                //handled in other keyPressed method
+                // handled in other keyPressed method
             }
-            
+
         }
     }
-    
+
     public void keyPressed(KeyEvent e)
     {
         if (isChatting && !e.isActionKey())
         {
-            ChatDrawing.addLetter(e.getKeyChar());       
+            ChatDrawing.addLetter(e.getKeyChar());
         }
     }
 
@@ -172,25 +171,53 @@ public class Game implements GameInputListener, MessageListener, RawListener
         int numPressed = depressedKeys.size();
         if (numPressed == 0)
         {
-            return 0;
+            return Integer.MIN_VALUE;
         }
+
         // TODO send diagonal directions!
         // deg is measured clockwise from x-axis. don't ask me why. -joe
         // keys currently override each other. we need to add the
         // y-resultant to the x-resultant
-        int deg = 0;
+        int deg = Integer.MIN_VALUE;
+
+        boolean left = false;
+        boolean right = false;
+        boolean up = false;
+        boolean down = false;
+
         if (depressedKeys.contains(Keys.LEFT))
         {
-            deg = 180;
+            left = true;
+        } else if (depressedKeys.contains(Keys.RIGHT))
+        {
+            right = true;
         }
+
         if (depressedKeys.contains(Keys.DOWN))
         {
-            deg = 90;
-        }
-        if (depressedKeys.contains(Keys.UP))
+            down = true;
+        } else if (depressedKeys.contains(Keys.UP))
         {
-            deg = -90;
+            up = true;
         }
+
+        if (right && down)
+            deg = 45;
+        else if (left && down)
+            deg = 135;
+        else if (up && left)
+            deg = 225;
+        else if (up && right)
+            deg = 315;
+        else if (right)
+            deg = 0;
+        else if (down)
+            deg = 90;
+        else if (left)
+            deg = 180;
+        else if (up)
+            deg = 270;
+
         return deg;
     }
 
@@ -206,6 +233,8 @@ public class Game implements GameInputListener, MessageListener, RawListener
             speed = 0;
         }
         int deg = calcMeDeg();
+        if (deg == Integer.MIN_VALUE)
+            deg = me.getDirectionMoving();
         ClientMovingMessage c = new ClientMovingMessage(speed, deg);
         ch.send(c);
     }
@@ -298,49 +327,50 @@ public class Game implements GameInputListener, MessageListener, RawListener
             // GameWindow is visible and running
             GameWindow.fireRepaintRequired();
         }
-        
+
     }
 
     /**
      * Creates random Points within play area for players to spawn at
+     * 
      * @param map Current map
      * @return An ArrayList of random Point objects within the map's play area where players spawn
      */
     public final void createPlaySpawns(AbstractMap map)
     {
         ArrayList<Point> spawns = new ArrayList<Point>();
-        for(int i = 0; i < Server.MAX_PLAYERS; i++) //Would be better if we accessed the exact number of players instead
+        for (int i = 0; i < Server.MAX_PLAYERS; i++) // Would be better if we accessed the exact number of players instead
         {
-            int x = (int)map.getPlayArea().getX() + (int)(Math.random() * map.getPlayArea().getWidth());
-            int y = (int)map.getPlayArea().getY() + (int)(Math.random() * map.getPlayArea().getHeight());
-            spawns.add(new Point(x,y));
+            int x = (int) map.getPlayArea().getX() + (int) (Math.random() * map.getPlayArea().getWidth());
+            int y = (int) map.getPlayArea().getY() + (int) (Math.random() * map.getPlayArea().getHeight());
+            spawns.add(new Point(x, y));
         }
         map.setPlaySpawns(spawns);
     }
 
     /**
      * Makes enemies spawn at the edge of the game window
+     * 
      * @return ArrayList of Points where enemies spawn at the edge of the game window
      */
     public final void createEnemySpawns(AbstractMap map)
     {
         ArrayList<Point> enemySpawns = new ArrayList<Point>();
-        for(int i = 0; i < GameWindow.GAME_HEIGHT; i+= 5)
+        for (int i = 0; i < GameWindow.GAME_HEIGHT; i += 5)
         {
-            enemySpawns.add(new Point(0,i));
-            enemySpawns.add(new Point(GameWindow.GAME_WIDTH,i));
+            enemySpawns.add(new Point(0, i));
+            enemySpawns.add(new Point(GameWindow.GAME_WIDTH, i));
         }
-        for(int i = 0; i < GameWindow.GAME_WIDTH; i+= 5)
+        for (int i = 0; i < GameWindow.GAME_WIDTH; i += 5)
         {
-            enemySpawns.add(new Point(i,0));
+            enemySpawns.add(new Point(i, 0));
             enemySpawns.add(new Point(i, GameWindow.GAME_HEIGHT));
         }
         map.setEnemySpawns(enemySpawns);
 
     }
 
-    private class DirectionalUpdateThread extends Thread
-    {
+    private class DirectionalUpdateThread extends Thread {
         private boolean keepRunning = true;
 
         /**
@@ -355,8 +385,7 @@ public class Game implements GameInputListener, MessageListener, RawListener
                 {
                     rch.send(me.getDirectionFacing());
                     Thread.sleep(EntityConstants.DIR_UPDATE_TIME);
-                }
-                catch(InterruptedException ex)
+                } catch (InterruptedException ex)
                 {
                     Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
                     kill();
