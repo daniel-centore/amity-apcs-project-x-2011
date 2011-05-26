@@ -189,6 +189,7 @@ public class Server {
 
     /**
      * Tells the server whether or not to listen for client
+     * Note: setting to true does not actually start the listening thread
      * 
      * @param listening True if it should; false otherwise
      */
@@ -370,6 +371,9 @@ public class Server {
         }
     }
 
+    /**
+     * @return The current game controller
+     */
     public GameController getGameController()
     {
         return gameController;

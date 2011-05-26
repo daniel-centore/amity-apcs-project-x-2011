@@ -99,8 +99,8 @@ public class MouseInput implements MouseMotionListener, MouseListener {
         int newX = GameWindow.GAME_WIDTH * x / width;
         int newY = GameWindow.GAME_HEIGHT * y / height;
 
-        newX -= GameWindow.getInstance().getxOffset(); // adjusts based on how we scaled
-        newY -= GameWindow.getInstance().getyOffset();
+        newX -= GameWindow.getInstance().getXOffset(); // adjusts based on how we scaled
+        newY -= GameWindow.getInstance().getYOffset();
 
         return new Point(newX, newY);
     }

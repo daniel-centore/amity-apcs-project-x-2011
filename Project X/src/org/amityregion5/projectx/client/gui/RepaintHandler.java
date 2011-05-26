@@ -35,8 +35,13 @@ import org.amityregion5.projectx.common.maps.AbstractMap;
  */
 public class RepaintHandler extends Thread {
 
-    private static Game game;
+    private static Game game; // game we are based from
 
+    /**
+     * Sets the game we are using
+     * 
+     * @param g Game to set it to
+     */
     public static void setGame(Game g)
     {
         game = g;
@@ -58,17 +63,17 @@ public class RepaintHandler extends Thread {
         AbstractMap map = game.getMap();
         Image k = map.getBackground();
 
-        if(k != null)
+        if (k != null)
         {
             g.drawImage(k, 0, 0, null);
         }
 
-        for(Entity e : map.getEntities())  //draw constant entities
+        for (Entity e : map.getEntities()) // draw constant entities
         {
             g.drawImage(e.getImage(), e.getX(), e.getY(), null);
         }
 
-        for(Entity e : game.getEntities())    //draw temporary entities
+        for (Entity e : game.getEntities()) // draw temporary entities
         {
             g.drawImage(e.getImage(), e.getX(), e.getY(), null);
         }

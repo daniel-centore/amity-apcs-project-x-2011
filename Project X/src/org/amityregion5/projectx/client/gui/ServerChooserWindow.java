@@ -19,14 +19,10 @@
  */
 package org.amityregion5.projectx.client.gui;
 
-import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.DatagramPacket;
-import java.net.InetAddress;
-import java.net.Socket;
-import java.net.UnknownHostException;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
@@ -34,14 +30,13 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import org.amityregion5.projectx.client.communication.CommunicationHandler;
-import org.amityregion5.projectx.common.communication.Constants;
+import org.amityregion5.projectx.client.preferences.PrefListener;
+import org.amityregion5.projectx.client.preferences.PreferenceManager;
 import org.amityregion5.projectx.common.communication.DatagramListener;
 import org.amityregion5.projectx.common.communication.messages.ActivePlayersMessage;
 import org.amityregion5.projectx.common.communication.messages.BooleanReplyMessage;
 import org.amityregion5.projectx.common.communication.messages.IntroduceMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
-import org.amityregion5.projectx.client.preferences.PrefListener;
-import org.amityregion5.projectx.client.preferences.PreferenceManager;
 
 /**
  * The window for choosing a server
@@ -163,21 +158,6 @@ public class ServerChooserWindow extends JFrame implements DatagramListener, Pre
             ServerListElement sle = (ServerListElement) serverList.getModel().getElementAt(selected);
             server = sle.getIP();
         }
-//
-//        try
-//        {
-//            if (!InetAddress.getByName(server).isReachable(5000))
-//            {
-//                JOptionPane.showMessageDialog(null, "Server Unavailable", "Error", JOptionPane.ERROR_MESSAGE);
-//                return;
-//            }
-//        } catch (HeadlessException e)
-//        {
-//        } catch (UnknownHostException e)
-//        {
-//        } catch (IOException e)
-//        {
-//        }
 
         CommunicationHandler ch = null;
         try

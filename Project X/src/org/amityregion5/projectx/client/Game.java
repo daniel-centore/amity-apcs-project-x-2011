@@ -141,7 +141,7 @@ public class Game implements GameInputListener, MessageListener {
     {
         if (isChatting && !e.isActionKey())
         {
-            ChatDrawing.addLetter(e.getKeyChar());            
+            ChatDrawing.addLetter(e.getKeyChar());       
         }
     }
 

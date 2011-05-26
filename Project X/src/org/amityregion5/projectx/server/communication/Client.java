@@ -50,8 +50,7 @@ import org.amityregion5.projectx.server.Server;
  * @author Joe Stein
  * @author Mike DiBuduo
  */
-public class Client extends Thread
-{
+public class Client extends Thread {
 
     private Socket sock; // socket
     private Server server; // the server to which this Client belongs
@@ -64,7 +63,7 @@ public class Client extends Thread
 
     /**
      * Creates a client
-     *
+     * 
      * @param sock Socket for communications
      */
     public Client(Socket sock, Server server)
@@ -92,8 +91,7 @@ public class Client extends Thread
             {
                 final Message m = (Message) inObjects.readObject();
 
-                new Thread()
-                {
+                new Thread() {
 
                     @Override
                     public void run()
@@ -142,7 +140,7 @@ public class Client extends Thread
 
     /**
      * Sends a message
-     *
+     * 
      * @param m Message to send
      */
     public void send(Message m)
@@ -209,9 +207,9 @@ public class Client extends Thread
 
             switch (nm.getWhat())
             {
-                case LOBBY_READY:
-                    server.incrementWaiting();
-                    break;
+            case LOBBY_READY:
+                server.incrementWaiting();
+                break;
             }
         } else if (m instanceof ClientPositionMessage)
         {
@@ -261,7 +259,7 @@ public class Client extends Thread
 
     /**
      * Are we waiting for the client to press "ready?"
-     *
+     * 
      * @return True if so; false otherwise
      */
     public boolean isWaiting()
@@ -271,6 +269,7 @@ public class Client extends Thread
 
     /**
      * Sets the client's Player
+     * 
      * @param p Player to set it to
      */
     public void setPlayer(Player p)

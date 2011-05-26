@@ -21,7 +21,6 @@ package org.amityregion5.projectx.client.handlers;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import org.amityregion5.projectx.server.game.EntityMoverThread;
 
 import org.amityregion5.projectx.client.gui.GameWindow;
 import org.amityregion5.projectx.common.entities.Entity;
@@ -34,7 +33,8 @@ import org.amityregion5.projectx.common.entities.Entity;
  * @author Michael Zuo
  */
 public class EntityHandler {
-    private Map<Long,Entity> entities = new HashMap<Long,Entity>(); // the set of current entities
+
+    private Map<Long, Entity> entities = new HashMap<Long, Entity>(); // the set of current entities
 
     public synchronized void addEntity(Entity e) // adds an entity (should receive request from game)
     {
@@ -55,6 +55,7 @@ public class EntityHandler {
 
     /**
      * Gets an entity from this EntityHandler's list.
+     * 
      * @param uniqueId the unique id of the entity to get
      * @return the entity, or null if unique id was not matched
      */
@@ -81,19 +82,19 @@ public class EntityHandler {
 
     public void tellSocketClosed()
     {
-        //TODO: implement what to do if the socket closes
     }
 
     /**
      * Updates an entity.
      * 
      * @param entity Entity to compare (by id) and update to.
-     *
+     * 
      * @return whether such an entity was properly updated.
      */
     public boolean updateEntity(Entity entity)
     {
-        if (entities.containsKey(entity.getUniqueID())) {
+        if (entities.containsKey(entity.getUniqueID()))
+        {
             entities.put(entity.getUniqueID(), entity);
             return true;
         }
