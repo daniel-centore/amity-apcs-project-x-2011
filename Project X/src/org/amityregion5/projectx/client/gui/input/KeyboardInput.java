@@ -32,34 +32,6 @@ import java.util.List;
  */
 public class KeyboardInput implements KeyListener {
 
-    private volatile List<Integer> depressed = new ArrayList<Integer>(); // keys currently pressed down
-
-    /**
-     * Initializes the KeyHandler run thread
-     */
-    public KeyboardInput()
-    {
-        /*
-        new Thread() {
-            @Override
-            public void run()
-            {
-                while (true)
-                {
-                    for (int i = 0; i < depressed.size(); i++)
-                        InputHandler.keyPressed(depressed.get(i));
-
-                    try
-                    {
-                        Thread.sleep(10);
-                    } catch (InterruptedException e)
-                    {
-                    }
-                }
-            }
-        }.start(); */
-    }
-
     public void keyTyped(KeyEvent e)
     {
         // keyPressed is preferable
@@ -67,14 +39,12 @@ public class KeyboardInput implements KeyListener {
 
     public void keyPressed(KeyEvent e)
     {
-//        if (!depressed.contains(e.getKeyCode()))
-//            depressed.add(e.getKeyCode());
         InputHandler.keyPressed(e.getKeyCode());
+        InputHandler.keyPressed(e);
     }
 
     public void keyReleased(KeyEvent e)
     {
-//        depressed.remove((Integer) e.getKeyCode()); // cast so we're removing object, not index
         InputHandler.keyReleased(e.getKeyCode());
     }
 
