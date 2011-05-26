@@ -18,7 +18,6 @@
  */
 package org.amityregion5.projectx.server.communication;
 
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -26,6 +25,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.amityregion5.projectx.common.entities.Entity;
+import org.amityregion5.projectx.server.Server;
 
 /**
  * Class documentation.
@@ -34,13 +34,15 @@ import org.amityregion5.projectx.common.entities.Entity;
  */
 public class RawServer extends Thread {
 
-    private static ArrayList<DataOutputStream> rawClients;
+    private static ArrayList<RawClient> rawClients;
     private boolean keepRunning = true;
-    private ServerSocket rawSock;
+    private static ServerSocket rawSock;
+    private Server server; // the main server
 
-    public RawServer(int port)
+    public RawServer(int port, Server serv)
     {
-        rawClients = new ArrayList<DataOutputStream>();
+        rawClients = new ArrayList<RawClient>();
+        server = serv;
         try
         {
             rawSock = new ServerSocket(port);
@@ -49,7 +51,7 @@ public class RawServer extends Thread {
             Logger.getLogger(RawServer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     @Override
     public void run()
     {
@@ -58,7 +60,9 @@ public class RawServer extends Thread {
             try
             {
                 Socket s = rawSock.accept();
-                rawClients.add(new DataOutputStream(s.getOutputStream()));
+                RawClient rc = new RawClient(s,server);
+                rc.start();
+                rawClients.add(rc);
             } catch (IOException ex)
             {
                 Logger.getLogger(RawServer.class.getName()).log(Level.SEVERE, null, ex);
@@ -71,25 +75,30 @@ public class RawServer extends Thread {
         keepRunning = false;
     }
 
-    public static void send(byte[] bytes)
+    /**
+     * Writes a string to the raw output.
+     * String format should be:
+     * entityUniqueId,x,y,dir
+     * Please keep x, y, and dir to int values.
+     * Strings should not have trailing newline characters.
+     * @param s the CSV string to send
+     */
+    public void send(String s)
     {
-        for (DataOutputStream out : rawClients)
+        for (RawClient out : rawClients)
         {
-            try
-            {
-                out.write(bytes);
-                out.flush();
-            } catch (IOException ex)
-            {
-                Logger.getLogger(RawServer.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            out.send(s + "\n");
         }
     }
-    public static void send(Entity e)
+    public void send(Entity e)
     {
-        for (DataOutputStream out : rawClients)
+        for (RawClient out : rawClients)
         {
-            // TODO write the entity's location and unique id as a byte array
+            String send = "" + e.getUniqueID();
+            send += "," + e.getX();
+            send += "," + e.getY();
+            send += "," + e.getDirectionFacing();
+            out.send(send + "\n");
         }
     }
 }

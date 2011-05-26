@@ -24,5 +24,5 @@ package org.amityregion5.projectx.common.communication;
  * @author Joe Stein
  */
 public interface RawListener {
-    public void handle(byte[] bytes);
+    public void handle(String str);
 }

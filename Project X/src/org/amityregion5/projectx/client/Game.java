@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.amityregion5.projectx.client.communication.CommunicationHandler;
+import org.amityregion5.projectx.client.communication.RawCommunicationHandler;
 import org.amityregion5.projectx.client.gui.ChatDrawing;
 import org.amityregion5.projectx.client.gui.GameWindow;
 import org.amityregion5.projectx.client.gui.RepaintHandler;
@@ -30,6 +31,7 @@ import org.amityregion5.projectx.client.gui.input.InputHandler;
 import org.amityregion5.projectx.client.gui.input.Keys;
 import org.amityregion5.projectx.client.handlers.EntityHandler;
 import org.amityregion5.projectx.common.communication.MessageListener;
+import org.amityregion5.projectx.common.communication.RawListener;
 import org.amityregion5.projectx.common.communication.messages.AddEntityMessage;
 import org.amityregion5.projectx.common.communication.messages.AddMeMessage;
 import org.amityregion5.projectx.common.communication.messages.ChatMessage;
@@ -47,9 +49,11 @@ import org.amityregion5.projectx.common.maps.AbstractMap;
  * @author Daniel Centore
  * @author Mike DiBuduo
  */
-public class Game implements GameInputListener, MessageListener {
+public class Game implements GameInputListener, MessageListener, RawListener
+{
 
     private CommunicationHandler ch; // current CommunicationHandler
+    private RawCommunicationHandler rch; // current raw communications handler
     private AbstractMap map; // current AbstractMap
     private Player me; // current Player (null at initialization!)
     private EntityHandler entityHandler; // current EntityHandler
@@ -62,7 +66,10 @@ public class Game implements GameInputListener, MessageListener {
         this.ch = ch;
         me = null;
         map = m;
+        rch = new RawCommunicationHandler(ch.getServerIP());
 
+        rch.registerRawListener(this);
+        rch.start();
         ch.registerListener(this);
         InputHandler.registerListener(this);
         RepaintHandler.setGame(this);
@@ -70,6 +77,8 @@ public class Game implements GameInputListener, MessageListener {
 
     public void mouseDragged(int x, int y)
     {
+        // TODO mouse dragged needs to turn the player just like
+        // mouseMoved did
     }
 
     public void mouseMoved(int x, int y)
@@ -84,6 +93,7 @@ public class Game implements GameInputListener, MessageListener {
         int angle = (int) Math.toDegrees(Math.atan2(y - y1, x - x1)) + 90;
 
         me.setDirectionFacing(angle);
+        rch.send(angle);
         GameWindow.fireRepaintRequired();
     }
 
@@ -99,6 +109,7 @@ public class Game implements GameInputListener, MessageListener {
 
     public void keyPressed(int keyCode)
     {
+        System.out.println("key " + keyCode + " pressed");
         if (!isChatting)
         {
             if (me == null)
@@ -152,30 +163,29 @@ public class Game implements GameInputListener, MessageListener {
         {
             return 0;
         }
-        List<Integer> degs = new ArrayList<Integer>();
+        // TODO send diagonal directions!
+        // deg is measured clockwise from x-axis. don't ask me why. -joe
+        // keys currently override each other. we need to add the
+        // y-resultant to the x-resultant
+        int deg = 0;
         if (depressedKeys.contains(Keys.LEFT))
         {
-            degs.add(-90);
-        }
-        if (depressedKeys.contains(Keys.RIGHT))
-        {
-            degs.add(90);
+            deg = 180;
         }
         if (depressedKeys.contains(Keys.DOWN))
         {
-            degs.add(180);
+            deg = 90;
         }
-        int sum = 0;
-        for (Integer i : degs)
+        if (depressedKeys.contains(Keys.UP))
         {
-            sum += i;
+            deg = -90;
         }
-        int deg = sum / numPressed;
         return deg;
     }
 
     public void keyReleased(int keyCode)
     {
+        System.out.println("key " + keyCode + " released");
         int speed = Player.INITIAL_SPEED;
         if (depressedKeys.contains(keyCode))
         {
@@ -258,4 +268,21 @@ public class Game implements GameInputListener, MessageListener {
         new GameWindow(map);
     }
 
+    public void handle(String str)
+    {
+        String[] arr = str.split(",");
+        Entity e = entityHandler.getEntity(Long.valueOf(arr[0]));
+        if (e != null)
+        {
+            e.setX(Double.valueOf(arr[1]));
+            e.setY(Double.valueOf(arr[2]));
+            e.setDirectionFacing(Integer.valueOf(arr[3]));
+        }
+        if (GameWindow.createImage() != null)
+        {
+            // GameWindow is visible and running
+            GameWindow.fireRepaintRequired();
+        }
+        
+    }
 }

@@ -33,6 +33,7 @@ import org.amityregion5.projectx.common.communication.messages.ChatMessage;
 import org.amityregion5.projectx.common.communication.messages.GoodbyeMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.common.communication.messages.StatusUpdateMessage;
+import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.server.communication.Client;
 import org.amityregion5.projectx.server.communication.Multicaster;
 import org.amityregion5.projectx.server.communication.RawServer;
@@ -86,7 +87,7 @@ public class Server {
             System.out.println("Starting multicaster...");
             multicaster.start();
             System.out.println("Creating raw server...");
-            rawServ = new RawServer(Constants.RAW_PORT);
+            rawServ = new RawServer(Constants.RAW_PORT,this);
             rawServ.start();
             System.out.println("Raw listening on port " + Constants.RAW_PORT);
         } catch (IOException e)
@@ -321,13 +322,11 @@ public class Server {
     public void startGame()
     {
         // TODO: make it so we stop accepting clients
-        // but if everyone leaves, begin accepting again
-
         setListening(false);
 
         relayMessage(new StatusUpdateMessage(StatusUpdateMessage.Type.STARTING));
-
         gameController = new GameController(this);
+        
     }
 
     /**
@@ -377,5 +376,15 @@ public class Server {
     public GameController getGameController()
     {
         return gameController;
+    }
+
+    public void sendRaw(String s)
+    {
+        rawServ.send(s);
+    }
+
+    public void sendRawUpdate(Entity e)
+    {
+        rawServ.send(e);
     }
 }

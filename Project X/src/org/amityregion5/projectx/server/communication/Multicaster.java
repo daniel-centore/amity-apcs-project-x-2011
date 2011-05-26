@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
+import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.amityregion5.projectx.common.communication.Constants;
@@ -77,14 +78,22 @@ public class Multicaster extends Thread {
     @Override
     public void run()
     {
+        InetAddress group = null;
+        DatagramPacket packet = null;
+        byte[] buf = name.getBytes();
+        try
+        {
+            group = InetAddress.getByName(Constants.UDPGROUP);
+            packet = new DatagramPacket(buf, buf.length, group, Constants.UDPORT);
+        }
+        catch(UnknownHostException ex)
+        {
+            Logger.getLogger(Multicaster.class.getName()).log(Level.SEVERE, null, ex);
+        }
         while (keepBroadcasting)
         {
             try
             {
-                byte[] buf = name.getBytes();
-
-                InetAddress group = InetAddress.getByName(Constants.UDPGROUP);
-                DatagramPacket packet = new DatagramPacket(buf, buf.length, group, Constants.UDPORT);
                 sock.send(packet);
 
                 sleep(Constants.MULTICAST_INTERVAL);

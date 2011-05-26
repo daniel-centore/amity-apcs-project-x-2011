@@ -162,6 +162,7 @@ public class GameWindow extends JFrame {
      */
     public static Image createImage()
     {
+        if (instance == null) return null;
         return instance.createImage(GAME_WIDTH, GAME_HEIGHT);
     }
 

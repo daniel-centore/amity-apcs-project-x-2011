@@ -41,6 +41,7 @@ public class GameController {
     private Collection<Client> clients; // List of current Clients
     private List<Entity> entities;
     private EntityMoverThread entityMoverThread; // will be in charge of moving entities
+    private Server server;
 
     /**
      * Creates and initializes the game controlling
@@ -49,6 +50,7 @@ public class GameController {
      */
     public GameController(Server server)
     {
+        this.server = server;
         players = new ArrayList<Player>();
         clients = server.getClients().values();
         entities = new ArrayList<Entity>();
@@ -74,9 +76,19 @@ public class GameController {
         entityMoverThread.start();
     }
 
-    public Iterable<Entity> getEntities()
+    public List<Entity> getEntities()
     {
         return entities;
+    }
+
+    public void sendRawUpdate(Entity e)
+    {
+        server.sendRawUpdate(e);
+    }
+
+    public Collection<Client> getClients()
+    {
+        return clients;
     }
 
 }

@@ -18,8 +18,12 @@
  */
 package org.amityregion5.projectx.client.communication;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -35,6 +39,7 @@ import org.amityregion5.projectx.common.communication.RawListener;
  */
 public class RawCommunicationHandler extends Thread {
     private Socket rawSock = null; // raw socket we created
+    private DataOutputStream dos;
     private boolean keepRunning = true;
     private ArrayList<RawListener> rawListeners;
 
@@ -44,6 +49,7 @@ public class RawCommunicationHandler extends Thread {
         try
         {
             rawSock = new Socket(serverIP, Constants.RAW_PORT);
+            dos = new DataOutputStream(rawSock.getOutputStream());
         } catch (UnknownHostException ex)
         {
             Logger.getLogger(RawCommunicationHandler.class.getName()).log(Level.SEVERE, null, ex);
@@ -56,10 +62,10 @@ public class RawCommunicationHandler extends Thread {
     @Override
     public void run()
     {
-        DataInputStream dis = null;
+        BufferedReader bis = null;
         try
         {
-            dis = new DataInputStream(rawSock.getInputStream());
+            bis = new BufferedReader(new InputStreamReader(rawSock.getInputStream()));
         } catch (IOException ex)
         {
             Logger.getLogger(RawCommunicationHandler.class.getName()).log(Level.SEVERE, null, ex);
@@ -67,19 +73,44 @@ public class RawCommunicationHandler extends Thread {
         }
         while (keepRunning)
         {
-            byte[] mes = new byte[3];
+            // String to read. Current format is:
+            // uniqueId,x-coord,y-coord,direction
+            String mes;
             try
             {
-                dis.read(mes);
-                for (RawListener rl : rawListeners)
+                mes = bis.readLine();
+                if (mes == null)
                 {
-                    rl.handle(mes);
+                    kill();
+                } else {
+                    for (RawListener rl : rawListeners)
+                    {
+                        rl.handle(mes);
+                    }
                 }
             } catch (IOException ex)
             {
                 Logger.getLogger(RawCommunicationHandler.class.getName()).log(Level.SEVERE, null, ex);
                 keepRunning = false;
             }
+        }
+    }
+
+    public void kill()
+    {
+        keepRunning = false;
+    }
+    
+    public synchronized void send(int dir)
+    {
+        try
+        {
+            dos.writeInt(dir);
+            dos.flush();
+        }
+        catch(IOException ex)
+        {
+            Logger.getLogger(RawCommunicationHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

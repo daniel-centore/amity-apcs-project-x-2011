@@ -26,11 +26,17 @@ import java.util.List;
 
 /**
  * Controls keyboard inputs. They should be handled in InputHandler.
- * 
+ *
  * @author Michael Wenke
  * @author Daniel Centore
  */
 public class KeyboardInput implements KeyListener {
+
+    private volatile List<Integer> depressed = new ArrayList<Integer>(); // keys currently pressed down
+
+    /**
+     * Initializes the KeyHandler run thread
+     */
 
     public void keyTyped(KeyEvent e)
     {
@@ -39,13 +45,22 @@ public class KeyboardInput implements KeyListener {
 
     public void keyPressed(KeyEvent e)
     {
-        InputHandler.keyPressed(e.getKeyCode());
-        InputHandler.keyPressed(e);
+        if (!depressed.contains((Integer) e.getKeyCode()))
+        {
+            depressed.add(e.getKeyCode());
+            InputHandler.keyPressed(e.getKeyCode());
+            InputHandler.keyPressed(e);
+        }
     }
 
     public void keyReleased(KeyEvent e)
     {
-        InputHandler.keyReleased(e.getKeyCode());
+        if (depressed.contains((Integer) e.getKeyCode()))
+        {
+//        depressed.remove((Integer) e.getKeyCode()); // cast so we're removing object, not index
+            InputHandler.keyReleased(e.getKeyCode());
+            depressed.remove((Integer) e.getKeyCode());
+        }
     }
 
 }

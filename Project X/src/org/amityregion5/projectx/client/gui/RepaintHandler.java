@@ -55,6 +55,10 @@ public class RepaintHandler extends Thread {
     public static Image getMapFlatImage()
     {
         Image img = GameWindow.createImage();
+        if (img == null)
+        {
+            return null; // save us from NPE later in this code!
+        }
         Graphics2D g = (Graphics2D) img.getGraphics();
 
         g.setColor(Color.white);

@@ -66,13 +66,13 @@ public class EntityMoverThread extends Thread {
 
     private void sendAggregateUpdateMessage()
     {
-        // TODO send a message with all the entities' locations.
-        // Since this will be sent many times per second, we will probably
-        // want to create an entire new UDP socket on both the client and
-        // server so we can minimize lost time (due to serialization, etc.).
-        // Sending raw UDP packets would also be better because UDP is
-        // faster than TCP (sockets don't need to receive a reply before
-        // they send the next packet.)
+        // TODO decide on update messages
+        // Should we send one message with all the entities, or one message
+        // for each entity?
+        for (Entity e : gameController.getEntities())
+        {
+            gameController.sendRawUpdate(e);
+        }
     }
 
     public void kill()
