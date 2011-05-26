@@ -66,7 +66,7 @@ public class Server {
 
     /**
      * Creates a new server.
-     *
+     * 
      * @param name the name of this server
      */
     public Server(String name)
@@ -89,8 +89,7 @@ public class Server {
             rawServ = new RawServer(Constants.RAW_PORT);
             rawServ.start();
             System.out.println("Raw listening on port " + Constants.RAW_PORT);
-        }
-        catch(IOException e)
+        } catch (IOException e)
         {
             // usually means a server is already running
             e.printStackTrace();
@@ -100,7 +99,7 @@ public class Server {
 
     /**
      * Sets this server's controller.
-     *
+     * 
      * @param sc the ServerController that will control this server
      */
     public void setController(ServerController sc)
@@ -110,7 +109,7 @@ public class Server {
 
     /**
      * Adds this client to this server.
-     *
+     * 
      * @param username the username of this client
      * @param c the Client object that handles connections to this client
      */
@@ -118,12 +117,12 @@ public class Server {
     {
         // waiting++; //handled in Client so we wait for Lobby initialization
 
-        if(clients.size() == MAX_PLAYERS) // TODO: handle this more politely
+        if (clients.size() == MAX_PLAYERS) // TODO: handle this more politely
         {
             c.kill();
         }
 
-        if(controller != null)
+        if (controller != null)
         {
             controller.clientJoined(username);
         }
@@ -133,14 +132,14 @@ public class Server {
 
     /**
      * Removes the client from this server, and notifies other clients that this client has left.
-     *
+     * 
      * @param username the username of the client to remove
      */
     public synchronized void removeClient(String username)
     {
         controller.clientLeft(username);
         Client c = clients.remove(username);
-        if(c.isWaiting())
+        if (c.isWaiting())
         {
             waiting--; // only if we were waiting on them should we count ir
         }
@@ -163,16 +162,15 @@ public class Server {
      */
     public synchronized void kill()
     {
-        if(listening)
+        if (listening)
         {
             listening = false;
-            for(Client client : clients.values())
+            for (Client client : clients.values())
             {
                 client.send(new AnnounceMessage("Server shutting down now!"));
                 client.kill();
             }
-        }
-        else
+        } else
         {
             throw new RuntimeException("Server not running --> why kill it?");
         }
@@ -180,7 +178,7 @@ public class Server {
 
     /**
      * Checks to see if this server already has a client by the given username.
-     *
+     * 
      * @param text the username to check
      * @return whether or not
      */
@@ -191,13 +189,12 @@ public class Server {
 
     /**
      * Tells the server whether or not to listen for client
-     *
+     * 
      * @param listening True if it should; false otherwise
      */
     public void setListening(boolean listening)
     {
         this.listening = listening;
-        // TODO: if we set this to true, shouldn't it start again?
     }
 
     /**
@@ -210,24 +207,23 @@ public class Server {
 
     /**
      * Sends a message to all active clients
-     *
+     * 
      * @param m Message to send
      */
     public synchronized void relayMessage(Message m)
     {
         // hook for the controller
-        if(m instanceof ChatMessage)
+        if (m instanceof ChatMessage)
         {
             ChatMessage cm = (ChatMessage) m;
             controller.chatted(cm.getFrom(), cm.getText());
-        }
-        else if(m instanceof AnnounceMessage)
+        } else if (m instanceof AnnounceMessage)
         {
             AnnounceMessage am = (AnnounceMessage) m;
             controller.chatted("[SERVER]", am.getText());
         }
         // relay to clients
-        for(Client client : clients.values())
+        for (Client client : clients.values())
         {
             client.send(m);
         }
@@ -240,9 +236,9 @@ public class Server {
     {
         List<String> names = new ArrayList<String>();
 
-        synchronized(this)
+        synchronized (this)
         {
-            for(Client c : clients.values())
+            for (Client c : clients.values())
             {
                 names.add(c.getUsername());
             }
@@ -253,15 +249,15 @@ public class Server {
 
     /**
      * Checks if we already have a client with a certain IP
-     *
+     * 
      * @param ip IP to check
      * @return True if we do; false otherwise
      */
     public synchronized boolean hasClientWithIP(String ip)
     {
-        for(Client client : clients.values())
+        for (Client client : clients.values())
         {
-            if(client.getIP().equals(ip))
+            if (client.getIP().equals(ip))
             {
                 return true;
             }
@@ -309,11 +305,10 @@ public class Server {
     {
         waiting--;
 
-        if(waiting == 0 && clients.size() >= MIN_PLAYERS)
+        if (waiting == 0 && clients.size() >= MIN_PLAYERS)
         {
             startGame();
-        }
-        else
+        } else
         {
             this.updateWaitingStatus();
         }
@@ -351,21 +346,24 @@ public class Server {
         {
             try
             {
-                while(listening)
+                while (listening)
                 {
                     Client newc = new Client(servSock.accept(), Server.this);
-                    if(!listening)
+                    if (!listening)
                     {
-                        newc.kill();
-                    }
-                    newc.start();
-                    if(controller != null)
+                        if (clients.size() == 0) // if nobody is playing, lets have a new game
+                            Server.this.setListening(true);
+                        else
+                            newc.kill();
+                    } else
+                        newc.start();
+                    
+                    if (controller != null)
                     {
                         controller.clientConnected(newc.getIP());
                     }
                 }
-            }
-            catch(IOException e)
+            } catch (IOException e)
             {
                 listening = false;
             }
