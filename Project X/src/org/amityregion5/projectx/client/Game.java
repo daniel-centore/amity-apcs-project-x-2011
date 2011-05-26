@@ -22,6 +22,8 @@ import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.amityregion5.projectx.client.communication.CommunicationHandler;
 import org.amityregion5.projectx.client.communication.RawCommunicationHandler;
@@ -40,6 +42,7 @@ import org.amityregion5.projectx.common.communication.messages.ClientMovingMessa
 import org.amityregion5.projectx.common.communication.messages.EntityMovedMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.common.entities.Entity;
+import org.amityregion5.projectx.common.entities.EntityConstants;
 import org.amityregion5.projectx.common.entities.characters.Player;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 import org.amityregion5.projectx.server.Server;
@@ -61,6 +64,7 @@ public class Game implements GameInputListener, MessageListener, RawListener
     private Player me; // current Player (null at initialization!)
     private EntityHandler entityHandler; // current EntityHandler
     private List<Integer> depressedKeys = new ArrayList<Integer>();
+    private DirectionalUpdateThread dUpThread;
     private boolean isChatting = false;
 
     public Game(CommunicationHandler ch, AbstractMap m)
@@ -72,6 +76,9 @@ public class Game implements GameInputListener, MessageListener, RawListener
         createPlaySpawns(m);
         createEnemySpawns(m);
         rch = new RawCommunicationHandler(ch.getServerIP());
+        dUpThread = new DirectionalUpdateThread();
+        // do not start the dUpThread until me != null
+        
 
         rch.registerRawListener(this);
         rch.start();
@@ -98,7 +105,6 @@ public class Game implements GameInputListener, MessageListener, RawListener
         int angle = (int) Math.toDegrees(Math.atan2(y - y1, x - x1)) + 90;
 
         me.setDirectionFacing(angle);
-        rch.send(angle);
         GameWindow.fireRepaintRequired();
     }
 
@@ -190,7 +196,6 @@ public class Game implements GameInputListener, MessageListener, RawListener
 
     public void keyReleased(int keyCode)
     {
-        System.out.println("key " + keyCode + " released");
         int speed = Player.INITIAL_SPEED;
         if (depressedKeys.contains(keyCode))
         {
@@ -224,6 +229,7 @@ public class Game implements GameInputListener, MessageListener, RawListener
             AddMeMessage amm = (AddMeMessage) m;
             me = (Player) amm.getEntity();
             entityHandler.addEntity(me);
+            dUpThread.start();
         } else if (m instanceof AddEntityMessage)
         {
             AddEntityMessage aem = (AddEntityMessage) m;
@@ -300,7 +306,7 @@ public class Game implements GameInputListener, MessageListener, RawListener
      * @param map Current map
      * @return An ArrayList of random Point objects within the map's play area where players spawn
      */
-    public void createPlaySpawns(AbstractMap map)
+    public final void createPlaySpawns(AbstractMap map)
     {
         ArrayList<Point> spawns = new ArrayList<Point>();
         for(int i = 0; i < Server.MAX_PLAYERS; i++) //Would be better if we accessed the exact number of players instead
@@ -316,7 +322,7 @@ public class Game implements GameInputListener, MessageListener, RawListener
      * Makes enemies spawn at the edge of the game window
      * @return ArrayList of Points where enemies spawn at the edge of the game window
      */
-    public void createEnemySpawns(AbstractMap map)
+    public final void createEnemySpawns(AbstractMap map)
     {
         ArrayList<Point> enemySpawns = new ArrayList<Point>();
         for(int i = 0; i < GameWindow.GAME_HEIGHT; i+= 5)
@@ -331,5 +337,36 @@ public class Game implements GameInputListener, MessageListener, RawListener
         }
         map.setEnemySpawns(enemySpawns);
 
+    }
+
+    private class DirectionalUpdateThread extends Thread
+    {
+        private boolean keepRunning = true;
+
+        /**
+         * me must exist before this thread is started!
+         */
+        @Override
+        public void run()
+        {
+            while (keepRunning)
+            {
+                try
+                {
+                    rch.send(me.getDirectionFacing());
+                    Thread.sleep(EntityConstants.DIR_UPDATE_TIME);
+                }
+                catch(InterruptedException ex)
+                {
+                    Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+                    kill();
+                }
+            }
+        }
+
+        public void kill()
+        {
+            keepRunning = false;
+        }
     }
 }

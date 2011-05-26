@@ -69,9 +69,6 @@ public class EntityMoverThread extends Thread {
 
     private void sendAggregateUpdateMessage()
     {
-        // TODO decide on update messages
-        // Should we send one message with all the entities, or one message
-        // for each entity?
         String send = "";
         for (Entity e : gameController.getEntities())
         {

@@ -39,4 +39,5 @@ public class EntityConstants {
      * pixels per this number of milliseconds.
      */
     public static final int MOVE_UPDATE_TIME = 50;
+    public static final int DIR_UPDATE_TIME = 50;
 }
