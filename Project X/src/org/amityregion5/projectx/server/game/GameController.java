@@ -64,6 +64,7 @@ public class GameController {
         map = game.getMap();
         ArrayList<Point> spawns = map.getPlaySpawns();
         
+
         Random r = new Random();
         for (Client c : clients)
         {
@@ -100,6 +101,16 @@ public class GameController {
     public Collection<Client> getClients()
     {
         return clients;
+    }
+
+    private Point getNextSpawn()
+    {
+        //TODO: move the map initialization to server-side and pass it to the client
+        //TODO: afterwards, finish this spawn creation
+
+         //int x = (int) map.getPlayArea().getX() + (int) (Math.random() * map.getPlayArea().getWidth());
+         //int y = (int) map.getPlayArea().getY() + (int) (Math.random() * map.getPlayArea().getHeight());
+         return null;
     }
 
 }
