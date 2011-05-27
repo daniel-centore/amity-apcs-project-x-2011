@@ -24,12 +24,12 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.amityregion5.projectx.common.entities.Entity;
+
 import org.amityregion5.projectx.server.Server;
 
 /**
  * Class documentation.
- *
+ * 
  * @author Joe Stein
  */
 public class RawServer extends Thread {
@@ -51,7 +51,7 @@ public class RawServer extends Thread {
             Logger.getLogger(RawServer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     @Override
     public void run()
     {
@@ -60,7 +60,7 @@ public class RawServer extends Thread {
             try
             {
                 Socket s = rawSock.accept();
-                RawClient rc = new RawClient(s,server);
+                RawClient rc = new RawClient(s, server);
                 rc.start();
                 rawClients.add(rc);
             } catch (IOException ex)
@@ -76,30 +76,18 @@ public class RawServer extends Thread {
     }
 
     /**
-     * Writes a string to the raw output.
-     * String format should be:
-     * entityUniqueId,x,y,dir
-     * Please keep x, y, and dir to int values.
-     * Strings should not have trailing newline characters.
+     * Writes a string to the raw output. String format should be: "entityUniqueId,x,y,dir". Please keep x, y, and dir to int values.
+     * 
      * @param s the CSV string to send
      */
     public void send(String s)
     {
+        s.trim();
+        
         for (RawClient out : rawClients)
         {
             out.send(s + "\n");
         }
     }
-    
-//    public void send(Entity e)
-//    {
-//        String send = "" + e.getUniqueID();
-//        send += "," + e.getX();
-//        send += "," + e.getY();
-//        send += "," + e.getDirectionFacing();
-//        for (RawClient out : rawClients)
-//        {
-//            out.send(send + "\n");
-//        }
-//    }
+
 }

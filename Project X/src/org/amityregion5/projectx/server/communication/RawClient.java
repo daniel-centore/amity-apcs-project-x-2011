@@ -52,12 +52,15 @@ public class RawClient extends Thread {
         }
         for (Client c : server.getClients().values())
         {
-            // TODO: IMPORTANT: this needs to be done correctly, b/c if two clients connect from the same IP they can get crossed
-            if (c.getIP().equals(sock.getInetAddress().getHostAddress()))
+            if (c.getIP().equals(sock.getInetAddress().getHostAddress()) && c.getRaw() == null)
             {
                 player = c.getPlayer();
+                c.setRaw(this);
+                return;
             }
         }
+        
+        throw new RuntimeException("CLIENT NOT ESTABLISHED BEFORE RAWCLIENT!");
     }
 
     @Override

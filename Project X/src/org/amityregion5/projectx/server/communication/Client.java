@@ -62,6 +62,7 @@ public class Client extends Thread {
     private boolean quit = false; // should we quit?
     private boolean waiting = true; // are we waiting on this client?
     private Player player; // client's player (once we make it!)
+    private RawClient raw; // client's raw client (once created)
 
     /**
      * Creates a client
@@ -73,6 +74,7 @@ public class Client extends Thread {
         this.server = server;
         this.sock = sock;
         player = null;
+        raw = null;
 
         try
         {
@@ -294,5 +296,15 @@ public class Client extends Thread {
     public Player getPlayer()
     {
         return player;
+    }
+
+    public void setRaw(RawClient raw)
+    {
+        this.raw = raw;
+    }
+
+    public RawClient getRaw()
+    {
+        return raw;
     }
 }
