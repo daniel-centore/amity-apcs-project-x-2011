@@ -47,30 +47,24 @@ public class GameController {
     private EntityMoverThread entityMoverThread; // will be in charge of moving entities
     private Server server;
     private AbstractMap map;
-    private Game game;
 
     /**
      * Creates and initializes the game controlling
      * 
      * @param server The Server we are based from
      */
-    public GameController(Server server, Game g)
+    public GameController(Server server)
     {
         this.server = server;
         players = new ArrayList<Player>();
         clients = server.getClients().values();
         entities = new ArrayList<Entity>();
-        game = g;
-        map = game.getMap();
-        ArrayList<Point> spawns = map.getPlaySpawns();
         
 
         Random r = new Random();
         for (Client c : clients)
         {
-            Point spawn = spawns.get(r.nextInt(spawns.size()));
-            Player p = new Player((int)spawn.getX(), (int)spawn.getY());
-            spawns.remove(spawn);
+            Player p = new Player(r.nextInt(500), r.nextInt(500));
             players.add(p);
             entities.add(p);
             c.setPlayer(p);

@@ -326,7 +326,7 @@ public class Server {
         setListening(false);
 
         relayMessage(new StatusUpdateMessage(StatusUpdateMessage.Type.STARTING));
-        gameController = new GameController(this, LobbyWindow.getInstance().getGame());
+        gameController = new GameController(this);
         
     }
 
