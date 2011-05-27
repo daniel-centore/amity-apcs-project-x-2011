@@ -28,9 +28,8 @@ import org.amityregion5.projectx.common.entities.characters.Player;
 import org.amityregion5.projectx.server.Server;
 
 /**
- * A raw client. Currently configured to read single ints
- * (which are direction facing) from the client.
- *
+ * A raw client. Currently configured to read single ints (which are direction facing) from the client.
+ * 
  * @author Joe Stein
  */
 public class RawClient extends Thread {
@@ -47,13 +46,13 @@ public class RawClient extends Thread {
         try
         {
             out = new PrintWriter(s.getOutputStream());
-        }
-        catch(IOException ex)
+        } catch (IOException ex)
         {
             Logger.getLogger(RawClient.class.getName()).log(Level.SEVERE, null, ex);
         }
         for (Client c : server.getClients().values())
         {
+            // TODO: IMPORTANT: this needs to be done correctly, b/c if two clients connect from the same IP they can get crossed
             if (c.getIP().equals(sock.getInetAddress().getHostAddress()))
             {
                 player = c.getPlayer();
@@ -68,8 +67,7 @@ public class RawClient extends Thread {
         try
         {
             in = new DataInputStream(sock.getInputStream());
-        }
-        catch(IOException ex)
+        } catch (IOException ex)
         {
             Logger.getLogger(RawClient.class.getName()).log(Level.SEVERE, null, ex);
             kill();
@@ -79,9 +77,9 @@ public class RawClient extends Thread {
             try
             {
                 int dir = in.readInt();
+                // System.out.println(dir);
                 this.handle(dir);
-            }
-            catch(IOException ex)
+            } catch (IOException ex)
             {
                 Logger.getLogger(RawClient.class.getName()).log(Level.SEVERE, null, ex);
                 kill();

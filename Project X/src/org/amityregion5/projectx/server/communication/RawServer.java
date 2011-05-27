@@ -90,15 +90,16 @@ public class RawServer extends Thread {
             out.send(s + "\n");
         }
     }
-    public void send(Entity e)
-    {
-        String send = "" + e.getUniqueID();
-        send += "," + e.getX();
-        send += "," + e.getY();
-        send += "," + e.getDirectionFacing();
-        for (RawClient out : rawClients)
-        {
-            out.send(send + "\n");
-        }
-    }
+    
+//    public void send(Entity e)
+//    {
+//        String send = "" + e.getUniqueID();
+//        send += "," + e.getX();
+//        send += "," + e.getY();
+//        send += "," + e.getDirectionFacing();
+//        for (RawClient out : rawClients)
+//        {
+//            out.send(send + "\n");
+//        }
+//    }
 }

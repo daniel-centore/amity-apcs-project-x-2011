@@ -54,6 +54,7 @@ public abstract class Entity implements Serializable {
     private transient boolean needUpdate; // do we need to resend the location?
 
     private transient boolean justFired; // did this client fire since the last repaint?
+
     /**
      * Default entity constructor. Sets sane (but not really useful) default values. Use this directly as little as possible.
      */
@@ -70,13 +71,14 @@ public abstract class Entity implements Serializable {
 
     /**
      * Creates an entity
+     * 
      * @param x X coordinate to put it at
      * @param y Y coordinate to put it at
      */
     public Entity(int x, int y)
     {
         this();
-        
+
         setX(x);
         setY(y);
     }
@@ -111,6 +113,7 @@ public abstract class Entity implements Serializable {
     public void setX(double x)
     {
         location.setLocation(x, location.getY());
+        requestUpdate();
     }
 
     /**
@@ -131,6 +134,7 @@ public abstract class Entity implements Serializable {
     public void setY(double y)
     {
         location.setLocation(location.getX(), y);
+        requestUpdate();
     }
 
     /**
@@ -171,6 +175,7 @@ public abstract class Entity implements Serializable {
     {
         this.directionFacing = directionFacing;
         updateImage();
+        requestUpdate();
     }
 
     /**
@@ -189,6 +194,7 @@ public abstract class Entity implements Serializable {
     public void setDirectionMoving(int directionMoving)
     {
         this.directionMoving = directionMoving;
+        requestUpdate(); // TODO: do we need this?
     }
 
     /**
@@ -324,23 +330,26 @@ public abstract class Entity implements Serializable {
     public void setLocation(Point2D location)
     {
         this.location = location;
+        requestUpdate();
     }
 
     /**
      * Requests that the location be resent to clients.
      */
-    public void requestUpdate() {
+    public void requestUpdate()
+    {
         needUpdate = true;
     }
 
     /**
      * Claims that an update has been completed.
-     *
+     * 
      * (there's a microoptimization possible here, yes)
-     *
+     * 
      * @return whether we need an update.
      */
-    public boolean updateCheck() {
+    public boolean updateCheck()
+    {
         boolean pre = needUpdate;
         needUpdate = false;
         return pre;
@@ -355,6 +364,5 @@ public abstract class Entity implements Serializable {
     {
         this.justFired = justFired;
     }
-
 
 }

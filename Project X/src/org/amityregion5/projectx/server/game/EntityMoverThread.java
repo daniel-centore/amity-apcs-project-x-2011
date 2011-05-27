@@ -21,7 +21,6 @@ package org.amityregion5.projectx.server.game;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.amityregion5.projectx.common.communication.messages.EntityMovedMessage;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.EntityConstants;
 import org.amityregion5.projectx.server.communication.RawServer;
@@ -50,13 +49,13 @@ public class EntityMoverThread extends Thread {
             for (Entity e : gameController.getEntities())
             {
                 double r = e.getMoveSpeed();
-                if (r > 0) {
+                if (r > 0)
+                {
                     double theta = e.getDirectionMoving();
                     double deltaX = r * Math.cos(Math.toRadians(theta));
                     double deltaY = r * Math.sin(Math.toRadians(theta));
                     e.setX(e.getX() + deltaX);
                     e.setY(e.getY() + deltaY);
-                    e.requestUpdate();
                 }
             }
             sendAggregateUpdateMessage();
@@ -77,7 +76,8 @@ public class EntityMoverThread extends Thread {
 
         for (Entity e : gameController.getEntities())
         {
-            if (e.updateCheck()) {
+            if (e.updateCheck())
+            {
                 buf.append(e.getUniqueID());
                 buf.append(",");
                 buf.append(e.getX());
@@ -89,7 +89,8 @@ public class EntityMoverThread extends Thread {
             }
         }
 
-        if (buf.length() > 0) {
+        if (buf.length() > 0)
+        {
             // trim last semicolon
             buf.deleteCharAt(buf.length() - 1);
             rawServer.send(buf.toString());

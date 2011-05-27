@@ -97,7 +97,7 @@ public class Game implements GameInputListener, MessageListener, RawListener {
     public void mouseMoved(int x, int y)
     {
         // send to server and let server deal with it?
-        if (me == null)
+        if (me == null || me.getImage() == null)
         {
             return;
         }
@@ -179,10 +179,6 @@ public class Game implements GameInputListener, MessageListener, RawListener {
             return Integer.MIN_VALUE;
         }
 
-        // TODO send diagonal directions!
-        // deg is measured clockwise from x-axis. don't ask me why. -joe
-        // keys currently override each other. we need to add the
-        // y-resultant to the x-resultant
         int deg = Integer.MIN_VALUE;
 
         boolean left = false;
@@ -392,6 +388,7 @@ public class Game implements GameInputListener, MessageListener, RawListener {
             {
                 try
                 {
+//                    System.out.println("sending");
                     rch.send(me.getDirectionFacing());
                     Thread.sleep(EntityConstants.DIR_UPDATE_TIME);
                 } catch (InterruptedException ex)

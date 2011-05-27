@@ -388,8 +388,8 @@ public class Server {
         rawServ.send(s);
     }
 
-    public void sendRawUpdate(Entity e)
-    {
-        rawServ.send(e);
-    }
+//    public void sendRawUpdate(Entity e)
+//    {
+//        rawServ.send(e);
+//    }
 }
