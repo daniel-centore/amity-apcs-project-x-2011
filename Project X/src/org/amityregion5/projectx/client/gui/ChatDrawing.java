@@ -5,6 +5,7 @@
 package org.amityregion5.projectx.client.gui;
 
 import java.awt.AlphaComposite;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -25,26 +26,27 @@ public class ChatDrawing
 
     private static final int NUM_CHATS = 3;
     private static ArrayList<String> chats = new ArrayList<String>();
-    private static Rectangle r = new Rectangle(0, 90, 600, 10);
-    private static boolean isChating = false;
+    private static boolean isChatting = false;
     private static StringBuffer currChat = new StringBuffer();
 
     static
     {
         // adds three empty strings so we don't get an
         // ArrayIndexOutOfBoundsException later
-        for (int i = 1; i <= 3; i++)
+        for (int i = 1; i <= NUM_CHATS; i++)
         {
             chats.add("");
         }
     }
 
-    public static BufferedImage getChat()
+    public static BufferedImage getChat(int width, int height)
     {
-        BufferedImage result = new BufferedImage(600, 100, BufferedImage.TYPE_INT_ARGB);
+
+        Rectangle r = new Rectangle(10, 500, 500, 15);
+        BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = (Graphics2D) result.getGraphics();
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
-        final int DISTANCE_BETWEEN_CHATS = result.getHeight() / NUM_CHATS;
+        final int DISTANCE_BETWEEN_CHATS = result.getHeight() / (NUM_CHATS - g2.getFont().getSize()) + 1;
         System.out.println(DISTANCE_BETWEEN_CHATS);
         int testHeight = g2.getFont().getSize();
         final int MARGIN = testHeight * 2;
@@ -55,11 +57,11 @@ public class ChatDrawing
             g2.drawString(chats.get(i), 20, j * DISTANCE_BETWEEN_CHATS + MARGIN);
             j++;
         }
-        if (isChating)
+        if (isChatting)
         {
-            g2.setColor(Color.red);
+            g2.setColor(Color.BLACK);
             g2.draw(r);
-            g2.drawString(currChat.toString(), 95, 5);
+            g2.drawString(currChat.toString(), 15, 500 + g2.getFont().getSize());
             g2.setColor(Color.BLACK);
         }
 
@@ -73,13 +75,13 @@ public class ChatDrawing
 
     public static void setChat(boolean chat)
     {
-        isChating = chat;
+        isChatting = chat;
     }
 
     public static void clearChat()
     {
         currChat.delete(0, currChat.length());
-        isChating = false;
+        isChatting = false;
     }
 
     public static String getTextChat()
@@ -89,7 +91,10 @@ public class ChatDrawing
 
     public static void backspace()
     {
-        currChat.delete(currChat.length() - 1, currChat.length());
+        if (currChat.length() > 0)
+        {
+            currChat.delete(currChat.length() - 1, currChat.length());
+        }
     }
 
     public static void addLetter(char c)
@@ -100,20 +105,18 @@ public class ChatDrawing
 
     public static void main(String[] args)
     {
-        drawChat("Hello");
-        drawChat("Test");
-        drawChat("Word");
         JFrame jf = new JFrame();
-        JPanel jp = new JPanel()
+        final JPanel jp = new JPanel()
         {
 
             @Override
             public void paintComponent(Graphics g)
             {
-                g.drawImage(getChat(), 0, 0, null);
+                g.clearRect(0, 0, this.getWidth(), this.getHeight());
+                g.drawImage(getChat(this.getWidth(), this.getHeight()), 0, 0, null);
             }
         };
-        jp.addKeyListener(new KeyListener()
+        jf.addKeyListener(new KeyListener()
         {
 
             public void keyTyped(KeyEvent e)
@@ -123,27 +126,40 @@ public class ChatDrawing
 
             public void keyPressed(KeyEvent e)
             {
-                if (e.getKeyCode() == KeyEvent.VK_T && !isChating)
+                int keyCode = e.getKeyCode();
+                if (keyCode == KeyEvent.VK_T && !isChatting)
                 {
-                    isChating = true;
-                }
-                else if(e.getKeyCode() == KeyEvent.VK_ENTER && isChating)
+                    isChatting = true;
+                } else if (keyCode == KeyEvent.VK_ENTER && isChatting)
                 {
-                    drawChat(currChat.toString());
-                    clearChat();
-                } else if (isChating && !e.isActionKey())
+                    String s = currChat.toString().trim();
+                    if (s.length() <= 0)
+                    {
+                        clearChat();
+                    } else
+                    {
+                        drawChat(s);
+                        clearChat();
+                    }
+                } else if (keyCode == KeyEvent.VK_BACK_SPACE)
+                {
+                    backspace();
+                } 
+                else if (isChatting && !(e.isActionKey() || keyCode == KeyEvent.VK_SHIFT || keyCode == KeyEvent.VK_ALT))
                 {
                     addLetter(e.getKeyChar());
                 }
+
+                jp.repaint();
             }
 
             public void keyReleased(KeyEvent e)
             {
-                throw new UnsupportedOperationException("Not supported yet.");
+                //
             }
         });
-        jf.setSize(100, 200);
-        jf.add(jp);
+        jf.setSize(600, 600);
+        jf.add(jp, BorderLayout.CENTER);
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jf.setVisible(true);
     }
