@@ -50,6 +50,7 @@ import org.amityregion5.projectx.client.preferences.PreferenceManager;
  * 
  * @author Daniel Centore
  * @author Joe Stein
+ * @author Michael Wenke
  */
 public class LobbyWindow extends JFrame implements MessageListener {
 
@@ -61,6 +62,7 @@ public class LobbyWindow extends JFrame implements MessageListener {
     private CommunicationHandler ch; // the communication with the server
     private boolean ready; // are we ready to play?
     private String lastFrom; // last person to recieve from
+    private Game game; // game used by LobbyWindow
 
     /**
      * Creates a new LobbyWindow.
@@ -403,5 +405,10 @@ public class LobbyWindow extends JFrame implements MessageListener {
     public static LobbyWindow getInstance()
     {
         return instance;
+    }
+
+    public Game getGame()
+    {
+        return game;
     }
 }

@@ -87,6 +87,8 @@ public class Game implements GameInputListener, MessageListener, RawListener {
         ch.registerListener(this);
         InputHandler.registerListener(this);
         RepaintHandler.setGame(this);
+
+
     }
 
     public void mouseDragged(int x, int y)
@@ -408,6 +410,11 @@ public class Game implements GameInputListener, MessageListener, RawListener {
         public void kill()
         {
             keepRunning = false;
+        }
+
+        public AbstractMap getMap()
+        {
+            return map;
         }
     }
 }

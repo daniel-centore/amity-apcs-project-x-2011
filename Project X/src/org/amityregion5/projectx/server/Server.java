@@ -25,6 +25,7 @@ import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import org.amityregion5.projectx.client.gui.LobbyWindow;
 
 import org.amityregion5.projectx.common.communication.Constants;
 import org.amityregion5.projectx.common.communication.messages.ActivePlayersMessage;
@@ -325,7 +326,7 @@ public class Server {
         setListening(false);
 
         relayMessage(new StatusUpdateMessage(StatusUpdateMessage.Type.STARTING));
-        gameController = new GameController(this);
+        gameController = new GameController(this, LobbyWindow.getInstance().getGame());
         
     }
 

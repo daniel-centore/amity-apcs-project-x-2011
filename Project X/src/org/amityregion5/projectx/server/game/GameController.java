@@ -18,15 +18,18 @@
  */
 package org.amityregion5.projectx.server.game;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
+import org.amityregion5.projectx.client.Game;
 
 import org.amityregion5.projectx.common.communication.messages.AddEntityMessage;
 import org.amityregion5.projectx.common.communication.messages.AddMeMessage;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.characters.Player;
+import org.amityregion5.projectx.common.maps.AbstractMap;
 import org.amityregion5.projectx.server.Server;
 import org.amityregion5.projectx.server.communication.Client;
 
@@ -34,6 +37,7 @@ import org.amityregion5.projectx.server.communication.Client;
  * Handles the game running.
  * 
  * @author Daniel Centore
+ * @author Michael Wenke
  */
 public class GameController {
 
@@ -42,23 +46,30 @@ public class GameController {
     private List<Entity> entities;
     private EntityMoverThread entityMoverThread; // will be in charge of moving entities
     private Server server;
+    private AbstractMap map;
+    private Game game;
 
     /**
      * Creates and initializes the game controlling
      * 
      * @param server The Server we are based from
      */
-    public GameController(Server server)
+    public GameController(Server server, Game g)
     {
         this.server = server;
         players = new ArrayList<Player>();
         clients = server.getClients().values();
         entities = new ArrayList<Entity>();
-
+        game = g;
+        map = game.getMap();
+        ArrayList<Point> spawns = map.getPlaySpawns();
+        
         Random r = new Random();
         for (Client c : clients)
         {
-            Player p = new Player(r.nextInt(500), r.nextInt(500));
+            Point spawn = spawns.get(r.nextInt(4));
+            Player p = new Player((int)spawn.getX(), (int)spawn.getY());
+            spawns.remove(spawn);
             players.add(p);
             entities.add(p);
             c.setPlayer(p);
