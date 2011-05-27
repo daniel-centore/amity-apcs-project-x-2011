@@ -84,47 +84,6 @@ public class CollisionDetection
         return isPixelCollide(a.getX() + xOffset, a.getY() + yOffset, a.getImage(), b.getX(), b.getY(), b.getImage());
     }
 
-//    // credits http://www.gamedev.net/topic/329033-pixel-perfect-collision-detection/
-//    // NOTE: there should not have been all those offsets by 1
-//    private static boolean hasOutlineCollision(Entity a, int xOffset, int yOffset, Entity b)
-//    {
-//        int x1 = a.getX() + xOffset;
-//        int y1 = a.getY() + yOffset;
-//        BufferedImage image1 = a.getImage();
-//        int x2 = b.getX();
-//        int y2 = b.getY();
-//        BufferedImage image2 = b.getImage();
-//
-//        boolean[][] outlineA = a.outline.getPoints();
-//        boolean[][] outlineB = b.outline.getPoints();
-//
-//        int width1 = x1 + image1.getWidth();
-//        int height1 = y1 + image1.getHeight();
-//        int width2 = x2 + image2.getWidth();
-//        int height2 = y2 + image2.getHeight();
-//
-//        // intersection credits
-//        int xstart = Math.max(x1, x2);
-//        int ystart = Math.max(y1, y2);
-//        int xend = Math.min(width1, width2);
-//        int yend = Math.min(height1, height2);
-//
-//        int toty = Math.abs(yend - ystart);
-//        int totx = Math.abs(xend - xstart);
-//        for (int y = 0; y < toty; y++)
-//        {
-//            int ny = Math.abs(ystart - y1) + y;
-//            int ny1 = Math.abs(ystart - y2) + y;
-//            for (int x = 0; x < totx; x++)
-//            {
-//                int nx = Math.abs(xstart - x1) + x;
-//                int nx1 = Math.abs(xstart - x2) + x;
-//                if (outlineA[nx][ny] && outlineB[nx1][ny1])
-//                    return true;
-//            }
-//        }
-//        return false;
-//    }
     // original credits: http://www.gamedev.net/topic/329033-pixel-perfect-collision-detection/
     // NOTE: there should not have been all those offsets by 1
     private static boolean isPixelCollide(int x1, int y1, BufferedImage image1, int x2, int y2, BufferedImage image2)

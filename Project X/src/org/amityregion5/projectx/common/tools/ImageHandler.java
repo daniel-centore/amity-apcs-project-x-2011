@@ -59,7 +59,6 @@ public class ImageHandler {
         } catch (IOException e)
         {
             throw new RuntimeException("FAILED TO FIND GRAPHICS AT: "+path);
-//            return null;
         }
     }
 }

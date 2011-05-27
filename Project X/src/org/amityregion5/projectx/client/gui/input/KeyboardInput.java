@@ -57,7 +57,6 @@ public class KeyboardInput implements KeyListener {
     {
         if (depressed.contains((Integer) e.getKeyCode()))
         {
-//        depressed.remove((Integer) e.getKeyCode()); // cast so we're removing object, not index
             InputHandler.keyReleased(e.getKeyCode());
             depressed.remove((Integer) e.getKeyCode());
         }
