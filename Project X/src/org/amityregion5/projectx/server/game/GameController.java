@@ -67,7 +67,7 @@ public class GameController {
         Random r = new Random();
         for (Client c : clients)
         {
-            Point spawn = spawns.get(r.nextInt(4));
+            Point spawn = spawns.get(r.nextInt(spawns.size()));
             Player p = new Player((int)spawn.getX(), (int)spawn.getY());
             spawns.remove(spawn);
             players.add(p);
