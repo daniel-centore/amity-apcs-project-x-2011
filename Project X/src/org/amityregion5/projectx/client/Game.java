@@ -67,6 +67,8 @@ public class Game implements GameInputListener, MessageListener, RawListener {
     private List<Integer> depressedKeys = new ArrayList<Integer>();
     private DirectionalUpdateThread dUpThread;
     private boolean isChatting = false;
+    private int lastMouseX; // last mouse coordinates, so we can update direction as moving
+    private int lastMouseY;
 
     public Game(CommunicationHandler ch, AbstractMap m)
     {
@@ -91,11 +93,13 @@ public class Game implements GameInputListener, MessageListener, RawListener {
     {
         // TODO mouse dragged needs to turn the player just like
         // mouseMoved did
-        mouseMoved(x,y);
     }
 
     public void mouseMoved(int x, int y)
     {
+        lastMouseX = x;
+        lastMouseY = y;
+
         // send to server and let server deal with it?
         if (me == null || me.getImage() == null)
         {
@@ -327,6 +331,8 @@ public class Game implements GameInputListener, MessageListener, RawListener {
                 e.setDirectionFacing(Integer.valueOf(entVals[3]));
             }
         }
+        mouseMoved(lastMouseX, lastMouseY); // update angle
+
         if (GameWindow.createImage() != null)
         {
             // GameWindow is visible and running
@@ -388,7 +394,7 @@ public class Game implements GameInputListener, MessageListener, RawListener {
             {
                 try
                 {
-//                    System.out.println("sending");
+                    // System.out.println("sending");
                     rch.send(me.getDirectionFacing());
                     Thread.sleep(EntityConstants.DIR_UPDATE_TIME);
                 } catch (InterruptedException ex)

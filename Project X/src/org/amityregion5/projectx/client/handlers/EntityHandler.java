@@ -96,6 +96,7 @@ public class EntityHandler {
         if (entities.containsKey(entity.getUniqueID()))
         {
             entities.put(entity.getUniqueID(), entity);
+            
             return true;
         }
 
