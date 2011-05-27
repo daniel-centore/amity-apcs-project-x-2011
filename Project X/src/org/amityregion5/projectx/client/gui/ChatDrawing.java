@@ -46,7 +46,7 @@ public class ChatDrawing
         BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = (Graphics2D) result.getGraphics();
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
-        final int DISTANCE_BETWEEN_CHATS = result.getHeight() / (NUM_CHATS - g2.getFont().getSize()) + 1;
+        final int DISTANCE_BETWEEN_CHATS = result.getHeight() / NUM_CHATS - g2.getFont().getSize();
         System.out.println(DISTANCE_BETWEEN_CHATS);
         int testHeight = g2.getFont().getSize();
         final int MARGIN = testHeight * 2;
