@@ -148,7 +148,7 @@ public class ServerChooserWindow extends JFrame implements DatagramListener, Pre
         String server;
         if (selected == 0) // manual/internet
         {
-            server = JOptionPane.showInputDialog(this, "Server IP:", "Server Input", JOptionPane.PLAIN_MESSAGE);
+            server = JOptionPane.showInputDialog(this, "Server Address:", "Server Input", JOptionPane.PLAIN_MESSAGE);
             if (server == null)
             {
                 return;
