@@ -24,10 +24,13 @@ import javax.swing.JPanel;
 public class ChatDrawing
 {
 
-    private static final int NUM_CHATS = 3;
-    private static ArrayList<String> chats = new ArrayList<String>();
+    private static final int NUM_CHATS = 5; //max number of chats that can be visible at once
+    private static ArrayList<String> chats = new ArrayList<String>(); //all of the chats
     private static boolean isChatting = false;
-    private static StringBuffer currChat = new StringBuffer();
+    private static StringBuffer currChat = new StringBuffer();//the current chat
+    private static final int X_MARGIN = 10;
+    private static final int Y_MARGIN = 50;
+    private static final int HEIGHT_MARGIN = 15;
 
     static
     {
@@ -41,54 +44,67 @@ public class ChatDrawing
 
     public static BufferedImage getChat(int width, int height)
     {
-
-        Rectangle r = new Rectangle(10, 500, 500, 15);
         BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = (Graphics2D) result.getGraphics();
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
-        final int DISTANCE_BETWEEN_CHATS = result.getHeight() / NUM_CHATS - g2.getFont().getSize();
+        Rectangle r = new Rectangle(X_MARGIN, (HEIGHT_MARGIN * NUM_CHATS), width - Y_MARGIN, g2.getFont().getSize() + 2);
+        final int DISTANCE_BETWEEN_CHATS = g2.getFont().getSize();
         System.out.println(DISTANCE_BETWEEN_CHATS);
-        int testHeight = g2.getFont().getSize();
-        final int MARGIN = testHeight * 2;
+        final int MARGIN = Y_MARGIN - (HEIGHT_MARGIN * 2);
         int j = 0;// used for printing chats lower than the last
         for (int i = chats.size() - NUM_CHATS; i < chats.size(); i++)
         {
             g2.setColor(Color.BLACK);
-            g2.drawString(chats.get(i), 20, j * DISTANCE_BETWEEN_CHATS + MARGIN);
+            g2.drawString(chats.get(i), X_MARGIN, j * DISTANCE_BETWEEN_CHATS + MARGIN);
             j++;
         }
         if (isChatting)
         {
             g2.setColor(Color.BLACK);
             g2.draw(r);
-            g2.drawString(currChat.toString(), 15, 500 + g2.getFont().getSize());
+            g2.drawString(currChat.toString(), X_MARGIN + 5, g2.getFont().getSize() + (HEIGHT_MARGIN * NUM_CHATS));
             g2.setColor(Color.BLACK);
         }
 
         return result;
     }
 
+    /**
+     * adds the chat to the ArrayList
+     * @param chat the chat that is about to be sent
+     */
     public static void drawChat(String chat)
     {
         chats.add(chat);
     }
 
-    public static void setChat(boolean chat)
+    /**public static void setChat(boolean chat)
     {
         isChatting = chat;
     }
+     */
 
+    /**
+     * clears the chat box and sets isChatting to false
+     */
     public static void clearChat()
     {
         currChat.delete(0, currChat.length());
         isChatting = false;
     }
 
+    /**
+     * gets the String value of the currChat
+     * @return the current text that is in the chat box
+     */
     public static String getTextChat()
     {
         return currChat.toString();
     }
 
+    /**
+     * removes one character from the end of currChat
+     */
     public static void backspace()
     {
         if (currChat.length() > 0)
@@ -97,6 +113,10 @@ public class ChatDrawing
         }
     }
 
+    /**
+     * added another character to the end of currChat
+     * @param c the character to add
+     */
     public static void addLetter(char c)
     {
         currChat.append(c);

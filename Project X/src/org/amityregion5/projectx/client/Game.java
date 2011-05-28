@@ -42,6 +42,7 @@ import org.amityregion5.projectx.common.communication.messages.ClientMovingMessa
 import org.amityregion5.projectx.common.communication.messages.EntityMovedMessage;
 import org.amityregion5.projectx.common.communication.messages.FiredMessage;
 import org.amityregion5.projectx.common.communication.messages.FiringMessage;
+import org.amityregion5.projectx.common.communication.messages.InGameChatMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.EntityConstants;
@@ -57,7 +58,8 @@ import org.amityregion5.projectx.server.Server;
  * @author Mike DiBuduo
  * @author Mike Wenke
  */
-public class Game implements GameInputListener, MessageListener, RawListener {
+public class Game implements GameInputListener, MessageListener, RawListener
+{
 
     private CommunicationHandler ch; // current CommunicationHandler
     private RawCommunicationHandler rch; // current raw communications handler
@@ -137,7 +139,7 @@ public class Game implements GameInputListener, MessageListener, RawListener {
                 return;
             }
 
-            if (keyCode == Keys.CHAT && !isChatting)
+            if (keyCode == Keys.CHAT)
             {
                 isChatting = true;
                 return;
@@ -151,7 +153,9 @@ public class Game implements GameInputListener, MessageListener, RawListener {
             }
             int deg = calcMeDeg();
             if (deg == Integer.MIN_VALUE)
+            {
                 return;
+            }
             ClientMovingMessage c = new ClientMovingMessage(Player.INITIAL_SPEED, deg);
             ch.send(c);
         } else
@@ -159,8 +163,21 @@ public class Game implements GameInputListener, MessageListener, RawListener {
 
             if (keyCode == KeyEvent.VK_ENTER)
             {
-                ChatDrawing.drawChat(ChatDrawing.getTextChat());
-                ChatDrawing.clearChat();
+
+                String s = ChatDrawing.getTextChat().toString().trim();
+                if (s.length() <= 0)
+                {
+                    ChatDrawing.clearChat();
+                } else
+                {
+                    ChatDrawing.drawChat(s);
+                    ChatDrawing.clearChat();
+                }
+                InGameChatMessage cm = new InGameChatMessage(ChatDrawing.getTextChat());
+                ch.send(cm);
+            } else if (keyCode == KeyEvent.VK_BACK_SPACE)
+            {
+                ChatDrawing.backspace();
             } else
             {
                 // handled in other keyPressed method
@@ -171,7 +188,7 @@ public class Game implements GameInputListener, MessageListener, RawListener {
 
     public void keyPressed(KeyEvent e)
     {
-        if (isChatting && !e.isActionKey())
+        if (isChatting && !(e.isActionKey() || e.getKeyCode() == KeyEvent.VK_SHIFT || e.getKeyCode() == KeyEvent.VK_ALT))
         {
             ChatDrawing.addLetter(e.getKeyChar());
         }
@@ -209,21 +226,30 @@ public class Game implements GameInputListener, MessageListener, RawListener {
         }
 
         if (right && down)
+        {
             deg = 45;
-        else if (left && down)
+        } else if (left && down)
+        {
             deg = 135;
-        else if (up && left)
+        } else if (up && left)
+        {
             deg = 225;
-        else if (up && right)
+        } else if (up && right)
+        {
             deg = 315;
-        else if (right)
+        } else if (right)
+        {
             deg = 0;
-        else if (down)
+        } else if (down)
+        {
             deg = 90;
-        else if (left)
+        } else if (left)
+        {
             deg = 180;
-        else if (up)
+        } else if (up)
+        {
             deg = 270;
+        }
 
         return deg;
     }
@@ -241,7 +267,9 @@ public class Game implements GameInputListener, MessageListener, RawListener {
         }
         int deg = calcMeDeg();
         if (deg == Integer.MIN_VALUE)
+        {
             deg = me.getDirectionMoving();
+        }
         ClientMovingMessage c = new ClientMovingMessage(speed, deg);
         ch.send(c);
     }
@@ -383,7 +411,9 @@ public class Game implements GameInputListener, MessageListener, RawListener {
 
     }
 
-    private class DirectionalUpdateThread extends Thread {
+    private class DirectionalUpdateThread extends Thread
+    {
+
         private boolean keepRunning = true;
 
         /**
