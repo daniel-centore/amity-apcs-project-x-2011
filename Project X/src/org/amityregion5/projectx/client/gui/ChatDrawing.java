@@ -46,6 +46,7 @@ public class ChatDrawing
     private static final int X_MARGIN = 10;
     private static final int Y_MARGIN = 50;
     private static final int HEIGHT_MARGIN = 15;
+    private static final int TEXT_OVERFLOW = 75;
 
     static
     {
@@ -62,6 +63,7 @@ public class ChatDrawing
         BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = (Graphics2D) result.getGraphics();
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
+        int k = 1;// used for making the text not ovrflow
         Rectangle r = new Rectangle(X_MARGIN, (HEIGHT_MARGIN * NUM_CHATS), width - Y_MARGIN, g2.getFont().getSize() + 2);
         final int DISTANCE_BETWEEN_CHATS = g2.getFont().getSize();
         final int MARGIN = Y_MARGIN - (HEIGHT_MARGIN * 2);
@@ -75,6 +77,16 @@ public class ChatDrawing
         if (isChatting)
         {
             g2.setColor(Color.BLACK);
+            if (currChat.length() >= TEXT_OVERFLOW * k)
+            {
+                k++;
+                r = new Rectangle(X_MARGIN, (HEIGHT_MARGIN * NUM_CHATS), width - Y_MARGIN, (g2.getFont().getSize() + 2) * k);
+            }
+            else if(currChat.length() < TEXT_OVERFLOW * k && k > 1)
+            {
+                k--;
+                r = new Rectangle(X_MARGIN, (HEIGHT_MARGIN * NUM_CHATS), width - Y_MARGIN, (g2.getFont().getSize() + 2) * k);
+            }
             g2.draw(r);
             g2.drawString(currChat.toString(), X_MARGIN + 5, g2.getFont().getSize() + (HEIGHT_MARGIN * NUM_CHATS));
             g2.setColor(Color.BLACK);
@@ -89,6 +101,7 @@ public class ChatDrawing
      */
     public static void drawChat(String chat)
     {
+        System.out.println(chat);
         chats.add(chat);
     }
 
@@ -103,7 +116,7 @@ public class ChatDrawing
      */
     public static void clearChat()
     {
-        currChat.delete(0, currChat.length());
+        currChat.delete(0, currChat.length());        
         isChatting = false;
     }
 
@@ -153,8 +166,6 @@ public class ChatDrawing
     {
         return isChatting;
     }
-
-    static int i = 0;
 
     public static void main(String[] args)
     {
@@ -211,7 +222,7 @@ public class ChatDrawing
                 //
             }
         });
-        jf.setSize(600, 200);
+        jf.setSize(600, 600);
         jf.add(jp, BorderLayout.CENTER);
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jf.setVisible(true);
