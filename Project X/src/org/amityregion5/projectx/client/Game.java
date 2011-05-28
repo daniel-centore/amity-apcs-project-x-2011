@@ -33,6 +33,7 @@ import org.amityregion5.projectx.client.gui.RepaintHandler;
 import org.amityregion5.projectx.client.gui.input.InputHandler;
 import org.amityregion5.projectx.client.gui.input.Keys;
 import org.amityregion5.projectx.client.handlers.EntityHandler;
+import org.amityregion5.projectx.client.preferences.PreferenceManager;
 import org.amityregion5.projectx.common.communication.MessageListener;
 import org.amityregion5.projectx.common.communication.RawListener;
 import org.amityregion5.projectx.common.communication.messages.AddEntityMessage;
@@ -51,7 +52,7 @@ import org.amityregion5.projectx.common.maps.AbstractMap;
 import org.amityregion5.projectx.server.Server;
 
 /**
- * Class documentation.
+ * The umbrella logistics class for the client-side game.
  * 
  * @author Joe Stein
  * @author Daniel Centore
@@ -168,12 +169,9 @@ public class Game implements GameInputListener, MessageListener, RawListener
                 if (s.length() <= 0)
                 {
                     ChatDrawing.clearChat();
-                } else
-                {
-                    ChatDrawing.drawChat(s);
-                    ChatDrawing.clearChat();
                 }
-                InGameChatMessage cm = new InGameChatMessage(ChatDrawing.getTextChat());
+                ChatMessage cm = new ChatMessage(ChatDrawing.getTextChat(),
+                        PreferenceManager.getUsername());
                 ch.send(cm);
             } else if (keyCode == KeyEvent.VK_BACK_SPACE)
             {
