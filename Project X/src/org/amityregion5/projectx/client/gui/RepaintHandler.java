@@ -24,6 +24,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Stroke;
+import java.awt.image.BufferedImage;
 
 import org.amityregion5.projectx.client.Game;
 import org.amityregion5.projectx.common.entities.Entity;
@@ -39,6 +40,8 @@ import org.amityregion5.projectx.common.maps.AbstractMap;
 public class RepaintHandler extends Thread {
 
     private static Game game; // game we are based from
+    public static final int CHAT_WIDTH = 500;
+    public static final int CHAT_HEIGHT = 150;
 
     /**
      * Sets the game we are using
@@ -109,6 +112,15 @@ public class RepaintHandler extends Thread {
             }
         }
 
+        // draw chat
+        BufferedImage chat = ChatDrawing.getChat(CHAT_WIDTH, CHAT_HEIGHT);
+        if (chat != null)
+        {
+            g.drawImage(chat, 5,
+                    img.getHeight(null) - CHAT_HEIGHT - 5,
+                    null);
+        }
+        
         return img;
     }
 }

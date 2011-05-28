@@ -69,7 +69,6 @@ public class Game implements GameInputListener, MessageListener, RawListener
     private EntityHandler entityHandler; // current EntityHandler
     private List<Integer> depressedKeys = new ArrayList<Integer>();
     private DirectionalUpdateThread dUpThread;
-    private boolean isChatting = false;
     private int lastMouseX; // last mouse coordinates, so we can update direction as moving
     private int lastMouseY;
 
@@ -130,21 +129,48 @@ public class Game implements GameInputListener, MessageListener, RawListener
         ch.send(new FiringMessage(false));
     }
 
-    public void keyPressed(int keyCode)
+    public void keyPressed(KeyEvent e)
     {
-        // System.out.println("key " + keyCode + " pressed");
-        if (!isChatting)
+        int keyCode = e.getKeyCode();
+        if (ChatDrawing.isChatting() && !(e.isActionKey() ||
+                e.getKeyCode() == KeyEvent.VK_SHIFT ||
+                e.getKeyCode() == KeyEvent.VK_ALT ||
+                e.getKeyCode() == KeyEvent.VK_ENTER ||
+                e.getKeyCode() == KeyEvent.VK_BACK_SPACE ||
+                e.getKeyCode() == KeyEvent.VK_CONTROL))
         {
+            ChatDrawing.addLetter(e.getKeyChar());
+        } else if (ChatDrawing.isChatting())
+        {
+            if (keyCode == KeyEvent.VK_ENTER)
+            {
+
+                String s = ChatDrawing.getTextChat().trim();
+                if (s.length() <= 0)
+                {
+                    ChatDrawing.clearChat();
+                    return;
+                }
+                ChatMessage cm = new ChatMessage(ChatDrawing.getTextChat(),
+                        PreferenceManager.getUsername());
+                ChatDrawing.clearChat();
+                ch.send(cm);
+            } else if (keyCode == KeyEvent.VK_BACK_SPACE)
+            {
+                ChatDrawing.backspace();
+            }
+        } else // not chatting
+        {
+            if (keyCode == Keys.CHAT)
+            {
+                ChatDrawing.setChatting(true);
+                return;
+            }
             if (me == null)
             {
                 return;
             }
-
-            if (keyCode == Keys.CHAT)
-            {
-                isChatting = true;
-                return;
-            } else if (!depressedKeys.contains(keyCode))
+            if (!depressedKeys.contains(keyCode))
             {
                 depressedKeys.add(keyCode);
             } else
@@ -159,36 +185,6 @@ public class Game implements GameInputListener, MessageListener, RawListener
             }
             ClientMovingMessage c = new ClientMovingMessage(Player.INITIAL_SPEED, deg);
             ch.send(c);
-        } else
-        {
-
-            if (keyCode == KeyEvent.VK_ENTER)
-            {
-
-                String s = ChatDrawing.getTextChat().toString().trim();
-                if (s.length() <= 0)
-                {
-                    ChatDrawing.clearChat();
-                }
-                ChatMessage cm = new ChatMessage(ChatDrawing.getTextChat(),
-                        PreferenceManager.getUsername());
-                ch.send(cm);
-            } else if (keyCode == KeyEvent.VK_BACK_SPACE)
-            {
-                ChatDrawing.backspace();
-            } else
-            {
-                // handled in other keyPressed method
-            }
-
-        }
-    }
-
-    public void keyPressed(KeyEvent e)
-    {
-        if (isChatting && !(e.isActionKey() || e.getKeyCode() == KeyEvent.VK_SHIFT || e.getKeyCode() == KeyEvent.VK_ALT))
-        {
-            ChatDrawing.addLetter(e.getKeyChar());
         }
     }
 

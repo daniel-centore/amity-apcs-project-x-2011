@@ -29,6 +29,7 @@ import java.util.List;
  *
  * @author Michael Wenke
  * @author Daniel Centore
+ * @author Joe Stein
  */
 public class KeyboardInput implements KeyListener {
 
@@ -48,7 +49,6 @@ public class KeyboardInput implements KeyListener {
         if (!depressed.contains((Integer) e.getKeyCode()))
         {
             depressed.add(e.getKeyCode());
-            InputHandler.keyPressed(e.getKeyCode());
             InputHandler.keyPressed(e);
         }
     }

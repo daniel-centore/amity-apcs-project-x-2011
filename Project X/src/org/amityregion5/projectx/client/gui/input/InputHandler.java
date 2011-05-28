@@ -79,12 +79,6 @@ public class InputHandler {
             g.mouseReleased(x, y, button);
     }
 
-    public static void keyPressed(int keyCode) // this includes key repeats
-    {
-        for(GameInputListener g : gils)
-            g.keyPressed(keyCode);
-    }
-
     public static void keyReleased(int keyCode) // only when key is released
     {
         for(GameInputListener g : gils)

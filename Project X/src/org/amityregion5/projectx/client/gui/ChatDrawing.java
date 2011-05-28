@@ -108,6 +108,15 @@ public class ChatDrawing
     }
 
     /**
+     * Sets whether or not we are chatting.
+     * @param chatting true if we're chatting, false if not
+     */
+    public static void setChatting(boolean chatting)
+    {
+        isChatting = chatting;
+    }
+
+    /**
      * gets the String value of the currChat
      * @return the current text that is in the chat box
      */
@@ -135,6 +144,16 @@ public class ChatDrawing
     {
         currChat.append(c);
     }
+
+    /**
+     * Returns whether or not we are chatting.
+     * @return whether or not we are chatting
+     */
+    public static boolean isChatting()
+    {
+        return isChatting;
+    }
+
     static int i = 0;
 
     public static void main(String[] args)
@@ -192,7 +211,7 @@ public class ChatDrawing
                 //
             }
         });
-        jf.setSize(600, 100);
+        jf.setSize(600, 200);
         jf.add(jp, BorderLayout.CENTER);
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jf.setVisible(true);
