@@ -50,7 +50,7 @@ public class ChatDrawing
 
     static
     {
-        // adds three empty strings so we don't get an
+        // adds NUM_CHATS empty strings so we don't get an
         // ArrayIndexOutOfBoundsException later
         for (int i = 1; i <= NUM_CHATS; i++)
         {
@@ -62,8 +62,8 @@ public class ChatDrawing
     {
         BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = (Graphics2D) result.getGraphics();
-        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.7f));
-        int k = 1;// used for making the text not ovrflow
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+        int k = 1;//used for making the text not ovrflow
         Rectangle r = new Rectangle(X_MARGIN, (HEIGHT_MARGIN * NUM_CHATS), width - Y_MARGIN, g2.getFont().getSize() + 2);
         final int DISTANCE_BETWEEN_CHATS = g2.getFont().getSize();
         final int MARGIN = Y_MARGIN - (HEIGHT_MARGIN * 2);
@@ -76,6 +76,7 @@ public class ChatDrawing
         }
         if (isChatting)
         {
+            //TODO make the letters also appear on the new line
             g2.setColor(Color.BLACK);
             if (currChat.length() >= TEXT_OVERFLOW * k)
             {
