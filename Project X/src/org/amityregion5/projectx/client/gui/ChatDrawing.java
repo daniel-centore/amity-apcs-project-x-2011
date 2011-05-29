@@ -25,6 +25,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
@@ -63,11 +64,12 @@ public class ChatDrawing
         BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = (Graphics2D) result.getGraphics();
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         int k = 1;//used for making the text not ovrflow
         Rectangle r = new Rectangle(X_MARGIN, (HEIGHT_MARGIN * NUM_CHATS), width - Y_MARGIN, g2.getFont().getSize() + 2);
         final int DISTANCE_BETWEEN_CHATS = g2.getFont().getSize();
         final int MARGIN = Y_MARGIN - (HEIGHT_MARGIN * 2);
-        int j = 0;// used for printing chats lower than the last
+        int j = 0;// used for printing chats lower than the last. represents number of lines this chat is
         for (int i = chats.size() - NUM_CHATS; i < chats.size(); i++)
         {
             g2.setColor(Color.BLACK);
@@ -105,12 +107,6 @@ public class ChatDrawing
         System.out.println(chat);
         chats.add(chat);
     }
-
-    /**public static void setChat(boolean chat)
-    {
-        isChatting = chat;
-    }
-     */
 
     /**
      * clears the chat box and sets isChatting to false
