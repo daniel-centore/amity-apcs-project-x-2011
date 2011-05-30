@@ -20,18 +20,12 @@
 package org.amityregion5.projectx.client.gui;
 
 import java.awt.AlphaComposite;
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 /**
  *
@@ -164,64 +158,4 @@ public class ChatDrawing
         return isChatting;
     }
 
-    public static void main(String[] args)
-    {
-        JFrame jf = new JFrame();
-        final JPanel jp = new JPanel()
-        {
-
-            @Override
-            public void paintComponent(Graphics g)
-            {
-                g.clearRect(0, 0, this.getWidth(), this.getHeight());
-                g.drawImage(getChat(this.getWidth(), this.getHeight()), 0, 0, null);
-            }
-        };
-        jf.addKeyListener(new KeyListener()
-        {
-
-            public void keyTyped(KeyEvent e)
-            {
-                // ignore
-            }
-
-            public void keyPressed(KeyEvent e)
-            {
-                int keyCode = e.getKeyCode();
-                if (keyCode == KeyEvent.VK_T && !isChatting)
-                {
-                    isChatting = true;
-                } else if (keyCode == KeyEvent.VK_ENTER && isChatting)
-                {
-                    String s = currChat.toString().trim();
-                    if (s.length() <= 0)
-                    {
-                        clearChat();
-                    } else
-                    {
-                        drawChat(s);
-                        clearChat();
-                    }
-                } else if (keyCode == KeyEvent.VK_BACK_SPACE)
-                {
-                    backspace();
-                } 
-                else if (isChatting && !(e.isActionKey() || keyCode == KeyEvent.VK_SHIFT || keyCode == KeyEvent.VK_ALT))
-                {
-                    addLetter(e.getKeyChar());
-                }
-
-                jp.repaint();
-            }
-
-            public void keyReleased(KeyEvent e)
-            {
-                //
-            }
-        });
-        jf.setSize(600, 600);
-        jf.add(jp, BorderLayout.CENTER);
-        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jf.setVisible(true);
-    }
 }
