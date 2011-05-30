@@ -91,6 +91,13 @@ public class GameWindow extends JFrame {
                 Image img = createImage(w, h);
                 img.getGraphics().drawImage(buffer, (xOffset = scale[2]), (yOffset = scale[3]), scale[0], scale[1], null);
 
+                // draw chat
+                BufferedImage chat = ChatDrawing.getChat(ChatDrawing.CHAT_WIDTH, ChatDrawing.CHAT_HEIGHT);
+                if (chat != null)
+                {
+                    img.getGraphics().drawImage(chat, xOffset, img.getHeight(null) - ChatDrawing.CHAT_HEIGHT - yOffset, null);
+                }
+                
                 g.drawImage(img, 0, 0, null);
             }
         };
@@ -152,6 +159,7 @@ public class GameWindow extends JFrame {
     public static void fireRepaintRequired()
     {
         buffer = RepaintHandler.getMapFlatImage();
+        
         panel.repaint();
     }
 

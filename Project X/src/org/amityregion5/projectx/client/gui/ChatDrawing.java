@@ -28,20 +28,22 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 /**
- *
+ * 
  * @author Mike DiBuduo
  */
-public class ChatDrawing
-{
+public class ChatDrawing {
 
-    private static final int NUM_CHATS = 5; //max number of chats that can be visible at once
-    private static ArrayList<String> chats = new ArrayList<String>(); //all of the chats
+    private static final int NUM_CHATS = 5; // max number of chats that can be visible at once
+    private static ArrayList<String> chats = new ArrayList<String>(); // all of the chats
     private static boolean isChatting = false;
-    private static StringBuffer currChat = new StringBuffer();//the current chat
+    private static StringBuffer currChat = new StringBuffer();// the current chat
     private static final int X_MARGIN = 10;
     private static final int Y_MARGIN = 50;
     private static final int HEIGHT_MARGIN = 15;
     private static final int TEXT_OVERFLOW = 75;
+
+    public static final int CHAT_WIDTH = 500;
+    public static final int CHAT_HEIGHT = 150;
 
     static
     {
@@ -59,7 +61,7 @@ public class ChatDrawing
         Graphics2D g2 = (Graphics2D) result.getGraphics();
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        int k = 1;//used for making the text not ovrflow
+        int k = 1;// used for making the text not ovrflow
         Rectangle r = new Rectangle(X_MARGIN, (HEIGHT_MARGIN * NUM_CHATS), width - Y_MARGIN, g2.getFont().getSize() + 2);
         final int DISTANCE_BETWEEN_CHATS = g2.getFont().getSize();
         final int MARGIN = Y_MARGIN - (HEIGHT_MARGIN * 2);
@@ -72,14 +74,13 @@ public class ChatDrawing
         }
         if (isChatting)
         {
-            //TODO make the letters also appear on the new line
+            // TODO make the letters also appear on the new line
             g2.setColor(Color.BLACK);
             if (currChat.length() >= TEXT_OVERFLOW * k)
             {
                 k++;
                 r = new Rectangle(X_MARGIN, (HEIGHT_MARGIN * NUM_CHATS), width - Y_MARGIN, (g2.getFont().getSize() + 2) * k);
-            }
-            else if(currChat.length() < TEXT_OVERFLOW * k && k > 1)
+            } else if (currChat.length() < TEXT_OVERFLOW * k && k > 1)
             {
                 k--;
                 r = new Rectangle(X_MARGIN, (HEIGHT_MARGIN * NUM_CHATS), width - Y_MARGIN, (g2.getFont().getSize() + 2) * k);
@@ -94,6 +95,7 @@ public class ChatDrawing
 
     /**
      * adds the chat to the ArrayList
+     * 
      * @param chat the chat that is about to be sent
      */
     public static void drawChat(String chat)
@@ -107,12 +109,13 @@ public class ChatDrawing
      */
     public static void clearChat()
     {
-        currChat.delete(0, currChat.length());        
+        currChat.delete(0, currChat.length());
         isChatting = false;
     }
 
     /**
      * Sets whether or not we are chatting.
+     * 
      * @param chatting true if we're chatting, false if not
      */
     public static void setChatting(boolean chatting)
@@ -122,6 +125,7 @@ public class ChatDrawing
 
     /**
      * gets the String value of the currChat
+     * 
      * @return the current text that is in the chat box
      */
     public static String getTextChat()
@@ -142,6 +146,7 @@ public class ChatDrawing
 
     /**
      * added another character to the end of currChat
+     * 
      * @param c the character to add
      */
     public static void addLetter(char c)
@@ -151,6 +156,7 @@ public class ChatDrawing
 
     /**
      * Returns whether or not we are chatting.
+     * 
      * @return whether or not we are chatting
      */
     public static boolean isChatting()
