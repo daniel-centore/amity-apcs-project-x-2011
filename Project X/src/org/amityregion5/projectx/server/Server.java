@@ -86,7 +86,7 @@ public class Server {
             System.out.println("Starting multicaster...");
             multicaster.start();
             System.out.println("Creating raw server...");
-            rawServ = new RawServer(Constants.RAW_PORT,this);
+            rawServ = new RawServer(Constants.RAW_PORT, this);
             rawServ.start();
             System.out.println("Raw listening on port " + Constants.RAW_PORT);
         } catch (IOException e)
@@ -188,8 +188,7 @@ public class Server {
     }
 
     /**
-     * Tells the server whether or not to listen for client
-     * Note: setting to true does not actually start the listening thread
+     * Tells the server whether or not to listen for client Note: setting to true does not actually start the listening thread
      * 
      * @param listening True if it should; false otherwise
      */
@@ -325,7 +324,7 @@ public class Server {
 
         relayMessage(new StatusUpdateMessage(StatusUpdateMessage.Type.STARTING));
         gameController = new GameController(this);
-        
+
     }
 
     /**
@@ -360,7 +359,7 @@ public class Server {
                         else
                             newc.kill();
                     }
-                    
+
                     newc.start();
                     if (controller != null)
                     {

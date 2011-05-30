@@ -85,7 +85,7 @@ public class RawClient extends Thread {
                 this.handle(dir);
             } catch (IOException ex)
             {
-                server.relayMessage(new RemoveEntityMessage(player));                                       
+                server.relayMessage(new RemoveEntityMessage(player));
                 Logger.getLogger(RawClient.class.getName()).log(Level.SEVERE, null, ex);
                 kill();
             }
@@ -99,6 +99,8 @@ public class RawClient extends Thread {
 
     private void handle(int dir)
     {
+        if(player == null)
+            return;
         player.setDirectionFacing(dir);
     }
 

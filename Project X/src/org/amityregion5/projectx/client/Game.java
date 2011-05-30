@@ -243,7 +243,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
     public void keyReleased(int keyCode)
     {
         int speed = Player.INITIAL_SPEED;
-        
+
         while (depressedKeys.contains(keyCode))
         {
             depressedKeys.remove((Integer) keyCode);
@@ -353,9 +353,10 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                 e.setX(Double.valueOf(entVals[1]));
                 e.setY(Double.valueOf(entVals[2]));
                 e.setDirectionFacing(Integer.valueOf(entVals[3]));
+                System.out.println("Facing: " + entVals[3]);
             }
         }
-        mouseMoved(lastMouseX, lastMouseY); // update angle
+//        mouseMoved(lastMouseX, lastMouseY); // update angle
 
         if (GameWindow.createImage() != null)
         {
