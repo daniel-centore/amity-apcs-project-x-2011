@@ -18,27 +18,33 @@
  */
 package org.amityregion5.projectx.server.game;
 
+import java.awt.Rectangle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.EntityConstants;
+import org.amityregion5.projectx.common.entities.characters.Player;
+import org.amityregion5.projectx.common.maps.AbstractMap;
 import org.amityregion5.projectx.server.communication.RawServer;
 
 /**
  * A thread that will move all Entities by need.
+ * TODO handles collision detection
  * 
  * @author Joe Stein
  */
 public class EntityMoverThread extends Thread {
-    private boolean keepRunning = true;
-    private GameController gameController;
-    private RawServer rawServer;
+    private boolean keepRunning = true; // keep moving entities
+    private GameController gameController; // used for getting entities
+    private RawServer rawServer; // used for communications e.g. loc updates
+    private AbstractMap map; // used for collision detection
 
-    public EntityMoverThread(GameController gc, RawServer rawServ)
+    public EntityMoverThread(GameController gc, RawServer rs, AbstractMap m)
     {
         gameController = gc;
-        rawServer = rawServ;
+        rawServer = rs;
+        map = m;
     }
 
     @Override
@@ -51,11 +57,27 @@ public class EntityMoverThread extends Thread {
                 double r = e.getMoveSpeed();
                 if (r > 0)
                 {
+                    // TODO make sure this Entity doesn't collide with
+                    // anything. If entity is a player, don't let it
+                    // leave the spawn area!
                     double theta = e.getDirectionMoving();
-                    double deltaX = r * Math.cos(Math.toRadians(theta));
-                    double deltaY = r * Math.sin(Math.toRadians(theta));
-                    e.setX(e.getX() + deltaX);
-                    e.setY(e.getY() + deltaY);
+                    double newX = r * Math.cos(Math.toRadians(theta))
+                            + e.getX();
+                    double newY = r * Math.sin(Math.toRadians(theta))
+                            + e.getY();
+                    if (e instanceof Player)
+                    {
+                        Rectangle thb = e.getHitBox();
+                        thb.setLocation((int) newX, (int) newY);
+                        if (map.getPlayArea().contains(thb))
+                        {
+                            e.setX(newX);
+                            e.setY(newY);
+                        }
+                    } else {
+                        e.setX(newX);
+                        e.setY(newY);
+                    }
                 }
             }
             sendAggregateUpdateMessage();

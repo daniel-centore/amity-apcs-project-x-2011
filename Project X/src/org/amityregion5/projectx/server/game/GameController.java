@@ -18,18 +18,20 @@
  */
 package org.amityregion5.projectx.server.game;
 
+import java.awt.Image;
 import java.awt.Point;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
-import org.amityregion5.projectx.client.Game;
 
 import org.amityregion5.projectx.common.communication.messages.AddEntityMessage;
 import org.amityregion5.projectx.common.communication.messages.AddMeMessage;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.characters.Player;
 import org.amityregion5.projectx.common.maps.AbstractMap;
+import org.amityregion5.projectx.common.maps.TestingMap;
 import org.amityregion5.projectx.server.Server;
 import org.amityregion5.projectx.server.communication.Client;
 
@@ -38,6 +40,7 @@ import org.amityregion5.projectx.server.communication.Client;
  * 
  * @author Daniel Centore
  * @author Michael Wenke
+ * @author Joe Stein
  */
 public class GameController {
 
@@ -55,6 +58,7 @@ public class GameController {
      */
     public GameController(Server server)
     {
+        map = new TestingMap();
         this.server = server;
         players = new ArrayList<Player>();
         clients = server.getClients().values();
@@ -64,7 +68,16 @@ public class GameController {
         Random r = new Random();
         for (Client c : clients)
         {
-            Player p = new Player(r.nextInt(500), r.nextInt(500));
+            // TODO spawn points!!
+            Player p = new Player(0,0);
+            int spawnY = (int) (map.getPlayArea().getY() +
+                    r.nextInt((int) map.getPlayArea().getHeight() -
+                    p.getHeight()));
+            int spawnX = (int) (map.getPlayArea().getX() +
+                    r.nextInt((int) map.getPlayArea().getWidth() -
+                    p.getWidth()));
+            p.setLocation(new Point2D.Double(spawnX,spawnY));
+            p.setHitBox(p.getWidth(),p.getHeight());
             players.add(p);
             entities.add(p);
             c.setPlayer(p);
@@ -78,7 +91,7 @@ public class GameController {
                 c.send(new AddEntityMessage(p));
         }
 
-        entityMoverThread = new EntityMoverThread(this,server.getRawServer());
+        entityMoverThread = new EntityMoverThread(this,server.getRawServer(),map);
         entityMoverThread.start();
     }
 

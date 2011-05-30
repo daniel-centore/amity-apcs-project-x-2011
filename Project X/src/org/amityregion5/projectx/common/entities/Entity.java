@@ -20,6 +20,7 @@
 package org.amityregion5.projectx.common.entities;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
@@ -37,7 +38,7 @@ public abstract class Entity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private static long nextUniqueID = 0; // so each entity has a unique ID
+    private static transient long nextUniqueID = 0; // so each entity has a unique ID
 
     private final long uniqueID; // necessary to check identity content changes.
     private Point2D location; // the entity's location
@@ -54,6 +55,7 @@ public abstract class Entity implements Serializable {
     private transient boolean needUpdate; // do we need to resend the location?
 
     private transient boolean justFired; // did this client fire since the last repaint?
+    private Rectangle hitBox; // a rudimentary hit boundary
 
     /**
      * Default entity constructor. Sets sane (but not really useful) default values. Use this directly as little as possible.
@@ -61,6 +63,7 @@ public abstract class Entity implements Serializable {
     public Entity()
     {
         uniqueID = nextUniqueID++;
+        hitBox = new Rectangle(1,1); // default tiny hitbox
         location = new Point2D.Double(0, 0);
         image = null;
         directionFacing = 0;
@@ -363,6 +366,26 @@ public abstract class Entity implements Serializable {
     public void setFired(boolean justFired)
     {
         this.justFired = justFired;
+    }
+
+    /**
+     * Sets a rudimentary hit box for primitive collision detection.
+     * NOTE danielle, we can remove this later. CALM DOWN
+     * @param width width of the hit box
+     * @param height height of the hit box
+     */
+    public void setHitBox(int width, int height)
+    {
+        hitBox = new Rectangle(width,height);
+    }
+
+    /*
+     * Returns the hit box including the x and y.
+     */
+    public Rectangle getHitBox()
+    {
+        return new Rectangle((int) location.getX(), (int) location.getY(),
+                (int) hitBox.getWidth(), (int) hitBox.getHeight());
     }
 
 }

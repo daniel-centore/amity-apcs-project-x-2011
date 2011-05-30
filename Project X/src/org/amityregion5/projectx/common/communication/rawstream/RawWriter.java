@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- * Extension of DataOutputStream to read what we actually want.
+ * Extension of DataOutputStream to write what we actually want.
  *
  * @author Michael Zuo
  */

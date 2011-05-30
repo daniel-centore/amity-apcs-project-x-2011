@@ -19,7 +19,8 @@
 package org.amityregion5.projectx.server.controllers;
 
 /**
- * Class documentation.
+ * A minimal ServerController. Does not accept input, but can be used as
+ * a ServerController.
  *
  * @author Joe Stein
  */

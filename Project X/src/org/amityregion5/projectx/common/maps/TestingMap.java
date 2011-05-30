@@ -20,7 +20,6 @@
 package org.amityregion5.projectx.common.maps;
 
 import java.awt.Image;
-import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +31,6 @@ import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.items.field.Area;
 import org.amityregion5.projectx.common.entities.items.field.Wall;
 import org.amityregion5.projectx.common.tools.ImageHandler;
-import org.amityregion5.projectx.server.Server;
 
 /**
  * Testing map

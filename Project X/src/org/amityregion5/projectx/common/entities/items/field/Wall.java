@@ -29,7 +29,6 @@ import org.amityregion5.projectx.common.entities.Entity;
  */
 public class Wall extends Block implements Damageable {
     private static final long serialVersionUID = 1L;
-
     public static final int DEFAULT_HEALTH = 100;
 
     public Wall()

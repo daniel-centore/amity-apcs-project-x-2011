@@ -43,7 +43,6 @@ import org.amityregion5.projectx.common.communication.messages.ClientMovingMessa
 import org.amityregion5.projectx.common.communication.messages.EntityMovedMessage;
 import org.amityregion5.projectx.common.communication.messages.FiredMessage;
 import org.amityregion5.projectx.common.communication.messages.FiringMessage;
-import org.amityregion5.projectx.common.communication.messages.InGameChatMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.EntityConstants;
@@ -95,8 +94,7 @@ public class Game implements GameInputListener, MessageListener, RawListener
 
     public void mouseDragged(int x, int y)
     {
-        // TODO mouse dragged needs to turn the player just like
-        // mouseMoved did
+        mouseMoved(x,y);
     }
 
     public void mouseMoved(int x, int y)
@@ -303,6 +301,7 @@ public class Game implements GameInputListener, MessageListener, RawListener
         {
             FiredMessage fm = (FiredMessage) m;
             entityHandler.getEntity(fm.getID()).setFired(true);
+            GameWindow.fireRepaintRequired();
         }
     }
 

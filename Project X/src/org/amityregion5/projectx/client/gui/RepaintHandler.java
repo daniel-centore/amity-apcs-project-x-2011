@@ -86,6 +86,8 @@ public class RepaintHandler extends Thread {
         for (Entity e : game.getEntities()) // draw temporary entities
         {
             g.drawImage(e.getImage(), e.getX(), e.getY(), null);
+            g.setColor(Color.WHITE);
+            g.draw(e.getHitBox());
             if (e instanceof Player)
             {
                 // draw a laser sight for weapon direction
@@ -120,6 +122,8 @@ public class RepaintHandler extends Thread {
                     img.getHeight(null) - CHAT_HEIGHT - 5,
                     null);
         }
+
+        g.draw(game.getMap().getPlayArea());
         
         return img;
     }
