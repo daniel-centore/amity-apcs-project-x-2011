@@ -28,8 +28,10 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 /**
+ * Handles chatting
  * 
  * @author Mike DiBuduo
+ * @author Daniel Centore
  */
 public class ChatDrawing {
 
