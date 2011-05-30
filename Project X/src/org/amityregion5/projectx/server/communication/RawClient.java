@@ -24,6 +24,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.amityregion5.projectx.common.communication.messages.RemoveEntityMessage;
 import org.amityregion5.projectx.common.entities.characters.Player;
 import org.amityregion5.projectx.server.Server;
 
@@ -84,7 +85,7 @@ public class RawClient extends Thread {
                 this.handle(dir);
             } catch (IOException ex)
             {
-                server.getGameController().getEntities().remove(player);                                
+                server.relayMessage(new RemoveEntityMessage(player));                                       
                 Logger.getLogger(RawClient.class.getName()).log(Level.SEVERE, null, ex);
                 kill();
             }

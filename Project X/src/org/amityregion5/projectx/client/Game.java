@@ -46,6 +46,7 @@ import org.amityregion5.projectx.common.communication.messages.EntityMovedMessag
 import org.amityregion5.projectx.common.communication.messages.FiredMessage;
 import org.amityregion5.projectx.common.communication.messages.FiringMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
+import org.amityregion5.projectx.common.communication.messages.RemoveEntityMessage;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.EntityConstants;
 import org.amityregion5.projectx.common.entities.characters.Player;
@@ -296,6 +297,11 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         {
             FiredMessage fm = (FiredMessage) m;
             entityHandler.getEntity(fm.getID()).setFired(true);
+            GameWindow.fireRepaintRequired();
+        } else if (m instanceof RemoveEntityMessage)
+        {
+            RemoveEntityMessage rem = (RemoveEntityMessage) m;
+            entityHandler.removeEntity(rem.getPlayer());
             GameWindow.fireRepaintRequired();
         }
     }

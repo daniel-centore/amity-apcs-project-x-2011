@@ -18,16 +18,27 @@
  */
 package org.amityregion5.projectx.common.communication.messages;
 
+import org.amityregion5.projectx.client.handlers.EntityHandler;
+import org.amityregion5.projectx.common.entities.Entity;
+
 /**
- * Message for in game chats
+ * Class documentation.
  *
  * @author Mike DiBuduo
  */
-public class InGameChatMessage extends TextualMessage
-{    
-    public InGameChatMessage(String s)
+public class RemoveEntityMessage extends Message
+{
+    private Entity entity;
+    
+    public RemoveEntityMessage(Entity e)
     {
-        super(s);
+        entity = e;
     }
+
+    public Entity getPlayer()
+    {
+        return entity;        
+    }
+    
     
 }
