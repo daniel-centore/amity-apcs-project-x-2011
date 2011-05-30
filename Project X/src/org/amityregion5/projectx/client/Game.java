@@ -352,13 +352,24 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             {
                 e.setX(Double.valueOf(entVals[1]));
                 e.setY(Double.valueOf(entVals[2]));
-                e.setDirectionFacing(Integer.valueOf(entVals[3]));
-                System.out.println("Facing: " + entVals[3]);
+                
+                if (e == me)
+                {
+                    int x1 = me.getCenterX();
+                    int y1 = me.getCenterY();
+                    int angle = (int) Math.toDegrees(Math.atan2(lastMouseY - y1, lastMouseX - x1));
+
+                    me.setDirectionFacing(angle);
+                }
+                else
+                    e.setDirectionFacing(Integer.valueOf(entVals[3]));
+                
+//                System.out.println("Facing: " + entVals[3]);
             }
         }
 //        mouseMoved(lastMouseX, lastMouseY); // update angle
 
-        if (GameWindow.createImage() != null)
+        if (GameWindow.getInstance() != null)
         {
             // GameWindow is visible and running
             GameWindow.fireRepaintRequired();
