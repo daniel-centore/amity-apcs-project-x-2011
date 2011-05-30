@@ -68,7 +68,6 @@ public class GameController {
         Random r = new Random();
         for (Client c : clients)
         {
-            // TODO spawn points!!
             Player p = new Player(0,0);
             int spawnY = (int) (map.getPlayArea().getY() +
                     r.nextInt((int) map.getPlayArea().getHeight() -

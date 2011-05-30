@@ -58,8 +58,7 @@ public class EntityMoverThread extends Thread {
                 if (r > 0)
                 {
                     // TODO make sure this Entity doesn't collide with
-                    // anything. If entity is a player, don't let it
-                    // leave the spawn area!
+                    // anything.
                     double theta = e.getDirectionMoving();
                     double newX = r * Math.cos(Math.toRadians(theta))
                             + e.getX();
@@ -67,8 +66,12 @@ public class EntityMoverThread extends Thread {
                             + e.getY();
                     if (e instanceof Player)
                     {
+                        // FIXME this may take too much time/memory
                         Rectangle thb = e.getHitBox();
                         thb.setLocation((int) newX, (int) newY);
+                        // TODO if the play area doesn't contain the new
+                        // hit box (thb), move the player to the edge of the
+                        // play area. Keep in mind the player's direction.
                         if (map.getPlayArea().contains(thb))
                         {
                             e.setX(newX);
