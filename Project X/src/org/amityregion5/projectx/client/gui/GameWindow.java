@@ -30,6 +30,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
+import org.amityregion5.projectx.client.Game;
 import org.amityregion5.projectx.client.gui.input.KeyboardInput;
 import org.amityregion5.projectx.client.gui.input.MouseInput;
 import org.amityregion5.projectx.common.maps.AbstractMap;
@@ -53,12 +54,12 @@ public class GameWindow extends JFrame {
     private int xOffset; // how much screen is offset horizontally
     private int yOffset; // how much screen is offset vertically
 
-    public GameWindow(AbstractMap map)
+    public GameWindow(AbstractMap map, Game game)
     {
         super("Amity Project X");
 
         instance = this;
-
+        
         this.setBackground(Color.black);
 
         this.addWindowListener(new WindowAdapter() {
@@ -101,6 +102,8 @@ public class GameWindow extends JFrame {
                 g.drawImage(img, 0, 0, null);
             }
         };
+        
+        panel.addFocusListener(game);
 
         // register listeners
         MouseInput mi = new MouseInput();

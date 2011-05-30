@@ -19,6 +19,8 @@
 package org.amityregion5.projectx.client;
 
 import java.awt.Point;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,8 +60,7 @@ import org.amityregion5.projectx.server.Server;
  * @author Mike DiBuduo
  * @author Mike Wenke
  */
-public class Game implements GameInputListener, MessageListener, RawListener
-{
+public class Game implements GameInputListener, MessageListener, RawListener, FocusListener {
 
     private CommunicationHandler ch; // current CommunicationHandler
     private RawCommunicationHandler rch; // current raw communications handler
@@ -89,12 +90,11 @@ public class Game implements GameInputListener, MessageListener, RawListener
         InputHandler.registerListener(this);
         RepaintHandler.setGame(this);
 
-
     }
 
     public void mouseDragged(int x, int y)
     {
-        mouseMoved(x,y);
+        mouseMoved(x, y);
     }
 
     public void mouseMoved(int x, int y)
@@ -117,25 +117,18 @@ public class Game implements GameInputListener, MessageListener, RawListener
 
     public void mousePressed(int x, int y, int button)
     {
-        // TODO start firing
         ch.send(new FiringMessage(true));
     }
 
     public void mouseReleased(int x, int y, int button)
     {
-        // TODO stop firing
         ch.send(new FiringMessage(false));
     }
 
     public void keyPressed(KeyEvent e)
     {
         int keyCode = e.getKeyCode();
-        if (ChatDrawing.isChatting() && !(e.isActionKey() ||
-                e.getKeyCode() == KeyEvent.VK_SHIFT ||
-                e.getKeyCode() == KeyEvent.VK_ALT ||
-                e.getKeyCode() == KeyEvent.VK_ENTER ||
-                e.getKeyCode() == KeyEvent.VK_BACK_SPACE ||
-                e.getKeyCode() == KeyEvent.VK_CONTROL))
+        if (ChatDrawing.isChatting() && !(e.isActionKey() || e.getKeyCode() == KeyEvent.VK_SHIFT || e.getKeyCode() == KeyEvent.VK_ALT || e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_BACK_SPACE || e.getKeyCode() == KeyEvent.VK_CONTROL))
         {
             ChatDrawing.addLetter(e.getKeyChar());
         } else if (ChatDrawing.isChatting())
@@ -149,15 +142,15 @@ public class Game implements GameInputListener, MessageListener, RawListener
                     ChatDrawing.clearChat();
                     return;
                 }
-                ChatMessage cm = new ChatMessage(ChatDrawing.getTextChat(),
-                        PreferenceManager.getUsername());
+                ChatMessage cm = new ChatMessage(ChatDrawing.getTextChat(), PreferenceManager.getUsername());
                 ChatDrawing.clearChat();
                 ch.send(cm);
             } else if (keyCode == KeyEvent.VK_BACK_SPACE)
             {
                 ChatDrawing.backspace();
             }
-        } else // not chatting
+        } else
+        // not chatting
         {
             if (keyCode == Keys.CHAT)
             {
@@ -249,7 +242,8 @@ public class Game implements GameInputListener, MessageListener, RawListener
     public void keyReleased(int keyCode)
     {
         int speed = Player.INITIAL_SPEED;
-        if (depressedKeys.contains(keyCode))
+        
+        while (depressedKeys.contains(keyCode))
         {
             depressedKeys.remove((Integer) keyCode);
         }
@@ -260,6 +254,7 @@ public class Game implements GameInputListener, MessageListener, RawListener
         int deg = calcMeDeg();
         if (deg == Integer.MIN_VALUE)
         {
+            speed = 0;
             deg = me.getDirectionMoving();
         }
         ClientMovingMessage c = new ClientMovingMessage(speed, deg);
@@ -337,7 +332,7 @@ public class Game implements GameInputListener, MessageListener, RawListener
 
     public void initWindow()
     {
-        new GameWindow(map);
+        new GameWindow(map, this);
     }
 
     public void handle(String str)
@@ -404,8 +399,7 @@ public class Game implements GameInputListener, MessageListener, RawListener
 
     }
 
-    private class DirectionalUpdateThread extends Thread
-    {
+    private class DirectionalUpdateThread extends Thread {
 
         private boolean keepRunning = true;
 
@@ -439,5 +433,17 @@ public class Game implements GameInputListener, MessageListener, RawListener
         {
             return map;
         }
+    }
+
+    @Override
+    public void focusGained(FocusEvent arg0)
+    {
+    }
+
+    @Override
+    public void focusLost(FocusEvent arg0)
+    {
+        depressedKeys.clear();
+        me.setMoveSpeed(0);
     }
 }
