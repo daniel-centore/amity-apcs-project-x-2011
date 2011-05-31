@@ -55,6 +55,20 @@ public abstract class Character extends Entity implements Damageable {
         this.maxHealth = maxHealth;
         this.hp = health;
         currWeapon = 0;
+        weapons = new ArrayList<Weapon>();
+    }
+
+    public void changeWeapon(int wheelRotation)
+    {
+        int tmp = currWeapon + wheelRotation;
+        while (tmp < 0)
+        {
+            tmp = currWeapon + tmp;
+        }
+        while (tmp > weapons.size() - 1)
+        {
+            tmp = currWeapon - tmp;
+        }
     }
 
     /**

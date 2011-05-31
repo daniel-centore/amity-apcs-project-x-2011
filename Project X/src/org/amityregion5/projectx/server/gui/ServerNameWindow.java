@@ -96,12 +96,13 @@ public class ServerNameWindow extends javax.swing.JFrame
             {
                 serverNameField.setEnabled(false);
                 okBtn.setEnabled(false);
+                setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
             }
         });
-        setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         Server s = new Server(serverNameField.getText());
         AggregateServerController asc = new AggregateServerController(s);
         s.setController(asc);
+        this.dispose();
 
         
     }
@@ -117,16 +118,18 @@ public class ServerNameWindow extends javax.swing.JFrame
             {
                 startServer();
             }
-        } else if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE && serverNameField.getText().length() <= 1)
+        } else if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE)
         {
-            SwingUtilities.invokeLater(new Runnable()
+            if (serverNameField.getText().length() <= 1)
             {
-
-                public void run()
+                SwingUtilities.invokeLater(new Runnable()
                 {
-                    okBtn.setEnabled(false);
-                }
-            });
+                    public void run()
+                    {
+                        okBtn.setEnabled(false);
+                    }
+                });
+            }
         } else
         {
             if (Character.isISOControl(evt.getKeyChar()) ||

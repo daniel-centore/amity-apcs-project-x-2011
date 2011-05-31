@@ -21,6 +21,7 @@ package org.amityregion5.projectx.client;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseWheelEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -337,6 +338,11 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             GameWindow.fireRepaintRequired();
         }
 
+    }
+
+    public void mouseScrolled(MouseWheelEvent e)
+    {
+        me.changeWeapon(e.getWheelRotation());
     }
 
 

@@ -20,6 +20,7 @@
 package org.amityregion5.projectx.client.gui.input;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseWheelEvent;
 import java.util.ArrayList;
 
 import org.amityregion5.projectx.client.GameInputListener;
@@ -89,6 +90,12 @@ public class InputHandler {
     {
         for (GameInputListener g : gils)
             g.keyPressed(e);
+    }
+
+    public static void mouseScrolled(MouseWheelEvent e)
+    {
+        for (GameInputListener g : gils)
+            g.mouseScrolled(e);
     }
 
 }

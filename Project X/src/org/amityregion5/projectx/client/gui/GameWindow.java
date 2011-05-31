@@ -109,6 +109,7 @@ public class GameWindow extends JFrame {
         MouseInput mi = new MouseInput();
         panel.addMouseListener(mi);
         panel.addMouseMotionListener(mi);
+        panel.addMouseWheelListener(mi);
         panel.addKeyListener(new KeyboardInput());
 
         this.add(panel, BorderLayout.CENTER);

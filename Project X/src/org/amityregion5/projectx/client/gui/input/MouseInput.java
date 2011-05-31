@@ -23,6 +23,8 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 
 import org.amityregion5.projectx.client.gui.GameWindow;
 
@@ -32,7 +34,8 @@ import org.amityregion5.projectx.client.gui.GameWindow;
  * @author Daniel Centore
  * @author Mike Wenke
  */
-public class MouseInput implements MouseMotionListener, MouseListener {
+public class MouseInput implements MouseMotionListener, MouseListener,
+        MouseWheelListener {
 
     public void mouseDragged(MouseEvent e)
     {
@@ -109,6 +112,11 @@ public class MouseInput implements MouseMotionListener, MouseListener {
         int newY = GameWindow.GAME_HEIGHT * y / height;
 
         return new Point(newX, newY);
+    }
+
+    public void mouseWheelMoved(MouseWheelEvent e)
+    {
+        InputHandler.mouseScrolled(e);
     }
 
 }

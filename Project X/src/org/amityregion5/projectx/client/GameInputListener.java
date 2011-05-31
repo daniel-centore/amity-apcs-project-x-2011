@@ -19,6 +19,7 @@
 package org.amityregion5.projectx.client;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseWheelEvent;
 
 /**
  * Listens for game events
@@ -33,5 +34,6 @@ public interface GameInputListener
     public void mousePressed(int x, int y, int button);
     public void mouseReleased(int x, int y, int button);
     public void keyReleased(int keyCode); // only when key is released
+    public void mouseScrolled(MouseWheelEvent e);
     public void keyPressed(KeyEvent e);
 }
