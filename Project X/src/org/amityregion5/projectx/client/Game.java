@@ -150,7 +150,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         } else
         // not chatting
         {
-            if (keyCode == Keys.CHAT)
+            if (Keys.isKey(Keys.CHAT, keyCode))
             {
                 ChatDrawing.setChatting(true);
                 return;
@@ -179,60 +179,25 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
 
     private int calcMeDeg()
     {
-        int numPressed = depressedKeys.size();
-        if (numPressed == 0)
-        {
-            return Integer.MIN_VALUE;
-        }
-
         int deg = Integer.MIN_VALUE;
 
-        boolean left = false;
-        boolean right = false;
-        boolean up = false;
-        boolean down = false;
+        int left    = Keys.anyIsKey(Keys.LEFT,  depressedKeys) ? 1 : 0;
+        int right   = Keys.anyIsKey(Keys.RIGHT, depressedKeys) ? 1 : 0;
+        int up      = Keys.anyIsKey(Keys.DOWN,  depressedKeys) ? 1 : 0;
+        int down    = Keys.anyIsKey(Keys.UP,    depressedKeys) ? 1 : 0;
 
-        if (depressedKeys.contains(Keys.LEFT))
-        {
-            left = true;
-        } else if (depressedKeys.contains(Keys.RIGHT))
-        {
-            right = true;
-        }
+        int lr = right - left;
+        int ud = up - down;
 
-        if (depressedKeys.contains(Keys.DOWN))
-        {
-            down = true;
-        } else if (depressedKeys.contains(Keys.UP))
-        {
-            up = true;
-        }
+        // .round() isn't actually needed here, for two reasons:
+        // one, it's negligible for the players
+        // two, it's always right anyway
+        deg = (int) Math.toDegrees(Math.atan2(ud, lr));
 
-        if (right && down)
-        {
-            deg = 45;
-        } else if (left && down)
-        {
-            deg = 135;
-        } else if (up && left)
-        {
-            deg = 225;
-        } else if (up && right)
-        {
-            deg = 315;
-        } else if (right)
-        {
-            deg = 0;
-        } else if (down)
-        {
-            deg = 90;
-        } else if (left)
-        {
-            deg = 180;
-        } else if (up)
-        {
-            deg = 270;
-        }
+        if (lr == 0 && ud == 0)
+            deg = Integer.MIN_VALUE;
+        else
+            System.out.println(lr + " " + ud);
 
         return deg;
     }

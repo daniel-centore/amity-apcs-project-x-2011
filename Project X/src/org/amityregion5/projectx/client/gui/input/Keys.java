@@ -19,32 +19,70 @@
 package org.amityregion5.projectx.client.gui.input;
 
 import java.awt.event.KeyEvent;
+import java.util.List;
+
 import org.amityregion5.projectx.client.preferences.PreferenceManager;
 
 /**
  * A class with key codes.
- * Key CSVs are in the format: up,left,down,right
+ * Key CSVs are in the format: up;left;down;right
  *
- * @author Joe Stein 
- * @author Mike DiBuduo 
+ * @author Joe Stein
+ * @author Mike DiBuduo
+ * @author Michael Zuo
  */
 public class Keys {
-    // Note: key CSV's are in the format:
-    // <up>,<left>,<down>,<right>
-    public static int UP = KeyEvent.VK_UP;
-    public static int DOWN = KeyEvent.VK_DOWN;
-    public static int LEFT = KeyEvent.VK_LEFT;
-    public static int RIGHT = KeyEvent.VK_RIGHT;
-    public static int CHAT = KeyEvent.VK_T;
+    public static int[] UP      = { KeyEvent.VK_K, KeyEvent.VK_UP };
+    public static int[] DOWN    = { KeyEvent.VK_J, KeyEvent.VK_DOWN };
+    public static int[] LEFT    = { KeyEvent.VK_H, KeyEvent.VK_LEFT };
+    public static int[] RIGHT   = { KeyEvent.VK_L, KeyEvent.VK_RIGHT };
+    public static int[] CHAT    = { KeyEvent.VK_T, KeyEvent.VK_SEMICOLON };
 
     public static void refreshKeyPrefs()
     {
         String csv = PreferenceManager.getKeys();
-        String[] vals = csv.split(",");
-        UP = Integer.parseInt(vals[0]);
-        LEFT = Integer.parseInt(vals[1]);
-        DOWN = Integer.parseInt(vals[2]);
-        RIGHT = Integer.parseInt(vals[3]);
-        CHAT = Integer.parseInt(vals[4]);
+        String[] keyses = csv.split(";");
+        UP      = parseKeyList(keyses[0]);
+        LEFT    = parseKeyList(keyses[1]);
+        DOWN    = parseKeyList(keyses[2]);
+        RIGHT   = parseKeyList(keyses[3]);
+        CHAT    = parseKeyList(keyses[4]);
+    }
+
+    private static int[] parseKeyList(String keys)
+    {
+        String[] asList = keys.split(",");
+        int[] asInts = new int[asList.length];
+        for (int i = 0; i < asList.length; i++)
+        {
+            asInts[i] = Integer.parseInt(asList[i]);
+        }
+        return asInts;
+    }
+
+    public static boolean isKey(int[] keys, int want)
+    {
+        for (int each : keys)
+        {
+            if (want == each)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static boolean anyIsKey(int[] keys, List<Integer> want)
+    {
+        for (int each : want)
+        {
+            if (isKey(keys, each))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
