@@ -153,7 +153,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         } else
         // not chatting
         {
-            if (keyCode == Keys.CHAT)
+            if (Keys.isKey(Keys.CHAT, keyCode))
             {
                 ChatDrawing.setChatting(true);
                 return;
@@ -183,6 +183,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
     private int calcMeDeg()
     {
         int numPressed = depressedKeys.size();
+
         if (numPressed == 0)
         {
             return Integer.MIN_VALUE;
@@ -190,52 +191,32 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
 
         int deg = Integer.MIN_VALUE;
 
-        boolean left = false;
-        boolean right = false;
-        boolean up = false;
-        boolean down = false;
+        int left    = 0;
+        int right   = 0;
+        int up      = 0;
+        int down    = 0;
 
-        if (depressedKeys.contains(Keys.LEFT))
+        if (Keys.anyIsKey(Keys.LEFT, depressedKeys))
         {
-            left = true;
-        } else if (depressedKeys.contains(Keys.RIGHT))
-        {
-            right = true;
+            left = 1;
         }
 
-        if (depressedKeys.contains(Keys.DOWN))
+        if (Keys.anyIsKey(Keys.RIGHT, depressedKeys))
         {
-            down = true;
-        } else if (depressedKeys.contains(Keys.UP))
-        {
-            up = true;
+            right = 1;
         }
 
-        if (right && down)
+        if (Keys.anyIsKey(Keys.DOWN, depressedKeys))
         {
-            deg = 45;
-        } else if (left && down)
-        {
-            deg = 135;
-        } else if (up && left)
-        {
-            deg = 225;
-        } else if (up && right)
-        {
-            deg = 315;
-        } else if (right)
-        {
-            deg = 0;
-        } else if (down)
-        {
-            deg = 90;
-        } else if (left)
-        {
-            deg = 180;
-        } else if (up)
-        {
-            deg = 270;
+            down = 1;
         }
+
+        if (Keys.anyIsKey(Keys.UP, depressedKeys))
+        {
+            up = 1;
+        }
+
+        deg = (int) Math.round(Math.toDegrees(Math.atan2(up - down, left - right)));
 
         return deg;
     }

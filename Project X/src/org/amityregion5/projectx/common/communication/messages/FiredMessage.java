@@ -24,6 +24,8 @@ package org.amityregion5.projectx.common.communication.messages;
  * @author Joe Stein
  */
 public class FiredMessage extends Message {
+    private static final long serialVersionUID = 1L;
+
     private long id;
     
     /**
