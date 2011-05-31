@@ -39,10 +39,11 @@ import org.amityregion5.projectx.common.communication.RawListener;
  * @author Daniel Centore
  */
 public class RawCommunicationHandler extends Thread {
+
     private Socket rawSock = null; // raw socket we created
-    private DataOutputStream dos;
-    private boolean keepRunning = true;
-    private ArrayList<RawListener> rawListeners;
+    private DataOutputStream dos; // for sending data
+    private boolean keepRunning = true; // do we keep running?
+    private ArrayList<RawListener> rawListeners; // listens for communications
 
     public RawCommunicationHandler(String serverIP, String username)
     {
