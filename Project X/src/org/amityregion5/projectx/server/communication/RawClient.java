@@ -18,10 +18,8 @@
  */
 package org.amityregion5.projectx.server.communication;
 
-import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.logging.Level;
@@ -35,6 +33,7 @@ import org.amityregion5.projectx.server.Server;
  * A raw client. Currently configured to read single ints (which are direction facing) from the client.
  * 
  * @author Joe Stein
+ * @author Daniel Centore
  */
 public class RawClient extends Thread {
     private Socket sock;

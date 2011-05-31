@@ -18,7 +18,6 @@
  */
 package org.amityregion5.projectx.client;
 
-import java.awt.Point;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
@@ -51,7 +50,6 @@ import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.EntityConstants;
 import org.amityregion5.projectx.common.entities.characters.Player;
 import org.amityregion5.projectx.common.maps.AbstractMap;
-import org.amityregion5.projectx.server.Server;
 
 /**
  * The umbrella logistics class for the client-side game.

@@ -18,7 +18,6 @@
  */
 package org.amityregion5.projectx.server.game;
 
-import java.awt.Image;
 import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;

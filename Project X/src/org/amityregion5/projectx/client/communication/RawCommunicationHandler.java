@@ -36,6 +36,7 @@ import org.amityregion5.projectx.common.communication.RawListener;
  * Client-side raw communications handler.
  *
  * @author Joe Stein
+ * @author Daniel Centore
  */
 public class RawCommunicationHandler extends Thread {
     private Socket rawSock = null; // raw socket we created

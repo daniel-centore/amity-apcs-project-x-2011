@@ -31,6 +31,7 @@ import org.amityregion5.projectx.server.Server;
  * Class documentation.
  * 
  * @author Joe Stein
+ * @author Daniel Centore
  */
 public class RawServer extends Thread {
 
