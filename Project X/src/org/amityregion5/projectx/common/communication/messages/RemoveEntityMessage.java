@@ -18,7 +18,6 @@
  */
 package org.amityregion5.projectx.common.communication.messages;
 
-import org.amityregion5.projectx.client.handlers.EntityHandler;
 import org.amityregion5.projectx.common.entities.Entity;
 
 /**
@@ -29,7 +28,7 @@ import org.amityregion5.projectx.common.entities.Entity;
 public class RemoveEntityMessage extends Message
 {
     private static final long serialVersionUID = 1L;
-
+    
     private Entity entity;
     
     public RemoveEntityMessage(Entity e)

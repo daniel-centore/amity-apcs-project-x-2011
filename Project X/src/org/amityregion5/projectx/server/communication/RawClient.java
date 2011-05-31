@@ -55,12 +55,15 @@ public class RawClient extends Thread {
         {
             if (c.getIP().equals(sock.getInetAddress().getHostAddress()) && c.getRaw() == null)
             {
+                while (c.getPlayer() == null)
+                    System.out.println("NULL!!"); // TODO: very temporary!!!!
+                
                 player = c.getPlayer();
                 c.setRaw(this);
                 return;
             }
         }
-        
+
         throw new RuntimeException("CLIENT NOT ESTABLISHED BEFORE RAWCLIENT!");
     }
 
@@ -99,8 +102,11 @@ public class RawClient extends Thread {
 
     private void handle(int dir)
     {
-        if(player == null)
+        if (player == null)
+        {
+            System.err.println("null player!");
             return;
+        }
         player.setDirectionFacing(dir);
     }
 

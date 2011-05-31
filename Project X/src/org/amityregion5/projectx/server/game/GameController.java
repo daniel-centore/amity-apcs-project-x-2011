@@ -63,20 +63,15 @@ public class GameController {
         players = new ArrayList<Player>();
         clients = server.getClients().values();
         entities = new ArrayList<Entity>();
-        
 
         Random r = new Random();
         for (Client c : clients)
         {
-            Player p = new Player(0,0);
-            int spawnY = (int) (map.getPlayArea().getY() +
-                    r.nextInt((int) map.getPlayArea().getHeight() -
-                    p.getHeight()));
-            int spawnX = (int) (map.getPlayArea().getX() +
-                    r.nextInt((int) map.getPlayArea().getWidth() -
-                    p.getWidth()));
-            p.setLocation(new Point2D.Double(spawnX,spawnY));
-            p.setHitBox(p.getWidth(),p.getHeight());
+            Player p = new Player(0, 0);
+            int spawnY = (int) (map.getPlayArea().getY() + r.nextInt((int) map.getPlayArea().getHeight() - p.getHeight()));
+            int spawnX = (int) (map.getPlayArea().getX() + r.nextInt((int) map.getPlayArea().getWidth() - p.getWidth()));
+            p.setLocation(new Point2D.Double(spawnX, spawnY));
+            p.setHitBox(p.getWidth(), p.getHeight());
             players.add(p);
             entities.add(p);
             c.setPlayer(p);
@@ -90,7 +85,7 @@ public class GameController {
                 c.send(new AddEntityMessage(p));
         }
 
-        entityMoverThread = new EntityMoverThread(this,server.getRawServer(),map);
+        entityMoverThread = new EntityMoverThread(this, server.getRawServer(), map);
         entityMoverThread.start();
     }
 
@@ -111,12 +106,12 @@ public class GameController {
 
     private Point getNextSpawn()
     {
-        //TODO: move the map initialization to server-side and pass it to the client
-        //TODO: afterwards, finish this spawn creation
+        // TODO: move the map initialization to server-side and pass it to the client
+        // TODO: afterwards, finish this spawn creation
 
-         //int x = (int) map.getPlayArea().getX() + (int) (Math.random() * map.getPlayArea().getWidth());
-         //int y = (int) map.getPlayArea().getY() + (int) (Math.random() * map.getPlayArea().getHeight());
-         return null;
+        // int x = (int) map.getPlayArea().getX() + (int) (Math.random() * map.getPlayArea().getWidth());
+        // int y = (int) map.getPlayArea().getY() + (int) (Math.random() * map.getPlayArea().getHeight());
+        return null;
     }
 
 }

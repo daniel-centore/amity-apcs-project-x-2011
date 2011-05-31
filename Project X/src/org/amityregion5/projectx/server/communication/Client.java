@@ -41,6 +41,7 @@ import org.amityregion5.projectx.common.communication.messages.IntroduceMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.common.communication.messages.NotifyMessage;
 import org.amityregion5.projectx.common.communication.messages.ReadyMessage;
+import org.amityregion5.projectx.common.communication.messages.RemoveEntityMessage;
 import org.amityregion5.projectx.common.communication.messages.TextualMessage;
 import org.amityregion5.projectx.common.entities.characters.Player;
 import org.amityregion5.projectx.server.Server;
@@ -111,26 +112,27 @@ public class Client extends Thread {
 
         } catch (EOFException eof)
         {
-            System.out.println("Client disconnected");
-            // remove this client from the server list
-            if (username != null) // this client gave us its username
-            {
-                server.removeClient(username); // take it off the server's list
-            }
+            disconnected();
         } catch (SocketException se)
         {
-            System.out.println("Client disconnected");
-            // remove this client from the server list
-            if (username != null) // this client gave us its username
-            {
-                server.removeClient(username); // take it off the server's list
-            }
+            disconnected();
         } catch (IOException e)
         {
             e.printStackTrace();
         } catch (ClassNotFoundException e)
         {
             e.printStackTrace();
+        }
+    }
+
+    private void disconnected() // helper
+    {
+        System.out.println("Client disconnected");
+        // remove this client from the server list
+        if (username != null) // this client gave us its username
+        {
+            server.removeClient(username); // take it off the server's list
+            server.relayMessage(new RemoveEntityMessage(this.player));
         }
     }
 
