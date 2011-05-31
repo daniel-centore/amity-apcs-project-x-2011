@@ -73,16 +73,18 @@ public class Keys {
         return false;
     }
 
-    public static boolean anyIsKey(int[] keys, List<Integer> want)
+    public static int numIsKey(int[] keys, List<Integer> want)
     {
+        int ct = 0;
+
         for (int each : want)
         {
             if (isKey(keys, each))
             {
-                return true;
+                ct++;
             }
         }
 
-        return false;
+        return ct;
     }
 }

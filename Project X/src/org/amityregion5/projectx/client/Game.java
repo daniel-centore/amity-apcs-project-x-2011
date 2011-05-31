@@ -179,10 +179,10 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
     {
         int deg = Integer.MIN_VALUE;
 
-        int left    = Keys.anyIsKey(Keys.LEFT,  depressedKeys) ? 1 : 0;
-        int right   = Keys.anyIsKey(Keys.RIGHT, depressedKeys) ? 1 : 0;
-        int up      = Keys.anyIsKey(Keys.DOWN,  depressedKeys) ? 1 : 0;
-        int down    = Keys.anyIsKey(Keys.UP,    depressedKeys) ? 1 : 0;
+        int left    = Keys.numIsKey(Keys.LEFT,  depressedKeys);
+        int right   = Keys.numIsKey(Keys.RIGHT, depressedKeys);
+        int up      = Keys.numIsKey(Keys.DOWN,  depressedKeys);
+        int down    = Keys.numIsKey(Keys.UP,    depressedKeys);
 
         int lr = right - left;
         int ud = up - down;
