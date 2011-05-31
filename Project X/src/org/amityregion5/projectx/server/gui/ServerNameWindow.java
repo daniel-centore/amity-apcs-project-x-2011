@@ -19,6 +19,7 @@
  */
 package org.amityregion5.projectx.server.gui;
 
+import java.awt.Cursor;
 import java.awt.event.KeyEvent;
 
 import javax.swing.SwingUtilities;
@@ -31,7 +32,9 @@ import org.amityregion5.projectx.server.Server;
  * 
  * @author Joe Stein
  */
-public class ServerNameWindow extends javax.swing.JFrame {
+public class ServerNameWindow extends javax.swing.JFrame
+{
+
     private static final long serialVersionUID = 1L;
 
     /** Creates new form ServerNameWindow */
@@ -88,11 +91,19 @@ public class ServerNameWindow extends javax.swing.JFrame {
 
     private void startServer()
     {
+        SwingUtilities.invokeLater(new Runnable(){
+            public void run()
+            {
+                serverNameField.setEnabled(false);
+                okBtn.setEnabled(false);
+            }
+        });
+        setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         Server s = new Server(serverNameField.getText());
         AggregateServerController asc = new AggregateServerController(s);
         s.setController(asc);
 
-        this.dispose();
+        
     }
 
     private void serverNameFieldKeyPressed(java.awt.event.KeyEvent evt)// GEN-FIRST:event_serverNameFieldKeyPressed
@@ -108,7 +119,9 @@ public class ServerNameWindow extends javax.swing.JFrame {
             }
         } else if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE && serverNameField.getText().length() <= 1)
         {
-            SwingUtilities.invokeLater(new Runnable() {
+            SwingUtilities.invokeLater(new Runnable()
+            {
+
                 public void run()
                 {
                     okBtn.setEnabled(false);
@@ -116,19 +129,25 @@ public class ServerNameWindow extends javax.swing.JFrame {
             });
         } else
         {
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run()
+            if (Character.isISOControl(evt.getKeyChar()) ||
+               !Character.isDefined(evt.getKeyChar()))
+            {
+                evt.consume();
+            } else {
+                SwingUtilities.invokeLater(new Runnable()
                 {
-                    okBtn.setEnabled(true);
-                }
-            });
+
+                    public void run()
+                    {
+                        okBtn.setEnabled(true);
+                    }
+                });
+            }
         }
     }// GEN-LAST:event_serverNameFieldKeyPressed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton okBtn;
     private javax.swing.JTextField serverNameField;
     // End of variables declaration//GEN-END:variables
-
 }

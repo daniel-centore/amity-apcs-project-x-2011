@@ -143,7 +143,8 @@ public class UsernameWindow extends JDialog
              PreferenceManager.setUsername(usernameField.getText());
              this.dispose();
           }
-       } else if (!evt.isShiftDown() && !evt.isActionKey())
+       } else if (!Character.isISOControl(evt.getKeyChar()) &&
+               Character.isDefined(evt.getKeyChar()))
        {
           SwingUtilities.invokeLater(new Runnable()
           {
