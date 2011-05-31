@@ -1,0 +1,27 @@
+1) Weapons Systems
+    a. Need different kind of weapons
+    b. Need to give player a default weapon (maybe Pistol?) at start of gamesrc/org/amityregion5/projectx/client/gui/ChatDrawing.java:            // TODO make the letters also appear on the new line
+
+src/org/amityregion5/projectx/client/gui/RepaintHandler.java:                // TODO draw the weapon. we need sprites for this!
+src/org/amityregion5/projectx/client/gui/RepaintHandler.java:                // TODO draw a fire if it just fired
+src/org/amityregion5/projectx/common/communication/messages/GoodbyeMessage.java:    //TODO: fix disconnected message displaying in option pane ("phantom window")
+src/org/amityregion5/projectx/common/entities/Entity.java:        requestUpdate(); // TODO: do we need this?
+src/org/amityregion5/projectx/common/entities/characters/Character.java:        //TODO Need weapons to draw
+src/org/amityregion5/projectx/common/entities/items/field/Bullet.java:        // TODO Auto-generated method stub
+src/org/amityregion5/projectx/common/entities/items/field/Projectile.java:        super(0, 0); //TODO
+src/org/amityregion5/projectx/common/entities/items/field/Trap.java:        super(0, 0);    //TODO
+src/org/amityregion5/projectx/common/entities/items/field/Trap.java:        // TODO Auto-generated method stub
+src/org/amityregion5/projectx/common/entities/items/field/Wall.java:        super(0, 0, health);    //TODO
+src/org/amityregion5/projectx/common/entities/items/held/Gun.java:        // TODO Auto-generated method stub
+src/org/amityregion5/projectx/common/entities/items/held/Sword.java:    private static int SWORD_RATE = 42; // FIXME: arbitrary.
+src/org/amityregion5/projectx/common/entities/items/held/Sword.java:        // TODO Auto-generated method stub
+src/org/amityregion5/projectx/common/tools/ImageHandler.java:        // FIXME: make this actually figure out what directory to look in.
+src/org/amityregion5/projectx/server/Server.java:        if (clients.size() == MAX_PLAYERS) // TODO: handle this more politely
+src/org/amityregion5/projectx/server/communication/Client.java:            // TODO do stuff when the client starts or stops firing
+src/org/amityregion5/projectx/server/communication/RawClient.java:                while (c.getPlayer() == null); // TODO: very temporary!!!!
+src/org/amityregion5/projectx/server/game/EntityMoverThread.java: * TODO handles collision detection
+src/org/amityregion5/projectx/server/game/EntityMoverThread.java:                    // TODO make sure this Entity doesn't collide with
+src/org/amityregion5/projectx/server/game/EntityMoverThread.java:                        // FIXME this may take too much time/memory
+src/org/amityregion5/projectx/server/game/EntityMoverThread.java:                        // TODO if the play area doesn't contain the new
+src/org/amityregion5/projectx/server/game/GameController.java:        // TODO: move the map initialization to server-side and pass it to the client
+src/org/amityregion5/projectx/server/game/GameController.java:        // TODO: afterwards, finish this spawn creation
