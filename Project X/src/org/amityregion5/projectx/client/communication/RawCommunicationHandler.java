@@ -44,7 +44,7 @@ public class RawCommunicationHandler extends Thread {
     private boolean keepRunning = true;
     private ArrayList<RawListener> rawListeners;
 
-    public RawCommunicationHandler(String serverIP)
+    public RawCommunicationHandler(String serverIP, String username)
     {
         rawListeners = new ArrayList<RawListener>();
         try
@@ -61,7 +61,7 @@ public class RawCommunicationHandler extends Thread {
         
         try
         {
-            dos.writeUTF(PreferenceManager.getUsername());
+            dos.writeUTF(username);
         } catch (IOException e)
         {
         }

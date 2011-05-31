@@ -70,14 +70,16 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
     private DirectionalUpdateThread dUpThread;
     private int lastMouseX; // last mouse coordinates, so we can update direction as moving
     private int lastMouseY;
+    private String username;
 
-    public Game(CommunicationHandler ch, AbstractMap m)
+    public Game(CommunicationHandler ch, AbstractMap m, String username)
     {
+        this.username = username;
         entityHandler = new EntityHandler();
         this.ch = ch;
         me = null;
         map = m;
-        rch = new RawCommunicationHandler(ch.getServerIP());
+        rch = new RawCommunicationHandler(ch.getServerIP(), username);
         dUpThread = new DirectionalUpdateThread();
         // do not start the dUpThread until me != null
 
@@ -138,7 +140,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                     ChatDrawing.clearChat();
                     return;
                 }
-                ChatMessage cm = new ChatMessage(ChatDrawing.getTextChat(), PreferenceManager.getUsername());
+                ChatMessage cm = new ChatMessage(ChatDrawing.getTextChat(), username);
                 ChatDrawing.clearChat();
                 ch.send(cm);
             } else if (keyCode == KeyEvent.VK_BACK_SPACE)

@@ -50,7 +50,8 @@ public class ServerChooserWindow extends JFrame implements DatagramListener, Pre
     private static final long serialVersionUID = 1L;
 
     private DefaultListModel dlm = new DefaultListModel(); // the list model for ips
-
+    private String username;
+    
     /**
      * Creates new form ServerChooserWindow
      */
@@ -60,7 +61,7 @@ public class ServerChooserWindow extends JFrame implements DatagramListener, Pre
         initComponents();
         dlm.addElement("Manual/Internet...");
 
-        joinBtn.setText("Join as " + PreferenceManager.getUsername());
+        joinBtn.setText("Join as " + (username = PreferenceManager.getUsername()));
 
         serverList.setModel(dlm);
 
@@ -172,7 +173,7 @@ public class ServerChooserWindow extends JFrame implements DatagramListener, Pre
         boolean joined = false;
         while (!joined)
         {
-            Message reply = ch.requestReply(new IntroduceMessage(PreferenceManager.getUsername()));
+            Message reply = ch.requestReply(new IntroduceMessage(username));
             // ActivePlayerUpdate message serves as an affirmative here.
             if (reply instanceof BooleanReplyMessage)
             {
@@ -192,7 +193,7 @@ public class ServerChooserWindow extends JFrame implements DatagramListener, Pre
                 ServerChooserWindow.this.setVisible(false);
                 ServerChooserWindow.this.dispose();
                 joined = true;
-                new LobbyWindow(ch, apm.getPlayers());
+                new LobbyWindow(ch, apm.getPlayers(), username);
             }
         }
     }// GEN-LAST:event_joinBtnActionPerformed
@@ -315,6 +316,7 @@ public class ServerChooserWindow extends JFrame implements DatagramListener, Pre
     @Override
     public void usernameChanged(String username)
     {
+        this.username = username;
         joinBtn.setText("Join as " + username);
     }
 }

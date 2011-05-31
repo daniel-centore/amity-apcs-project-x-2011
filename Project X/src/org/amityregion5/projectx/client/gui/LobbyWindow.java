@@ -63,6 +63,7 @@ public class LobbyWindow extends JFrame implements MessageListener {
     private boolean ready; // are we ready to play?
     private String lastFrom; // last person to recieve from
     private Game game; // game used by LobbyWindow
+    private String username;
 
     /**
      * Creates a new LobbyWindow.
@@ -70,10 +71,11 @@ public class LobbyWindow extends JFrame implements MessageListener {
      * @param sock the socket that was connected to the server after choosing
      * @param players the players that were already in this lobby. Can be empty or null.
      */
-    public LobbyWindow(CommunicationHandler ch, List<String> players)
+    public LobbyWindow(CommunicationHandler ch, List<String> players, String username)
     {
         super("Project X Lobby");
 
+        this.username = username;
         instance = this;
 
         lastFrom = "";
@@ -86,7 +88,7 @@ public class LobbyWindow extends JFrame implements MessageListener {
         ch.registerListener(this);
         playerListModel = new DefaultListModel();
         initComponents();
-        playerListModel.addElement(PreferenceManager.getUsername());
+        playerListModel.addElement(username);
         if (players != null)
         {
             for (String player : players)
@@ -325,7 +327,7 @@ public class LobbyWindow extends JFrame implements MessageListener {
             {
                 this.setVisible(false);
 
-                Game g = new Game(ch, new TestingMap());
+                Game g = new Game(ch, new TestingMap(), username);
                 g.initWindow();
             }
             SwingUtilities.invokeLater(new Runnable() {
@@ -375,7 +377,7 @@ public class LobbyWindow extends JFrame implements MessageListener {
      */
     private void sendChat()
     {
-        ChatMessage chm = new ChatMessage(chatField.getText(), ChatMessage.Type.PUBLIC, PreferenceManager.getUsername());
+        ChatMessage chm = new ChatMessage(chatField.getText(), ChatMessage.Type.PUBLIC, username);
         ch.send(chm);
         SwingUtilities.invokeLater(new Runnable() {
 
@@ -395,7 +397,7 @@ public class LobbyWindow extends JFrame implements MessageListener {
         @Override
         public void windowClosing(WindowEvent e)
         {
-            ch.send(new GoodbyeMessage(PreferenceManager.getUsername()));
+            ch.send(new GoodbyeMessage(username));
         }
     }
 
