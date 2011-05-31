@@ -183,8 +183,9 @@ public abstract class Character extends Entity implements Damageable {
         {
             return;
         }
-        BufferedImage wepImg = weapons.get(currWeapon).getImage();
-        Graphics2D g2 = (Graphics2D) currentImage.getGraphics();
-        g2.drawImage(wepImg, getAffineTransform(), null);
+        //TODO Need weapons to draw
+        //BufferedImage wepImg = weapons.get(currWeapon).getImage();
+        //Graphics2D g2 = (Graphics2D) currentImage.getGraphics();
+        //g2.drawImage(wepImg, getAffineTransform(), null);
     }
 }

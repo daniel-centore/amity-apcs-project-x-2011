@@ -29,6 +29,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.amityregion5.projectx.common.communication.messages.ActivePlayersMessage;
+import org.amityregion5.projectx.common.communication.messages.AnnounceMessage;
 import org.amityregion5.projectx.common.communication.messages.BlockingMessage;
 import org.amityregion5.projectx.common.communication.messages.BooleanReplyMessage;
 import org.amityregion5.projectx.common.communication.messages.ChatMessage;
@@ -38,6 +39,7 @@ import org.amityregion5.projectx.common.communication.messages.EntityMovedMessag
 import org.amityregion5.projectx.common.communication.messages.FiredMessage;
 import org.amityregion5.projectx.common.communication.messages.FiringMessage;
 import org.amityregion5.projectx.common.communication.messages.IntroduceMessage;
+import org.amityregion5.projectx.common.communication.messages.LeavingChatMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.common.communication.messages.NotifyMessage;
 import org.amityregion5.projectx.common.communication.messages.ReadyMessage;
@@ -132,7 +134,7 @@ public class Client extends Thread {
         if (username != null) // this client gave us its username
         {
             server.removeClient(username); // take it off the server's list
-            server.relayMessage(new ChatMessage(username + " has disconnected.", username));
+            server.relayMessage(new AnnounceMessage(username + " has disconnected."));
             server.relayMessage(new RemoveEntityMessage(this.player));
         }
     }
