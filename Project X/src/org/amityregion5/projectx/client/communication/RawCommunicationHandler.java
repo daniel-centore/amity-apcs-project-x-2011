@@ -27,6 +27,8 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.amityregion5.projectx.client.preferences.PreferenceManager;
 import org.amityregion5.projectx.common.communication.Constants;
 import org.amityregion5.projectx.common.communication.RawListener;
 
@@ -54,6 +56,13 @@ public class RawCommunicationHandler extends Thread {
         } catch (IOException ex)
         {
             Logger.getLogger(RawCommunicationHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        try
+        {
+            dos.writeUTF(PreferenceManager.getUsername());
+        } catch (IOException e)
+        {
         }
     }
 

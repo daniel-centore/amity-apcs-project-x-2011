@@ -38,7 +38,7 @@ public abstract class Entity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private static transient long nextUniqueID = 0; // so each entity has a unique ID
+    private static volatile transient long nextUniqueID = 0; // so each entity has a unique ID
 
     private final long uniqueID; // necessary to check identity content changes.
     private Point2D location; // the entity's location

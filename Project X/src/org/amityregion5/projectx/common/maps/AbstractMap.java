@@ -38,8 +38,6 @@ public abstract class AbstractMap {
 
     private Image bgImage; // the image of the actual scenery/map/whatever
     private Rectangle playArea; // the area where players can move
-    private ArrayList<Point> playSpawns; // player spawn points within playArea
-    private ArrayList<Point> enemySpawns; // enemy spawn points on edges of screen
 
     /**
      * @return A list of all permanent entities (ie Area)
@@ -65,24 +63,5 @@ public abstract class AbstractMap {
         return playArea;
     }
 
-    public void setPlaySpawns(ArrayList<Point> spawns)
-{
-        playSpawns = spawns;
-    }
-    
-    public ArrayList<Point> getPlaySpawns()
-    {
-        return playSpawns;
-    }
-
-    public ArrayList<Point> getEnemySpawns()
-    {
-        return enemySpawns;
-    }
-
-    public void setEnemySpawns(ArrayList<Point> spawns)
-    {
-        enemySpawns = spawns;
-    }
 
 }

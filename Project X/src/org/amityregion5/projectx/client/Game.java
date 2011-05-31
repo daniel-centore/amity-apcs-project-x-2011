@@ -79,8 +79,6 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         this.ch = ch;
         me = null;
         map = m;
-        createPlaySpawns(m);
-        createEnemySpawns(m);
         rch = new RawCommunicationHandler(ch.getServerIP());
         dUpThread = new DirectionalUpdateThread();
         // do not start the dUpThread until me != null
@@ -90,7 +88,6 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         ch.registerListener(this);
         InputHandler.registerListener(this);
         RepaintHandler.setGame(this);
-
     }
 
     public void mouseDragged(int x, int y)
@@ -377,45 +374,6 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
 
     }
 
-    /**
-     * Creates random Points within play area for players to spawn at
-     * 
-     * @param map Current map
-     * @return An ArrayList of random Point objects within the map's play area where players spawn
-     */
-    public final void createPlaySpawns(AbstractMap map)
-    {
-        ArrayList<Point> spawns = new ArrayList<Point>();
-        for (int i = 0; i < Server.MAX_PLAYERS; i++) // Would be better if we accessed the exact number of players instead
-        {
-            int x = (int) map.getPlayArea().getX() + (int) (Math.random() * map.getPlayArea().getWidth());
-            int y = (int) map.getPlayArea().getY() + (int) (Math.random() * map.getPlayArea().getHeight());
-            spawns.add(new Point(x, y));
-        }
-        map.setPlaySpawns(spawns);
-    }
-
-    /**
-     * Makes enemies spawn at the edge of the game window
-     * 
-     * @return ArrayList of Points where enemies spawn at the edge of the game window
-     */
-    public final void createEnemySpawns(AbstractMap map)
-    {
-        ArrayList<Point> enemySpawns = new ArrayList<Point>();
-        for (int i = 0; i < GameWindow.GAME_HEIGHT; i += 5)
-        {
-            enemySpawns.add(new Point(0, i));
-            enemySpawns.add(new Point(GameWindow.GAME_WIDTH, i));
-        }
-        for (int i = 0; i < GameWindow.GAME_WIDTH; i += 5)
-        {
-            enemySpawns.add(new Point(i, 0));
-            enemySpawns.add(new Point(i, GameWindow.GAME_HEIGHT));
-        }
-        map.setEnemySpawns(enemySpawns);
-
-    }
 
     private class DirectionalUpdateThread extends Thread {
 

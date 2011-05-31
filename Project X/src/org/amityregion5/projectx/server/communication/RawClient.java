@@ -18,12 +18,15 @@
  */
 package org.amityregion5.projectx.server.communication;
 
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.amityregion5.projectx.common.communication.messages.RemoveEntityMessage;
 import org.amityregion5.projectx.common.entities.characters.Player;
 import org.amityregion5.projectx.server.Server;
@@ -38,26 +41,40 @@ public class RawClient extends Thread {
     private boolean keepRunning = true;
     private Server server;
     private PrintWriter out;
+    private DataInputStream in;
     private Player player;
 
     public RawClient(Socket s, Server serv)
     {
         server = serv;
         sock = s;
+
         try
         {
             out = new PrintWriter(s.getOutputStream());
+            in = new DataInputStream(sock.getInputStream());
         } catch (IOException ex)
         {
             Logger.getLogger(RawClient.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        String user = null;
+        
+        try
+        {
+            user = in.readUTF();
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        
         for (Client c : server.getClients().values())
         {
-            if (c.getIP().equals(sock.getInetAddress().getHostAddress()) && c.getRaw() == null)
+            if (c.getIP().equals(sock.getInetAddress().getHostAddress()) && c.getUsername().equals(user))
             {
                 while (c.getPlayer() == null)
                     System.out.println("NULL!!"); // TODO: very temporary!!!!
-                
+
                 player = c.getPlayer();
                 c.setRaw(this);
                 return;
@@ -70,15 +87,6 @@ public class RawClient extends Thread {
     @Override
     public void run()
     {
-        DataInputStream in = null;
-        try
-        {
-            in = new DataInputStream(sock.getInputStream());
-        } catch (IOException ex)
-        {
-            Logger.getLogger(RawClient.class.getName()).log(Level.SEVERE, null, ex);
-            kill();
-        }
         while (keepRunning)
         {
             try
