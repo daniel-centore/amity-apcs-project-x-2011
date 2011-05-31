@@ -45,6 +45,7 @@ import org.amityregion5.projectx.common.communication.messages.ClientMovingMessa
 import org.amityregion5.projectx.common.communication.messages.EntityMovedMessage;
 import org.amityregion5.projectx.common.communication.messages.FiredMessage;
 import org.amityregion5.projectx.common.communication.messages.FiringMessage;
+import org.amityregion5.projectx.common.communication.messages.LeavingChatMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.common.communication.messages.RemoveEntityMessage;
 import org.amityregion5.projectx.common.entities.Entity;
@@ -238,6 +239,10 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         if (m instanceof ChatMessage)
         {
             ChatMessage cm = (ChatMessage) m;
+            if (m instanceof LeavingChatMessage)
+            {
+                ChatDrawing.drawChat(cm.getFrom() + " has left the game");
+            }
             ChatDrawing.drawChat(cm.getFrom() + ": " + cm.getText());
         } else if (m instanceof AddMeMessage)
         {

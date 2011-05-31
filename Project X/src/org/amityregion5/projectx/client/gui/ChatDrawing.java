@@ -88,7 +88,7 @@ public class ChatDrawing {
                 r = new Rectangle(X_MARGIN, (HEIGHT_MARGIN * NUM_CHATS), width - Y_MARGIN, (g2.getFont().getSize() + 2) * k);
             }
             g2.draw(r);
-            g2.drawString(currChat.toString(), X_MARGIN + 5, g2.getFont().getSize() + (HEIGHT_MARGIN * NUM_CHATS));
+            g2.drawString(currChat.toString() + "|", X_MARGIN + 5, g2.getFont().getSize() + (HEIGHT_MARGIN * NUM_CHATS));
             g2.setColor(Color.BLACK);
         }
 
@@ -102,7 +102,6 @@ public class ChatDrawing {
      */
     public static void drawChat(String chat)
     {
-        System.out.println(chat);
         chats.add(chat);
     }
 
