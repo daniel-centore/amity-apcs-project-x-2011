@@ -163,6 +163,11 @@ public class GameWindow extends JFrame {
     {
         buffer = RepaintHandler.getMapFlatImage();
         
+        if(panel == null)
+        {
+            System.err.println("Null panel");
+            return;
+        }
         panel.repaint();
     }
 

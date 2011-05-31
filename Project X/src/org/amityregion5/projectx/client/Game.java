@@ -27,8 +27,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.sound.sampled.ReverbType;
-
 import org.amityregion5.projectx.client.communication.CommunicationHandler;
 import org.amityregion5.projectx.client.communication.RawCommunicationHandler;
 import org.amityregion5.projectx.client.gui.ChatDrawing;
@@ -155,7 +153,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         } else
         // not chatting
         {
-            if (Keys.isKey(Keys.CHAT, keyCode))
+            if (keyCode == Keys.CHAT)
             {
                 ChatDrawing.setChatting(true);
                 return;
@@ -184,43 +182,60 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
 
     private int calcMeDeg()
     {
+        int numPressed = depressedKeys.size();
+        if (numPressed == 0)
+        {
+            return Integer.MIN_VALUE;
+        }
+
         int deg = Integer.MIN_VALUE;
 
-        int left    = 0;
-        int right   = 0;
-        int up      = 0;
-        int down    = 0;
+        boolean left = false;
+        boolean right = false;
+        boolean up = false;
+        boolean down = false;
 
-        if (Keys.anyIsKey(Keys.LEFT, depressedKeys))
+        if (depressedKeys.contains(Keys.LEFT))
         {
-            left = 1;
+            left = true;
+        } else if (depressedKeys.contains(Keys.RIGHT))
+        {
+            right = true;
         }
 
-        if (Keys.anyIsKey(Keys.RIGHT, depressedKeys))
+        if (depressedKeys.contains(Keys.DOWN))
         {
-            right = 1;
+            down = true;
+        } else if (depressedKeys.contains(Keys.UP))
+        {
+            up = true;
         }
 
-        if (Keys.anyIsKey(Keys.DOWN, depressedKeys))
+        if (right && down)
         {
-            down = 1;
-        }
-
-        if (Keys.anyIsKey(Keys.UP, depressedKeys))
+            deg = 45;
+        } else if (left && down)
         {
-            up = 1;
+            deg = 135;
+        } else if (up && left)
+        {
+            deg = 225;
+        } else if (up && right)
+        {
+            deg = 315;
+        } else if (right)
+        {
+            deg = 0;
+        } else if (down)
+        {
+            deg = 90;
+        } else if (left)
+        {
+            deg = 180;
+        } else if (up)
+        {
+            deg = 270;
         }
-
-        int lr = right - left;
-        int ud = down - up;
-
-        // .round() isn't actually needed here, for two reasons:
-        // one, it's negligible for the players
-        // two, it's always right anyway
-        deg = (int) Math.toDegrees(Math.atan2(down - up, right - left));
-
-        if (lr == 0 && ud == 0)
-            deg = Integer.MIN_VALUE;
 
         return deg;
     }
