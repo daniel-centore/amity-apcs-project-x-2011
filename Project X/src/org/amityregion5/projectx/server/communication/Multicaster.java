@@ -54,27 +54,6 @@ public class Multicaster extends Thread {
         }
     }
 
-    /**
-     * Starts multicasting (if not already doing so).
-     */
-    public void startMulticasting()
-    {
-        if (!keepBroadcasting)
-        {
-            keepBroadcasting = true;
-            start();
-        }
-    }
-
-    /**
-     * Stops multicasting.
-     */
-    public void stopMulticasting()
-    {
-        keepBroadcasting = false;
-
-    }
-
     @Override
     public void run()
     {
@@ -106,6 +85,15 @@ public class Multicaster extends Thread {
                 keepBroadcasting = false;
                 e.printStackTrace();
             }
+        }
+    }
+
+    public void setMulticasting(boolean listening)
+    {
+        keepBroadcasting = listening;
+        if (listening && !keepBroadcasting)
+        {
+            start();
         }
     }
 }

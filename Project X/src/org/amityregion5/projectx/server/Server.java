@@ -189,12 +189,14 @@ public class Server {
 
     /**
      * Tells the server whether or not to listen for client Note: setting to true does not actually start the listening thread
-     * 
+     * Also turns multicasting on or off according to listening.
+     *
      * @param listening True if it should; false otherwise
      */
     public void setListening(boolean listening)
     {
         this.listening = listening;
+        multicaster.setMulticasting(listening);
     }
 
     /**
@@ -220,7 +222,7 @@ public class Server {
         } else if (m instanceof AnnounceMessage)
         {
             AnnounceMessage am = (AnnounceMessage) m;
-            controller.chatted("[SERVER]", am.getText());
+            controller.chatted("[SERVER] ", am.getText());
         }
         // relay to clients
         for (Client client : clients.values())
@@ -319,7 +321,6 @@ public class Server {
      */
     public void startGame()
     {
-        // TODO: make it so we stop accepting clients
         setListening(false);
 
         relayMessage(new StatusUpdateMessage(StatusUpdateMessage.Type.STARTING));
@@ -354,7 +355,7 @@ public class Server {
                     Client newc = new Client(servSock.accept(), Server.this);
                     if (!listening)
                     {
-                        if (clients.size() == 0) // if nobody is playing, lets have a new game
+                        if (clients.isEmpty()) // if nobody is playing, lets have a new game
                             Server.this.setListening(true);
                         else
                             newc.kill();
