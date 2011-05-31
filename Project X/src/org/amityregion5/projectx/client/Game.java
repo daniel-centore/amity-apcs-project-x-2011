@@ -184,13 +184,6 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
 
     private int calcMeDeg()
     {
-        int numPressed = depressedKeys.size();
-
-        if (numPressed == 0)
-        {
-            return Integer.MIN_VALUE;
-        }
-
         int deg = Integer.MIN_VALUE;
 
         int left    = 0;
@@ -218,7 +211,16 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             up = 1;
         }
 
-        deg = (int) Math.round(Math.toDegrees(Math.atan2(up - down, left - right)));
+        int lr = right - left;
+        int ud = down - up;
+
+        // .round() isn't actually needed here, for two reasons:
+        // one, it's negligible for the players
+        // two, it's always right anyway
+        deg = (int) Math.toDegrees(Math.atan2(down - up, right - left));
+
+        if (lr == 0 && ud == 0)
+            deg = Integer.MIN_VALUE;
 
         return deg;
     }
