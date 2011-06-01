@@ -39,7 +39,6 @@ import org.amityregion5.projectx.common.communication.messages.EntityMovedMessag
 import org.amityregion5.projectx.common.communication.messages.FiredMessage;
 import org.amityregion5.projectx.common.communication.messages.FiringMessage;
 import org.amityregion5.projectx.common.communication.messages.IntroduceMessage;
-import org.amityregion5.projectx.common.communication.messages.LeavingChatMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.common.communication.messages.NotifyMessage;
 import org.amityregion5.projectx.common.communication.messages.ReadyMessage;

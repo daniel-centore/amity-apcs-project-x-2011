@@ -46,7 +46,6 @@ import org.amityregion5.projectx.common.communication.messages.ClientMovingMessa
 import org.amityregion5.projectx.common.communication.messages.EntityMovedMessage;
 import org.amityregion5.projectx.common.communication.messages.FiredMessage;
 import org.amityregion5.projectx.common.communication.messages.FiringMessage;
-import org.amityregion5.projectx.common.communication.messages.LeavingChatMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.common.communication.messages.RemoveEntityMessage;
 import org.amityregion5.projectx.common.entities.Entity;
