@@ -25,6 +25,7 @@ import org.amityregion5.projectx.common.entities.items.DamageDealing;
  * Basic melee weapon.
  *
  * @author Mike DiBuduo
+ * @author Joe Stein
  */
 public class Sword extends MeleeWeapon implements DamageDealing
 {
@@ -42,5 +43,11 @@ public class Sword extends MeleeWeapon implements DamageDealing
     {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    @Override
+    public boolean hasAmmo()
+    {
+        return true; // swords always have ammo! :D
     }
 }

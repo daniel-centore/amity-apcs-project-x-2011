@@ -42,7 +42,7 @@ public class Player extends Character implements Damageable {
     {
         super(health, MAX_HEALTH, 0, 0);
         this.setMoveSpeed(INITIAL_SPEED);
-        System.out.println("adding weapon!");
+        /*System.out.println("adding weapon!");
         addWeapon(new Weapon(1000,1) {
 
             @Override
@@ -50,7 +50,7 @@ public class Player extends Character implements Damageable {
             {
                 return "sprites/Pistol1";
             }
-        });
+        }); */
     }
 
     public Player(int health, Weapon wp)

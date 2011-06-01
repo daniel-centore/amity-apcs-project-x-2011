@@ -176,4 +176,12 @@ public abstract class Character extends Entity implements Damageable {
         if(hp > maxHealth)
             hp = maxHealth;
     }
+
+    public void updateWeaponImages()
+    {
+        for (Weapon wep : weapons)
+        {
+            wep.selectImage(wep.getDefaultImage());
+        }
+    }
 }

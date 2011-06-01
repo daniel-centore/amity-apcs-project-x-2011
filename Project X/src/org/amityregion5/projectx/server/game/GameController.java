@@ -31,7 +31,9 @@ import org.amityregion5.projectx.common.communication.messages.AddEntityMessage;
 import org.amityregion5.projectx.common.communication.messages.AddMeMessage;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.characters.Player;
+import org.amityregion5.projectx.common.entities.characters.Character;
 import org.amityregion5.projectx.common.entities.items.held.Gun;
+import org.amityregion5.projectx.common.entities.items.held.Weapon;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 import org.amityregion5.projectx.common.maps.TestingMap;
 import org.amityregion5.projectx.server.Server;
@@ -77,13 +79,14 @@ public class GameController {
             int spawnX = (int) (map.getPlayArea().getX() + r.nextInt((int) map.getPlayArea().getWidth() - p.getWidth()));
             p.setLocation(new Point2D.Double(spawnX, spawnY));
             p.setHitBox(p.getWidth(), p.getHeight());
-            Gun g = new Gun(100, 100, 10, 2, 6, 50);
+
             players.add(p);
+
             entities.add(p);
             c.setPlayer(p);
-
             c.send(new AddMeMessage(p));
-            c.send(new AddWeaponMessage(p.getUniqueID(),g));
+
+            addWeapon(p,new Gun(100, 100, 10, 20, 6, 50));
         }
 
         for (Client c : clients)
@@ -110,6 +113,18 @@ public class GameController {
     public Collection<Client> getClients()
     {
         return clients;
+    }
+
+    /**
+     * Adds a weapon to the given server-side character and relays a message
+     * to update the client-side characters.
+     * @param c the character to which to add the weapon
+     * @param w the weapon to add
+     */
+    public final void addWeapon(Character c, Weapon w)
+    {
+        c.addWeapon(w);
+        server.relayMessage(new AddWeaponMessage(c.getUniqueID(),w));
     }
 
     /**

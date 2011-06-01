@@ -45,6 +45,10 @@ public abstract class Weapon extends HeldItem {
         return range;
     }
 
+    /**
+     * Gets attack rate, in attacks per second.
+     * @return attack rate in attacks per second
+     */
     public int getAttackRate()
     {
         return attackRate;
@@ -54,4 +58,6 @@ public abstract class Weapon extends HeldItem {
     {
         return accuracySpread;
     }
+
+    public abstract boolean hasAmmo();
 }

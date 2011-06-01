@@ -37,7 +37,6 @@ import org.amityregion5.projectx.common.communication.messages.ChatMessage;
 import org.amityregion5.projectx.common.communication.messages.ClientPositionMessage;
 import org.amityregion5.projectx.common.communication.messages.ClientMovingMessage;
 import org.amityregion5.projectx.common.communication.messages.EntityMovedMessage;
-import org.amityregion5.projectx.common.communication.messages.FiredMessage;
 import org.amityregion5.projectx.common.communication.messages.FiringMessage;
 import org.amityregion5.projectx.common.communication.messages.IntroduceMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
@@ -67,6 +66,7 @@ public class Client extends Thread {
     private boolean waiting = true; // are we waiting on this client?
     private Player player; // client's player (once we make it!)
     private RawClient raw; // client's raw client (once created)
+    private ShotThread shotThread; // helps this client with shooting
 
     /**
      * Creates a client
@@ -88,6 +88,7 @@ public class Client extends Thread {
         {
             e.printStackTrace();
         }
+        shotThread = new ShotThread(player,server);
     }
 
     @Override
@@ -239,10 +240,24 @@ public class Client extends Thread {
         {
             FiringMessage fm = (FiringMessage) m;
             // TODO do stuff when the client starts or stops firing
-            // for now, relays one shot :/
-            if (fm.getFireStart()) // starting firing
+            synchronized(shotThread)
             {
-                server.relayMessage(new FiredMessage(player.getUniqueID()));
+                if (fm.getFireStart()) // starting firing
+                {
+                    if (shotThread.getState() != Thread.State.NEW)
+                    {
+                        shotThread.setShooting(true);
+                    } else
+                    {
+                        shotThread.start();
+                    }
+                    //server.relayMessage(new FiredMessage(player.getUniqueID()));
+                } else
+                {
+                    // shotThread will wait by itself after we set setShooting
+                    // to false
+                    shotThread.setShooting(false);
+                }
             }
         } else if (m instanceof RequestEntityAddMessage)
         {
@@ -299,6 +314,7 @@ public class Client extends Thread {
     public void setPlayer(Player p)
     {
         player = p;
+        shotThread.setPlayer(player);
     }
 
     /**

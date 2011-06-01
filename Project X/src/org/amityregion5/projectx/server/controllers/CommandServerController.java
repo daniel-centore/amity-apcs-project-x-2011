@@ -104,13 +104,13 @@ public class CommandServerController extends Thread implements ServerController 
 
     public void clientJoined(String username)
     {
-        System.out.println(username + "\" joined");
+        System.out.println(username + " joined");
         System.out.print(":");
     }
 
     public void clientLeft(String username)
     {
-        System.out.println(username + "\" left");
+        System.out.println(username + " left");
         System.out.print(":");
     }
 

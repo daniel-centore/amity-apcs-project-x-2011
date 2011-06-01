@@ -51,7 +51,6 @@ import org.amityregion5.projectx.common.communication.messages.RemoveEntityMessa
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.EntityConstants;
 import org.amityregion5.projectx.common.entities.characters.Player;
-import org.amityregion5.projectx.common.entities.items.held.Weapon;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 import org.amityregion5.projectx.common.tools.ImageHandler;
 
@@ -251,6 +250,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         {
             AddMeMessage amm = (AddMeMessage) m;
             me = (Player) amm.getEntity();
+            me.updateWeaponImages();
             entityHandler.addEntity(me);
             dUpThread.start(); // start directional update thread
         } else if (m instanceof AddEntityMessage)
@@ -276,6 +276,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             GameWindow.fireRepaintRequired();
         } else if (m instanceof AddWeaponMessage)
         {
+            System.err.println("getting weapon!!!!!");
             AddWeaponMessage awm = (AddWeaponMessage) m;
             awm.getWeapon().setImage(
                     ImageHandler.loadImage(awm.getWeapon().getDefaultImage()));

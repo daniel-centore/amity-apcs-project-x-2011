@@ -123,7 +123,7 @@ public class RepaintHandler extends Thread {
             }
         }
 
-        g.draw(game.getMap().getPlayArea());
+        //g.draw(game.getMap().getPlayArea());
 
         return img;
     }

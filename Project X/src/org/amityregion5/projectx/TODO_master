@@ -1,6 +1,7 @@
 1) Weapons Systems
     a. Need different kind of weapons
     b. Need to give player a default weapon (maybe Pistol?) at start of game
+    c. Need to stop shooting upon weapon change
 
 src/org/amityregion5/projectx/client/gui/ChatDrawing.java:            // TODO make the letters also appear on the new line
 src/org/amityregion5/projectx/client/gui/RepaintHandler.java:                // TODO draw a fire if it just fired

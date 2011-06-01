@@ -80,4 +80,9 @@ public abstract class ProjectileWeapon extends Weapon {
         mags--;
     }
 
+    public boolean hasAmmo()
+    {
+        return (ammo > 0);
+    }
+
 }

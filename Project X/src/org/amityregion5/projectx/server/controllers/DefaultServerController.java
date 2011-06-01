@@ -29,7 +29,7 @@ public class DefaultServerController implements ServerController{
 
     public void clientJoined(String username)
     {
-        System.out.println(username + "\" joined");
+        System.out.println(username + " joined");
     }
 
     public void clientLeft(String username)
