@@ -128,8 +128,8 @@ public class GameWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent arg0)
             {
-                //TODO: open a fieldItemAdder or such
                 panel.requestFocusInWindow();
+                new FieldItemAdder(GameWindow.this, true);
             }
             
         });
