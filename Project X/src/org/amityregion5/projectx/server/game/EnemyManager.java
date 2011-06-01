@@ -19,6 +19,10 @@
  */
 package org.amityregion5.projectx.server.game;
 
+import java.awt.Point;
+import java.util.ArrayList;
+import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
+
 /**
  * Class documentation.
  * 
@@ -28,5 +32,21 @@ package org.amityregion5.projectx.server.game;
 public class EnemyManager {
 
     private GeneratorThread gen;
+    private EnemyWave wave;
+    private ArrayList<Point> spawnArea;
+
+    public EnemyManager(ArrayList<Point> area)
+    {
+        spawnArea = area;
+    }
+    public void setWave(EnemyWave w)
+    {
+        wave = w;
+    }
+
+    public void addEnemies()
+    {
+        gen.addEnemies(wave, spawnArea);
+    }
 
 }

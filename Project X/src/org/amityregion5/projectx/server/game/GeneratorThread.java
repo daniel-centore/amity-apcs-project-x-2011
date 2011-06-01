@@ -19,10 +19,38 @@
  */
 package org.amityregion5.projectx.server.game;
 
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Random;
+import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
+
 /**
  * Class documentation.
  * 
  * @author Jenny Liu
+ * @author Michael Wenke
  */
 public class GeneratorThread extends Thread {
+
+    //TODO: Get enemy spawning to work
+    public GeneratorThread()
+    {
+
+    }
+
+    public void addEnemies(EnemyWave wave, ArrayList<Point> spawnArea)
+    {
+        ArrayList<Enemy> enemyTypes = wave.getEnemyTypes();
+        ArrayList<Integer> enemyQuantities = wave.getEnemyNumbers();
+        Random gen = new Random();
+        for(int i = 0; i < enemyTypes.size(); i++)
+        {
+            Enemy e = enemyTypes.get(i);
+            for(int j = 0; j < enemyQuantities.get(i); i++)
+            {
+                Point spawn = spawnArea.get(gen.nextInt(spawnArea.size()));
+
+            }
+        }
+    }
 }

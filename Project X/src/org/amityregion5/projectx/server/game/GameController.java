@@ -50,6 +50,7 @@ public class GameController {
     private EntityMoverThread entityMoverThread; // will be in charge of moving entities
     private Server server;
     private AbstractMap map;
+    private EnemyManager enemyManager;
 
     /**
      * Creates and initializes the game controlling
@@ -86,6 +87,7 @@ public class GameController {
                 c.send(new AddEntityMessage(p));
         }
 
+        enemyManager = new EnemyManager(getEnemySpawns());
         entityMoverThread = new EntityMoverThread(this, server.getRawServer(), map);
         entityMoverThread.start();
     }
