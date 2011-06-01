@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
+import org.amityregion5.projectx.client.gui.GameWindow;
 
 import org.amityregion5.projectx.common.communication.messages.AddEntityMessage;
 import org.amityregion5.projectx.common.communication.messages.AddMeMessage;
@@ -62,6 +63,7 @@ public class GameController {
         players = new ArrayList<Player>();
         clients = server.getClients().values();
         entities = new ArrayList<Entity>();
+        
 
         Random r = new Random();
         for (Client c : clients)
@@ -103,14 +105,28 @@ public class GameController {
         return clients;
     }
 
-    private Point getNextSpawn()
+    /**
+     * This assumes the default game window dimensions and that enemies spawn at edge of screen.
+     * @return enemy spawn points
+     */
+    private ArrayList<Point> getEnemySpawns()
     {
-        // TODO: move the map initialization to server-side and pass it to the client
-        // TODO: afterwards, finish this spawn creation
+        ArrayList<Point> spawns = new ArrayList<Point>();
+        if(map instanceof TestingMap)
+        {
+            for(int i = 0; i < GameWindow.GAME_WIDTH; i += 10)
+            {
+                spawns.add(new Point(0,i));
+                spawns.add(new Point(GameWindow.GAME_HEIGHT, i));
+            }
+            for(int i = 0; i < GameWindow.GAME_HEIGHT; i += 10)
+            {
+             spawns.add(new Point(i,0));
+                spawns.add(new Point(i,GameWindow.GAME_WIDTH));
+            }
+        }
 
-        // int x = (int) map.getPlayArea().getX() + (int) (Math.random() * map.getPlayArea().getWidth());
-        // int y = (int) map.getPlayArea().getY() + (int) (Math.random() * map.getPlayArea().getHeight());
-        return null;
+        return spawns;
     }
 
 }

@@ -20,6 +20,7 @@
 package org.amityregion5.projectx.common.maps;
 
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,5 +83,11 @@ public class TestingMap extends AbstractMap {
     public List<Entity> getEntities()
     {
         return entities;
+    }
+    
+    public Point getCenter()
+    {
+
+        return new Point(GameWindow.GAME_WIDTH / 2, GameWindow.GAME_HEIGHT / 2);
     }
 }
