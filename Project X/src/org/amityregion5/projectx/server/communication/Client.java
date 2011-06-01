@@ -136,7 +136,7 @@ public class Client extends Thread {
         {
             server.removeClient(username); // take it off the server's list
             server.relayMessage(new AnnounceMessage(username + " has disconnected."));
-            server.relayMessage(new RemoveEntityMessage(this.player));
+            server.relayMessage(new RemoveEntityMessage(player));
         }
     }
 

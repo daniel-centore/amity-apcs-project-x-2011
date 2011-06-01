@@ -39,6 +39,7 @@ import org.amityregion5.projectx.common.communication.MessageListener;
 import org.amityregion5.projectx.common.communication.RawListener;
 import org.amityregion5.projectx.common.communication.messages.AddEntityMessage;
 import org.amityregion5.projectx.common.communication.messages.AddMeMessage;
+import org.amityregion5.projectx.common.communication.messages.AddWeaponMessage;
 import org.amityregion5.projectx.common.communication.messages.AnnounceMessage;
 import org.amityregion5.projectx.common.communication.messages.ChatMessage;
 import org.amityregion5.projectx.common.communication.messages.ClientMovingMessage;
@@ -50,8 +51,9 @@ import org.amityregion5.projectx.common.communication.messages.RemoveEntityMessa
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.EntityConstants;
 import org.amityregion5.projectx.common.entities.characters.Player;
-import org.amityregion5.projectx.common.entities.items.held.Gun;
+import org.amityregion5.projectx.common.entities.items.held.Weapon;
 import org.amityregion5.projectx.common.maps.AbstractMap;
+import org.amityregion5.projectx.common.tools.ImageHandler;
 
 /**
  * The umbrella logistics class for the client-side game.
@@ -249,9 +251,6 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         {
             AddMeMessage amm = (AddMeMessage) m;
             me = (Player) amm.getEntity();
-            //TODO: add this back in once joe commits his graphics
-//            System.out.println("adding a weapon to me");
-            me.addWeapon(new Gun(100, 100, 10, 2, 6, 50));
             entityHandler.addEntity(me);
             dUpThread.start(); // start directional update thread
         } else if (m instanceof AddEntityMessage)
@@ -275,6 +274,14 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             RemoveEntityMessage rem = (RemoveEntityMessage) m;
             entityHandler.removeEntity(rem.getPlayer());
             GameWindow.fireRepaintRequired();
+        } else if (m instanceof AddWeaponMessage)
+        {
+            AddWeaponMessage awm = (AddWeaponMessage) m;
+            awm.getWeapon().setImage(
+                    ImageHandler.loadImage(awm.getWeapon().getDefaultImage()));
+            ((org.amityregion5.projectx.common.entities.characters.Character)
+                    entityHandler.getEntity(awm.getID())).addWeapon(
+                    awm.getWeapon());
         }
     }
 

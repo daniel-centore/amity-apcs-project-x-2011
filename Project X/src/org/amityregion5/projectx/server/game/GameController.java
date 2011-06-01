@@ -18,6 +18,7 @@
  */
 package org.amityregion5.projectx.server.game;
 
+import org.amityregion5.projectx.common.communication.messages.AddWeaponMessage;
 import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ import org.amityregion5.projectx.common.communication.messages.AddEntityMessage;
 import org.amityregion5.projectx.common.communication.messages.AddMeMessage;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.characters.Player;
+import org.amityregion5.projectx.common.entities.items.held.Gun;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 import org.amityregion5.projectx.common.maps.TestingMap;
 import org.amityregion5.projectx.server.Server;
@@ -75,11 +77,13 @@ public class GameController {
             int spawnX = (int) (map.getPlayArea().getX() + r.nextInt((int) map.getPlayArea().getWidth() - p.getWidth()));
             p.setLocation(new Point2D.Double(spawnX, spawnY));
             p.setHitBox(p.getWidth(), p.getHeight());
+            Gun g = new Gun(100, 100, 10, 2, 6, 50);
             players.add(p);
             entities.add(p);
             c.setPlayer(p);
 
             c.send(new AddMeMessage(p));
+            c.send(new AddWeaponMessage(p.getUniqueID(),g));
         }
 
         for (Client c : clients)
