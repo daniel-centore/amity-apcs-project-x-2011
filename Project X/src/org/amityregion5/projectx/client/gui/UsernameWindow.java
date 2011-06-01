@@ -122,38 +122,23 @@ public class UsernameWindow extends JDialog
 
     private void usernameFieldKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_usernameFieldKeyPressed
     {//GEN-HEADEREND:event_usernameFieldKeyPressed
-       if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE
-               && usernameField.getText().length() <= 1)
-       {
-          SwingUtilities.invokeLater(new Runnable()
-          {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER)
+        {
+            if (usernameField.getText().length() < 1)
+            {
+                evt.consume();
+            } else
+            {
+                PreferenceManager.setUsername(usernameField.getText());
+                this.dispose();
+            }
+        }
 
-             public void run()
-             {
-                okBtn.setEnabled(false);
-             }
-          });
-       } else if (evt.getKeyCode() == KeyEvent.VK_ENTER)
-       {
-          if (usernameField.getText().length() < 1)
-          {
-             evt.consume();
-          } else
-          {
-             PreferenceManager.setUsername(usernameField.getText());
-             this.dispose();
-          }
-       } else if (!Character.isISOControl(evt.getKeyChar()) &&
-               Character.isDefined(evt.getKeyChar()))
-       {
-          SwingUtilities.invokeLater(new Runnable()
-          {
-             public void run()
-             {
-                okBtn.setEnabled(true);
-             }
-          });
-       }
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                okBtn.setEnabled(usernameField.getText().length() > 0);
+            }
+        });
     }//GEN-LAST:event_usernameFieldKeyPressed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

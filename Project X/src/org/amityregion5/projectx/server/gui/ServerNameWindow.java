@@ -118,35 +118,13 @@ public class ServerNameWindow extends javax.swing.JFrame
             {
                 startServer();
             }
-        } else if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE)
-        {
-            if (serverNameField.getText().length() <= 1)
-            {
-                SwingUtilities.invokeLater(new Runnable()
-                {
-                    public void run()
-                    {
-                        okBtn.setEnabled(false);
-                    }
-                });
-            }
-        } else
-        {
-            if (Character.isISOControl(evt.getKeyChar()) ||
-               !Character.isDefined(evt.getKeyChar()))
-            {
-                evt.consume();
-            } else {
-                SwingUtilities.invokeLater(new Runnable()
-                {
-
-                    public void run()
-                    {
-                        okBtn.setEnabled(true);
-                    }
-                });
-            }
         }
+
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                okBtn.setEnabled(serverNameField.getText().length() > 0);
+            }
+        });
     }// GEN-LAST:event_serverNameFieldKeyPressed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
