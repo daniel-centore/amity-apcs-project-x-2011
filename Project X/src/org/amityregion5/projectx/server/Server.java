@@ -22,6 +22,7 @@ package org.amityregion5.projectx.server;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -272,7 +273,12 @@ public class Server {
      */
     public InetAddress getInetAddress()
     {
-        return servSock.getInetAddress();
+        try {
+            return InetAddress.getLocalHost();
+        }
+        catch (UnknownHostException e) {
+            return servSock.getInetAddress();
+        }
     }
 
     /**
