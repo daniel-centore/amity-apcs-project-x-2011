@@ -23,6 +23,7 @@ package org.amityregion5.projectx.common.entities;
  * Constants used for Entities.
  * 
  * @author Mike DiBuduo
+ * @author Daniel Centore
  */
 public class EntityConstants {
 
@@ -34,10 +35,18 @@ public class EntityConstants {
     public final int SOUTH_EAST = 135;
     public final int SOUTH_WEST = 225;
     public final int NORTH_WEST = 315;
+
     /**
-     * Number of milliseconds between moves. Move speed is number of linear
-     * pixels per this number of milliseconds.
+     * Number of milliseconds between moves. Move speed is number of linear pixels per this number of milliseconds.
      */
     public static final int MOVE_UPDATE_TIME = 50; // 20 times per second
     public static final int DIR_UPDATE_TIME = 25; // about 40 times per second
+
+    // names of field items
+    public static final String FENCE = "Fence";
+    public static final String WALL = "Wall";
+    public static final String BLOCK = "Block";
+
+    public static final String[] fieldItems =
+    { BLOCK, WALL, FENCE };
 }

@@ -29,6 +29,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.amityregion5.projectx.common.communication.messages.ActivePlayersMessage;
+import org.amityregion5.projectx.common.communication.messages.AddEntityMessage;
 import org.amityregion5.projectx.common.communication.messages.AnnounceMessage;
 import org.amityregion5.projectx.common.communication.messages.BlockingMessage;
 import org.amityregion5.projectx.common.communication.messages.BooleanReplyMessage;
@@ -43,6 +44,7 @@ import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.common.communication.messages.NotifyMessage;
 import org.amityregion5.projectx.common.communication.messages.ReadyMessage;
 import org.amityregion5.projectx.common.communication.messages.RemoveEntityMessage;
+import org.amityregion5.projectx.common.communication.messages.RequestEntityAddMessage;
 import org.amityregion5.projectx.common.communication.messages.TextualMessage;
 import org.amityregion5.projectx.common.entities.characters.Player;
 import org.amityregion5.projectx.server.Server;
@@ -242,6 +244,11 @@ public class Client extends Thread {
             {
                 server.relayMessage(new FiredMessage(player.getUniqueID()));
             }
+        } else if (m instanceof RequestEntityAddMessage)
+        {
+            RequestEntityAddMessage ream = (RequestEntityAddMessage) m;
+            
+            server.relayMessage(new AddEntityMessage(ream.getNewInstance()));
         }
     }
 

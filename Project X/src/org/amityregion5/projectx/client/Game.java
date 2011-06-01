@@ -64,7 +64,7 @@ import org.amityregion5.projectx.common.maps.AbstractMap;
  */
 public class Game implements GameInputListener, MessageListener, RawListener, FocusListener {
 
-    private CommunicationHandler ch; // current CommunicationHandler
+    private CommunicationHandler communicationHandler; // current CommunicationHandler
     private RawCommunicationHandler rch; // current raw communications handler
     private AbstractMap map; // current AbstractMap
     private Player me; // current Player (null at initialization!)
@@ -79,7 +79,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
     {
         this.username = username;
         entityHandler = new EntityHandler();
-        this.ch = ch;
+        communicationHandler = ch;
         me = null;
         map = m;
         rch = new RawCommunicationHandler(ch.getServerIP(), username);
@@ -118,12 +118,12 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
 
     public void mousePressed(int x, int y, int button)
     {
-        ch.send(new FiringMessage(true));
+        getCommunicationHandler().send(new FiringMessage(true));
     }
 
     public void mouseReleased(int x, int y, int button)
     {
-        ch.send(new FiringMessage(false));
+        getCommunicationHandler().send(new FiringMessage(false));
     }
 
     public void keyPressed(KeyEvent e)
@@ -145,7 +145,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                 }
                 ChatMessage cm = new ChatMessage(ChatDrawing.getTextChat(), username);
                 ChatDrawing.clearChat();
-                ch.send(cm);
+                getCommunicationHandler().send(cm);
             } else if (keyCode == KeyEvent.VK_BACK_SPACE)
             {
                 ChatDrawing.backspace();
@@ -176,7 +176,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                 return;
             }
             ClientMovingMessage c = new ClientMovingMessage(Player.INITIAL_SPEED, deg);
-            ch.send(c);
+            getCommunicationHandler().send(c);
         }
     }
 
@@ -222,7 +222,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             deg = me.getDirectionMoving();
         }
         ClientMovingMessage c = new ClientMovingMessage(speed, deg);
-        ch.send(c);
+        getCommunicationHandler().send(c);
     }
 
     /**
@@ -250,8 +250,9 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         {
             AddMeMessage amm = (AddMeMessage) m;
             me = (Player) amm.getEntity();
-            System.out.println("adding a weapon to me");
-            me.addWeapon(new Gun(100, 100, 10, 2, 6, 50));
+            //TODO: add this back in once joe commits his graphics
+//            System.out.println("adding a weapon to me");
+//            me.addWeapon(new Gun(100, 100, 10, 2, 6, 50));
             entityHandler.addEntity(me);
             dUpThread.start(); // start directional update thread
         } else if (m instanceof AddEntityMessage)
@@ -401,5 +402,10 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
     {
         depressedKeys.clear();
         me.setMoveSpeed(0);
+    }
+
+    public CommunicationHandler getCommunicationHandler()
+    {
+        return communicationHandler;
     }
 }

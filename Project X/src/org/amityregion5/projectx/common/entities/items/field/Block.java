@@ -22,9 +22,8 @@ package org.amityregion5.projectx.common.entities.items.field;
 import org.amityregion5.projectx.common.entities.Damageable;
 
 /**
- * The basic Block. Used to protect prevent direct attack or movement.
- * Has health which is drained by attacks.
- *
+ * The basic Block. Used to protect prevent direct attack or movement. Has health which is drained by attacks.
+ * 
  * @author Mike DiBuduo
  * @author Mike Wenke
  */
@@ -62,8 +61,8 @@ public class Block extends FieldItem implements Damageable {
     }
 
     /**
-     * Not sure if Blocks should have a max health. For now it can be infinitely reinforced.
-     * Perhaps a fence has a max health and a wall can be infinitely upgraded?
+     * Not sure if Blocks should have a max health. For now it can be infinitely reinforced. Perhaps a fence has a max health and a wall can be infinitely upgraded?
+     * 
      * @param health amount to be healed by
      */
     public void heal(int health)
@@ -76,15 +75,15 @@ public class Block extends FieldItem implements Damageable {
      */
     public void killed()
     {
-        if(hp <= 0)
+        if (hp <= 0)
         {
-            //Remove self from game
+            // TODO: Remove self from game
         }
     }
 
     @Override
     public String getDefaultImage()
     {
-        return "sprites/Wall";
+        return "sprites/Block";
     }
 }

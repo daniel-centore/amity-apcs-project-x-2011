@@ -23,19 +23,19 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JMenuBar;
-import javax.swing.SwingUtilities;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 
 import org.amityregion5.projectx.client.Game;
 import org.amityregion5.projectx.client.gui.input.KeyboardInput;
@@ -61,7 +61,8 @@ public class GameWindow extends JFrame {
     private int xOffset; // how much screen is offset horizontally
     private int yOffset; // how much screen is offset vertically
 
-    public GameWindow(AbstractMap map, Game game)
+
+    public GameWindow(AbstractMap map, final Game game)
     {
         super("Amity Project X");
 
@@ -119,22 +120,9 @@ public class GameWindow extends JFrame {
         panel.addMouseWheelListener(mi);
         panel.addKeyListener(new KeyboardInput());
 
-        JMenuBar menu = new JMenuBar();
-        JButton butt = new JButton("Add Field Item");
-
-        menu.add(butt);
-
-        butt.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0)
-            {
-                new FieldItemAdder(GameWindow.this, true).setVisible(true);
-                panel.requestFocusInWindow();
-            }
-        });
-
+        panel.addMouseListener(new PopupMenuHandler(game.getCommunicationHandler()));
+        
         this.add(panel, BorderLayout.CENTER);
-        this.add(menu, BorderLayout.NORTH);
 
         this.setSize(GAME_WIDTH, GAME_HEIGHT);
 

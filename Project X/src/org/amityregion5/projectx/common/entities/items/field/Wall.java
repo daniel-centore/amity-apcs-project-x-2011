@@ -31,20 +31,18 @@ public class Wall extends Block implements Damageable {
     private static final long serialVersionUID = 1L;
     public static final int DEFAULT_HEALTH = 100;
 
-    public Wall()
+    public Wall(int x, int y)
     {
-        this(DEFAULT_HEALTH);
+        this(x, y, DEFAULT_HEALTH);
     }
 
-    public Wall(int health)
+    public Wall(int x, int y, int health)
     {
-        super(0, 0, health);    //TODO
+        super(x, y, health);
     }
 
     public Wall(Entity e)
     {
-        this();
-        setX(e.getX());
-        setY(e.getY());
+        this(e.getX(), e.getY());
     }
 }
