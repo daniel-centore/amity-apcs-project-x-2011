@@ -36,6 +36,7 @@ import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.server.Server;
 import org.amityregion5.projectx.server.controllers.DefaultServerController;
 import org.amityregion5.projectx.server.controllers.ServerController;
+import java.net.InetAddress;
 
 /**
  * Class documentation.
@@ -44,8 +45,9 @@ import org.amityregion5.projectx.server.controllers.ServerController;
  */
 public class Main {
     public static void main(String[] args)
+        throws Exception
     {
-        Server s = new Server("test server");
+        Server s = new Server("test server @ " + InetAddress.getLocalHost().getCanonicalHostName());
         ServerController sc = new DefaultServerController();
         s.setController(sc);
         if (PreferenceManager.getUsername() == null)
@@ -53,36 +55,24 @@ public class Main {
             PreferenceManager.setUsername("test user");
         }
         final String user = PreferenceManager.getUsername();
-        try
+        CommunicationHandler ch = new CommunicationHandler("localhost");
+        boolean joined = false;
+        while (!joined)
         {
-            Thread.sleep(500);
-            CommunicationHandler ch = new CommunicationHandler("localhost");
-            boolean joined = false;
-            while (!joined)
+            Message reply = ch.requestReply(new IntroduceMessage(user));
+            // ActivePlayerUpdate message serves as an affirmative here.
+            if (reply instanceof BooleanReplyMessage)
             {
-                Message reply = ch.requestReply(new IntroduceMessage(user));
-                // ActivePlayerUpdate message serves as an affirmative here.
-                if (reply instanceof BooleanReplyMessage)
-                {
-                    System.err.println("username already in use");
-                    System.exit(-1);
-                } else if (reply instanceof ActivePlayersMessage)
-                {
-                    ActivePlayersMessage apm = (ActivePlayersMessage) reply;
-                    joined = true;
-                    new LobbyWindow(ch, apm.getPlayers(), user);
-                }
+                System.err.println("username already in use");
+                System.exit(1);
             }
-            Thread.sleep(100);
-            s.startGame();
+            else if (reply instanceof ActivePlayersMessage)
+            {
+                ActivePlayersMessage apm = (ActivePlayersMessage) reply;
+                joined = true;
+                new LobbyWindow(ch, apm.getPlayers(), user);
+            }
         }
-        catch(InterruptedException ex)
-        {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }        catch(IOException ex)
-        {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-            System.exit(1);
-        }
+        s.startGame();
     }
 }
