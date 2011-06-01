@@ -47,18 +47,23 @@ public class Main {
             // ignore
         }
 
-        SplashScreen s = new SplashScreen();
-        try
-        {
-            Thread.sleep(SPLASH_TIME);
-            if (PreferenceManager.getUsername() == null)
-            {
-                // user has never used Project X before!
+        SplashScreen s = null;
 
-                new UsernameWindow(s, true, true);
+        if (PreferenceManager.checkSplashScreen()) {
+            s = new SplashScreen();
+            try
+            {
+                Thread.sleep(SPLASH_TIME);
+            } catch (InterruptedException e)
+            {
             }
-        } catch (InterruptedException e)
+        }
+
+        if (PreferenceManager.getUsername() == null)
         {
+            // user has never used Project X before!
+
+            new UsernameWindow(s, true, true);
         }
 
         final ServerChooserWindow chooser = new ServerChooserWindow();
@@ -67,7 +72,9 @@ public class Main {
         mch.registerListener(chooser);
         mch.start();
 
-        s.setVisible(false);
+        if (s != null)
+            s.setVisible(false);
+
         chooser.setVisible(true);
     }
 }

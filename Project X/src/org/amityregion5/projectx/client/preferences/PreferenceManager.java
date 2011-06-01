@@ -20,6 +20,7 @@
 package org.amityregion5.projectx.client.preferences;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.BackingStoreException;
@@ -32,10 +33,13 @@ import java.util.prefs.Preferences;
  * @author Joe Stein
  */
 public class PreferenceManager {
-    
-    private static ArrayList<PrefListener> listeners = new ArrayList<PrefListener>();
     public static final String USERNAME = "username";
+    public static final String SPLASH_SHOWN = "splash";
     public static final String KEY_CSV = "keycsv";
+
+    public static final long SPLASH_PERIOD = 60 * 60 * 24; //one day.
+
+    private static ArrayList<PrefListener> listeners = new ArrayList<PrefListener>();
     private static Preferences prefs;
 
     static
@@ -101,5 +105,15 @@ public class PreferenceManager {
     public static String getKeys()
     {
         return prefs.get(KEY_CSV, "w,a,s,d,t");
+    }
+
+    public static boolean checkSplashScreen() {
+        long last = Long.parseLong(prefs.get(SPLASH_SHOWN, "0"));
+        long time = (new Date()).getTime();
+        if (time - last > SPLASH_PERIOD) {
+            prefs.put(SPLASH_SHOWN, ""+ time);
+            return true;
+        }
+        return false;
     }
 }
