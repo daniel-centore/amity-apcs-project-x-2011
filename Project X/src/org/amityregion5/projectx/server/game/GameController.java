@@ -34,6 +34,7 @@ import org.amityregion5.projectx.common.maps.AbstractMap;
 import org.amityregion5.projectx.common.maps.TestingMap;
 import org.amityregion5.projectx.server.Server;
 import org.amityregion5.projectx.server.communication.Client;
+import org.amityregion5.projectx.server.game.enemies.EnemyManager;
 
 /**
  * Handles the game running.

@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package org.amityregion5.projectx.server.game;
+package org.amityregion5.projectx.server.game.enemies;
 
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
 
