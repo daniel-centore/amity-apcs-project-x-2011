@@ -23,7 +23,9 @@ import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.JOptionPane;
+
 import org.amityregion5.projectx.client.communication.CommunicationHandler;
 import org.amityregion5.projectx.client.gui.LobbyWindow;
 import org.amityregion5.projectx.client.preferences.PreferenceManager;
@@ -32,7 +34,8 @@ import org.amityregion5.projectx.common.communication.messages.BooleanReplyMessa
 import org.amityregion5.projectx.common.communication.messages.IntroduceMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.server.Server;
-import org.amityregion5.projectx.server.controllers.CommandServerController;
+import org.amityregion5.projectx.server.controllers.DefaultServerController;
+import org.amityregion5.projectx.server.controllers.ServerController;
 
 /**
  * Class documentation.
@@ -43,8 +46,8 @@ public class Main {
     public static void main(String[] args)
     {
         Server s = new Server("test server");
-        CommandServerController csc = new CommandServerController(s);
-        s.setController(csc);
+        ServerController sc = new DefaultServerController();
+        s.setController(sc);
         if (PreferenceManager.getUsername() == null)
         {
             PreferenceManager.setUsername("test user");
