@@ -32,15 +32,17 @@ public abstract class ProjectileWeapon extends Weapon {
     private int maxAmmo;
     private int roundsPerMag;
     private int mags;
+    private int damage;
 
     public ProjectileWeapon(int range, int startAmmo, int _maxAmmo, int rate,
-            int rpm, int mags)
+            int rpm, int mags, int damage)
     {
         super(range, rate);
         ammo = startAmmo;
         maxAmmo = _maxAmmo;
         roundsPerMag = rpm;
         this.mags = mags;
+        this.damage = damage;
     }
 
     public int getAmmo()
@@ -83,6 +85,11 @@ public abstract class ProjectileWeapon extends Weapon {
     public boolean hasAmmo()
     {
         return (ammo > 0);
+    }
+    
+    public int getDamage()
+    {
+        return damage;
     }
 
 }

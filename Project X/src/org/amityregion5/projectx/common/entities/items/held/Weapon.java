@@ -20,13 +20,15 @@
 
 package org.amityregion5.projectx.common.entities.items.held;
 
+import org.amityregion5.projectx.common.entities.items.DamageDealing;
+
 /**
  * A HeldItem used to effect effects on a target.
  * The Weapon itself does not necessarily do damage.
  *
  * @author Joe Stein
  */
-public abstract class Weapon extends HeldItem {
+public abstract class Weapon extends HeldItem implements DamageDealing{
     private int range; // Range (in pixels)
     private int attackRate;
     /**
@@ -60,4 +62,5 @@ public abstract class Weapon extends HeldItem {
     }
 
     public abstract boolean hasAmmo();
+    public abstract int getDamage();
 }

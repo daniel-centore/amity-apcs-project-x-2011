@@ -18,8 +18,12 @@
  */
 package org.amityregion5.projectx.server.game;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import org.amityregion5.projectx.common.communication.messages.AddWeaponMessage;
 import java.awt.Point;
+import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,6 +37,7 @@ import org.amityregion5.projectx.common.communication.messages.FiredMessage;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.characters.Player;
 import org.amityregion5.projectx.common.entities.characters.Character;
+import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
 import org.amityregion5.projectx.common.entities.items.held.Gun;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
 import org.amityregion5.projectx.common.maps.AbstractMap;
@@ -87,7 +92,7 @@ public class GameController {
             c.setPlayer(p);
             c.send(new AddMeMessage(p));
 
-            addWeapon(p,new Gun(100, 100, 10, 20, 6, 50));
+            addWeapon(p,new Gun(100, 100, 10, 20, 6, 50, 10));
         }
 
         for (Client c : clients)
@@ -158,7 +163,18 @@ public class GameController {
      */
     public void playerFired(Player player)
     {
-        // TODO mike, do it up!
+        int direction = player.getDirectionFacing();
+        int x2 = (int) (Math.cos(Math.toRadians(direction)) * 800) + player.getCenterX();
+        int y2 = (int) (Math.sin(Math.toRadians(direction)) * 800) + player.getCenterY();
+        Line2D.Double line = new Line2D.Double(player.getCenterX(), player.getCenterY(), x2, y2);
+        for (Entity e : entities)
+        {
+            if (e instanceof Enemy && line.intersects(e.getHitBox()));
+            {
+                Enemy en = (Enemy) e;
+                en.damage(player.getWeapon(player.getCurrWeapon()).getDamage());
+            }
+        }
     }
 
 }
