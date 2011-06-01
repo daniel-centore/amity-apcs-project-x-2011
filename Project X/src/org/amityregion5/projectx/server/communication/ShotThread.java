@@ -24,6 +24,7 @@ import org.amityregion5.projectx.common.communication.messages.FiredMessage;
 import org.amityregion5.projectx.common.entities.characters.Player;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
 import org.amityregion5.projectx.server.Server;
+import org.amityregion5.projectx.server.game.GameController;
 
 /**
  * A thread that helps deal with players shooting. Each client has one.
@@ -70,7 +71,7 @@ public class ShotThread extends Thread
             {
                 if (currWeapon.hasAmmo())
                 {
-                    server.relayMessage(new FiredMessage(player.getUniqueID()));
+                    server.playerFired(player);
                 }
                 // sleeps in order to get the attack rate right
                 Thread.sleep(1000 / player.getWeapon(player.getCurrWeapon())

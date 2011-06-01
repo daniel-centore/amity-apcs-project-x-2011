@@ -29,6 +29,7 @@ import org.amityregion5.projectx.client.gui.GameWindow;
 
 import org.amityregion5.projectx.common.communication.messages.AddEntityMessage;
 import org.amityregion5.projectx.common.communication.messages.AddMeMessage;
+import org.amityregion5.projectx.common.communication.messages.FiredMessage;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.characters.Player;
 import org.amityregion5.projectx.common.entities.characters.Character;
@@ -149,6 +150,15 @@ public class GameController {
         }
 
         return spawns;
+    }
+
+    /**
+     * Tells this controller that the player has fired.
+     * @param player the player that fired
+     */
+    public void playerFired(Player player)
+    {
+        // TODO mike, do it up!
     }
 
 }

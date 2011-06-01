@@ -31,9 +31,11 @@ import org.amityregion5.projectx.common.communication.Constants;
 import org.amityregion5.projectx.common.communication.messages.ActivePlayersMessage;
 import org.amityregion5.projectx.common.communication.messages.AnnounceMessage;
 import org.amityregion5.projectx.common.communication.messages.ChatMessage;
+import org.amityregion5.projectx.common.communication.messages.FiredMessage;
 import org.amityregion5.projectx.common.communication.messages.GoodbyeMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.common.communication.messages.StatusUpdateMessage;
+import org.amityregion5.projectx.common.entities.characters.Player;
 import org.amityregion5.projectx.server.communication.Client;
 import org.amityregion5.projectx.server.communication.Multicaster;
 import org.amityregion5.projectx.server.communication.RawServer;
@@ -345,6 +347,21 @@ public class Server {
     public RawServer getRawServer()
     {
         return rawServ;
+    }
+
+    /**
+     * Notifies the server that the given player has fired. This server
+     * will in turn hand off the notification to the game controller
+     * for damage handling.
+     * @param player the player that fired
+     */
+    public void playerFired(Player player)
+    {
+        if (gameController != null)
+        {
+            relayMessage(new FiredMessage(player.getUniqueID()));
+            gameController.playerFired(player);
+        }
     }
 
     /**
