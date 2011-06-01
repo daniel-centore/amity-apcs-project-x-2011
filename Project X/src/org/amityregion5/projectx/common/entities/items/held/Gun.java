@@ -20,9 +20,10 @@
 package org.amityregion5.projectx.common.entities.items.held;
 
 /**
- * A ProjectileWeapon which fires Bullets into field.
+ * A ProjectileWeapon that fires Bullets into field.
  *
  * @author Mike DiBuduo
+ * @author Joe Stein
  */
 public class Gun extends ProjectileWeapon
 {

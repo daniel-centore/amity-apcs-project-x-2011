@@ -51,7 +51,6 @@ import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.EntityConstants;
 import org.amityregion5.projectx.common.entities.characters.Player;
 import org.amityregion5.projectx.common.entities.items.held.Gun;
-import org.amityregion5.projectx.common.entities.items.held.Weapon;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 
 /**
@@ -252,7 +251,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             me = (Player) amm.getEntity();
             //TODO: add this back in once joe commits his graphics
 //            System.out.println("adding a weapon to me");
-//            me.addWeapon(new Gun(100, 100, 10, 2, 6, 50));
+            me.addWeapon(new Gun(100, 100, 10, 2, 6, 50));
             entityHandler.addEntity(me);
             dUpThread.start(); // start directional update thread
         } else if (m instanceof AddEntityMessage)
@@ -401,7 +400,8 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
     public void focusLost(FocusEvent arg0)
     {
         depressedKeys.clear();
-        me.setMoveSpeed(0);
+        if (me != null)
+            me.setMoveSpeed(0);
     }
 
     public CommunicationHandler getCommunicationHandler()

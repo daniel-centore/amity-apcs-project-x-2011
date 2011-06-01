@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.amityregion5.projectx.client.preferences.PreferenceManager;
 import org.amityregion5.projectx.common.communication.Constants;
 import org.amityregion5.projectx.common.communication.RawListener;
 
@@ -63,6 +62,7 @@ public class RawCommunicationHandler extends Thread {
         try
         {
             dos.writeUTF(username);
+            dos.flush();
         } catch (IOException e)
         {
         }

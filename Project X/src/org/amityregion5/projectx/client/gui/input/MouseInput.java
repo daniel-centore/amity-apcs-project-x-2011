@@ -96,6 +96,8 @@ public class MouseInput implements MouseMotionListener, MouseListener,
      */
     public static Point fix(int x, int y)
     {
+        if (GameWindow.getCurrentHeight() == 0)
+            return new Point(0,0);
         int width = GameWindow.getCurrentWidth();
         int height = GameWindow.getCurrentHeight();
 

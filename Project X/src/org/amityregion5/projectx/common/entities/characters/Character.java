@@ -20,9 +20,6 @@
  */
 package org.amityregion5.projectx.common.entities.characters;
 
-import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import org.amityregion5.projectx.common.entities.Damageable;
@@ -103,6 +100,11 @@ public abstract class Character extends Entity implements Damageable {
         this.currWeapon = newWeapon;
     }
 
+    public boolean hasWeapons()
+    {
+        return !weapons.isEmpty();
+    }
+
     /**
      * Gets the character's current HP.
      *
@@ -173,23 +175,5 @@ public abstract class Character extends Entity implements Damageable {
         hp += health;
         if(hp > maxHealth)
             hp = maxHealth;
-    }
-
-    @Override
-    protected void updateImage()
-    {
-        super.updateImage();
-
-        if (weapons == null || weapons.size() <= currWeapon)
-        {
-            return;
-        }
-
-        BufferedImage wepImg = weapons.get(currWeapon).getImage();
-        Graphics2D g2 = (Graphics2D) currentImage.getGraphics();
-        AffineTransform at = getAffineTransform();
-        at.translate(this.getWidth() / 2, this.getHeight() / 2);
-        g2.drawImage(wepImg, at, null);
-        //g2.drawImage(wepImg, 0, 0, null);
     }
 }

@@ -24,6 +24,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Stroke;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 import org.amityregion5.projectx.client.Game;
@@ -93,17 +94,36 @@ public class RepaintHandler extends Thread {
                 int x2 = (int) (Math.cos(Math.toRadians(e.getDirectionFacing())) * 800) + e.getCenterX();
                 int y2 = (int) (Math.sin(Math.toRadians(e.getDirectionFacing())) * 800) + e.getCenterY();
                 g.drawLine(e.getCenterX(), e.getCenterY(), x2, y2);
-                // TODO draw the weapon. we need sprites for this!
 
                 // TODO draw a fire if it just fired
                 if (e.getFired())
                 {
                     Stroke old = g.getStroke();
-                    g.setStroke(new BasicStroke(4));
+                    Color oldColor = g.getColor();
+                    g.setStroke(new BasicStroke(6));
                     g.setColor(Color.YELLOW);
                     g.drawLine(e.getCenterX(), e.getCenterY(), x2, y2);
+                    g.setColor(oldColor);
                     g.setStroke(old);
                     e.setFired(false);
+                }
+
+                // draw the weapon
+                Player p = (Player) e;
+                if (p.hasWeapons())
+                {
+                    BufferedImage wepImg = p.getWeapon(p.getCurrWeapon())
+                            .getImage();
+                    AffineTransform at = new AffineTransform();
+                    at.translate(e.getCenterX(), e.getCenterY());
+                    at.rotate(Math.toRadians(p.getDirectionFacing()));
+                    at.translate(0,-1 * wepImg.getHeight() / 2);
+                    System.out.println(e.getCenterX() + " " + e.getCenterY());
+                    //AffineTransform at = p.getAffineTransform();
+                    
+                    //at.translate(p.getWidth() / 2,
+                    //        (p.getHeight() / 2) - (wepImg.getHeight() / 2));
+                    g.drawImage(wepImg, at, null);
                 }
             }
         }

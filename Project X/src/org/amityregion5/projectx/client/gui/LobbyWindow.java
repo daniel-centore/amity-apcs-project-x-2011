@@ -43,7 +43,6 @@ import org.amityregion5.projectx.common.communication.messages.NotifyMessage;
 import org.amityregion5.projectx.common.communication.messages.ReadyMessage;
 import org.amityregion5.projectx.common.communication.messages.StatusUpdateMessage;
 import org.amityregion5.projectx.common.maps.TestingMap;
-import org.amityregion5.projectx.client.preferences.PreferenceManager;
 
 /**
  * The game lobby
