@@ -118,11 +118,6 @@ public class RepaintHandler extends Thread {
                     at.translate(e.getCenterX(), e.getCenterY());
                     at.rotate(Math.toRadians(p.getDirectionFacing()));
                     at.translate(0,-1 * wepImg.getHeight() / 2);
-                    System.out.println(e.getCenterX() + " " + e.getCenterY());
-                    //AffineTransform at = p.getAffineTransform();
-                    
-                    //at.translate(p.getWidth() / 2,
-                    //        (p.getHeight() / 2) - (wepImg.getHeight() / 2));
                     g.drawImage(wepImg, at, null);
                 }
             }
