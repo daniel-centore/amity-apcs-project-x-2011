@@ -35,7 +35,6 @@ import org.amityregion5.projectx.client.gui.RepaintHandler;
 import org.amityregion5.projectx.client.gui.input.InputHandler;
 import org.amityregion5.projectx.client.gui.input.Keys;
 import org.amityregion5.projectx.client.handlers.EntityHandler;
-import org.amityregion5.projectx.client.preferences.PreferenceManager;
 import org.amityregion5.projectx.common.communication.MessageListener;
 import org.amityregion5.projectx.common.communication.RawListener;
 import org.amityregion5.projectx.common.communication.messages.AddEntityMessage;
@@ -51,6 +50,8 @@ import org.amityregion5.projectx.common.communication.messages.RemoveEntityMessa
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.EntityConstants;
 import org.amityregion5.projectx.common.entities.characters.Player;
+import org.amityregion5.projectx.common.entities.items.held.Gun;
+import org.amityregion5.projectx.common.entities.items.held.Weapon;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 
 /**
@@ -198,8 +199,6 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
 
         if (lr == 0 && ud == 0)
             deg = Integer.MIN_VALUE;
-        else
-            System.out.println(lr + " " + ud);
 
         return deg;
     }
@@ -240,7 +239,6 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         {
             AnnounceMessage am = (AnnounceMessage) m;
             ChatDrawing.drawChat(am.getText());
-            
         } else if (m instanceof ChatMessage)
         {
             ChatMessage cm = (ChatMessage) m;
@@ -252,8 +250,10 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         {
             AddMeMessage amm = (AddMeMessage) m;
             me = (Player) amm.getEntity();
+            System.out.println("adding a weapon to me");
+            me.addWeapon(new Gun(100, 100, 10, 2, 6, 50));
             entityHandler.addEntity(me);
-            dUpThread.start();
+            dUpThread.start(); // start directional update thread
         } else if (m instanceof AddEntityMessage)
         {
             AddEntityMessage aem = (AddEntityMessage) m;
@@ -372,7 +372,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                     // System.out.println("sending");
                     rch.send(me.getDirectionFacing());
                     Thread.sleep(EntityConstants.DIR_UPDATE_TIME);
-                } catch (InterruptedException ex)
+                } catch (Exception ex)
                 {
                     Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
                     kill();

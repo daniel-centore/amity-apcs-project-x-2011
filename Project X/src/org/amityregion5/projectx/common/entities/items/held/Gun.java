@@ -42,7 +42,6 @@ public class Gun extends ProjectileWeapon
     @Override
     public String getDefaultImage()
     {
-        // TODO Auto-generated method stub
-        return null;
+        return "sprites/Pistol1";
     }
 }

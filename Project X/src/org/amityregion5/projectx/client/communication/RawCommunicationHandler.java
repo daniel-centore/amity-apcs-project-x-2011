@@ -110,17 +110,10 @@ public class RawCommunicationHandler extends Thread {
         keepRunning = false;
     }
     
-    public synchronized void send(int dir)
+    public synchronized void send(int dir) throws IOException
     {
-        try
-        {
-            dos.writeInt(dir);
-            dos.flush();
-        }
-        catch(IOException ex)
-        {
-            Logger.getLogger(RawCommunicationHandler.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        dos.writeInt(dir);
+        dos.flush();
     }
 
     public synchronized void registerRawListener(RawListener rl)

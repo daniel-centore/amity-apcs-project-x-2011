@@ -21,6 +21,7 @@
 package org.amityregion5.projectx.common.entities.characters;
 
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -52,10 +53,10 @@ public abstract class Character extends Entity implements Damageable {
     public Character(int health, int maxHealth, int x, int y)
     {
         super(x, y);
+        weapons = new ArrayList<Weapon>();
         this.maxHealth = maxHealth;
         this.hp = health;
         currWeapon = 0;
-        weapons = new ArrayList<Weapon>();
     }
 
     public void changeWeapon(int wheelRotation)
@@ -179,13 +180,16 @@ public abstract class Character extends Entity implements Damageable {
     {
         super.updateImage();
 
-        if (weapons == null || weapons.size() > currWeapon) // no weapons :(
+        if (weapons == null || weapons.size() <= currWeapon)
         {
             return;
         }
-        //TODO Need weapons to draw
-        //BufferedImage wepImg = weapons.get(currWeapon).getImage();
-        //Graphics2D g2 = (Graphics2D) currentImage.getGraphics();
-        //g2.drawImage(wepImg, getAffineTransform(), null);
+
+        BufferedImage wepImg = weapons.get(currWeapon).getImage();
+        Graphics2D g2 = (Graphics2D) currentImage.getGraphics();
+        AffineTransform at = getAffineTransform();
+        at.translate(this.getWidth() / 2, this.getHeight() / 2);
+        g2.drawImage(wepImg, at, null);
+        //g2.drawImage(wepImg, 0, 0, null);
     }
 }
