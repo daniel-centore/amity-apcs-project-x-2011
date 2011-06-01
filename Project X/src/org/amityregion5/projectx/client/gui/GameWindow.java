@@ -23,12 +23,18 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JMenuBar;
 
 import org.amityregion5.projectx.client.Game;
 import org.amityregion5.projectx.client.gui.input.KeyboardInput;
@@ -111,8 +117,25 @@ public class GameWindow extends JFrame {
         panel.addMouseMotionListener(mi);
         panel.addMouseWheelListener(mi);
         panel.addKeyListener(new KeyboardInput());
-
+        
+        JMenuBar menu = new JMenuBar();
+        JButton butt = new JButton("Add Field Item");
+        
+        menu.add(butt);
+        
+        butt.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent arg0)
+            {
+                //TODO: open a fieldItemAdder or such
+                panel.requestFocusInWindow();
+            }
+            
+        });
+        
         this.add(panel, BorderLayout.CENTER);
+        this.add(menu, BorderLayout.NORTH);
 
         this.setSize(GAME_WIDTH, GAME_HEIGHT);
 
@@ -163,8 +186,8 @@ public class GameWindow extends JFrame {
     public static void fireRepaintRequired()
     {
         buffer = RepaintHandler.getMapFlatImage();
-        
-        if(panel == null)
+
+        if (panel == null)
         {
             System.err.println("Null panel");
             return;
