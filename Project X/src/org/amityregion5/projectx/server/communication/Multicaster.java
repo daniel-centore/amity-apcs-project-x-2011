@@ -90,10 +90,10 @@ public class Multicaster extends Thread {
 
     public void setMulticasting(boolean listening)
     {
-        keepBroadcasting = listening;
         if (listening && !keepBroadcasting)
         {
             start();
         }
+        keepBroadcasting = listening;
     }
 }
