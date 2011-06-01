@@ -71,7 +71,8 @@ public class RawClient extends Thread {
         {
             if (c.getIP().equals(sock.getInetAddress().getHostAddress()) && c.getUsername().equals(user))
             {
-                while (c.getPlayer() == null); // TODO: very temporary!!!!
+                while (c.getPlayer() == null)
+                    System.out.println("null waka waka"); // TODO: very temporary!!!!
 
                 player = c.getPlayer();
                 c.setRaw(this);
@@ -95,7 +96,7 @@ public class RawClient extends Thread {
             } catch (IOException ex)
             {
                 server.relayMessage(new RemoveEntityMessage(player));
-                Logger.getLogger(RawClient.class.getName()).log(Level.SEVERE, null, ex);
+//                Logger.getLogger(RawClient.class.getName()).log(Level.SEVERE, null, ex);
                 kill();
             }
         }

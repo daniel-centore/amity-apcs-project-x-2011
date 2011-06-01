@@ -29,8 +29,7 @@ import org.amityregion5.projectx.common.maps.AbstractMap;
 import org.amityregion5.projectx.server.communication.RawServer;
 
 /**
- * A thread that will move all Entities by need.
- * TODO handles collision detection
+ * A thread that will move all Entities by need. TODO handles collision detection
  * 
  * @author Joe Stein
  */
@@ -60,10 +59,8 @@ public class EntityMoverThread extends Thread {
                     // TODO make sure this Entity doesn't collide with
                     // anything.
                     double theta = e.getDirectionMoving();
-                    double newX = r * Math.cos(Math.toRadians(theta))
-                            + e.getX();
-                    double newY = r * Math.sin(Math.toRadians(theta))
-                            + e.getY();
+                    double newX = r * Math.cos(Math.toRadians(theta)) + e.getX();
+                    double newY = r * Math.sin(Math.toRadians(theta)) + e.getY();
                     if (e instanceof Player)
                     {
                         // FIXME this may take too much time/memory
@@ -77,7 +74,8 @@ public class EntityMoverThread extends Thread {
                             e.setX(newX);
                             e.setY(newY);
                         }
-                    } else {
+                    } else
+                    {
                         e.setX(newX);
                         e.setY(newY);
                     }

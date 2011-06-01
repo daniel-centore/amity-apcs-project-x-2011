@@ -35,6 +35,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
+import javax.swing.SwingUtilities;
 
 import org.amityregion5.projectx.client.Game;
 import org.amityregion5.projectx.client.gui.input.KeyboardInput;
@@ -65,7 +66,7 @@ public class GameWindow extends JFrame {
         super("Amity Project X");
 
         instance = this;
-        
+
         this.setBackground(Color.black);
 
         this.addWindowListener(new WindowAdapter() {
@@ -104,11 +105,11 @@ public class GameWindow extends JFrame {
                 {
                     img.getGraphics().drawImage(chat, xOffset, img.getHeight(null) - ChatDrawing.CHAT_HEIGHT - yOffset, null);
                 }
-                
+
                 g.drawImage(img, 0, 0, null);
             }
         };
-        
+
         panel.addFocusListener(game);
 
         // register listeners
@@ -117,23 +118,21 @@ public class GameWindow extends JFrame {
         panel.addMouseMotionListener(mi);
         panel.addMouseWheelListener(mi);
         panel.addKeyListener(new KeyboardInput());
-        
+
         JMenuBar menu = new JMenuBar();
         JButton butt = new JButton("Add Field Item");
-        
+
         menu.add(butt);
-        
-        butt.addActionListener(new ActionListener()
-        {
+
+        butt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0)
             {
+                new FieldItemAdder(GameWindow.this, true).setVisible(true);
                 panel.requestFocusInWindow();
-                new FieldItemAdder(GameWindow.this, true);
             }
-            
         });
-        
+
         this.add(panel, BorderLayout.CENTER);
         this.add(menu, BorderLayout.NORTH);
 
@@ -141,7 +140,14 @@ public class GameWindow extends JFrame {
 
         this.setVisible(true);
 
+        try
+        {
+            Thread.sleep(100);
+        } catch (InterruptedException e)
+        {
+        }
         panel.requestFocusInWindow();
+
     }
 
     /**

@@ -122,6 +122,7 @@ public class ChatDrawing {
     public static void setChatting(boolean chatting)
     {
         isChatting = chatting;
+        GameWindow.getInstance().fireRepaintRequired();
     }
 
     /**
@@ -142,6 +143,7 @@ public class ChatDrawing {
         if (currChat.length() > 0)
         {
             currChat.delete(currChat.length() - 1, currChat.length());
+            GameWindow.getInstance().fireRepaintRequired();
         }
     }
 
@@ -153,6 +155,7 @@ public class ChatDrawing {
     public static void addLetter(char c)
     {
         currChat.append(c);
+        GameWindow.getInstance().fireRepaintRequired();
     }
 
     /**

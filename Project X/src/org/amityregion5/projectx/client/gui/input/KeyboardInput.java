@@ -42,6 +42,7 @@ public class KeyboardInput implements KeyListener {
     public void keyTyped(KeyEvent e)
     {
         // keyPressed is preferable
+        e.consume();
     }
 
     public void keyPressed(KeyEvent e)
@@ -50,7 +51,9 @@ public class KeyboardInput implements KeyListener {
         {
             depressed.add(e.getKeyCode());
             InputHandler.keyPressed(e);
+//            System.out.println("Pressed: "+e.getKeyChar());
         }
+        e.consume();
     }
 
     public void keyReleased(KeyEvent e)
@@ -60,6 +63,7 @@ public class KeyboardInput implements KeyListener {
             InputHandler.keyReleased(e.getKeyCode());
             depressed.remove((Integer) e.getKeyCode());
         }
+        e.consume();
     }
 
 }
