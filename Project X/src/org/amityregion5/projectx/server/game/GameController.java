@@ -103,7 +103,7 @@ public class GameController {
 
         for(Player p : players)
         {
-            addWeapon(p, new Gun(100, 100, 10, 20, 6, 50, 10));
+            addWeapon(p, new Gun(100, 100, 10, 20, 6, 50, 5));
         }
 
         enemyManager = new EnemyManager(this, getEnemySpawns());
