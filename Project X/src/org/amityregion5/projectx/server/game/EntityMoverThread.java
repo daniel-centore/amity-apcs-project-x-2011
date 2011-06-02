@@ -21,6 +21,7 @@ package org.amityregion5.projectx.server.game;
 import java.awt.Rectangle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.EntityConstants;
@@ -87,6 +88,11 @@ public class EntityMoverThread extends Thread {
                             Enemy en = (Enemy) e;
                             map.getArea().damage(en.getWeapon(en.getCurrWeapon())
                                     .getDamage());
+                            if(map.getArea().killed())
+                            {
+                                JOptionPane.showMessageDialog(null, "The enemies have taken over!", "Game Over", JOptionPane.OK_OPTION);
+                                //TODO end the game
+                            }
                         }
                     }
                 }
