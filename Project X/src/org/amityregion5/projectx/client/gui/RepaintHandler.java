@@ -82,7 +82,7 @@ public class RepaintHandler extends Thread {
             g.drawImage(e.getImage(), e.getX(), e.getY(), null);
         }
 
-        synchronized (game.getEntityHandler())
+        synchronized (game)
         {
             for (Entity e : game.getEntities()) // draw temporary entities
             {
