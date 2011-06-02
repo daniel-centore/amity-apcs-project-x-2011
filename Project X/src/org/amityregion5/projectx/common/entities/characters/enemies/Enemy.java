@@ -73,7 +73,7 @@ public class Enemy extends Character implements Damageable {
 
     
     /**
-     * Checks to see if a character's health is below 0. If so, remove the character from the map.
+     * Checks to see if a character's health is below 0.
      */
     public boolean killed()
     {

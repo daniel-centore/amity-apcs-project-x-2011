@@ -41,7 +41,8 @@ import org.amityregion5.projectx.common.maps.AbstractMap;
 import org.amityregion5.projectx.common.maps.TestingMap;
 import org.amityregion5.projectx.server.Server;
 import org.amityregion5.projectx.server.communication.Client;
-import org.amityregion5.projectx.server.game.enemies.EnemyManager;
+import org.amityregion5.projectx.server.game.oldSpawning.EnemyManager;
+import org.amityregion5.projectx.server.game.spawning.EnemySpawning;
 
 /**
  * Handles the game running.
@@ -80,7 +81,7 @@ public class GameController {
             int spawnY = (int) (map.getPlayArea().getY() + r.nextInt((int) map.getPlayArea().getHeight() - p.getHeight()));
             int spawnX = (int) (map.getPlayArea().getX() + r.nextInt((int) map.getPlayArea().getWidth() - p.getWidth()));
             p.setLocation(new Point2D.Double(spawnX, spawnY));
-//            p.setHitBox(p.getWidth(), p.getHeight());
+            // p.setHitBox(p.getWidth(), p.getHeight());
 
             players.add(p);
 
@@ -88,9 +89,9 @@ public class GameController {
             c.setPlayer(p);
             c.send(new AddMeMessage(p));
 
-//            Enemy enemy = new Enemy(200, 500, 500);
-//            c.send(new AddEntityMessage(enemy));
-//            entities.add(enemy);
+            // Enemy enemy = new Enemy(200, 500, 500);
+            // c.send(new AddEntityMessage(enemy));
+            // entities.add(enemy);
         }
 
         for (Client c : clients)
@@ -98,17 +99,7 @@ public class GameController {
             for (Player p : players)
             {
                 c.send(new AddEntityMessage(p));
-                addWeapon(p, new Gun(100, 100, 10, 20, 6, 50, 10));
             }
-        }
-
-        try
-        {
-            Thread.sleep(2000);
-        } catch (InterruptedException e)
-        {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
 
         for (Player p : players)
@@ -116,18 +107,24 @@ public class GameController {
             addWeapon(p, new Gun(100, 100, 10, 20, 6, 50, 10));
         }
 
-        enemyManager = new EnemyManager(this, getEnemySpawns());
+        // enemyManager = new EnemyManager(this, getEnemySpawns());
         entityMoverThread = new EntityMoverThread(this, server.getRawServer(), map);
         entityMoverThread.start();
-        enemyManager.startSpawning();
+        // enemyManager.startSpawning();
+
+        new EnemySpawning(server, this);
     }
 
     public void addEntity(Entity e)
     {
-        entities.add(e);
+        synchronized (this)
+        {
+            entities.add(e);
+        }
+
         server.relayMessage(new AddEntityMessage(e));
     }
-    
+
     public List<Entity> getEntities()
     {
         return entities;
@@ -166,15 +163,15 @@ public class GameController {
         if (map instanceof TestingMap)
         {
 
-            for(int i = 0; i < GameWindow.GAME_WIDTH; i += 10)
+            for (int i = 0; i < GameWindow.GAME_WIDTH; i += 10)
             {
-                spawns.add(new Point(0,i));
+                spawns.add(new Point(0, i));
                 spawns.add(new Point(GameWindow.GAME_HEIGHT, i += 10));
             }
-            for(int i = 0; i < GameWindow.GAME_HEIGHT; i += 10)
+            for (int i = 0; i < GameWindow.GAME_HEIGHT; i += 10)
             {
-                spawns.add(new Point(i,0));
-                spawns.add(new Point(i,GameWindow.GAME_WIDTH ));
+                spawns.add(new Point(i, 0));
+                spawns.add(new Point(i, GameWindow.GAME_WIDTH));
             }
         }
 
@@ -192,18 +189,26 @@ public class GameController {
         int x2 = (int) (Math.cos(Math.toRadians(direction)) * 1500) + player.getCenterX();
         int y2 = (int) (Math.sin(Math.toRadians(direction)) * 1500) + player.getCenterY();
         Line2D.Double line = new Line2D.Double(player.getCenterX(), player.getCenterY(), x2, y2);
-        for (Entity e : entities)
+
+        List<Entity> toRemove = new ArrayList<Entity>();
+        synchronized (this)
         {
-            if (e instanceof Enemy && line.intersects(e.getHitBox()))
+            for (Entity e : entities)
             {
-                System.out.println("Ouch");
-                Enemy en = (Enemy) e;
-                en.damage(player.getWeapon(player.getCurrWeapon()).getDamage());
-                if (en.killed())
+                if (e instanceof Enemy && line.intersects(e.getHitBox()))
                 {
-                    server.relayMessage(new RemoveEntityMessage(en));
+                    Enemy en = (Enemy) e;
+                    en.damage(player.getWeapon(player.getCurrWeapon()).getDamage());
+                    if (en.killed())
+                    {
+//                        System.out.println("Killed");
+                        toRemove.add(en);
+                        server.relayMessage(new RemoveEntityMessage(en));
+                    }
                 }
             }
         }
+        
+        entities.removeAll(toRemove);
     }
 }

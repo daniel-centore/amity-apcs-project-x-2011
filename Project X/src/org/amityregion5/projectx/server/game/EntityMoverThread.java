@@ -51,36 +51,40 @@ public class EntityMoverThread extends Thread {
     {
         while (keepRunning)
         {
-            for (Entity e : gameController.getEntities())
+            synchronized (gameController)
             {
-                double r = e.getMoveSpeed();
-                if (r > 0)
+                for (Entity e : gameController.getEntities())
                 {
-                    // TODO make sure this Entity doesn't collide with
-                    // anything.
-                    double theta = e.getDirectionMoving();
-                    double newX = r * Math.cos(Math.toRadians(theta)) + e.getX();
-                    double newY = r * Math.sin(Math.toRadians(theta)) + e.getY();
-                    if (e instanceof Player)
+                    double r = e.getMoveSpeed();
+                    if (r > 0)
                     {
-                        // FIXME this may take too much time/memory
-                        Rectangle thb = e.getHitBox();
-                        thb.setLocation((int) newX, (int) newY);
-                        // TODO if the play area doesn't contain the new
-                        // hit box (thb), move the player to the edge of the
-                        // play area. Keep in mind the player's direction.
-                        if (map.getPlayArea().contains(thb))
+                        // TODO make sure this Entity doesn't collide with
+                        // anything.
+                        double theta = e.getDirectionMoving();
+                        double newX = r * Math.cos(Math.toRadians(theta)) + e.getX();
+                        double newY = r * Math.sin(Math.toRadians(theta)) + e.getY();
+                        if (e instanceof Player)
+                        {
+                            // FIXME this may take too much time/memory
+                            Rectangle thb = e.getHitBox();
+                            thb.setLocation((int) newX, (int) newY);
+                            // TODO if the play area doesn't contain the new
+                            // hit box (thb), move the player to the edge of the
+                            // play area. Keep in mind the player's direction.
+                            if (map.getPlayArea().contains(thb))
+                            {
+                                e.setX(newX);
+                                e.setY(newY);
+                            }
+                        } else
                         {
                             e.setX(newX);
                             e.setY(newY);
                         }
-                    } else
-                    {
-                        e.setX(newX);
-                        e.setY(newY);
                     }
                 }
             }
+//            System.out.println("sent");
             sendAggregateUpdateMessage();
             try
             {
@@ -95,21 +99,23 @@ public class EntityMoverThread extends Thread {
 
     private void sendAggregateUpdateMessage()
     {
-        System.out.println("sending agg");
         StringBuilder buf = new StringBuilder();
 
-        for (Entity e : gameController.getEntities())
+        synchronized (gameController)
         {
-            if (e.updateCheck())
+            for (Entity e : gameController.getEntities())
             {
-                buf.append(e.getUniqueID());
-                buf.append(",");
-                buf.append(e.getX());
-                buf.append(",");
-                buf.append(e.getY());
-                buf.append(",");
-                buf.append(e.getDirectionFacing());
-                buf.append(";");
+                if (e.updateCheck())
+                {
+                    buf.append(e.getUniqueID());
+                    buf.append(",");
+                    buf.append(e.getX());
+                    buf.append(",");
+                    buf.append(e.getY());
+                    buf.append(",");
+                    buf.append(e.getDirectionFacing());
+                    buf.append(";");
+                }
             }
         }
 

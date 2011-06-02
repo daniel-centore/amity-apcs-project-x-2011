@@ -1,5 +1,5 @@
 /**
-  * Copyright (c) 2011 Amity AP CS A Students of 2010-2011.
+ * Copyright (c) 2011 Amity AP CS A Students of 2010-2011.
  *
  * ex: set filetype=java expandtab tabstop=4 shiftwidth=4 :
  *
@@ -82,49 +82,52 @@ public class RepaintHandler extends Thread {
             g.drawImage(e.getImage(), e.getX(), e.getY(), null);
         }
 
-        for (Entity e : game.getEntities()) // draw temporary entities
+        synchronized (game.getEntityHandler())
         {
-            if (e == null) break;
-            g.drawImage(e.getImage(), e.getX(), e.getY(), null);
-            g.setColor(Color.WHITE);
-            g.draw(e.getHitBox());
-            if (e instanceof Player)
+            for (Entity e : game.getEntities()) // draw temporary entities
             {
-                // draw a laser sight for weapon direction
-                g.setColor(Color.red);
-                int x2 = (int) (Math.cos(Math.toRadians(e.getDirectionFacing())) * 800) + e.getCenterX();
-                int y2 = (int) (Math.sin(Math.toRadians(e.getDirectionFacing())) * 800) + e.getCenterY();
-                g.drawLine(e.getCenterX(), e.getCenterY(), x2, y2);
-
-                // TODO draw a fire if it just fired
-                if (e.getFired())
+                if (e == null)
+                    break;
+                g.drawImage(e.getImage(), e.getX(), e.getY(), null);
+                g.setColor(Color.WHITE);
+                g.draw(e.getHitBox());
+                if (e instanceof Player)
                 {
-                    Stroke old = g.getStroke();
-                    Color oldColor = g.getColor();
-                    g.setStroke(new BasicStroke(6));
-                    g.setColor(Color.YELLOW);
+                    // draw a laser sight for weapon direction
+                    g.setColor(Color.red);
+                    int x2 = (int) (Math.cos(Math.toRadians(e.getDirectionFacing())) * 800) + e.getCenterX();
+                    int y2 = (int) (Math.sin(Math.toRadians(e.getDirectionFacing())) * 800) + e.getCenterY();
                     g.drawLine(e.getCenterX(), e.getCenterY(), x2, y2);
-                    g.setColor(oldColor);
-                    g.setStroke(old);
-                    e.setFired(false);
-                }
 
-                // draw the weapon
-                Player p = (Player) e;
-                if (p.hasWeapons())
-                {
-                    BufferedImage wepImg = p.getWeapon(p.getCurrWeapon())
-                            .getImage();
-                    AffineTransform at = new AffineTransform();
-                    at.translate(e.getCenterX(), e.getCenterY());
-                    at.rotate(Math.toRadians(p.getDirectionFacing()));
-                    at.translate(0,-1 * wepImg.getHeight() / 2);
-                    g.drawImage(wepImg, at, null);
+                    // TODO draw a fire if it just fired
+                    if (e.getFired())
+                    {
+                        Stroke old = g.getStroke();
+                        Color oldColor = g.getColor();
+                        g.setStroke(new BasicStroke(6));
+                        g.setColor(Color.YELLOW);
+                        g.drawLine(e.getCenterX(), e.getCenterY(), x2, y2);
+                        g.setColor(oldColor);
+                        g.setStroke(old);
+                        e.setFired(false);
+                    }
+
+                    // draw the weapon
+                    Player p = (Player) e;
+                    if (p.hasWeapons())
+                    {
+                        BufferedImage wepImg = p.getWeapon(p.getCurrWeapon()).getImage();
+                        AffineTransform at = new AffineTransform();
+                        at.translate(e.getCenterX(), e.getCenterY());
+                        at.rotate(Math.toRadians(p.getDirectionFacing()));
+                        at.translate(0, -1 * wepImg.getHeight() / 2);
+                        g.drawImage(wepImg, at, null);
+                    }
                 }
             }
         }
 
-        //g.draw(game.getMap().getPlayArea());
+        // g.draw(game.getMap().getPlayArea());
 
         return img;
     }

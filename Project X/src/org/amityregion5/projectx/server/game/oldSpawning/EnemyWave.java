@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package org.amityregion5.projectx.server.game.enemies;
+package org.amityregion5.projectx.server.game.oldSpawning;
 
 import java.util.ArrayList;
 
@@ -11,6 +11,7 @@ import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
 /**
  * A wave of enemies, consisting of several EnemyGroups.
  * @author Michael Wenke
+ * @deprecated Bugged
  */
 public class EnemyWave 
 {

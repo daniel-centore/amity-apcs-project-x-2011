@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package org.amityregion5.projectx.server.game.enemies;
+package org.amityregion5.projectx.server.game.oldSpawning;
 
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
 
@@ -11,6 +11,7 @@ import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
  * A group of enemies of the same type. A wave has several of these.
  * 
  * @author Michael Wenke
+ * @deprecated Bugged
  */
 public class EnemyGroup {
 

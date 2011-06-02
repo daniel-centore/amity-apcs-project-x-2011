@@ -181,6 +181,11 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             getCommunicationHandler().send(c);
         }
     }
+    
+    public EntityHandler getEntityHandler()
+    {
+        return entityHandler;
+    }
 
     private int calcMeDeg()
     {
@@ -285,7 +290,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                 ((Character) entityHandler.getEntity(awm.getID())).addWeapon(awm.getWeapon());
             } catch (Exception e)
             {
-                //TODO: temporary kludge
+                // TODO: temporary kludge
             }
         }
     }
@@ -317,12 +322,9 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
      */
     public Iterable<Entity> getEntities()
     {
-        synchronized (entityHandler)
-        {
-            return entityHandler.getEntities();
-        }
-        //entityHandler.wait();
-        
+        return entityHandler.getEntities();
+        // entityHandler.wait();
+
     }
 
     public void initWindow()

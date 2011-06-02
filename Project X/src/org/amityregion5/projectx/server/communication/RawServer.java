@@ -85,7 +85,10 @@ public class RawServer extends Thread {
     {
         s.trim();
         
-//        for (RawClient out : rawClients)
+        if(rawClients.size() == 0)
+            System.out.println("RAWCLIENT SIZE IS 0 ARGHH!!!!");
+
+        // for (RawClient out : rawClients)
         for (int i = 0; i < rawClients.size(); i++)
         {
             RawClient out = rawClients.get(i);

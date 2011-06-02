@@ -17,7 +17,7 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
-package org.amityregion5.projectx.server.game.enemies;
+package org.amityregion5.projectx.server.game.oldSpawning;
 
 import java.awt.Point;
 import java.util.ArrayList;
@@ -31,6 +31,7 @@ import org.amityregion5.projectx.server.game.GameController;
  * @author Michal Wenke
  * @author Jenny Liu
  * @author Mike DiBuduo
+ * @deprecated Bugged
  */
 public class EnemyManager {
 

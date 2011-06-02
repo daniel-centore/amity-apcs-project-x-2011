@@ -18,10 +18,8 @@
  */
 package org.amityregion5.projectx.client.handlers;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Map;
 
 import org.amityregion5.projectx.client.gui.GameWindow;
 import org.amityregion5.projectx.common.entities.Entity;
@@ -51,6 +49,7 @@ public class EntityHandler {
 
     public synchronized Entity removeEntity(Entity e) // receive an entity (should receive request from game)
     {
+        System.out.println("Removed!!!");
         return entities.remove(e.getUniqueID());
     }
 
