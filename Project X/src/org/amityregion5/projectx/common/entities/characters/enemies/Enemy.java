@@ -92,7 +92,6 @@ public class Enemy extends Character implements Damageable {
     public void damage(int damage)
     {
         hp -= damage;
-        System.out.println("Current: " + hp);
         killed();
     }
 
