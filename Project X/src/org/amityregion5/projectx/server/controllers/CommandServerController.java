@@ -19,6 +19,7 @@
 package org.amityregion5.projectx.server.controllers;
 
 import java.util.Scanner;
+
 import org.amityregion5.projectx.common.communication.messages.AnnounceMessage;
 import org.amityregion5.projectx.server.Server;
 

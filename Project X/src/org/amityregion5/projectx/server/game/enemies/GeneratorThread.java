@@ -22,6 +22,7 @@ package org.amityregion5.projectx.server.game.enemies;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
+
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
 
 /**

@@ -30,9 +30,7 @@ import javax.swing.JPopupMenu;
 
 import org.amityregion5.projectx.client.communication.CommunicationHandler;
 import org.amityregion5.projectx.common.communication.messages.RequestEntityAddMessage;
-import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.EntityConstants;
-import org.amityregion5.projectx.common.entities.items.field.Block;
 
 /**
  * Note: To add more field items, just modify {@link RequestEntityAddMessage}. It has everything.

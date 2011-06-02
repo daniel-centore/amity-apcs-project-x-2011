@@ -24,6 +24,7 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.JDialog;
 import javax.swing.SwingUtilities;
+
 import org.amityregion5.projectx.client.preferences.PreferenceManager;
 
 /**

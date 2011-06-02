@@ -19,9 +19,6 @@
  */
 package org.amityregion5.projectx.server;
 
-import org.amityregion5.projectx.server.controllers.ServerController;
-import org.amityregion5.projectx.server.controllers.CommandServerController;
-import org.amityregion5.projectx.server.controllers.AggregateServerController;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Level;
@@ -29,6 +26,9 @@ import java.util.logging.Logger;
 
 import javax.swing.UIManager;
 
+import org.amityregion5.projectx.server.controllers.AggregateServerController;
+import org.amityregion5.projectx.server.controllers.CommandServerController;
+import org.amityregion5.projectx.server.controllers.ServerController;
 import org.amityregion5.projectx.server.gui.ServerNameWindow;
 
 /**

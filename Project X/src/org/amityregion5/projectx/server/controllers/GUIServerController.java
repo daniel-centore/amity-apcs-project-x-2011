@@ -25,8 +25,10 @@
 package org.amityregion5.projectx.server.controllers;
 
 import java.awt.event.KeyEvent;
+
 import javax.swing.DefaultListModel;
 import javax.swing.SwingUtilities;
+
 import org.amityregion5.projectx.common.communication.messages.AnnounceMessage;
 import org.amityregion5.projectx.server.Server;
 

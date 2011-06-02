@@ -24,8 +24,8 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.SwingUtilities;
 
-import org.amityregion5.projectx.server.controllers.AggregateServerController;
 import org.amityregion5.projectx.server.Server;
+import org.amityregion5.projectx.server.controllers.AggregateServerController;
 
 /**
  * Asks the user to name their server!

@@ -20,11 +20,10 @@ package org.amityregion5.projectx.server.communication;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.amityregion5.projectx.common.communication.messages.FiredMessage;
+
 import org.amityregion5.projectx.common.entities.characters.Player;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
 import org.amityregion5.projectx.server.Server;
-import org.amityregion5.projectx.server.game.GameController;
 
 /**
  * A thread that helps deal with players shooting. Each client has one.
