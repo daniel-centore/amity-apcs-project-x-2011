@@ -21,29 +21,31 @@ package org.amityregion5.projectx.common.entities.characters.enemies;
 
 import org.amityregion5.projectx.common.entities.Damageable;
 import org.amityregion5.projectx.common.entities.characters.CharacterEntity;
-import org.amityregion5.projectx.common.entities.items.DamageDealing;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
 
 /**
  * Character that attacks player
- * 
+ *
  * @author Mike DiBuduo
  * @author Daniel Centore
  */
 public class Enemy extends CharacterEntity implements Damageable {
-    
+
     private static final long serialVersionUID = 1L;
-    
+
     private int hp; // hitpoints
+    private final int maxHealth;
 
     /**
      * Creates an enemy with specified health.
-     * 
+     *
      * @param health
      */
     public Enemy(int max, int x, int y)
     {
-        super(max, x, y);
+        super(x, y);
+        hp = max;
+        maxHealth = max;
     }
 
     public Enemy(int max, Weapon wp, int x, int y)
@@ -51,10 +53,10 @@ public class Enemy extends CharacterEntity implements Damageable {
         this(max, x, y);
         addWeapon(wp);
     }
-    
+
     /**
      * Gets the character's current HP.
-     * 
+     *
      * @return The character's HP.
      */
     public int getHp()
@@ -64,7 +66,7 @@ public class Enemy extends CharacterEntity implements Damageable {
 
     /**
      * Changes the character's HP.
-     * 
+     *
      * @param hp The HP value to set to.
      */
     public void setHp(int hp)
@@ -72,7 +74,7 @@ public class Enemy extends CharacterEntity implements Damageable {
         this.hp = hp;
     }
 
-    
+
     /**
      * Checks to see if a character's health is below 0.
      */
@@ -87,7 +89,7 @@ public class Enemy extends CharacterEntity implements Damageable {
 
     /**
      * Removes health from character, then checks to see if it has been killed.
-     * 
+     *
      * @param damage the amount of health to remove
      */
     public void damage(int damage)
@@ -98,7 +100,7 @@ public class Enemy extends CharacterEntity implements Damageable {
 
     /**
      * Adds health to hp. If the total exceeds maximum, it is set to maximum.
-     * 
+     *
      * @param health health to add
      */
     public void heal(int health)
@@ -114,7 +116,8 @@ public class Enemy extends CharacterEntity implements Damageable {
         return "sprites/Enemy";
     }
 
-    public int getDamage() {
-        throw new UnsupportedOperationException("Not yet implemented");
+    public int getMaxHp()
+    {
+        return maxHealth;
     }
 }

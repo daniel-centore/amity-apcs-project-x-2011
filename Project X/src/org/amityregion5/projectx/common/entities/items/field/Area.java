@@ -79,4 +79,14 @@ public class Area extends FieldItem implements Damageable{
             hp = maxHealth;
     }
 
+    public int getHp()
+    {
+        return hp;
+    }
+
+    public int getMaxHp()
+    {
+        return maxHealth;
+    }
+
 }

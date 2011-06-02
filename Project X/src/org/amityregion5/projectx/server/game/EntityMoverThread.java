@@ -85,7 +85,8 @@ public class EntityMoverThread extends Thread {
                         if (e instanceof Enemy && e.getHitBox().intersects(map.getPlayArea()))
                         {
                             Enemy en = (Enemy) e;
-                            map.getArea().damage(en.getDamage());
+                            map.getArea().damage(en.getWeapon(en.getCurrWeapon())
+                                    .getDamage());
                         }
                     }
                 }

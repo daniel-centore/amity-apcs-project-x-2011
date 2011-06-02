@@ -37,7 +37,6 @@ public abstract class CharacterEntity extends Entity {
     private static final long serialVersionUID = 1L;
     protected ArrayList<Weapon> weapons; // The weapons the character owns
     protected int currWeapon; // currently active weapon
-    protected int maxHealth; // maximum possible hea1h (generally 100)
 
     /**
      * Create a character.
@@ -45,11 +44,10 @@ public abstract class CharacterEntity extends Entity {
      * @param health The amount of health the character begins with.
      * @param max_health The most amount of health this character can have.
      */
-    public CharacterEntity(int maxHealth, int x, int y)
+    public CharacterEntity(int x, int y)
     {
         super(x, y);
         weapons = new ArrayList<Weapon>();
-        this.maxHealth = maxHealth;
         currWeapon = 0;
     }
 
@@ -110,14 +108,6 @@ public abstract class CharacterEntity extends Entity {
     public void addWeapon(Weapon wp)
     {
         weapons.add(wp);
-    }
-
-    /**
-     * @return The character's maximum health.
-     */
-    public int getMaxHealth()
-    {
-        return maxHealth;
     }
 
     public void updateWeaponImages()

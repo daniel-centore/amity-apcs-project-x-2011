@@ -34,7 +34,7 @@ public class Player extends CharacterEntity {
 
     public Player()
     {
-        super(MAX_HEALTH, 0, 0);
+        super(0, 0);
         this.setMoveSpeed(INITIAL_SPEED);
         /*System.out.println("adding weapon!");
         addWeapon(new Weapon(1000,1) {
@@ -55,7 +55,7 @@ public class Player extends CharacterEntity {
 
     public Player(int i, int j)
     {
-        super(MAX_HEALTH, i, j);
+        super(i, j);
     }
 
     @Override

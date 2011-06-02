@@ -32,6 +32,7 @@ public class Block extends FieldItem implements Damageable {
     private static final long serialVersionUID = 1L;
     public static final int DEFAULT_HEALTH = 100;
     private int hp;
+    private final int maxHealth;
 
     public Block(int x, int y)
     {
@@ -42,6 +43,7 @@ public class Block extends FieldItem implements Damageable {
     {
         super(x, y);
         hp = health;
+        maxHealth = health;
     }
 
     public int getHp()
@@ -86,5 +88,10 @@ public class Block extends FieldItem implements Damageable {
     public String getDefaultImage()
     {
         return "sprites/Block";
+    }
+
+    public int getMaxHp()
+    {
+        return maxHealth;
     }
 }

@@ -31,6 +31,7 @@ import org.amityregion5.projectx.client.Game;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.characters.CharacterEntity;
 import org.amityregion5.projectx.common.entities.characters.Player;
+import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 
 /**
@@ -42,6 +43,7 @@ import org.amityregion5.projectx.common.maps.AbstractMap;
 public class RepaintHandler extends Thread {
 
     private static Game game; // game we are based from
+    private final int HEALTHBAR_WIDTH = 60;
 
     /**
      * Sets the game we are using
@@ -94,9 +96,12 @@ public class RepaintHandler extends Thread {
                 g.setStroke(new BasicStroke(1));
                 g.draw(e.getHitBox());
                 // draw health bar
-                if (e instanceof CharacterEntity)
-                {
 
+                if (e instanceof Enemy)
+                {
+                    // TODO draw health bar
+                    Enemy en = (Enemy) e;
+                    double percent = en.getHp();
                 }
                 if (e instanceof Player)
                 {

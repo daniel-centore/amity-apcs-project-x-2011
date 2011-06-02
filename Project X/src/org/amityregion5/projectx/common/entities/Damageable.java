@@ -42,4 +42,7 @@ public interface Damageable {
      * Kills the entity
      */
     public boolean killed();
+
+    public int getHp();
+    public int getMaxHp();
 }
