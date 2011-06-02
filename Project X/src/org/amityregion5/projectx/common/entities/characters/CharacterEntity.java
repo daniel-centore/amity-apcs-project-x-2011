@@ -32,7 +32,7 @@ import org.amityregion5.projectx.common.entities.items.held.Weapon;
  * @author Mike Wenke
  * @author Daniel Centore
  */
-public abstract class Character extends Entity {
+public abstract class CharacterEntity extends Entity {
 
     private static final long serialVersionUID = 1L;
     protected ArrayList<Weapon> weapons; // The weapons the character owns
@@ -45,7 +45,7 @@ public abstract class Character extends Entity {
      * @param health The amount of health the character begins with.
      * @param max_health The most amount of health this character can have.
      */
-    public Character(int maxHealth, int x, int y)
+    public CharacterEntity(int maxHealth, int x, int y)
     {
         super(x, y);
         weapons = new ArrayList<Weapon>();

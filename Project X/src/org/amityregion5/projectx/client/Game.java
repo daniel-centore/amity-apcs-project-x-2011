@@ -54,7 +54,7 @@ import org.amityregion5.projectx.common.entities.EntityConstants;
 import org.amityregion5.projectx.common.entities.characters.Player;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 import org.amityregion5.projectx.common.tools.ImageHandler;
-import org.amityregion5.projectx.common.entities.characters.Character;
+import org.amityregion5.projectx.common.entities.characters.CharacterEntity;
 
 /**
  * The umbrella logistics class for the client-side game.
@@ -287,7 +287,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             awm.getWeapon().setImage(ImageHandler.loadImage(awm.getWeapon().getDefaultImage()));
             try
             {
-                ((Character) entityHandler.getEntity(awm.getID())).addWeapon(awm.getWeapon());
+                ((CharacterEntity) entityHandler.getEntity(awm.getID())).addWeapon(awm.getWeapon());
             } catch (Exception e)
             {
                 // TODO: temporary kludge

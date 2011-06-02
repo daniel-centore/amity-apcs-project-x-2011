@@ -32,7 +32,7 @@ import org.amityregion5.projectx.common.communication.messages.AddMeMessage;
 import org.amityregion5.projectx.common.communication.messages.AddWeaponMessage;
 import org.amityregion5.projectx.common.communication.messages.RemoveEntityMessage;
 import org.amityregion5.projectx.common.entities.Entity;
-import org.amityregion5.projectx.common.entities.characters.Character;
+import org.amityregion5.projectx.common.entities.characters.CharacterEntity;
 import org.amityregion5.projectx.common.entities.characters.Player;
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
 import org.amityregion5.projectx.common.entities.items.held.Gun;
@@ -139,7 +139,7 @@ public class GameController {
      * @param c the character to which to add the weapon
      * @param w the weapon to add
      */
-    public final void addWeapon(Character c, Weapon w)
+    public final void addWeapon(CharacterEntity c, Weapon w)
     {
         c.addWeapon(w);
         server.relayMessage(new AddWeaponMessage(c.getUniqueID(), w));

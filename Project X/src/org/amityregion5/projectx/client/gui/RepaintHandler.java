@@ -29,6 +29,7 @@ import java.awt.image.BufferedImage;
 
 import org.amityregion5.projectx.client.Game;
 import org.amityregion5.projectx.common.entities.Entity;
+import org.amityregion5.projectx.common.entities.characters.CharacterEntity;
 import org.amityregion5.projectx.common.entities.characters.Player;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 
@@ -92,6 +93,11 @@ public class RepaintHandler extends Thread {
                 g.setColor(Color.WHITE);
                 g.setStroke(new BasicStroke(1));
                 g.draw(e.getHitBox());
+                // draw health bar
+                if (e instanceof CharacterEntity)
+                {
+
+                }
                 if (e instanceof Player)
                 {
                     // draw a laser sight for weapon direction
