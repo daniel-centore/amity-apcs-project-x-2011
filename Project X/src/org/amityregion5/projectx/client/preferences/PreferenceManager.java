@@ -110,10 +110,7 @@ public class PreferenceManager {
     public static boolean checkSplashScreen() {
         long last = Long.parseLong(prefs.get(SPLASH_SHOWN, "0"));
         long time = (new Date()).getTime();
-        if (time - last > SPLASH_PERIOD) {
-            prefs.put(SPLASH_SHOWN, ""+ time);
-            return true;
-        }
-        return false;
+        prefs.put(SPLASH_SHOWN, ""+ time);
+        return time - last > SPLASH_PERIOD;
     }
 }
