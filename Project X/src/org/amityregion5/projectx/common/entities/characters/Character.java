@@ -147,12 +147,13 @@ public abstract class Character extends Entity implements Damageable {
      * Checks to see if a character's health is below 0.
      * If so, remove the character from the map.
      */
-    public void killed()
+    public boolean killed()
     {
         if(hp <= 0)
         {
-            //perhaps we need to rethink this, but calling the client is entirely wrong.
+            return true;
         }
+        return false;
     }
 
     /**

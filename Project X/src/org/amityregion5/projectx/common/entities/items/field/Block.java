@@ -73,12 +73,13 @@ public class Block extends FieldItem implements Damageable {
     /**
      * If hp drops to zero, the block is destroyed and removed
      */
-    public void killed()
+    public boolean killed()
     {
         if (hp <= 0)
         {
-            // TODO: Remove self from game
+            return true;
         }
+        return false;
     }
 
     @Override

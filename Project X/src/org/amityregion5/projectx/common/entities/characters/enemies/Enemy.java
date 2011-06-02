@@ -38,7 +38,7 @@ public class Enemy extends Character implements Damageable {
      */
     public Enemy(int health, int max)
     {
-        super(health, max, 0, 0);
+        super(health, max, 500, 500);
     }
 
     public Enemy(int health, int max, Weapon wp)

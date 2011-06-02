@@ -41,5 +41,5 @@ public interface Damageable {
     /**
      * Kills the entity
      */
-    public void killed();
+    public boolean killed();
 }

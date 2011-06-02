@@ -34,6 +34,7 @@ import org.amityregion5.projectx.common.communication.messages.AddEntityMessage;
 import org.amityregion5.projectx.common.communication.messages.AddMeMessage;
 import org.amityregion5.projectx.common.communication.messages.AddWeaponMessage;
 import org.amityregion5.projectx.common.communication.messages.FiredMessage;
+import org.amityregion5.projectx.common.communication.messages.RemoveEntityMessage;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.characters.Character;
 import org.amityregion5.projectx.common.entities.characters.Player;
@@ -53,7 +54,8 @@ import org.amityregion5.projectx.server.game.enemies.EnemyManager;
  * @author Michael Wenke
  * @author Joe Stein
  */
-public class GameController {
+public class GameController
+{
 
     private List<Player> players; // List of current Players (do we even need this..?)
     private Collection<Client> clients; // List of current Clients
@@ -75,7 +77,7 @@ public class GameController {
         players = new ArrayList<Player>();
         clients = server.getClients().values();
         entities = new ArrayList<Entity>();
-        
+
 
         Random r = new Random();
         for (Client c : clients)
@@ -92,13 +94,19 @@ public class GameController {
             c.setPlayer(p);
             c.send(new AddMeMessage(p));
 
-            addWeapon(p,new Gun(100, 100, 10, 20, 6, 50, 10));
+            addWeapon(p, new Gun(100, 100, 10, 20, 6, 50, 10));
+
+            Enemy enemy = new Enemy(10, 10);
+            c.send(new AddEntityMessage(enemy));
+            entities.add(enemy);
         }
 
         for (Client c : clients)
         {
             for (Player p : players)
+            {
                 c.send(new AddEntityMessage(p));
+            }
         }
 
         enemyManager = new EnemyManager(getEnemySpawns());
@@ -130,7 +138,7 @@ public class GameController {
     public final void addWeapon(Character c, Weapon w)
     {
         c.addWeapon(w);
-        server.relayMessage(new AddWeaponMessage(c.getUniqueID(),w));
+        server.relayMessage(new AddWeaponMessage(c.getUniqueID(), w));
     }
 
     /**
@@ -140,17 +148,17 @@ public class GameController {
     private ArrayList<Point> getEnemySpawns()
     {
         ArrayList<Point> spawns = new ArrayList<Point>();
-        if(map instanceof TestingMap)
+        if (map instanceof TestingMap)
         {
-            for(int i = 0; i < GameWindow.GAME_WIDTH; i += 10)
+            for (int i = 0; i < GameWindow.GAME_WIDTH; i += 10)
             {
-                spawns.add(new Point(0,i));
+                spawns.add(new Point(0, i));
                 spawns.add(new Point(GameWindow.GAME_HEIGHT, i));
             }
-            for(int i = 0; i < GameWindow.GAME_HEIGHT; i += 10)
+            for (int i = 0; i < GameWindow.GAME_HEIGHT; i += 10)
             {
-             spawns.add(new Point(i,0));
-                spawns.add(new Point(i,GameWindow.GAME_WIDTH));
+                spawns.add(new Point(i, 0));
+                spawns.add(new Point(i, GameWindow.GAME_WIDTH));
             }
         }
 
@@ -169,12 +177,18 @@ public class GameController {
         Line2D.Double line = new Line2D.Double(player.getCenterX(), player.getCenterY(), x2, y2);
         for (Entity e : entities)
         {
+            System.out.println("Checking");
+            System.out.println(e.toString());
             if (e instanceof Enemy && line.intersects(e.getHitBox()))
             {
+                System.out.println("Ouch");
                 Enemy en = (Enemy) e;
                 en.damage(player.getWeapon(player.getCurrWeapon()).getDamage());
+                if (en.killed())
+                {
+                    server.relayMessage(new RemoveEntityMessage(en));
+                }
             }
         }
     }
-
 }
