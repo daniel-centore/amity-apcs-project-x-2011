@@ -20,6 +20,7 @@
 package org.amityregion5.projectx.common.entities;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
@@ -401,6 +402,17 @@ public abstract class Entity implements Serializable {
     public Rectangle getHitBox()
     {
         return new Rectangle((int) location.getX(), (int) location.getY(), (int) hitBox.getWidth(), (int) hitBox.getHeight());
+    }
+
+    /**
+     *
+     * @return the direction of Point p towards a certain target point
+     */
+    public double getDirectionTowards(Point target)
+    {
+        double deltaY = target.getY() - this.getY();
+        double deltaX = target.getX() - this.getX();
+        return Math.atan2(deltaY, deltaX) * 180 / Math.PI;
     }
 
 }
