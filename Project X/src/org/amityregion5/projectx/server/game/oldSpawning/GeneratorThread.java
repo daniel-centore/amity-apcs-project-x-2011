@@ -24,9 +24,13 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
+import org.amityregion5.projectx.common.maps.AbstractMap;
+import org.amityregion5.projectx.common.maps.TestingMap;
 import org.amityregion5.projectx.server.game.GameController;
 
 /**
@@ -58,6 +62,8 @@ public class GeneratorThread extends Thread {
         for (EnemyGroup group: groups)
         {
             Enemy e = group.getEnemy();
+            AbstractMap map = controller.getMap();
+            Point center = ((TestingMap)map).getCenter(); //I hope we're only using TestingMap...
             for (int i = 0; i < group.getNumEnemies(); i++)
             {
                 // picks a random spawn point from the spawn point list
@@ -67,8 +73,14 @@ public class GeneratorThread extends Thread {
                         (int) spawn.getY());      //TODO: arbitrary location
                 // puts the enemy at spawn
                 en.setLocation(spawn);
+                //en.setDirectionFacing(Math.atan2(spawn, center));
                 // adds the entity to the controller
                 controller.addEntity(en);
+                try {
+                    Thread.sleep(wave.getSpawnTime());
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(GeneratorThread.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }

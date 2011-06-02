@@ -206,4 +206,9 @@ public class GameController {
 
 
     }
+
+    public AbstractMap getMap()
+        {
+            return map;
+        }
 }
