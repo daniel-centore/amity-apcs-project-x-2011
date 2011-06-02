@@ -280,6 +280,7 @@ public abstract class Entity implements Serializable {
         currentImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = (Graphics2D) currentImage.getGraphics();
 
+        // TODO: fix it so it doesnt cut off anymore
         setHitBox(image.getWidth(), image.getHeight());
 
         g2.drawImage(image, getAffineTransform(), null);
