@@ -84,6 +84,7 @@ public class RepaintHandler extends Thread {
 
         for (Entity e : game.getEntities()) // draw temporary entities
         {
+            if (e == null) break;
             g.drawImage(e.getImage(), e.getX(), e.getY(), null);
             g.setColor(Color.WHITE);
             g.draw(e.getHitBox());

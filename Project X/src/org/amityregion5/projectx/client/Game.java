@@ -23,6 +23,7 @@ import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseWheelEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -276,7 +277,6 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             GameWindow.fireRepaintRequired();
         } else if (m instanceof AddWeaponMessage)
         {
-            System.err.println("getting weapon!!!!!");
             AddWeaponMessage awm = (AddWeaponMessage) m;
             awm.getWeapon().setImage(
                     ImageHandler.loadImage(awm.getWeapon().getDefaultImage()));
@@ -313,7 +313,12 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
      */
     public Iterable<Entity> getEntities()
     {
-        return entityHandler.getEntities();
+        synchronized (entityHandler)
+        {
+            return entityHandler.getEntities();
+        }
+        //entityHandler.wait();
+        
     }
 
     public void initWindow()

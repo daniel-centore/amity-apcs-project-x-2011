@@ -18,6 +18,7 @@
  */
 package org.amityregion5.projectx.client.handlers;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +35,7 @@ import org.amityregion5.projectx.common.entities.Entity;
  */
 public class EntityHandler {
 
-    private Map<Long, Entity> entities = new HashMap<Long, Entity>(); // the set of current entities
+    private volatile HashMap<Long, Entity> entities = new HashMap<Long, Entity>(); // the set of current entities
 
     public synchronized void addEntity(Entity e) // adds an entity (should receive request from game)
     {
@@ -65,11 +66,13 @@ public class EntityHandler {
     }
 
     /**
-     * @return A collection of entities.
+     * @return a collection of entities.
      */
     public synchronized Collection<Entity> getEntities()
     {
         return entities.values();
+        // clone the collection to avoid CMEs!!
+        // return ((HashMap<Long, Entity>) entities.clone()).values();
     }
 
     /**
@@ -96,7 +99,6 @@ public class EntityHandler {
         if (entities.containsKey(entity.getUniqueID()))
         {
             entities.put(entity.getUniqueID(), entity);
-            
             return true;
         }
 

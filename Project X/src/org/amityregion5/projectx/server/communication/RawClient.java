@@ -71,8 +71,8 @@ public class RawClient extends Thread {
         {
             if (c.getIP().equals(sock.getInetAddress().getHostAddress()) && c.getUsername().equals(user))
             {
-                while (c.getPlayer() == null)
-                    System.out.println("null waka waka"); // TODO: very temporary!!!!
+                while (c.getPlayer() == null);
+                    //System.out.println("null waka waka"); // TODO: very temporary!!!!
 
                 player = c.getPlayer();
                 c.setRaw(this);

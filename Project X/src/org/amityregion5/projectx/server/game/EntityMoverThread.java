@@ -95,7 +95,8 @@ public class EntityMoverThread extends Thread {
 
     private void sendAggregateUpdateMessage()
     {
-        StringBuffer buf = new StringBuffer();
+        System.out.println("sending agg");
+        StringBuilder buf = new StringBuilder();
 
         for (Entity e : gameController.getEntities())
         {

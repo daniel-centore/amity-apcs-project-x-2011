@@ -8,10 +8,8 @@ package org.amityregion5.projectx.server.game.enemies;
 import java.util.ArrayList;
 
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
-import org.amityregion5.projectx.server.game.enemies.EnemyGroup;
-
 /**
- *
+ * A wave of enemies, consisting of several EnemyGroups.
  * @author Michael Wenke
  */
 public class EnemyWave 
@@ -25,30 +23,7 @@ public class EnemyWave
         waveNumber = n;
         enemies = en;
         spawnTime = 500; //Random spawn time
-    }
-
-    public ArrayList<Enemy> getEnemyTypes()
-    {
-        ArrayList<Enemy> enemyTypes = new ArrayList<Enemy>();
-        for(EnemyGroup group : enemies)
-        {
-           enemyTypes.add(group.getEnemy());
-
-        }
-        return enemyTypes;
-    }
-
-    public ArrayList<Integer> getEnemyNumbers()
-    {
-        ArrayList<Integer> enemyNumbers = new ArrayList<Integer>();
-        for(EnemyGroup group : enemies)
-        {
-            enemyNumbers.add(group.getNumEnemies());
-        }
-        
-        return enemyNumbers;
-    }
-    
+    }   
 
     public long getSpawnTime()
     {
@@ -63,6 +38,11 @@ public class EnemyWave
     public int getWaveNumber()
     {
         return waveNumber;
+    }
+
+    public ArrayList<EnemyGroup> getEnemyGroups()
+    {
+        return enemies;
     }
 
 }

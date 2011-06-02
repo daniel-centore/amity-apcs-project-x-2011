@@ -48,11 +48,10 @@ public class EnemyManager {
         ArrayList<EnemyGroup> enemies = new ArrayList<EnemyGroup>();
         enemies.add(group);
         wave = new EnemyWave(1, enemies);
-        
         gen = new GeneratorThread(controller, spawnArea, this);
-        gen.start();
-
+        gen.setCurrentWave(wave);
     }
+    
     public EnemyGroup createEnemyGroup(Enemy en, int num)
     {
         return new EnemyGroup(en, num);
@@ -63,9 +62,12 @@ public class EnemyManager {
         wave = w;
     }
 
-    public void addEnemies() throws InterruptedException
+    /**
+     * Starts the spawning thread.
+     */
+    public void startSpawning()
     {
-        gen.run();
+        gen.start();
     }
 
 }

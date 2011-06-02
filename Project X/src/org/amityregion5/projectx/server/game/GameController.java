@@ -18,9 +18,6 @@
  */
 package org.amityregion5.projectx.server.game;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.Point;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
@@ -33,7 +30,6 @@ import org.amityregion5.projectx.client.gui.GameWindow;
 import org.amityregion5.projectx.common.communication.messages.AddEntityMessage;
 import org.amityregion5.projectx.common.communication.messages.AddMeMessage;
 import org.amityregion5.projectx.common.communication.messages.AddWeaponMessage;
-import org.amityregion5.projectx.common.communication.messages.FiredMessage;
 import org.amityregion5.projectx.common.communication.messages.RemoveEntityMessage;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.characters.Character;
@@ -70,7 +66,7 @@ public class GameController
      * 
      * @param server The Server we are based from
      */
-    public GameController(Server server) throws InterruptedException
+    public GameController(Server server)
     {
         map = new TestingMap();
         this.server = server;
@@ -112,8 +108,7 @@ public class GameController
         enemyManager = new EnemyManager(this, getEnemySpawns());
         entityMoverThread = new EntityMoverThread(this, server.getRawServer(), map);
         entityMoverThread.start();
-        enemyManager.addEnemies();
-
+        enemyManager.startSpawning();
     }
 
     public void addEntity(Entity e)
@@ -181,13 +176,11 @@ public class GameController
     public void playerFired(Player player)
     {
         int direction = player.getDirectionFacing();
-        int x2 = (int) (Math.cos(Math.toRadians(direction)) * 800) + player.getCenterX();
-        int y2 = (int) (Math.sin(Math.toRadians(direction)) * 800) + player.getCenterY();
+        int x2 = (int) (Math.cos(Math.toRadians(direction)) * 1500) + player.getCenterX();
+        int y2 = (int) (Math.sin(Math.toRadians(direction)) * 1500) + player.getCenterY();
         Line2D.Double line = new Line2D.Double(player.getCenterX(), player.getCenterY(), x2, y2);
         for (Entity e : entities)
         {
-            System.out.println("Checking");
-            System.out.println(e.toString());
             if (e instanceof Enemy && line.intersects(e.getHitBox()))
             {
                 System.out.println("Ouch");

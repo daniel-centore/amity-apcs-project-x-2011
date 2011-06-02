@@ -21,6 +21,7 @@ package org.amityregion5.projectx.server.game.enemies;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Queue;
 import java.util.Random;
 
 import java.util.logging.Level;
@@ -51,35 +52,37 @@ public class GeneratorThread extends Thread {
         manager = m;
     }
 
-    public void addEnemies(EnemyWave wave) throws InterruptedException
+    public void addEnemies(EnemyWave wave)
     {
         currentWave = wave;
-        ArrayList<Enemy> enemyTypes = wave.getEnemyTypes();
-        ArrayList<Integer> enemyQuantities = wave.getEnemyNumbers();
+        ArrayList<EnemyGroup> groups =  wave.getEnemyGroups();
         Random gen = new Random();
-        for(int i = 0; i < enemyTypes.size(); i++)
+        for (EnemyGroup group: groups)
         {
-            Enemy e = enemyTypes.get(i);
-            for(int j = 0; j < enemyQuantities.get(i); i++)
+            Enemy e = group.getEnemy();
+            for (int i = 0; i < group.getNumEnemies(); i++)
             {
+                // picks a random spawn point from the spawn point list
                 Point spawn = enemySpawns.get(gen.nextInt(enemySpawns.size()));
+                // creates an enemy
                 Enemy en = new Enemy(e.getHp(),e.getHp());
-                e.setLocation(spawn);
+                // puts the enemy at spawn
+                en.setLocation(spawn);
+                // adds the entity to the controller
                 controller.addEntity(en);
-                
-
-
             }
         }
     }
+
+    public void setCurrentWave(EnemyWave wave)
+    {
+        currentWave = wave;
+    }
+    
     @Override
     public void run()
     {
-        this.start();
-        try {
-            addEnemies(currentWave);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(GeneratorThread.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        // TODO will release enemies on some kind of timer
+        addEnemies(currentWave);
     }
 }
