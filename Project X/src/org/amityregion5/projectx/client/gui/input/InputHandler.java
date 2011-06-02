@@ -35,8 +35,8 @@ import org.amityregion5.projectx.client.GameInputListener;
  * @author Mike DiBuduo
  */
 public class InputHandler {
+    
     private static ArrayList<GameInputListener> gils = new ArrayList<GameInputListener>();
-
 
     /**
      * Registers the given GameInputListener with the input handler

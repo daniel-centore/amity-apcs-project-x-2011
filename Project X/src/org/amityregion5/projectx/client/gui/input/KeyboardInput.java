@@ -35,10 +35,6 @@ public class KeyboardInput implements KeyListener {
 
     private volatile List<Integer> depressed = new ArrayList<Integer>(); // keys currently pressed down
 
-    /**
-     * Initializes the KeyHandler run thread
-     */
-
     public void keyTyped(KeyEvent e)
     {
         // keyPressed is preferable
@@ -51,7 +47,6 @@ public class KeyboardInput implements KeyListener {
         {
             depressed.add(e.getKeyCode());
             InputHandler.keyPressed(e);
-//            System.out.println("Pressed: "+e.getKeyChar());
         }
         e.consume();
     }

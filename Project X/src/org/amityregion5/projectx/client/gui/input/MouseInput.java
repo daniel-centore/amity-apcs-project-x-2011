@@ -34,8 +34,7 @@ import org.amityregion5.projectx.client.gui.GameWindow;
  * @author Daniel Centore
  * @author Mike Wenke
  */
-public class MouseInput implements MouseMotionListener, MouseListener,
-        MouseWheelListener {
+public class MouseInput implements MouseMotionListener, MouseListener, MouseWheelListener {
 
     public void mouseDragged(MouseEvent e)
     {
@@ -97,7 +96,7 @@ public class MouseInput implements MouseMotionListener, MouseListener,
     public static Point fix(int x, int y)
     {
         if (GameWindow.getCurrentHeight() == 0)
-            return new Point(0,0);
+            return new Point(0, 0);
         int width = GameWindow.getCurrentWidth();
         int height = GameWindow.getCurrentHeight();
 

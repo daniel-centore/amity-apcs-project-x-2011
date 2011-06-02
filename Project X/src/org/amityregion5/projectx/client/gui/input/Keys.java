@@ -32,6 +32,7 @@ import org.amityregion5.projectx.client.preferences.PreferenceManager;
  * @author Michael Zuo
  */
 public class Keys {
+    
     public static int[] UP      = { KeyEvent.VK_K, KeyEvent.VK_UP };
     public static int[] DOWN    = { KeyEvent.VK_J, KeyEvent.VK_DOWN };
     public static int[] LEFT    = { KeyEvent.VK_H, KeyEvent.VK_LEFT };
@@ -49,7 +50,7 @@ public class Keys {
         CHAT    = parseKeyList(keyses[4]);
     }
 
-    private static int[] parseKeyList(String keys)
+    private static int[] parseKeyList(String keys) // helper
     {
         String[] asList = keys.split(",");
         int[] asInts = new int[asList.length];

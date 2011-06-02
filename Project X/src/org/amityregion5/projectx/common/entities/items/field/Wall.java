@@ -27,8 +27,10 @@ import org.amityregion5.projectx.common.entities.Entity;
  *
  * @author Mike DiBuduo
  */
-public class Wall extends Block implements Damageable {
+public class Wall extends Block {
+    
     private static final long serialVersionUID = 1L;
+    
     public static final int DEFAULT_HEALTH = 100;
 
     public Wall(int x, int y)
@@ -44,5 +46,11 @@ public class Wall extends Block implements Damageable {
     public Wall(Entity e)
     {
         this(e.getX(), e.getY());
+    }
+    
+    @Override
+    public String getDefaultImage()
+    {
+        return "sprites/Wall";
     }
 }

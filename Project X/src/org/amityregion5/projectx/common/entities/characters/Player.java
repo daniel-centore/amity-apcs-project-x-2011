@@ -28,19 +28,14 @@ import org.amityregion5.projectx.common.entities.items.held.Weapon;
  * @author Mike DiBuduo
  * @author Joe Stein
  */
-public class Player extends Character implements Damageable {
+public class Player extends Character {
     public  static final int INITIAL_SPEED = 10; // initial move speed
     private static final long serialVersionUID = 1L;
     private static final int MAX_HEALTH = 100; // Player's health should be 100
 
     public Player()
     {
-        this(MAX_HEALTH);
-    }
-
-    public Player(int health)
-    {
-        super(health, MAX_HEALTH, 0, 0);
+        super(MAX_HEALTH, 0, 0);
         this.setMoveSpeed(INITIAL_SPEED);
         /*System.out.println("adding weapon!");
         addWeapon(new Weapon(1000,1) {
@@ -53,15 +48,15 @@ public class Player extends Character implements Damageable {
         }); */
     }
 
-    public Player(int health, Weapon wp)
+    public Player(Weapon wp)
     {
-        this(health);
+        this();
         addWeapon(wp);
     }
 
     public Player(int i, int j)
     {
-        super(MAX_HEALTH, MAX_HEALTH, i, j);
+        super(MAX_HEALTH, i, j);
     }
 
     @Override

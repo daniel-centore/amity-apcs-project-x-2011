@@ -22,37 +22,34 @@ package org.amityregion5.projectx.common.entities.characters;
 
 import java.util.ArrayList;
 
-import org.amityregion5.projectx.common.entities.Damageable;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
 
 /**
- * Basic Character.
- * Has health and a set of Weapons.
- *
+ * Basic Character. Has health and a set of Weapons.
+ * 
  * @author Mike DiBuduo
  * @author Mike Wenke
+ * @author Daniel Centore
  */
-public abstract class Character extends Entity implements Damageable {
+public abstract class Character extends Entity {
 
     private static final long serialVersionUID = 1L;
-    private ArrayList<Weapon> weapons;  // The weapons the character owns
-    private int currWeapon; //currently active weapon
-    private int hp; //hitpoints
-    private int maxHealth;  //maximum possible hea1h (generally 100)
+    protected ArrayList<Weapon> weapons; // The weapons the character owns
+    protected int currWeapon; // currently active weapon
+    protected int maxHealth; // maximum possible hea1h (generally 100)
 
     /**
      * Create a character.
-     *
+     * 
      * @param health The amount of health the character begins with.
      * @param max_health The most amount of health this character can have.
      */
-    public Character(int health, int maxHealth, int x, int y)
+    public Character(int maxHealth, int x, int y)
     {
         super(x, y);
         weapons = new ArrayList<Weapon>();
         this.maxHealth = maxHealth;
-        this.hp = health;
         currWeapon = 0;
     }
 
@@ -71,7 +68,7 @@ public abstract class Character extends Entity implements Damageable {
 
     /**
      * Gets a weapon the character has.
-     *
+     * 
      * @param weapon The weapon's identifier.
      * @return The weapon identified.
      */
@@ -82,7 +79,7 @@ public abstract class Character extends Entity implements Damageable {
 
     /**
      * Gets the identifier for the character's current weapon.
-     *
+     * 
      * @return The current weapon's identifier.
      */
     public int getCurrWeapon()
@@ -92,7 +89,7 @@ public abstract class Character extends Entity implements Damageable {
 
     /**
      * Changes the character's current weapon.
-     *
+     * 
      * @param newWeapon The identifier of the weapon to switch to.
      */
     public void setCurrWeapon(int newWeapon)
@@ -106,28 +103,8 @@ public abstract class Character extends Entity implements Damageable {
     }
 
     /**
-     * Gets the character's current HP.
-     *
-     * @return The character's HP.
-     */
-    public int getHp()
-    {
-        return hp;
-    }
-
-    /**
-     * Changes the character's HP.
-     *
-     * @param hp The HP value to set to.
-     */
-    public void setHp(int hp)
-    {
-        this.hp = hp;
-    }
-
-    /**
      * Adds a weapon to the character's arsenal.
-     *
+     * 
      * @param wp The weapon to be added.
      */
     public void addWeapon(Weapon wp)
@@ -141,41 +118,6 @@ public abstract class Character extends Entity implements Damageable {
     public int getMaxHealth()
     {
         return maxHealth;
-    }
-
-    /**
-     * Checks to see if a character's health is below 0.
-     * If so, remove the character from the map.
-     */
-    public boolean killed()
-    {
-        if(hp <= 0)
-        {
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Removes health from character, then checks to see if it has been killed.
-     * @param damage the amount of health to remove
-     */
-    public void damage(int damage)
-    {
-        hp -= damage;
-        killed();
-    }
-
-    /**
-     * Adds health to hp. If the total exceeds maximum, it is set to maximum.
-     * 
-     * @param health health to add
-     */
-    public void heal(int health)
-    {
-        hp += health;
-        if(hp > maxHealth)
-            hp = maxHealth;
     }
 
     public void updateWeaponImages()

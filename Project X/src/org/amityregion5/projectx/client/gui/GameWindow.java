@@ -48,13 +48,18 @@ public class GameWindow extends JFrame {
 
     public static final int GAME_WIDTH = 1024; // the game size we will draw at before resizing
     public static final int GAME_HEIGHT = 768;
+
     private static GameWindow instance; // the instance of Gui
     private static JComponent panel; // the panel we will draw on
     private static Image buffer; // the image the panel should draw
     private int xOffset; // how much screen is offset horizontally
     private int yOffset; // how much screen is offset vertically
 
-
+    /**
+     * Creates a GameWindow
+     * @param map The map of the game
+     * @param game The game
+     */
     public GameWindow(AbstractMap map, final Game game)
     {
         super("Amity Project X");
@@ -114,7 +119,7 @@ public class GameWindow extends JFrame {
         panel.addKeyListener(new KeyboardInput());
 
         panel.addMouseListener(new PopupMenuHandler(game.getCommunicationHandler()));
-        
+
         this.add(panel, BorderLayout.CENTER);
 
         this.setSize(GAME_WIDTH, GAME_HEIGHT);
@@ -128,7 +133,7 @@ public class GameWindow extends JFrame {
         {
         }
         panel.requestFocusInWindow();
-
+        
     }
 
     /**

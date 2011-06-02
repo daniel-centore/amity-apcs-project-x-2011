@@ -105,22 +105,38 @@ public class RawCommunicationHandler extends Thread {
         }
     }
 
+    /**
+     * Requests that communications stop
+     */
     public void kill()
     {
         keepRunning = false;
     }
     
+    /**
+     * Sends a raw direction update
+     * @param dir Direction to face
+     * @throws IOException If it don't write good!
+     */
     public synchronized void send(int dir) throws IOException
     {
         dos.writeInt(dir);
         dos.flush();
     }
 
+    /**
+     * Registers a raw listener to receive direction and position updates
+     * @param rl The listener to register
+     */
     public synchronized void registerRawListener(RawListener rl)
     {
         rawListeners.add(rl);
     }
 
+    /**
+     * Removes a raw listener
+     * @param rl Listener to remove
+     */
     public synchronized void removeRawListener(RawListener rl)
     {
         rawListeners.remove(rl);

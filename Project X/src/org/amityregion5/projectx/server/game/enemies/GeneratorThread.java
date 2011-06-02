@@ -65,7 +65,7 @@ public class GeneratorThread extends Thread {
                 // picks a random spawn point from the spawn point list
                 Point spawn = enemySpawns.get(gen.nextInt(enemySpawns.size()));
                 // creates an enemy
-                Enemy en = new Enemy(e.getHp(),e.getHp());
+                Enemy en = new Enemy(e.getHp(), 500, 500);      //TODO: arbitrary location
                 // puts the enemy at spawn
                 en.setLocation(spawn);
                 // adds the entity to the controller

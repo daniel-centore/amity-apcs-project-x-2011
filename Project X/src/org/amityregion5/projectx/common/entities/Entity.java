@@ -40,6 +40,8 @@ public abstract class Entity implements Serializable {
 
     private static volatile transient long nextUniqueID = 0; // so each entity has a unique ID
 
+    public static final long FIRE_TIME = 5; // how many ms to show the thing
+
     private final long uniqueID; // necessary to check identity content changes.
     private Point2D location; // the entity's location
 
@@ -54,7 +56,10 @@ public abstract class Entity implements Serializable {
 
     private transient boolean needUpdate; // do we need to resend the location?
 
+    // TODO: move this to Player
     private transient boolean justFired; // did this client fire since the last repaint?
+    private long firedTime; // when we fired
+
     private Rectangle hitBox; // a rudimentary hit boundary
 
     /**
@@ -63,7 +68,7 @@ public abstract class Entity implements Serializable {
     public Entity()
     {
         uniqueID = nextUniqueID++;
-        hitBox = new Rectangle(1,1); // default tiny hitbox
+        hitBox = new Rectangle(1, 1); // default tiny hitbox
         location = new Point2D.Double(0, 0);
         image = null;
         directionFacing = 0;
@@ -275,6 +280,8 @@ public abstract class Entity implements Serializable {
         currentImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = (Graphics2D) currentImage.getGraphics();
 
+        setHitBox(image.getWidth(), image.getHeight());
+
         g2.drawImage(image, getAffineTransform(), null);
     }
 
@@ -365,18 +372,26 @@ public abstract class Entity implements Serializable {
 
     public void setFired(boolean justFired)
     {
-        this.justFired = justFired;
+
+        if (justFired)
+        {
+            firedTime = System.currentTimeMillis();
+            this.justFired = justFired;
+        } else if (System.currentTimeMillis() - firedTime >= FIRE_TIME)
+        {
+            this.justFired = justFired;
+        }
     }
 
     /**
      * Sets a rudimentary hit box for primitive collision detection.
-     * NOTE danielle, we can remove this later. CALM DOWN
+     * 
      * @param width width of the hit box
      * @param height height of the hit box
      */
-    public void setHitBox(int width, int height)
+    private void setHitBox(int width, int height)
     {
-        hitBox = new Rectangle(width,height);
+        hitBox = new Rectangle(width, height);
     }
 
     /*
@@ -384,8 +399,7 @@ public abstract class Entity implements Serializable {
      */
     public Rectangle getHitBox()
     {
-        return new Rectangle((int) location.getX(), (int) location.getY(),
-                (int) hitBox.getWidth(), (int) hitBox.getHeight());
+        return new Rectangle((int) location.getX(), (int) location.getY(), (int) hitBox.getWidth(), (int) hitBox.getHeight());
     }
 
 }

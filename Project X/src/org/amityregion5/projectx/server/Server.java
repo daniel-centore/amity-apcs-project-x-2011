@@ -334,11 +334,7 @@ public class Server {
         setListening(false);
 
         relayMessage(new StatusUpdateMessage(StatusUpdateMessage.Type.STARTING));
-        try {
-            gameController = new GameController(this);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        gameController = new GameController(this);
 
     }
 

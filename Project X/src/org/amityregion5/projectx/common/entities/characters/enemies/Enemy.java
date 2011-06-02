@@ -27,24 +27,85 @@ import org.amityregion5.projectx.common.entities.items.held.Weapon;
  * Character that attacks player
  * 
  * @author Mike DiBuduo
+ * @author Daniel Centore
  */
 public class Enemy extends Character implements Damageable {
+    
     private static final long serialVersionUID = 1L;
+    
+    private int hp; // hitpoints
 
     /**
      * Creates an enemy with specified health.
      * 
      * @param health
      */
-    public Enemy(int health, int max)
+    public Enemy(int max, int x, int y)
     {
-        super(health, max, 500, 500);
+        super(max, x, y);
     }
 
-    public Enemy(int health, int max, Weapon wp)
+    public Enemy(int max, Weapon wp, int x, int y)
     {
-        this(health, max);
+        this(max, x, y);
         addWeapon(wp);
+    }
+    
+    /**
+     * Gets the character's current HP.
+     * 
+     * @return The character's HP.
+     */
+    public int getHp()
+    {
+        return hp;
+    }
+
+    /**
+     * Changes the character's HP.
+     * 
+     * @param hp The HP value to set to.
+     */
+    public void setHp(int hp)
+    {
+        this.hp = hp;
+    }
+
+    
+    /**
+     * Checks to see if a character's health is below 0. If so, remove the character from the map.
+     */
+    public boolean killed()
+    {
+        if (hp <= 0)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Removes health from character, then checks to see if it has been killed.
+     * 
+     * @param damage the amount of health to remove
+     */
+    public void damage(int damage)
+    {
+        hp -= damage;
+        System.out.println("Current: " + hp);
+        killed();
+    }
+
+    /**
+     * Adds health to hp. If the total exceeds maximum, it is set to maximum.
+     * 
+     * @param health health to add
+     */
+    public void heal(int health)
+    {
+        hp += health;
+        if (hp > maxHealth)
+            hp = maxHealth;
     }
 
     @Override

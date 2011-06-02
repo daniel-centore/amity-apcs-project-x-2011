@@ -50,8 +50,7 @@ import org.amityregion5.projectx.server.game.enemies.EnemyManager;
  * @author Michael Wenke
  * @author Joe Stein
  */
-public class GameController
-{
+public class GameController {
 
     private List<Player> players; // List of current Players (do we even need this..?)
     private Collection<Client> clients; // List of current Clients
@@ -74,7 +73,6 @@ public class GameController
         clients = server.getClients().values();
         entities = new ArrayList<Entity>();
 
-
         Random r = new Random();
         for (Client c : clients)
         {
@@ -82,7 +80,7 @@ public class GameController
             int spawnY = (int) (map.getPlayArea().getY() + r.nextInt((int) map.getPlayArea().getHeight() - p.getHeight()));
             int spawnX = (int) (map.getPlayArea().getX() + r.nextInt((int) map.getPlayArea().getWidth() - p.getWidth()));
             p.setLocation(new Point2D.Double(spawnX, spawnY));
-            p.setHitBox(p.getWidth(), p.getHeight());
+//            p.setHitBox(p.getWidth(), p.getHeight());
 
             players.add(p);
 
@@ -90,11 +88,9 @@ public class GameController
             c.setPlayer(p);
             c.send(new AddMeMessage(p));
 
-            addWeapon(p, new Gun(100, 100, 10, 20, 6, 50, 10));
-
-            Enemy enemy = new Enemy(10, 10);
-            c.send(new AddEntityMessage(enemy));
-            entities.add(enemy);
+//            Enemy enemy = new Enemy(200, 500, 500);
+//            c.send(new AddEntityMessage(enemy));
+//            entities.add(enemy);
         }
 
         for (Client c : clients)
@@ -102,7 +98,22 @@ public class GameController
             for (Player p : players)
             {
                 c.send(new AddEntityMessage(p));
+                addWeapon(p, new Gun(100, 100, 10, 20, 6, 50, 10));
             }
+        }
+
+        try
+        {
+            Thread.sleep(2000);
+        } catch (InterruptedException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        for (Player p : players)
+        {
+            addWeapon(p, new Gun(100, 100, 10, 20, 6, 50, 10));
         }
 
         enemyManager = new EnemyManager(this, getEnemySpawns());
@@ -133,8 +144,8 @@ public class GameController
     }
 
     /**
-     * Adds a weapon to the given server-side character and relays a message
-     * to update the client-side characters.
+     * Adds a weapon to the given server-side character and relays a message to update the client-side characters.
+     * 
      * @param c the character to which to add the weapon
      * @param w the weapon to add
      */
@@ -146,6 +157,7 @@ public class GameController
 
     /**
      * This assumes the default game window dimensions and that enemies spawn at edge of screen.
+     * 
      * @return enemy spawn points
      */
     public ArrayList<Point> getEnemySpawns()
@@ -171,6 +183,7 @@ public class GameController
 
     /**
      * Tells this controller that the player has fired.
+     * 
      * @param player the player that fired
      */
     public void playerFired(Player player)

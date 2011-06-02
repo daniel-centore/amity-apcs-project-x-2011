@@ -54,6 +54,7 @@ import org.amityregion5.projectx.common.entities.EntityConstants;
 import org.amityregion5.projectx.common.entities.characters.Player;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 import org.amityregion5.projectx.common.tools.ImageHandler;
+import org.amityregion5.projectx.common.entities.characters.Character;
 
 /**
  * The umbrella logistics class for the client-side game.
@@ -185,10 +186,10 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
     {
         int deg = Integer.MIN_VALUE;
 
-        int left    = Keys.numIsKey(Keys.LEFT,  depressedKeys);
-        int right   = Keys.numIsKey(Keys.RIGHT, depressedKeys);
-        int up      = Keys.numIsKey(Keys.DOWN,  depressedKeys);
-        int down    = Keys.numIsKey(Keys.UP,    depressedKeys);
+        int left = Keys.numIsKey(Keys.LEFT, depressedKeys);
+        int right = Keys.numIsKey(Keys.RIGHT, depressedKeys);
+        int up = Keys.numIsKey(Keys.DOWN, depressedKeys);
+        int down = Keys.numIsKey(Keys.UP, depressedKeys);
 
         int lr = right - left;
         int ud = up - down;
@@ -246,7 +247,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             ChatDrawing.drawChat(cm.getFrom() + ": " + cm.getText());
         } else if (m instanceof AnnounceMessage)
         {
-            
+
         } else if (m instanceof AddMeMessage)
         {
             AddMeMessage amm = (AddMeMessage) m;
@@ -278,11 +279,14 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         } else if (m instanceof AddWeaponMessage)
         {
             AddWeaponMessage awm = (AddWeaponMessage) m;
-            awm.getWeapon().setImage(
-                    ImageHandler.loadImage(awm.getWeapon().getDefaultImage()));
-            ((org.amityregion5.projectx.common.entities.characters.Character)
-                    entityHandler.getEntity(awm.getID())).addWeapon(
-                    awm.getWeapon());
+            awm.getWeapon().setImage(ImageHandler.loadImage(awm.getWeapon().getDefaultImage()));
+            try
+            {
+                ((Character) entityHandler.getEntity(awm.getID())).addWeapon(awm.getWeapon());
+            } catch (Exception e)
+            {
+                //TODO: temporary kludge
+            }
         }
     }
 
@@ -337,7 +341,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             {
                 e.setX(Double.valueOf(entVals[1]));
                 e.setY(Double.valueOf(entVals[2]));
-                
+
                 if (e == me)
                 {
                     int x1 = me.getCenterX();
@@ -345,14 +349,13 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                     int angle = (int) Math.toDegrees(Math.atan2(lastMouseY - y1, lastMouseX - x1));
 
                     me.setDirectionFacing(angle);
-                }
-                else
+                } else
                     e.setDirectionFacing(Integer.valueOf(entVals[3]));
-                
-//                System.out.println("Facing: " + entVals[3]);
+
+                // System.out.println("Facing: " + entVals[3]);
             }
         }
-//        mouseMoved(lastMouseX, lastMouseY); // update angle
+        // mouseMoved(lastMouseX, lastMouseY); // update angle
 
         if (GameWindow.getInstance() != null)
         {
@@ -366,7 +369,6 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
     {
         me.changeWeapon(e.getWheelRotation());
     }
-
 
     private class DirectionalUpdateThread extends Thread {
 
