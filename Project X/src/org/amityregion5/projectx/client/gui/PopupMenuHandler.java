@@ -19,6 +19,7 @@
  */
 package org.amityregion5.projectx.client.gui;
 
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -29,6 +30,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
 import org.amityregion5.projectx.client.communication.CommunicationHandler;
+import org.amityregion5.projectx.client.gui.input.MouseInput;
 import org.amityregion5.projectx.common.communication.messages.RequestEntityAddMessage;
 import org.amityregion5.projectx.common.entities.EntityConstants;
 
@@ -80,7 +82,10 @@ public class PopupMenuHandler extends MouseAdapter implements ActionListener {
     {
         if (e.isPopupTrigger())
         {
-            popup.show(e.getComponent(), (popupX = e.getX()), (popupY = e.getY()));
+            Point p = MouseInput.fix(e);
+            popupX = p.x;
+            popupY = p.y;
+            popup.show(e.getComponent(), e.getX(), e.getY());
         }
     }
 
