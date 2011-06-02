@@ -18,7 +18,7 @@ public class EnemyWave
 {
     private int waveNumber;
     private ArrayList<EnemyGroup> enemies;
-    private int spawnTime;
+    private long spawnTime;
 
     public EnemyWave(int n, ArrayList<EnemyGroup> en)
     {
@@ -48,4 +48,21 @@ public class EnemyWave
         
         return enemyNumbers;
     }
+    
+
+    public long getSpawnTime()
+    {
+        return spawnTime;
+    }
+
+    public void setSpawnTime(long time)
+    {
+        spawnTime = time;
+    }
+
+    public int getWaveNumber()
+    {
+        return waveNumber;
+    }
+
 }

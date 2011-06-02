@@ -23,31 +23,49 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
+import org.amityregion5.projectx.server.game.GameController;
 
 /**
  * Class documentation.
- * 
+ *
+ * @author Michal Wenke
  * @author Jenny Liu
  * @author Mike DiBuduo
  */
 public class EnemyManager {
 
     private GeneratorThread gen;
-    private EnemyWave wave;
+    private EnemyWave wave; //Current wave
     private ArrayList<Point> spawnArea;
+    private GameController controller;
 
-    public EnemyManager(ArrayList<Point> area)
+    public EnemyManager(GameController c, ArrayList<Point> area)
     {
+        controller = c;
         spawnArea = area;
+        
+        EnemyGroup group = createEnemyGroup(new Enemy(100,100), 20); //Arbitrary first wave with 20 enemies w/100 health
+        ArrayList<EnemyGroup> enemies = new ArrayList<EnemyGroup>();
+        enemies.add(group);
+        wave = new EnemyWave(1, enemies);
+        
+        gen = new GeneratorThread(controller, spawnArea, this);
+        gen.start();
+
     }
+    public EnemyGroup createEnemyGroup(Enemy en, int num)
+    {
+        return new EnemyGroup(en, num);
+    }
+
     public void setWave(EnemyWave w)
     {
         wave = w;
     }
 
-    public void addEnemies()
+    public void addEnemies() throws InterruptedException
     {
-        gen.addEnemies(wave, spawnArea);
+        gen.run();
     }
 
 }

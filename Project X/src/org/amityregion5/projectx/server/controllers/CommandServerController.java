@@ -51,6 +51,7 @@ public class CommandServerController extends Thread implements ServerController 
             System.out.print(":");
             String cmd = scan.nextLine();
             String[] args = cmd.split(" ");
+            //String[] args = {"help"};
             args[0] = args[0].toLowerCase(); // lowercase for interpretation
             if(args[0].equals(Command.HALT.getString()))
             {

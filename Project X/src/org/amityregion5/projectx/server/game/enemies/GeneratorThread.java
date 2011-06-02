@@ -23,7 +23,13 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+
+
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
+import org.amityregion5.projectx.server.game.GameController;
 
 /**
  * Class documentation.
@@ -33,14 +39,21 @@ import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
  */
 public class GeneratorThread extends Thread {
 
+    private GameController controller;
+    private EnemyWave currentWave;
+    private ArrayList<Point> enemySpawns;
+    private EnemyManager manager;
     //TODO: Get enemy spawning to work
-    public GeneratorThread()
+    public GeneratorThread(GameController c, ArrayList<Point> spawns, EnemyManager m)
     {
-
+        controller = c;
+        enemySpawns = c.getEnemySpawns();
+        manager = m;
     }
 
-    public void addEnemies(EnemyWave wave, ArrayList<Point> spawnArea)
+    public void addEnemies(EnemyWave wave) throws InterruptedException
     {
+        currentWave = wave;
         ArrayList<Enemy> enemyTypes = wave.getEnemyTypes();
         ArrayList<Integer> enemyQuantities = wave.getEnemyNumbers();
         Random gen = new Random();
@@ -49,9 +62,24 @@ public class GeneratorThread extends Thread {
             Enemy e = enemyTypes.get(i);
             for(int j = 0; j < enemyQuantities.get(i); i++)
             {
-                Point spawn = spawnArea.get(gen.nextInt(spawnArea.size()));
+                Point spawn = enemySpawns.get(gen.nextInt(enemySpawns.size()));
+                Enemy en = new Enemy(e.getHp(),e.getHp());
+                e.setLocation(spawn);
+                controller.addEntity(en);
+                
+
 
             }
+        }
+    }
+    @Override
+    public void run()
+    {
+        this.start();
+        try {
+            addEnemies(currentWave);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(GeneratorThread.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

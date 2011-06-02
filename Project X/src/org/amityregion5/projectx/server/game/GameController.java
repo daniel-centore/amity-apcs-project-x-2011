@@ -70,7 +70,7 @@ public class GameController
      * 
      * @param server The Server we are based from
      */
-    public GameController(Server server)
+    public GameController(Server server) throws InterruptedException
     {
         map = new TestingMap();
         this.server = server;
@@ -109,11 +109,19 @@ public class GameController
             }
         }
 
-        enemyManager = new EnemyManager(getEnemySpawns());
+        enemyManager = new EnemyManager(this, getEnemySpawns());
         entityMoverThread = new EntityMoverThread(this, server.getRawServer(), map);
         entityMoverThread.start();
+        enemyManager.addEnemies();
+
     }
 
+    public void addEntity(Entity e)
+    {
+        entities.add(e);
+        server.relayMessage(new AddEntityMessage(e));
+    }
+    
     public List<Entity> getEntities()
     {
         return entities;
@@ -145,20 +153,21 @@ public class GameController
      * This assumes the default game window dimensions and that enemies spawn at edge of screen.
      * @return enemy spawn points
      */
-    private ArrayList<Point> getEnemySpawns()
+    public ArrayList<Point> getEnemySpawns()
     {
         ArrayList<Point> spawns = new ArrayList<Point>();
         if (map instanceof TestingMap)
         {
-            for (int i = 0; i < GameWindow.GAME_WIDTH; i += 10)
+
+            for(int i = 0; i < GameWindow.GAME_WIDTH; i += 10)
             {
-                spawns.add(new Point(0, i));
-                spawns.add(new Point(GameWindow.GAME_HEIGHT, i));
+                spawns.add(new Point(0,i));
+                spawns.add(new Point(GameWindow.GAME_HEIGHT, i += 10));
             }
-            for (int i = 0; i < GameWindow.GAME_HEIGHT; i += 10)
+            for(int i = 0; i < GameWindow.GAME_HEIGHT; i += 10)
             {
-                spawns.add(new Point(i, 0));
-                spawns.add(new Point(i, GameWindow.GAME_WIDTH));
+                spawns.add(new Point(i,0));
+                spawns.add(new Point(i,GameWindow.GAME_WIDTH ));
             }
         }
 

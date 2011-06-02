@@ -26,6 +26,8 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.amityregion5.projectx.common.communication.Constants;
 import org.amityregion5.projectx.common.communication.messages.ActivePlayersMessage;
@@ -317,7 +319,7 @@ public class Server {
 
         if (waiting == 0 && clients.size() >= MIN_PLAYERS)
         {
-            startGame();
+                startGame();
         } else
         {
             this.updateWaitingStatus();
@@ -332,7 +334,11 @@ public class Server {
         setListening(false);
 
         relayMessage(new StatusUpdateMessage(StatusUpdateMessage.Type.STARTING));
-        gameController = new GameController(this);
+        try {
+            gameController = new GameController(this);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
