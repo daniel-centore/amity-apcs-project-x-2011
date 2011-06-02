@@ -50,6 +50,6 @@ public class Enemy extends Character implements Damageable {
     @Override
     public String getDefaultImage()
     {
-        return "Enemy";
+        return "sprites/Enemy";
     }
 }
