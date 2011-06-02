@@ -19,7 +19,6 @@
  */
 package org.amityregion5.projectx.common.entities.characters;
 
-import org.amityregion5.projectx.common.entities.Damageable;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
 
 /**

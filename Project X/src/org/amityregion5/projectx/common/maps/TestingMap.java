@@ -41,10 +41,11 @@ import org.amityregion5.projectx.common.tools.ImageHandler;
  * @author Joseph Stein
  * 
  */
-public class TestingMap extends AbstractMap {
+public class TestingMap extends AbstractMap
+{
 
     private Image image;
-
+    private Area area;
     private final List<Entity> entities;
 
     public TestingMap()
@@ -52,23 +53,22 @@ public class TestingMap extends AbstractMap {
         entities = new ArrayList<Entity>();
 
         Area a = new Area(0, 0);
+        area = a;
         int x = GameWindow.GAME_WIDTH / 2 - a.getWidth() / 2;
         int y = GameWindow.GAME_HEIGHT / 2 - a.getHeight() / 2;
-        
+
         a.setX(x);
         a.setY(y);
-        
+
         setPlayArea(new Rectangle(a.getX(), a.getY(), a.getWidth(), a.getHeight()));
-        
+
 
         entities.add(a);
         entities.add(new Wall(a));
 
-        try
-        {
+        try {
             image = ImageHandler.loadImage("maps/TestMap");
-        } catch (RuntimeException ex)
-        {
+        } catch (RuntimeException ex) {
             Logger.getLogger(TestingMap.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -84,10 +84,16 @@ public class TestingMap extends AbstractMap {
     {
         return entities;
     }
-    
+
     public Point getCenter()
     {
 
         return new Point(GameWindow.GAME_WIDTH / 2, GameWindow.GAME_HEIGHT / 2);
+    }
+
+    @Override
+    public Area getArea()
+    {
+        return area;
     }
 }

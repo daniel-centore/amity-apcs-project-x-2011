@@ -25,6 +25,7 @@ import java.util.logging.Logger;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.EntityConstants;
 import org.amityregion5.projectx.common.entities.characters.Player;
+import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 import org.amityregion5.projectx.server.communication.RawServer;
 
@@ -80,6 +81,11 @@ public class EntityMoverThread extends Thread {
                         {
                             e.setX(newX);
                             e.setY(newY);
+                        }
+                        if (e instanceof Enemy && e.getHitBox().intersects(map.getPlayArea()))
+                        {
+                            Enemy en = (Enemy) e;
+                            map.getArea().damage(en.getDamage());
                         }
                     }
                 }

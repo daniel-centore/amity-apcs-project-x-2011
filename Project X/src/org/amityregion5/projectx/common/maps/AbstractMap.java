@@ -24,6 +24,7 @@ import java.awt.Rectangle;
 import java.util.List;
 
 import org.amityregion5.projectx.common.entities.Entity;
+import org.amityregion5.projectx.common.entities.items.field.Area;
 
 /**
  * An abstract map.
@@ -60,6 +61,7 @@ public abstract class AbstractMap {
     {
         return playArea;
     }
+    public abstract Area getArea();
 
 
 }

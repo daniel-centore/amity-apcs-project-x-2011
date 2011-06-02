@@ -21,6 +21,7 @@ package org.amityregion5.projectx.common.entities.characters.enemies;
 
 import org.amityregion5.projectx.common.entities.Damageable;
 import org.amityregion5.projectx.common.entities.characters.CharacterEntity;
+import org.amityregion5.projectx.common.entities.items.DamageDealing;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
 
 /**
@@ -111,5 +112,9 @@ public class Enemy extends CharacterEntity implements Damageable {
     public String getDefaultImage()
     {
         return "sprites/Enemy";
+    }
+
+    public int getDamage() {
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 }

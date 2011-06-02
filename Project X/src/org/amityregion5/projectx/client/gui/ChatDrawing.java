@@ -42,7 +42,7 @@ public class ChatDrawing {
     private static final int X_MARGIN = 10;
     private static final int Y_MARGIN = 50;
     private static final int HEIGHT_MARGIN = 15;
-    private static final int TEXT_OVERFLOW = 75;
+    private static final int TEXT_LIMIT = 70;
 
     public static final int CHAT_WIDTH = 500;
     public static final int CHAT_HEIGHT = 150;
@@ -78,15 +78,6 @@ public class ChatDrawing {
         {
             // TODO make the letters also appear on the new line
             g2.setColor(Color.BLACK);
-            if (currChat.length() >= TEXT_OVERFLOW * k)
-            {
-                k++;
-                r = new Rectangle(X_MARGIN, (HEIGHT_MARGIN * NUM_CHATS), width - Y_MARGIN, (g2.getFont().getSize() + 2) * k);
-            } else if (currChat.length() < TEXT_OVERFLOW * k && k > 1)
-            {
-                k--;
-                r = new Rectangle(X_MARGIN, (HEIGHT_MARGIN * NUM_CHATS), width - Y_MARGIN, (g2.getFont().getSize() + 2) * k);
-            }
             g2.draw(r);
             g2.drawString(currChat.toString() + "|", X_MARGIN + 5, g2.getFont().getSize() + (HEIGHT_MARGIN * NUM_CHATS));
             g2.setColor(Color.BLACK);
@@ -154,8 +145,11 @@ public class ChatDrawing {
      */
     public static void addLetter(char c)
     {
-        currChat.append(c);
-        GameWindow.getInstance().fireRepaintRequired();
+        if (currChat.length() < TEXT_LIMIT)
+        {
+            currChat.append(c);
+            GameWindow.getInstance().fireRepaintRequired();
+        }
     }
 
     /**
