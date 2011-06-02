@@ -169,7 +169,7 @@ public class GameController {
         Line2D.Double line = new Line2D.Double(player.getCenterX(), player.getCenterY(), x2, y2);
         for (Entity e : entities)
         {
-            if (e instanceof Enemy && line.intersects(e.getHitBox()));
+            if (e instanceof Enemy && line.intersects(e.getHitBox()))
             {
                 Enemy en = (Enemy) e;
                 en.damage(player.getWeapon(player.getCurrWeapon()).getDamage());
