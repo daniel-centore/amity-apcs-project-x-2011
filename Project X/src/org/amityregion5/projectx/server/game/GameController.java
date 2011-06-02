@@ -87,10 +87,6 @@ public class GameController {
             entities.add(p);
             c.setPlayer(p);
             c.send(new AddMeMessage(p));
-
-            // Enemy enemy = new Enemy(200, 500, 500);
-            // c.send(new AddEntityMessage(enemy));
-            // entities.add(enemy);
         }
 
         for(Client c : clients)
@@ -157,18 +153,18 @@ public class GameController {
     public ArrayList<Point> getEnemySpawns()
     {
         ArrayList<Point> spawns = new ArrayList<Point>();
+        final int MARGIN = 20;
         if(map instanceof TestingMap)
         {
-
-            for(int i = 0;i < GameWindow.GAME_WIDTH;i += 10)
+            for(int i = -MARGIN; i < GameWindow.GAME_HEIGHT + MARGIN;i += 10)
             {
-                spawns.add(new Point(0, i));
-                spawns.add(new Point(GameWindow.GAME_HEIGHT, i += 10));
+                spawns.add(new Point(-MARGIN, i));
+                spawns.add(new Point(GameWindow.GAME_WIDTH + MARGIN, i += 10));
             }
-            for(int i = 0;i < GameWindow.GAME_HEIGHT;i += 10)
+            for(int i = -MARGIN; i < GameWindow.GAME_WIDTH + MARGIN;i += 10)
             {
-                spawns.add(new Point(i, 0));
-                spawns.add(new Point(i, GameWindow.GAME_WIDTH));
+                spawns.add(new Point(i, -MARGIN));
+                spawns.add(new Point(i, GameWindow.GAME_HEIGHT + MARGIN));
             }
         }
 

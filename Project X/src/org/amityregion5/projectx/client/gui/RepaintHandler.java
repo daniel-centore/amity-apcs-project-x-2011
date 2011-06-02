@@ -81,8 +81,8 @@ public class RepaintHandler extends Thread {
         {
             g.drawImage(e.getImage(), e.getX(), e.getY(), null);
         }
-
-        synchronized (game)
+        
+        synchronized (game.getEntityHandler())
         {
             for (Entity e : game.getEntities()) // draw temporary entities
             {
@@ -90,11 +90,14 @@ public class RepaintHandler extends Thread {
                     break;
                 g.drawImage(e.getImage(), e.getX(), e.getY(), null);
                 g.setColor(Color.WHITE);
+                g.setStroke(new BasicStroke(1));
                 g.draw(e.getHitBox());
                 if (e instanceof Player)
                 {
                     // draw a laser sight for weapon direction
                     g.setColor(Color.red);
+                    g.setStroke(new BasicStroke(2));
+                    
                     int x2 = (int) (Math.cos(Math.toRadians(e.getDirectionFacing())) * 800) + e.getCenterX();
                     int y2 = (int) (Math.sin(Math.toRadians(e.getDirectionFacing())) * 800) + e.getCenterY();
                     g.drawLine(e.getCenterX(), e.getCenterY(), x2, y2);
