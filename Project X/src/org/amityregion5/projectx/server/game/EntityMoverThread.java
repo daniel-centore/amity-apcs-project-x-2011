@@ -51,7 +51,7 @@ public class EntityMoverThread extends Thread {
     {
         while (keepRunning)
         {
-            synchronized (gameController)
+            synchronized (gameController.getEntities())
             {
                 for (Entity e : gameController.getEntities())
                 {

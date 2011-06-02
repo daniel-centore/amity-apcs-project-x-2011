@@ -31,7 +31,6 @@ import org.amityregion5.projectx.server.game.GameController;
  * @author Michal Wenke
  * @author Jenny Liu
  * @author Mike DiBuduo
- * @deprecated Bugged
  */
 public class EnemyManager {
 
@@ -50,7 +49,7 @@ public class EnemyManager {
         enemies.add(group);
         wave = new EnemyWave(1, enemies);
         gen = new GeneratorThread(controller, spawnArea, this);
-        gen.setCurrentWave(wave);
+        gen.addWave(wave);
     }
     
     public EnemyGroup createEnemyGroup(Enemy en, int num)

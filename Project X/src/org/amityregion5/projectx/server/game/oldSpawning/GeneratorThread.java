@@ -21,12 +21,9 @@ package org.amityregion5.projectx.server.game.oldSpawning;
 
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Queue;
 import java.util.Random;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
@@ -37,25 +34,25 @@ import org.amityregion5.projectx.server.game.GameController;
  * 
  * @author Jenny Liu
  * @author Michael Wenke
- * @deprecated Bugged
  */
 public class GeneratorThread extends Thread {
 
     private GameController controller;
-    private EnemyWave currentWave;
+    private BlockingQueue<EnemyWave> waves;
     private ArrayList<Point> enemySpawns;
     private EnemyManager manager;
     //TODO: Get enemy spawning to work
     public GeneratorThread(GameController c, ArrayList<Point> spawns, EnemyManager m)
     {
+        waves = new LinkedBlockingQueue<EnemyWave>();
         controller = c;
         enemySpawns = c.getEnemySpawns();
         manager = m;
     }
 
-    public void addEnemies(EnemyWave wave)
+    public void addWave(EnemyWave wave)
     {
-        currentWave = wave;
+        waves.add(wave);
         ArrayList<EnemyGroup> groups =  wave.getEnemyGroups();
         Random gen = new Random();
         for (EnemyGroup group: groups)
@@ -66,7 +63,8 @@ public class GeneratorThread extends Thread {
                 // picks a random spawn point from the spawn point list
                 Point spawn = enemySpawns.get(gen.nextInt(enemySpawns.size()));
                 // creates an enemy
-                Enemy en = new Enemy(e.getHp(), 500, 500);      //TODO: arbitrary location
+                Enemy en = new Enemy(e.getHp(), (int) spawn.getX(),
+                        (int) spawn.getY());      //TODO: arbitrary location
                 // puts the enemy at spawn
                 en.setLocation(spawn);
                 // adds the entity to the controller
@@ -74,16 +72,14 @@ public class GeneratorThread extends Thread {
             }
         }
     }
-
-    public void setCurrentWave(EnemyWave wave)
-    {
-        currentWave = wave;
-    }
     
     @Override
     public void run()
     {
         // TODO will release enemies on some kind of timer
-        addEnemies(currentWave);
+        if (waves.peek() != null)
+        {
+            addWave(waves.poll());
+        }
     }
 }

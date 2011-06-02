@@ -41,7 +41,7 @@ import org.amityregion5.projectx.common.maps.AbstractMap;
 import org.amityregion5.projectx.common.maps.TestingMap;
 import org.amityregion5.projectx.server.Server;
 import org.amityregion5.projectx.server.communication.Client;
-import org.amityregion5.projectx.server.game.spawning.EnemySpawning;
+import org.amityregion5.projectx.server.game.oldSpawning.EnemyManager;
 
 /**
  * Handles the game running.
@@ -58,6 +58,7 @@ public class GameController {
     private EntityMoverThread entityMoverThread; // will be in charge of moving entities
     private Server server;
     private AbstractMap map;
+    private final EnemyManager enemyManager;
 
     /**
      * Creates and initializes the game controlling
@@ -105,12 +106,10 @@ public class GameController {
             addWeapon(p, new Gun(100, 100, 10, 20, 6, 50, 10));
         }
 
-        // enemyManager = new EnemyManager(this, getEnemySpawns());
+        enemyManager = new EnemyManager(this, getEnemySpawns());
         entityMoverThread = new EntityMoverThread(this, server.getRawServer(), map);
         entityMoverThread.start();
-        // enemyManager.startSpawning();
-
-        new EnemySpawning(server, this);
+        enemyManager.startSpawning();
     }
 
     public void addEntity(Entity e)

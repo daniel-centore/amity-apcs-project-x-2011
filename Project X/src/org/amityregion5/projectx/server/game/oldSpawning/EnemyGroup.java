@@ -11,7 +11,6 @@ import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
  * A group of enemies of the same type. A wave has several of these.
  * 
  * @author Michael Wenke
- * @deprecated Bugged
  */
 public class EnemyGroup {
 

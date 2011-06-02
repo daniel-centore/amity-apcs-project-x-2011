@@ -193,19 +193,17 @@ public class LobbyWindow extends JFrame implements MessageListener {
         }
 
         ready = !ready;
-    }// GEN-LAST:event_readyButtonActionPerformed
+    }
 
     private void BackToServerChooserButtonActionPerformed(java.awt.event.ActionEvent evt)
-    {// GEN-FIRST:event_BackToServerChooserButtonActionPerformed
-
+    {
         CommunicationHandler.getInstance().kill(); // close old connection
-
         ServerChooserWindow chooser = new ServerChooserWindow();
         MulticastCommunicationHandler mch = new MulticastCommunicationHandler();
         mch.registerListener(chooser);
         mch.start();
         this.dispose();
-    }// GEN-LAST:event_BackToServerChooserButtonActionPerformed
+    }
 
     private void sendBtnActionPerformed(java.awt.event.ActionEvent evt)// GEN-FIRST:event_sendBtnActionPerformed
     {// GEN-HEADEREND:event_sendBtnActionPerformed

@@ -27,7 +27,7 @@ import org.amityregion5.projectx.common.entities.items.held.Weapon;
 
 /**
  * Basic Character. Has health and a set of Weapons.
- * 
+ *
  * @author Mike DiBuduo
  * @author Mike Wenke
  * @author Daniel Centore
@@ -41,7 +41,7 @@ public abstract class Character extends Entity {
 
     /**
      * Create a character.
-     * 
+     *
      * @param health The amount of health the character begins with.
      * @param max_health The most amount of health this character can have.
      */
@@ -68,7 +68,7 @@ public abstract class Character extends Entity {
 
     /**
      * Gets a weapon the character has.
-     * 
+     *
      * @param weapon The weapon's identifier.
      * @return The weapon identified.
      */
@@ -79,7 +79,7 @@ public abstract class Character extends Entity {
 
     /**
      * Gets the identifier for the character's current weapon.
-     * 
+     *
      * @return The current weapon's identifier.
      */
     public int getCurrWeapon()
@@ -89,7 +89,7 @@ public abstract class Character extends Entity {
 
     /**
      * Changes the character's current weapon.
-     * 
+     *
      * @param newWeapon The identifier of the weapon to switch to.
      */
     public void setCurrWeapon(int newWeapon)
@@ -104,7 +104,7 @@ public abstract class Character extends Entity {
 
     /**
      * Adds a weapon to the character's arsenal.
-     * 
+     *
      * @param wp The weapon to be added.
      */
     public void addWeapon(Weapon wp)

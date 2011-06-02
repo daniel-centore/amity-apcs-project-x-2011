@@ -49,7 +49,6 @@ public class EntityHandler {
 
     public synchronized Entity removeEntity(Entity e) // receive an entity (should receive request from game)
     {
-        System.out.println("Removed!!!");
         return entities.remove(e.getUniqueID());
     }
 
