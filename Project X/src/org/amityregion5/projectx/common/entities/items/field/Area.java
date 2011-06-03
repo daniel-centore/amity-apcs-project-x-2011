@@ -29,7 +29,7 @@ public class Area extends FieldItem implements Damageable{
     
     private static final long serialVersionUID = 1L;
     private int hp;
-    private int maxHealth = 100;//TODO arbitrary
+    private int maxHealth = 1000;//TODO arbitrary
 
     public Area(int x, int y)
     {
