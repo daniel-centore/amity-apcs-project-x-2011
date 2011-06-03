@@ -36,7 +36,7 @@ import javax.sound.sampled.Line;
  * @author Joe Stein
  */
 public class SoundManager {
-    /**
+    
     public static void main(String[] args)
     {
         try
@@ -52,5 +52,5 @@ public class SoundManager {
             Logger.getLogger(SoundManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-     **/
+     
 }

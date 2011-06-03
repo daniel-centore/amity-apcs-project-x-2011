@@ -107,6 +107,8 @@ public class GeneratorThread extends Thread {
     public void run()
     {
         // TODO will release enemies on some kind of timer
+        while(true)
+        {
         if (waves.peek() != null)
         {
             sendWave(waves.poll());
@@ -114,6 +116,7 @@ public class GeneratorThread extends Thread {
                 Thread.sleep((long) EnemyManager.TIME_BTW_WAVES);
             } catch (InterruptedException ex) {
                 Logger.getLogger(GeneratorThread.class.getName()).log(Level.SEVERE, null, ex);
+            }
             }
         }
     }

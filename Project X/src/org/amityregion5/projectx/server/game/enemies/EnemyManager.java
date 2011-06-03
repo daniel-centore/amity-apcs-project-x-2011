@@ -40,14 +40,14 @@ public class EnemyManager {
     private GameController controller;
     private final int NUM_WAVES = 5; //Completely arbitrary
     
-    public static final int TIME_BTW_WAVES = 10000;
+    public static final int TIME_BTW_WAVES = 20000;
 
     public EnemyManager(GameController c, ArrayList<Point> area)
     {
         controller = c;
         spawnArea = area;
         
-        EnemyGroup group = createEnemyGroup(new Enemy(25, 0, 0), 5); //Arbitrary first wave with 20 enemies w/100 health
+        EnemyGroup group = createEnemyGroup(new Enemy(10, 0, 0), 5); //Arbitrary first wave with 20 enemies w/100 health
         ArrayList<EnemyGroup> enemies = new ArrayList<EnemyGroup>();
         enemies.add(group);
         wave = new EnemyWave(1, enemies);
