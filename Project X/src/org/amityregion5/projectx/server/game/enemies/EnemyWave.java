@@ -22,7 +22,7 @@ public class EnemyWave
     {
         waveNumber = n;
         enemies = en;
-        spawnTime = 500; //Random spawn time
+        spawnTime = 1000; //Random spawn time
     }   
 
     public long getSpawnTime()

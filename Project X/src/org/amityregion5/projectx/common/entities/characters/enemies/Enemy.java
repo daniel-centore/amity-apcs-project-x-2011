@@ -21,6 +21,7 @@ package org.amityregion5.projectx.common.entities.characters.enemies;
 
 import org.amityregion5.projectx.common.entities.Damageable;
 import org.amityregion5.projectx.common.entities.characters.CharacterEntity;
+import org.amityregion5.projectx.common.entities.items.held.Sword;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
 
 /**
@@ -49,6 +50,8 @@ public class Enemy extends CharacterEntity implements Damageable {
         hp = max;
         maxHealth = max;
         setMoveSpeed(DEFAULT_SPEED);
+        addWeapon(new Sword());
+        setCurrWeapon(0);
     }
 
     public Enemy(int max, Weapon wp, int x, int y)

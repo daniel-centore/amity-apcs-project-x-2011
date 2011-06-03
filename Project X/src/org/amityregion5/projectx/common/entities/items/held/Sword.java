@@ -42,7 +42,7 @@ public class Sword extends MeleeWeapon implements DamageDealing
     public String getDefaultImage()
     {
         // TODO Auto-generated method stub
-        return null;
+        return "sprites/Pistol1";
     }
 
     @Override
