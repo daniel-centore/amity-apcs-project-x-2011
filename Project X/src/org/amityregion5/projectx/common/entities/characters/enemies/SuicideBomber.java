@@ -11,6 +11,8 @@ package org.amityregion5.projectx.common.entities.characters.enemies;
  */
 public class SuicideBomber extends Enemy {
 
+    private static final long serialVersionUID = 1L;
+    
     private int damage;
 
     public SuicideBomber(int damage, int max, int x, int y)

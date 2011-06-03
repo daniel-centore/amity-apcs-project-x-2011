@@ -22,11 +22,13 @@ import java.awt.Rectangle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import org.amityregion5.projectx.common.communication.messages.RemoveEntityMessage;
 
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.EntityConstants;
 import org.amityregion5.projectx.common.entities.characters.Player;
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
+import org.amityregion5.projectx.common.entities.characters.enemies.SuicideBomber;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 import org.amityregion5.projectx.server.communication.RawServer;
 
@@ -89,26 +91,36 @@ public class EntityMoverThread extends Thread {
                     if (e instanceof Enemy)
                     {
                         Enemy en = (Enemy) e;
-                        if (en.getHitBox().intersects(map.getPlayArea()) || en.hasHit())
+                        if(en.getHitBox().intersects(map.getPlayArea()) || en.hasHit())
                         {
-                            int relY = (int) map.getPlayArea().getCenterY() - e.getCenterY();
-                            int relX = (int) map.getPlayArea().getCenterX() - e.getCenterX();
-                            int dir = (int) Math.toDegrees(Math.atan2(relY, relX));
-                            e.setDirectionMoving(dir);
-                            e.setDirectionFacing(dir);
-                            en.stop();
-                            en.hit();
-                            map.getArea().damage(en.getWeapon(en.getCurrWeapon()).getDamage());
-                            if(map.getArea().killed() && alive)
+                            if (en instanceof SuicideBomber)
                             {
-                                // keep the joptionpane out, this is serverside remember
-                                //JOptionPane.showMessageDialog(null, "The enemies have taken over!", "Game Over", JOptionPane.OK_OPTION);
-                                System.out.println("Base destroyed, game over");
-                                alive = false;
-                                gameController.getServer().kill();
-                                keepRunning = false;
-                                rawServer.kill();
-                                kill();
+                                SuicideBomber sb = (SuicideBomber) en;
+                                map.getArea().damage(sb.getDamage());
+                                gameController.getServer().relayMessage(new RemoveEntityMessage(en));
+                                gameController.removeEntity(sb);
+                            }
+                            else
+                            {
+                                int relY = (int) map.getPlayArea().getCenterY() - e.getCenterY();
+                                int relX = (int) map.getPlayArea().getCenterX() - e.getCenterX();
+                                int dir = (int) Math.toDegrees(Math.atan2(relY, relX));
+                                e.setDirectionMoving(dir);
+                                e.setDirectionFacing(dir);
+                                en.stop();
+                                en.hit();
+                                map.getArea().damage(en.getWeapon(en.getCurrWeapon()).getDamage());
+                                if(map.getArea().killed() && alive)
+                                {
+                                    // keep the joptionpane out, this is serverside remember
+                                    //JOptionPane.showMessageDialog(null, "The enemies have taken over!", "Game Over", JOptionPane.OK_OPTION);
+                                    System.out.println("Base destroyed, game over");
+                                    alive = false;
+                                    gameController.getServer().kill();
+                                    keepRunning = false;
+                                    rawServer.kill();
+                                    kill();
+                                }
                             }
                         }
                     }

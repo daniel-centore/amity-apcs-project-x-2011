@@ -213,4 +213,9 @@ public class GameController {
     {
         return map;
     }
+
+    public synchronized void removeEntity(Entity e)
+    {
+        entities.remove(e);
+    }
 }
