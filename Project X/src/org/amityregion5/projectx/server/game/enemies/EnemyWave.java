@@ -17,12 +17,15 @@ public class EnemyWave
     private int waveNumber;
     private ArrayList<EnemyGroup> enemies;
     private long spawnTime;
+    private final double SPAWNTIME_DIFFICULTY_RAMP = .75;
+    private final double NUM_ENEMIES_DIFFICULTY_RAMP = 1.5;
+    private final double ENEMY_HEALTH_DIFFICULTY_RAMP = 1.5;
 
     public EnemyWave(int n, ArrayList<EnemyGroup> en)
     {
         waveNumber = n;
         enemies = en;
-        spawnTime = 1000; //Random spawn time
+        spawnTime = 10000; //Random spawn time
     }   
 
     public long getSpawnTime()
@@ -43,6 +46,19 @@ public class EnemyWave
     public ArrayList<EnemyGroup> getEnemyGroups()
     {
         return enemies;
+    }
+
+    public void nextWave()
+    {
+        waveNumber++;
+        setSpawnTime(spawnTime * (long)SPAWNTIME_DIFFICULTY_RAMP);
+        for(EnemyGroup group : enemies)
+        {
+            group.setNumEnemies((int)(group.getNumEnemies() * NUM_ENEMIES_DIFFICULTY_RAMP));
+            Enemy previous = group.getEnemy();
+            Enemy e = new Enemy(previous.getMaxHp(),0,0);
+            group.setEnemy(e);
+        }
     }
 
 }

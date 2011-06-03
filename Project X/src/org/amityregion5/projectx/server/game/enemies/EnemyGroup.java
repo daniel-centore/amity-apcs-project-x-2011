@@ -32,4 +32,13 @@ public class EnemyGroup {
         return numEnemies;
     }
 
+    public void setEnemy(Enemy e)
+    {
+        enemyType = e;
+    }
+    public void setNumEnemies(int num)
+    {
+        numEnemies = num;
+    }
+
 }

@@ -92,6 +92,15 @@ public class GeneratorThread extends Thread {
     public void run()
     {
         // TODO will release enemies on some kind of timer
-        addEnemies(currentWave);
+        while(true) //Should probably loop only while game is running
+        {
+            addEnemies(currentWave);
+            try {
+                Thread.sleep((long)EnemyManager.TIME_BTW_WAVES);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(GeneratorThread.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            currentWave.nextWave();
+        }
     }
 }

@@ -38,6 +38,8 @@ public class EnemyManager {
     private EnemyWave wave; //Current wave
     private ArrayList<Point> spawnArea;
     private GameController controller;
+    
+    public static final int TIME_BTW_WAVES = 10000;
 
     public EnemyManager(GameController c, ArrayList<Point> area)
     {
