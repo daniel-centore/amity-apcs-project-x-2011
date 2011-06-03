@@ -37,7 +37,7 @@ public class Enemy extends CharacterEntity implements Damageable {
     private int hp; // hitpoints
     private final int maxHealth;
 
-    public static final int DEFAULT_SPEED = 3; //arbitrary speed
+    public static final int DEFAULT_SPEED = 1; //arbitrary speed
 
     /**
      * Creates an enemy with specified health.
@@ -50,7 +50,7 @@ public class Enemy extends CharacterEntity implements Damageable {
         hp = max;
         maxHealth = max;
         setMoveSpeed(DEFAULT_SPEED);
-        addWeapon(new Sword(5));
+        addWeapon(new Sword(1));
         setCurrWeapon(0);
     }
 
