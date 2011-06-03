@@ -213,16 +213,4 @@ public class GameController {
     {
         return map;
     }
-    
-    public boolean enemiesDead()
-    {
-        for (Entity e : entities)
-        {
-            if(e instanceof Enemy && startedSpawning)
-            {
-                return false;
-            }
-        }
-        return true;
-    }
 }

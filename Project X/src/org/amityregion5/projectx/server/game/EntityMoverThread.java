@@ -87,7 +87,6 @@ public class EntityMoverThread extends Thread {
                         if (e instanceof Enemy)
                         {
                             Enemy en = (Enemy) e;
-                            System.out.println(en.hasHit());
                             if (en.getHitBox().intersects(map.getPlayArea()) || en.hasHit())
                             {
                                 System.out.println("Hit");
