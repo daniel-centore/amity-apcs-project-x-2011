@@ -90,11 +90,16 @@ public class EntityMoverThread extends Thread {
                         Enemy en = (Enemy) e;
                         if (en.getHitBox().intersects(map.getPlayArea()) || en.hasHit())
                         {
+                            int relY = (int) map.getPlayArea().getCenterY() - e.getCenterY();
+                            int relX = (int) map.getPlayArea().getCenterX() - e.getCenterX();
+                            int dir = (int) Math.toDegrees(Math.atan2(relY, relX));
+                            e.setDirectionMoving(dir);
+                            e.setDirectionFacing(dir);
+                            System.out.println("dir to " + dir + " from " + e.getX() + "," + e.getY());
                             System.out.println("enemy hit center");
                             en.stop();
                             en.hit();
-                            map.getArea().damage(en.getWeapon(en.getCurrWeapon())
-                                    .getDamage());
+                            map.getArea().damage(en.getWeapon(en.getCurrWeapon()).getDamage());
                             if(map.getArea().killed())
                             {
                                 JOptionPane.showMessageDialog(null, "The enemies have taken over!", "Game Over", JOptionPane.OK_OPTION);
