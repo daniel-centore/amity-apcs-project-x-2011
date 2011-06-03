@@ -50,7 +50,7 @@ public class Enemy extends CharacterEntity implements Damageable {
         hp = max;
         maxHealth = max;
         setMoveSpeed(DEFAULT_SPEED);
-        addWeapon(new Sword());
+        addWeapon(new Sword(5));
         setCurrWeapon(0);
     }
 

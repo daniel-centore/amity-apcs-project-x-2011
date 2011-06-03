@@ -33,9 +33,9 @@ public class Sword extends MeleeWeapon implements DamageDealing
 
     private static int SWORD_RATE = 42; // FIXME: arbitrary.
 
-    public Sword()
+    public Sword(int damage)
     {
-        super(SWORD_RATE);
+        super(SWORD_RATE, damage);
     }
 
     @Override

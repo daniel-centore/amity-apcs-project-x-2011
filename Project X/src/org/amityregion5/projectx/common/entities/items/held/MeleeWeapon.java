@@ -31,9 +31,10 @@ public abstract class MeleeWeapon extends Weapon implements DamageDealing
 
    public static final int MELEE_RANGE = 5; // default to 5 pixels range
    public int damage;
-   public MeleeWeapon(int rate)
+   public MeleeWeapon(int rate, int damage)
    {
       super(MELEE_RANGE, rate);
+      this.damage = damage;
    }
 
    public int getDamage()
