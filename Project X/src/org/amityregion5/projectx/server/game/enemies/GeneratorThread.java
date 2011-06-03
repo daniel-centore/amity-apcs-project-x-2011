@@ -110,6 +110,11 @@ public class GeneratorThread extends Thread {
         if (waves.peek() != null)
         {
             sendWave(waves.poll());
+            try {
+                Thread.sleep((long) EnemyManager.TIME_BTW_WAVES);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(GeneratorThread.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 }

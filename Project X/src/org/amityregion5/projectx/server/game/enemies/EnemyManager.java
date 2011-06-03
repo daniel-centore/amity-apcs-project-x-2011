@@ -47,7 +47,7 @@ public class EnemyManager {
         controller = c;
         spawnArea = area;
         
-        EnemyGroup group = createEnemyGroup(new Enemy(100, 100, 100), 20); //Arbitrary first wave with 20 enemies w/100 health
+        EnemyGroup group = createEnemyGroup(new Enemy(25, 0, 0), 5); //Arbitrary first wave with 20 enemies w/100 health
         ArrayList<EnemyGroup> enemies = new ArrayList<EnemyGroup>();
         enemies.add(group);
         wave = new EnemyWave(1, enemies);
@@ -70,7 +70,7 @@ public class EnemyManager {
      */
     public void startSpawning()
     {
-        EnemyGroup group = createEnemyGroup(new Enemy(10, 0, 0), 10);
+        EnemyGroup group = createEnemyGroup(new Enemy(10, 0, 0), 5);
         ArrayList<EnemyGroup> enemies = new ArrayList<EnemyGroup>();
         enemies.add(group);
         wave = new EnemyWave(1, enemies);

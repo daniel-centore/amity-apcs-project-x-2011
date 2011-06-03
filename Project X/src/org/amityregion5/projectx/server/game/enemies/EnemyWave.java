@@ -25,7 +25,7 @@ public class EnemyWave
     {
         waveNumber = n;
         enemies = en;
-        spawnTime = 10000; //Random spawn time
+        spawnTime = 500; //Random spawn time
     }   
 
     public long getSpawnTime()
@@ -57,7 +57,7 @@ public class EnemyWave
             Enemy oldEnemy = group.getEnemy();
             Enemy newEnemy = new Enemy((int)(oldEnemy.getMaxHp()* ENEMY_HEALTH_DIFFICULTY_RAMP),0,0);
             EnemyGroup newGroup = new EnemyGroup(newEnemy, (int)(group.getNumEnemies() * NUM_ENEMIES_DIFFICULTY_RAMP));
-            newEnemies.set(i, newGroup);
+            newEnemies.add(newGroup);
         }
         EnemyWave nextWave = new EnemyWave(this.getWaveNumber()+1, newEnemies);
         nextWave.setSpawnTime(this.spawnTime * (long)SPAWNTIME_DIFFICULTY_RAMP);
