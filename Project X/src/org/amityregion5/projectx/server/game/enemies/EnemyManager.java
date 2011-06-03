@@ -38,6 +38,7 @@ public class EnemyManager {
     private EnemyWave wave; //Current wave
     private ArrayList<Point> spawnArea;
     private GameController controller;
+    private final int NUM_WAVES = 5; //Completely arbitrary
     
     public static final int TIME_BTW_WAVES = 10000;
 
@@ -51,7 +52,7 @@ public class EnemyManager {
         enemies.add(group);
         wave = new EnemyWave(1, enemies);
         gen = new GeneratorThread(controller, spawnArea, this);
-        gen.setCurrentWave(wave);
+        gen.addWave(wave);
     }
     
     public EnemyGroup createEnemyGroup(Enemy en, int num)
@@ -65,10 +66,19 @@ public class EnemyManager {
     }
 
     /**
-     * Starts the spawning thread.
+     * Starts the spawning thread. Adds an initial wave.
      */
     public void startSpawning()
     {
+        EnemyGroup group = createEnemyGroup(new Enemy(10, 0, 0), 10);
+        ArrayList<EnemyGroup> enemies = new ArrayList<EnemyGroup>();
+        enemies.add(group);
+        wave = new EnemyWave(1, enemies);
+        for(int i = 0; i < NUM_WAVES; i++)
+        {
+            gen.addWave(wave);
+            wave = wave.nextWave();
+        }
         gen.start();
     }
 

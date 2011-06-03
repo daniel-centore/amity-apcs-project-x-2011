@@ -48,17 +48,21 @@ public class EnemyWave
         return enemies;
     }
 
-    public void nextWave()
+    public EnemyWave nextWave()
     {
-        waveNumber++;
-        setSpawnTime(spawnTime * (long)SPAWNTIME_DIFFICULTY_RAMP);
-        for(EnemyGroup group : enemies)
-        {
-            group.setNumEnemies((int)(group.getNumEnemies() * NUM_ENEMIES_DIFFICULTY_RAMP));
-            Enemy previous = group.getEnemy();
-            Enemy e = new Enemy(previous.getMaxHp(),0,0);
-            group.setEnemy(e);
+        ArrayList<EnemyGroup> newEnemies = new ArrayList<EnemyGroup>();
+        for(int i = 0; i < enemies.size(); i++)
+        {   
+            EnemyGroup group = enemies.get(i);
+            Enemy oldEnemy = group.getEnemy();
+            Enemy newEnemy = new Enemy((int)(oldEnemy.getMaxHp()* ENEMY_HEALTH_DIFFICULTY_RAMP),0,0);
+            EnemyGroup newGroup = new EnemyGroup(newEnemy, (int)(group.getNumEnemies() * NUM_ENEMIES_DIFFICULTY_RAMP));
+            newEnemies.set(i, newGroup);
         }
+        EnemyWave nextWave = new EnemyWave(this.getWaveNumber()+1, newEnemies);
+        nextWave.setSpawnTime(this.spawnTime * (long)SPAWNTIME_DIFFICULTY_RAMP);
+        return nextWave;
+
     }
 
 }
