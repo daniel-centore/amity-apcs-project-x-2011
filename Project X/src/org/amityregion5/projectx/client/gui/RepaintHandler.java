@@ -85,7 +85,7 @@ public class RepaintHandler extends Thread {
         {
             g.drawImage(e.getImage(), e.getX(), e.getY(), null);
         }
-        
+
         synchronized (game.getEntityHandler())
         {
             for (Entity e : game.getEntityHandler().getEntities()) // draw temporary entities
@@ -95,7 +95,7 @@ public class RepaintHandler extends Thread {
                 g.drawImage(e.getImage(), e.getX(), e.getY(), null);
                 g.setColor(Color.WHITE);
                 g.setStroke(new BasicStroke(1));
-                g.draw(e.getHitBox());
+                // g.draw(e.getHitBox());
                 // draw health bar
 
                 if (e instanceof Enemy)
@@ -108,8 +108,7 @@ public class RepaintHandler extends Thread {
                     g.setColor(Color.RED);
                     g.fillRect(x, y, HEALTHBAR_WIDTH, HEALTHBAR_HEIGHT);
                     g.setColor(Color.GREEN);
-                    g.fillRect(x, y, (int) (HEALTHBAR_WIDTH * percent),
-                            HEALTHBAR_HEIGHT);
+                    g.fillRect(x, y, (int) (HEALTHBAR_WIDTH * percent), HEALTHBAR_HEIGHT);
                 }
                 Area a = game.getMap().getArea();
                 double percent = (double) a.getHp() / a.getMaxHp();
@@ -118,17 +117,16 @@ public class RepaintHandler extends Thread {
                 g.setColor(Color.RED);
                 g.fillRect(x, y, a.getWidth(), HEALTHBAR_HEIGHT);
                 g.setColor(Color.GREEN);
-                g.fillRect(x, y, (int) (a.getWidth() * percent),
-                        HEALTHBAR_HEIGHT);                    
+                g.fillRect(x, y, (int) (a.getWidth() * percent), HEALTHBAR_HEIGHT);
                 if (e instanceof Player)
                 {
                     // draw a laser sight for weapon direction
                     g.setColor(Color.red);
                     g.setStroke(new BasicStroke(2));
-                    
+
                     int x2 = (int) (Math.cos(Math.toRadians(e.getDirectionFacing())) * 800) + e.getCenterX();
                     int y2 = (int) (Math.sin(Math.toRadians(e.getDirectionFacing())) * 800) + e.getCenterY();
-                    //g.drawLine(e.getCenterX(), e.getCenterY(), x2, y2);
+                    // g.drawLine(e.getCenterX(), e.getCenterY(), x2, y2);
 
                     // TODO draw a fire if it just fired
                     if (e.getFired())
