@@ -99,6 +99,7 @@ public class EntityMoverThread extends Thread {
                             {
                                 JOptionPane.showMessageDialog(null, "The enemies have taken over!", "Game Over", JOptionPane.OK_OPTION);
                                 gameController.getServer().kill();
+                                keepRunning = false;
                                 rawServer.kill();
                                 kill();
                             }
