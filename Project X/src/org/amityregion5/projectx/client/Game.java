@@ -37,6 +37,8 @@ import org.amityregion5.projectx.client.gui.ServerChooserWindow;
 import org.amityregion5.projectx.client.gui.input.InputHandler;
 import org.amityregion5.projectx.client.gui.input.Keys;
 import org.amityregion5.projectx.client.handlers.EntityHandler;
+import org.amityregion5.projectx.client.sound.SoundManager;
+import org.amityregion5.projectx.client.sound.SoundManager.Sound;
 import org.amityregion5.projectx.common.communication.MessageListener;
 import org.amityregion5.projectx.common.communication.RawListener;
 import org.amityregion5.projectx.common.communication.messages.AddEntityMessage;
@@ -96,6 +98,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         ch.registerListener(this);
         InputHandler.registerListener(this);
         RepaintHandler.setGame(this);
+        SoundManager.playSound(Sound.BG_1, -1);
     }
 
     public void mouseDragged(int x, int y)

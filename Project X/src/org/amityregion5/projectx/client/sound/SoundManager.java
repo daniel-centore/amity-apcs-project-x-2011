@@ -19,21 +19,16 @@
 package org.amityregion5.projectx.client.sound;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
-import javax.sound.sampled.LineEvent;
-import javax.sound.sampled.LineListener;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
 
 /**
  * A class that handles playing sounds client-side.
@@ -42,41 +37,94 @@ import sun.audio.AudioStream;
  */
 public class SoundManager {
 
-    public static void main(String[] args)
+    public static enum Sound
     {
-        try
+        PISTOL_SHOT("resources/sounds/wav/pistol_shot_short.wav"),
+        BG_1("resources/sounds/wav/bg_02.wav");
+        
+        private Clip clip;
+        Sound(String file)
         {
-        InputStream in = new FileInputStream(new File(
-                "resources/sounds/wav/pistol_shot_short.wav"));
-
-// Create an AudioStream object from the input stream.
-        final AudioStream as = new AudioStream(in);
-
-// Use the static class member "player" from class AudioPlayer to play
-// clip.
-        new Thread()
-        {
-            public void run()
+            AudioInputStream ais = null;
+            try
             {
-                while (true)
+                File sf = new File(file);
+                ais = AudioSystem.getAudioInputStream(sf.toURI().toURL());
+                clip = (Clip) AudioSystem.getLine(new DataLine.Info(Clip.class,
+                    AudioSystem.getAudioFileFormat(sf).getFormat()));
+                clip.open(ais);
+            }
+            catch(LineUnavailableException ex)
+            {
+                Logger.getLogger(SoundManager.class.getName()).log(Level.SEVERE, null, ex);
+            }            catch(UnsupportedAudioFileException ex)
+            {
+                Logger.getLogger(SoundManager.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            catch(IOException ex)
+            {
+                Logger.getLogger(SoundManager.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            finally
+            {
+                try
                 {
-                    System.out.println("shoot");
-                    AudioPlayer.player.start(as);
-                        try
-                        {
-                            Thread.sleep(200);
-                        }
-                        catch(InterruptedException ex)
-                        {
-                            Logger.getLogger(SoundManager.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                    ais.close();
+                }
+                catch(IOException ex)
+                {
+                    Logger.getLogger(SoundManager.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-        }.start();
-        
-        } catch (Exception e)
-        {
-            e.printStackTrace();
         }
+    }
+
+    /**
+     * Starts looping a sound with the given frame length.
+     * @param s the sound to play
+     * @param endLoopPoint the number of frames to play before looping
+     */
+    public static void playSound(Sound s, int endLoopPoint)
+    {
+        System.out.println(s.clip.getFrameLength());
+        System.out.println(s.clip.getMicrosecondLength());
+        endLoopPoint = Math.min(endLoopPoint, s.clip.getFrameLength());
+        s.clip.setLoopPoints(0, endLoopPoint);
+        s.clip.loop(Clip.LOOP_CONTINUOUSLY);
+        s.clip.start();
+    }
+
+    public static void stopSound(Sound s)
+    {
+        s.clip.stop();
+    }
+
+    public static int getMilliSoundLength(Sound s)
+    {
+        return (int) (s.clip.getMicrosecondLength() / 1000);
+    }
+
+    public static void main(String[] args)
+    {
+        /*new Thread()
+        {
+            @Override
+            public void run()
+            {
+                try
+                {
+                    SoundManager.playSound(SoundManager.Sound.PISTOL_SHOT,Integer.MAX_VALUE);
+                    Thread.sleep(SoundManager.getMilliSoundLength(Sound.PISTOL_SHOT));
+                }
+                // TODO make the sound play
+                catch(InterruptedException ex)
+                {
+                    Logger.getLogger(SoundManager.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                //SoundManager.stopSound(SoundManager.Sound.PISTOL_SHOT);
+            }
+            // TODO make the sound play
+        }.start();*/
+        SoundManager.playSound(Sound.BG_1, -1);
     }
 }
