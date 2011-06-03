@@ -101,7 +101,7 @@ public class GameController {
 
         for(Player p : players)
         {
-            addWeapon(p, new Gun(100, 100, 10, 20, 6, 50, 5));
+            addWeapon(p, new Gun(100, 100, 10, 2, 6, 50, 5));
         }
 
         entityMoverThread = new EntityMoverThread(this, server.getRawServer(), map);
@@ -195,6 +195,7 @@ public class GameController {
                 {
                     Enemy en = (Enemy) e;
                     en.damage(player.getWeapon(player.getCurrWeapon()).getDamage());
+                    en.requestUpdate();
                     if(en.killed())
                     {
                         toRemove.add(en);

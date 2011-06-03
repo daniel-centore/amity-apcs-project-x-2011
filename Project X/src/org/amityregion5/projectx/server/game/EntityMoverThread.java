@@ -84,21 +84,21 @@ public class EntityMoverThread extends Thread {
                             e.setX(newX);
                             e.setY(newY);
                         }
-                        if (e instanceof Enemy)
+                    }
+                    if (e instanceof Enemy)
+                    {
+                        Enemy en = (Enemy) e;
+                        if (en.getHitBox().intersects(map.getPlayArea()) || en.hasHit())
                         {
-                            Enemy en = (Enemy) e;
-                            if (en.getHitBox().intersects(map.getPlayArea()) || en.hasHit())
+                            System.out.println("enemy hit center");
+                            en.stop();
+                            en.hit();
+                            map.getArea().damage(en.getWeapon(en.getCurrWeapon())
+                                    .getDamage());
+                            if(map.getArea().killed())
                             {
-                                System.out.println("Hit");
-                                en.stop();
-                                en.hit();
-                                map.getArea().damage(en.getWeapon(en.getCurrWeapon())
-                                        .getDamage());
-                                if(map.getArea().killed())
-                                {
-                                    JOptionPane.showMessageDialog(null, "The enemies have taken over!", "Game Over", JOptionPane.OK_OPTION);
-                                    //TODO end the game
-                                }
+                                JOptionPane.showMessageDialog(null, "The enemies have taken over!", "Game Over", JOptionPane.OK_OPTION);
+                                //TODO end the game
                             }
                         }
                     }

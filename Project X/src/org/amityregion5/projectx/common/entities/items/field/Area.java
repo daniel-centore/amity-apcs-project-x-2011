@@ -48,11 +48,7 @@ public class Area extends FieldItem implements Damageable{
      */
     public boolean killed()
     {
-        if (hp <= 0)
-        {
-            return true;
-        }
-        return false;
+        return hp <= 0;
     }
 
     /**
@@ -63,8 +59,7 @@ public class Area extends FieldItem implements Damageable{
     public void damage(int damage)
     {
         hp -= damage;
-        System.out.println("Current: " + hp);
-        killed();
+        //System.out.println("Current: " + hp);
     }
 
     /**
