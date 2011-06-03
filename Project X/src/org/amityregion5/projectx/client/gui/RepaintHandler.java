@@ -128,7 +128,7 @@ public class RepaintHandler extends Thread {
                     
                     int x2 = (int) (Math.cos(Math.toRadians(e.getDirectionFacing())) * 800) + e.getCenterX();
                     int y2 = (int) (Math.sin(Math.toRadians(e.getDirectionFacing())) * 800) + e.getCenterY();
-                    g.drawLine(e.getCenterX(), e.getCenterY(), x2, y2);
+                    //g.drawLine(e.getCenterX(), e.getCenterY(), x2, y2);
 
                     // TODO draw a fire if it just fired
                     if (e.getFired())

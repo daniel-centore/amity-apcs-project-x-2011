@@ -41,7 +41,7 @@ public abstract class Entity implements Serializable {
 
     private static volatile transient long nextUniqueID = 0; // so each entity has a unique ID
 
-//    public static final long FIRE_TIME = 5; // how many ms to show the thing
+    public static final long FIRE_TIME = 100; // how many ms to show the thing
 
     private final long uniqueID; // necessary to check identity content changes.
     private Point2D location; // the entity's location
@@ -59,7 +59,7 @@ public abstract class Entity implements Serializable {
 
     // TODO: move this to Player
     private transient boolean justFired; // did this client fire since the last repaint?
-//    private long firedTime; // when we fired
+    private long firedTime; // when we fired
 
     private Rectangle hitBox; // a rudimentary hit boundary
 
@@ -379,15 +379,15 @@ public abstract class Entity implements Serializable {
 
     public void setFired(boolean justFired)
     {
-//
-//        if (justFired)
-//        {
-//            firedTime = System.currentTimeMillis();
-//            this.justFired = justFired;
-//        } else if (System.currentTimeMillis() - firedTime >= FIRE_TIME)
-//        {
+
+        if (justFired)
+        {
+            firedTime = System.currentTimeMillis();
             this.justFired = justFired;
-//        }
+        } else if (System.currentTimeMillis() - firedTime >= FIRE_TIME)
+        {
+            this.justFired = justFired;
+        }
     }
 
     /**
