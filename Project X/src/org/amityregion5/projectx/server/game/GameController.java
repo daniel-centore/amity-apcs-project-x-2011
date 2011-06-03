@@ -59,6 +59,7 @@ public class GameController {
     private Server server;
     private AbstractMap map;
     private final EnemyManager enemyManager;
+    private boolean startedSpawning = false;
 
     /**
      * Creates and initializes the game controlling
@@ -106,6 +107,7 @@ public class GameController {
         entityMoverThread = new EntityMoverThread(this, server.getRawServer(), map);
         entityMoverThread.start();
         enemyManager.startSpawning();
+        startedSpawning = true;
     }
 
     public void addEntity(Entity e)
@@ -208,7 +210,19 @@ public class GameController {
     }
 
     public AbstractMap getMap()
+    {
+        return map;
+    }
+    
+    public boolean enemiesDead()
+    {
+        for (Entity e : entities)
         {
-            return map;
+            if(e instanceof Enemy && startedSpawning)
+            {
+                return false;
+            }
         }
+        return true;
+    }
 }

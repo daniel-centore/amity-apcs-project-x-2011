@@ -91,7 +91,7 @@ public class GeneratorThread extends Thread {
     public void run()
     {
         // TODO will release enemies on some kind of timer
-        if (waves.peek() != null)
+        if (waves.peek() != null && controller.enemiesDead())
         {
             addWave(waves.poll());
         }
