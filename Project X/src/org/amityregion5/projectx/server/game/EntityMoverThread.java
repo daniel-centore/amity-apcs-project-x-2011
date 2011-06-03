@@ -95,7 +95,6 @@ public class EntityMoverThread extends Thread {
                             int dir = (int) Math.toDegrees(Math.atan2(relY, relX));
                             e.setDirectionMoving(dir);
                             e.setDirectionFacing(dir);
-                            System.out.println("dir to " + dir + " from " + e.getX() + "," + e.getY());
                             System.out.println("enemy hit center");
                             en.stop();
                             en.hit();
