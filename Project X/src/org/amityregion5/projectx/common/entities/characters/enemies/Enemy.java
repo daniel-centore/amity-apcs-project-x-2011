@@ -36,6 +36,7 @@ public class Enemy extends CharacterEntity implements Damageable {
 
     private int hp; // hitpoints
     private final int maxHealth;
+    private boolean hasHit = false;
 
     public static final int DEFAULT_SPEED = 1; //arbitrary speed
 
@@ -125,5 +126,20 @@ public class Enemy extends CharacterEntity implements Damageable {
     public int getMaxHp()
     {
         return maxHealth;
+    }
+    
+    public void stop()
+    {
+        setMoveSpeed(0);
+    }
+    
+    public boolean hasHit()
+    {
+        return hasHit;
+    }
+    
+    public void hit()
+    {
+        hasHit = true;
     }
 }
