@@ -34,8 +34,9 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  * A class that handles playing sounds client-side.
  *
  * @author Joe Stein
+ * @author Cam Simpson
  */
-public class SoundManager {
+public class SoundManager extends Thread {
 
     public static enum Sound
     {
@@ -84,10 +85,10 @@ public class SoundManager {
      * @param s the sound to play
      * @param endLoopPoint the number of frames to play before looping
      */
-    public static void playSound(Sound s, int endLoopPoint)
+    public static void playLoop(Sound s, int endLoopPoint)
     {
-        System.out.println(s.clip.getFrameLength());
-        System.out.println(s.clip.getMicrosecondLength());
+        //System.out.println(s.clip.getFrameLength());
+        //System.out.println(s.clip.getMicrosecondLength());
         endLoopPoint = Math.min(endLoopPoint, s.clip.getFrameLength());
         s.clip.setLoopPoints(0, endLoopPoint);
         s.clip.loop(Clip.LOOP_CONTINUOUSLY);
@@ -106,6 +107,32 @@ public class SoundManager {
 
     public static void main(String[] args)
     {
-        SoundManager.playSound(Sound.BG_1, -1);
+        SoundManager.playOnce(Sound.BG_1);
+    }
+    public static void playOnce(Sound s)
+    {
+         s.clip.start();
+    }
+    public static void playFor(Sound s, int time)
+    {
+        //FIXME: I'm not sure if this works. Luckily we don't use it yet.
+        if (getMilliSoundLength(s) > time)
+            playOnce(s);
+        else
+        {
+            s.clip.start();
+            try
+            {
+            Thread.sleep(time);
+            s.clip.stop();
+            }
+            catch(InterruptedException ex)
+            {
+                Logger.getLogger(SoundManager.class.getName()).log(Level.SEVERE, null, ex);
+                s.clip.stop();
+            }
+
+        }
+
     }
 }

@@ -68,6 +68,7 @@ import org.amityregion5.projectx.common.entities.characters.CharacterEntity;
  * @author Daniel Centore
  * @author Mike DiBuduo
  * @author Mike Wenke
+ * @author Cam Simpson
  */
 public class Game implements GameInputListener, MessageListener, RawListener, FocusListener {
 
@@ -98,7 +99,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         ch.registerListener(this);
         InputHandler.registerListener(this);
         RepaintHandler.setGame(this);
-        SoundManager.playSound(Sound.BG_1, -1);
+        SoundManager.playLoop(Sound.BG_1, -1);
     }
 
     public void mouseDragged(int x, int y)

@@ -21,16 +21,19 @@
 package org.amityregion5.projectx.common.entities.items.held;
 
 import org.amityregion5.projectx.common.entities.items.DamageDealing;
+import org.amityregion5.projectx.client.sound.SoundManager.Sound;
 
 /**
  * A HeldItem used to effect effects on a target.
  * The Weapon itself does not necessarily do damage.
  *
  * @author Joe Stein
+ * @author Cam Simpson
  */
 public abstract class Weapon extends HeldItem implements DamageDealing{
     private int range; // Range (in pixels)
     private int attackRate;
+    private Sound wepSound;
     /**
      * Degrees of spread from direction of fire. This is basically accuracy.
      */
@@ -40,6 +43,14 @@ public abstract class Weapon extends HeldItem implements DamageDealing{
     {
         this.range = range;
         this.attackRate = rate;
+        this.wepSound = Sound.PISTOL_SHOT;
+    }
+
+    public Weapon(int range, int rate, Sound s)
+    {
+        this.range = range;
+        this.attackRate = rate;
+        this.wepSound = s;
     }
 
     public int getRange()
@@ -59,6 +70,11 @@ public abstract class Weapon extends HeldItem implements DamageDealing{
     public int getAccuracySpread()
     {
         return accuracySpread;
+    }
+
+    public Sound getSound()
+    {
+        return wepSound;
     }
 
     public abstract boolean hasAmmo();

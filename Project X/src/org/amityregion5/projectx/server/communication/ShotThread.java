@@ -24,11 +24,14 @@ import java.util.logging.Logger;
 import org.amityregion5.projectx.common.entities.characters.Player;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
 import org.amityregion5.projectx.server.Server;
+import org.amityregion5.projectx.client.sound.SoundManager;
+import org.amityregion5.projectx.client.sound.SoundManager.Sound;
 
 /**
  * A thread that helps deal with players shooting. Each client has one.
  *
  * @author Joe Stein
+ * @author Cam Simpson
  */
 public class ShotThread extends Thread
 {
@@ -71,6 +74,7 @@ public class ShotThread extends Thread
                 if (currWeapon.hasAmmo())
                 {
                     server.playerFired(player);
+                    SoundManager.playOnce(player.getWeapon(player.getCurrWeapon()).getSound());
                 }
                 // sleeps in order to get the attack rate right
                 Thread.sleep(1000 / player.getWeapon(player.getCurrWeapon())
