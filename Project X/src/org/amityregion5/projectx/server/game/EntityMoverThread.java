@@ -34,6 +34,7 @@ import org.amityregion5.projectx.server.communication.RawServer;
  * A thread that will move all Entities by need. TODO handles collision detection
  * 
  * @author Joe Stein
+ * @author Mike DiBuduo
  */
 public class EntityMoverThread extends Thread {
     private boolean keepRunning = true; // keep moving entities

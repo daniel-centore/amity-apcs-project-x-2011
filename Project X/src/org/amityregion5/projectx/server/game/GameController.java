@@ -49,6 +49,7 @@ import org.amityregion5.projectx.server.game.oldSpawning.EnemyManager;
  * @author Daniel Centore
  * @author Michael Wenke
  * @author Joe Stein
+ * @author Mike DiBuduo
  */
 public class GameController {
 
@@ -102,10 +103,11 @@ public class GameController {
         {
             addWeapon(p, new Gun(100, 100, 10, 20, 6, 50, 5));
         }
-
-        enemyManager = new EnemyManager(this, getEnemySpawns());
+        
+        
         entityMoverThread = new EntityMoverThread(this, server.getRawServer(), map);
         entityMoverThread.start();
+        enemyManager = new EnemyManager(this, getEnemySpawns());
         enemyManager.startSpawning();
         startedSpawning = true;
     }

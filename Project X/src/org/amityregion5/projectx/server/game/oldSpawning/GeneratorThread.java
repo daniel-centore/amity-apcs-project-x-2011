@@ -38,6 +38,7 @@ import org.amityregion5.projectx.server.game.GameController;
  * 
  * @author Jenny Liu
  * @author Michael Wenke
+ * @author Mike DiBuduo
  */
 public class GeneratorThread extends Thread {
 
