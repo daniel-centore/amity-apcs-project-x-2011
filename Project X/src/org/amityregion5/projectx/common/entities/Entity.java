@@ -92,6 +92,11 @@ public abstract class Entity implements Serializable {
         setY(y);
     }
 
+    public int getHp()
+    {
+        return Byte.MIN_VALUE;
+    }
+
     /**
      * Creates a new entity with the important information set.
      * 

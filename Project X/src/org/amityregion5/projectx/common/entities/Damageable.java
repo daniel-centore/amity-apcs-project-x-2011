@@ -43,6 +43,22 @@ public interface Damageable {
      */
     public boolean killed();
 
+    /**
+     * Returns the current HP of this entity.
+     * @return the current HP of this entity
+     */
     public int getHp();
+
+    /**
+     * Returns the maximum HP of this entity, i.e. the HP with which the entity
+     * started.
+     * @return the max HP of this entity
+     */
     public int getMaxHp();
+
+    /**
+     * Sets the HP of this entity.
+     * @param hp the number of HP this entity will have
+     */
+    public void setHp(int hp);
 }

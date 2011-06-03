@@ -85,8 +85,8 @@ public class RawServer extends Thread {
     {
         s.trim();
         
-        if(rawClients.size() == 0)
-            System.out.println("RAWCLIENT SIZE IS 0 ARGHH!!!!");
+        if(rawClients.isEmpty())
+            System.err.println("No raw clients!");
 
         // for (RawClient out : rawClients)
         for (int i = 0; i < rawClients.size(); i++)

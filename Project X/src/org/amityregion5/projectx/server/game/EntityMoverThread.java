@@ -134,6 +134,8 @@ public class EntityMoverThread extends Thread {
                     buf.append(e.getY());
                     buf.append(",");
                     buf.append(e.getDirectionFacing());
+                    buf.append(",");
+                    buf.append(e.getHp());
                     buf.append(";");
                 }
             }

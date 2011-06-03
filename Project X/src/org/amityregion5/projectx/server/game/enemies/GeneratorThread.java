@@ -21,12 +21,10 @@ package org.amityregion5.projectx.server.game.enemies;
 
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Queue;
 import java.util.Random;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.amityregion5.projectx.common.entities.Entity;
 
 
 
@@ -77,7 +75,7 @@ public class GeneratorThread extends Thread {
                 en.setDirectionFacing((int)en.getDirectionTowards(center));
                 en.setDirectionMoving((int)en.getDirectionTowards(center));
                 try {
-                    this.sleep(wave.getSpawnTime());
+                    Thread.sleep(wave.getSpawnTime());
                 } catch (InterruptedException ex) {
                     Logger.getLogger(GeneratorThread.class.getName()).log(Level.SEVERE, null, ex);
                 }

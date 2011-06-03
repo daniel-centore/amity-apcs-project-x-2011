@@ -23,7 +23,6 @@ import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseWheelEvent;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -49,6 +48,7 @@ import org.amityregion5.projectx.common.communication.messages.FiredMessage;
 import org.amityregion5.projectx.common.communication.messages.FiringMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.common.communication.messages.RemoveEntityMessage;
+import org.amityregion5.projectx.common.entities.Damageable;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.EntityConstants;
 import org.amityregion5.projectx.common.entities.characters.Player;
@@ -284,13 +284,15 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         } else if (m instanceof AddWeaponMessage)
         {
             AddWeaponMessage awm = (AddWeaponMessage) m;
-            awm.getWeapon().setImage(ImageHandler.loadImage(awm.getWeapon().getDefaultImage()));
+            awm.getWeapon().setImage(ImageHandler.loadImage(awm.getWeapon()
+                    .getDefaultImage()));
             try
             {
                 ((CharacterEntity) entityHandler.getEntity(awm.getID())).addWeapon(awm.getWeapon());
             } catch (Exception e)
             {
                 // TODO: temporary kludge
+                // what's the usual error?
             }
         }
     }
@@ -343,6 +345,12 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             {
                 e.setX(Double.valueOf(entVals[1]));
                 e.setY(Double.valueOf(entVals[2]));
+                int hp = Integer.valueOf(entVals[4]);
+                //System.out.println(hp);
+                if (hp > Byte.MIN_VALUE)
+                {
+                    ((Damageable) e).setHp(hp);
+                }
 
                 if (e == me)
                 {

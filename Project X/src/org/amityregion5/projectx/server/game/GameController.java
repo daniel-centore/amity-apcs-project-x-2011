@@ -196,7 +196,6 @@ public class GameController {
                     en.damage(player.getWeapon(player.getCurrWeapon()).getDamage());
                     if(en.killed())
                     {
-//                        System.out.println("Killed");
                         toRemove.add(en);
                         server.relayMessage(new RemoveEntityMessage(en));
                     }
