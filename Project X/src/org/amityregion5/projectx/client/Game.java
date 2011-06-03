@@ -126,11 +126,13 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
 
     public void mousePressed(int x, int y, int button)
     {
+        SoundManager.playSound(SoundManager.Sound.PISTOL_SHOT, 2000);
         getCommunicationHandler().send(new FiringMessage(true));
     }
 
     public void mouseReleased(int x, int y, int button)
     {
+        SoundManager.stopSound(SoundManager.Sound.PISTOL_SHOT);
         getCommunicationHandler().send(new FiringMessage(false));
     }
 

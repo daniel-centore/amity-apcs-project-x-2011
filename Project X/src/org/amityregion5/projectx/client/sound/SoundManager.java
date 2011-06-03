@@ -106,25 +106,6 @@ public class SoundManager {
 
     public static void main(String[] args)
     {
-        /*new Thread()
-        {
-            @Override
-            public void run()
-            {
-                try
-                {
-                    SoundManager.playSound(SoundManager.Sound.PISTOL_SHOT,Integer.MAX_VALUE);
-                    Thread.sleep(SoundManager.getMilliSoundLength(Sound.PISTOL_SHOT));
-                }
-                // TODO make the sound play
-                catch(InterruptedException ex)
-                {
-                    Logger.getLogger(SoundManager.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                //SoundManager.stopSound(SoundManager.Sound.PISTOL_SHOT);
-            }
-            // TODO make the sound play
-        }.start();*/
         SoundManager.playSound(Sound.BG_1, -1);
     }
 }
