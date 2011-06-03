@@ -23,6 +23,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
+import org.amityregion5.projectx.common.entities.characters.enemies.SuicideBomber;
 import org.amityregion5.projectx.server.game.GameController;
 
 /**
@@ -48,8 +49,12 @@ public class EnemyManager {
         spawnArea = area;
         
         EnemyGroup group = createEnemyGroup(new Enemy(10, 0, 0), 5); //Arbitrary first wave with 20 enemies w/100 health
+        Enemy modelBomber = new SuicideBomber(100, 10, 0, 0);
+        modelBomber.setMoveSpeed(Enemy.DEFAULT_SPEED * 2);
+        EnemyGroup bomberGroup = createEnemyGroup(modelBomber, 3);
         ArrayList<EnemyGroup> enemies = new ArrayList<EnemyGroup>();
         enemies.add(group);
+        enemies.add(bomberGroup);
         wave = new EnemyWave(1, enemies);
         gen = new GeneratorThread(controller, spawnArea, this);
         gen.addWave(wave);
