@@ -130,6 +130,8 @@ public class EntityMoverThread extends Thread {
 
         synchronized (gameController)
         {
+            buf.append("-1,");
+            buf.append((double) gameController.getMap().getArea().getHp());
             for (Entity e : gameController.getEntities())
             {
                 if (e.updateCheck())

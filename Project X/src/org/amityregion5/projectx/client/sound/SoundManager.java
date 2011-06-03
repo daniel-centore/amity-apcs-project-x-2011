@@ -18,39 +18,81 @@
  */
 package org.amityregion5.projectx.client.sound;
 
-import java.applet.Applet;
-import java.applet.AudioClip;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.io.File;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
-import javax.sound.sampled.Line;
+import javax.sound.sampled.LineEvent;
+import javax.sound.sampled.LineListener;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 /**
  * A class that handles playing sounds client-side.
  *
  * @author Joe Stein
  */
-public class SoundManager {
+public class SoundManager implements LineListener {
+    private Clip clip;
     
-    public static void main(String[] args)
+    public SoundManager(String file)
     {
+        AudioInputStream ais = null;
         try
         {
-            Line line = AudioSystem.getLine(new DataLine.Info(Clip.class,
-                    AudioFormat.Encoding.PCM_UNSIGNED));
-            AudioClip sound = Applet.newAudioClip(
-                    new URL("./resources/sounds/pistol_shot_short.ogg"));
-            sound.play();
+            File sf = new File(file);
+            System.out.println(sf.exists());
+            ais = AudioSystem.getAudioInputStream(sf);
+            clip = (Clip) AudioSystem.getLine(new DataLine.Info(Clip.class,
+                    AudioSystem.getAudioFileFormat(sf).getFormat()));
+            clip.open(ais);
+            clip.addLineListener(this);
         }
-        catch(MalformedURLException ex)
+        catch(LineUnavailableException ex)
+        {
+            Logger.getLogger(SoundManager.class.getName()).log(Level.SEVERE, null, ex);
+        }        catch(UnsupportedAudioFileException ex)
         {
             Logger.getLogger(SoundManager.class.getName()).log(Level.SEVERE, null, ex);
         }
+        catch(IOException ex)
+        {
+            Logger.getLogger(SoundManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally
+        {
+            /*try
+            {
+                ais.close();
+            }
+            catch(IOException ex)
+            {
+                Logger.getLogger(SoundManager.class.getName()).log(Level.SEVERE, null, ex);
+            }*/
+        }
     }
-     
+    public void playSound()
+    {
+        clip.start();
+    }
+    public static void main(String[] args)
+    {
+        SoundManager sm = new SoundManager("resources/sounds/wav/pistol_shot_short.wav");
+        new Thread()
+        {
+            // TODO make the sound play
+        };
+    }
+
+    public void update(LineEvent event)
+    {
+        if (event.getType() == LineEvent.Type.STOP)
+        {
+            System.out.println("stopped");
+        }
+    }
 }

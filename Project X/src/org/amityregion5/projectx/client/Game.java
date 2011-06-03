@@ -340,29 +340,36 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         for (int i = 0; i < entStrs.length; i++)
         {
             String[] entVals = entStrs[i].split(",");
-            Entity e = entityHandler.getEntity(Long.valueOf(entVals[0]));
-            if (e != null)
+            long id = Long.valueOf(entVals[0]);
+            if (id == -1)
             {
-                e.setX(Double.valueOf(entVals[1]));
-                e.setY(Double.valueOf(entVals[2]));
-                int hp = Integer.valueOf(entVals[4]);
-                //System.out.println(hp);
-                if (hp > Byte.MIN_VALUE)
+                // affects the base
+                map.getArea().setHp(Integer.valueOf(entVals[1]));
+            } else {
+                Entity e = entityHandler.getEntity(Long.valueOf(entVals[0]));
+                if (e != null)
                 {
-                    ((Damageable) e).setHp(hp);
+                    e.setX(Double.valueOf(entVals[1]));
+                    e.setY(Double.valueOf(entVals[2]));
+                    int hp = Integer.valueOf(entVals[4]);
+                    //System.out.println(hp);
+                    if (hp > Byte.MIN_VALUE)
+                    {
+                        ((Damageable) e).setHp(hp);
+                    }
+
+                    if (e == me)
+                    {
+                        int x1 = me.getCenterX();
+                        int y1 = me.getCenterY();
+                        int angle = (int) Math.toDegrees(Math.atan2(lastMouseY - y1, lastMouseX - x1));
+
+                        me.setDirectionFacing(angle);
+                    } else
+                        e.setDirectionFacing(Integer.valueOf(entVals[3]));
+
+                    // System.out.println("Facing: " + entVals[3]);
                 }
-
-                if (e == me)
-                {
-                    int x1 = me.getCenterX();
-                    int y1 = me.getCenterY();
-                    int angle = (int) Math.toDegrees(Math.atan2(lastMouseY - y1, lastMouseX - x1));
-
-                    me.setDirectionFacing(angle);
-                } else
-                    e.setDirectionFacing(Integer.valueOf(entVals[3]));
-
-                // System.out.println("Facing: " + entVals[3]);
             }
         }
         // mouseMoved(lastMouseX, lastMouseY); // update angle
