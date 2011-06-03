@@ -26,3 +26,4 @@ src/org/amityregion5/projectx/server/game/EntityMoverThread.java:               
 src/org/amityregion5/projectx/server/game/EntityMoverThread.java:                        // TODO if the play area doesn't contain the new
 src/org/amityregion5/projectx/server/game/GameController.java:        // TODO: move the map initialization to server-side and pass it to the client
 src/org/amityregion5/projectx/server/game/GameController.java:        // TODO: afterwards, finish this spawn creation
+src/org/amityregion5/projectx/server/game/GameController.java:        // TODO: End game/make new game option

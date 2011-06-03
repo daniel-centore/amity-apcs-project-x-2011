@@ -98,7 +98,9 @@ public class EntityMoverThread extends Thread {
                             if(map.getArea().killed())
                             {
                                 JOptionPane.showMessageDialog(null, "The enemies have taken over!", "Game Over", JOptionPane.OK_OPTION);
-                                //TODO end the game
+                                gameController.getServer().kill();
+                                rawServer.kill();
+                                kill();
                             }
                         }
                     }
