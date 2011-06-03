@@ -74,6 +74,7 @@ public class Area extends FieldItem implements Damageable{
             hp = maxHealth;
     }
 
+    @Override
     public int getHp()
     {
         return hp;

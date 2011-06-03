@@ -113,7 +113,7 @@ public class RepaintHandler extends Thread {
                 }
                 Area a = game.getMap().getArea();
                 double percent = (double) a.getHp() / a.getMaxHp();
-                System.out.println(a.getHp() + ":" + a.getMaxHp());
+                //System.out.println(a.getHp() + ":" + a.getMaxHp());
                 int x = a.getX();
                 int y = a.getY() - 10;
                 g.setColor(Color.RED);
