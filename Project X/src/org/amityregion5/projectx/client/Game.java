@@ -126,13 +126,13 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
 
     public void mousePressed(int x, int y, int button)
     {
-        SoundManager.playSound(SoundManager.Sound.PISTOL_SHOT, 20000);
+        // SoundManager.playSound(SoundManager.Sound.PISTOL_SHOT, 20000);
         getCommunicationHandler().send(new FiringMessage(true));
     }
 
     public void mouseReleased(int x, int y, int button)
     {
-        SoundManager.stopSound(SoundManager.Sound.PISTOL_SHOT);
+        // SoundManager.stopSound(SoundManager.Sound.PISTOL_SHOT);
         getCommunicationHandler().send(new FiringMessage(false));
     }
 
@@ -189,7 +189,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             getCommunicationHandler().send(c);
         }
     }
-    
+
     public EntityHandler getEntityHandler()
     {
         return entityHandler;
@@ -289,8 +289,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         } else if (m instanceof AddWeaponMessage)
         {
             AddWeaponMessage awm = (AddWeaponMessage) m;
-            awm.getWeapon().setImage(ImageHandler.loadImage(awm.getWeapon()
-                    .getDefaultImage()));
+            awm.getWeapon().setImage(ImageHandler.loadImage(awm.getWeapon().getDefaultImage()));
             try
             {
                 ((CharacterEntity) entityHandler.getEntity(awm.getID())).addWeapon(awm.getWeapon());
@@ -304,9 +303,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             StatusUpdateMessage sum = (StatusUpdateMessage) m;
             if (sum.getType() == StatusUpdateMessage.Type.END_GAME)
             {
-                JOptionPane.showMessageDialog(null,
-                        "The enemies have taken over!",
-                        "Game Over", JOptionPane.OK_OPTION);
+                JOptionPane.showMessageDialog(null, "The enemies have taken over!", "Game Over", JOptionPane.OK_OPTION);
                 // TODO return to lobby?
             }
         }
@@ -314,9 +311,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
 
     public void tellSocketClosed()
     {
-        JOptionPane.showMessageDialog(null,
-                "Server has closed. You have been disconnected",
-                "Disconnected", JOptionPane.OK_OPTION);
+        JOptionPane.showMessageDialog(null, "Server has closed. You have been disconnected", "Disconnected", JOptionPane.OK_OPTION);
         this.destroy();
         new ServerChooserWindow();
     }
@@ -365,14 +360,15 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             {
                 // affects the base
                 map.getArea().setHp(Integer.valueOf(entVals[1]));
-            } else {
+            } else
+            {
                 Entity e = entityHandler.getEntity(Long.valueOf(entVals[0]));
                 if (e != null)
                 {
                     e.setX(Double.valueOf(entVals[1]));
                     e.setY(Double.valueOf(entVals[2]));
                     int hp = Integer.valueOf(entVals[4]);
-                    //System.out.println(hp);
+                    // System.out.println(hp);
                     if (hp > Byte.MIN_VALUE)
                     {
                         ((Damageable) e).setHp(hp);
