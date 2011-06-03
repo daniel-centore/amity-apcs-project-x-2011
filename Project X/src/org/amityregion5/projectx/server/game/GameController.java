@@ -103,8 +103,7 @@ public class GameController {
         {
             addWeapon(p, new Gun(100, 100, 10, 20, 6, 50, 5));
         }
-        
-        
+
         entityMoverThread = new EntityMoverThread(this, server.getRawServer(), map);
         entityMoverThread.start();
         enemyManager = new EnemyManager(this, getEnemySpawns());

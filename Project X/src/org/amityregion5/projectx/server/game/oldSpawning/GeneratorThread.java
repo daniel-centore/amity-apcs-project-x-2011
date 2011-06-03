@@ -55,9 +55,13 @@ public class GeneratorThread extends Thread {
         manager = m;
     }
 
-    public void addWave(EnemyWave wave)
+    /*
+     * Adds a wave of enemies to the game, staggering timing by the specified
+     * spawn time in the given wave's getSpawnTime().
+     * Note: THIS METHOD BLOCKS UNTIL THE ENTIRE WAVE IS FINISHED.
+     */
+    private void sendWave(EnemyWave wave)
     {
-        waves.add(wave);
         ArrayList<EnemyGroup> groups =  wave.getEnemyGroups();
         Random gen = new Random();
         for (EnemyGroup group: groups)
@@ -87,6 +91,16 @@ public class GeneratorThread extends Thread {
             }
         }
     }
+
+    /**
+     * Adds a wave to the queue.
+     * This method does NOT block.
+     * @param wave the wave to add to the wave queue
+     */
+    public void addWave(EnemyWave wave)
+    {
+        waves.add(wave);
+    }
     
     @Override
     public void run()
@@ -94,7 +108,7 @@ public class GeneratorThread extends Thread {
         // TODO will release enemies on some kind of timer
         if (waves.peek() != null && controller.enemiesDead())
         {
-            addWave(waves.poll());
+            sendWave(waves.poll());
         }
     }
 }

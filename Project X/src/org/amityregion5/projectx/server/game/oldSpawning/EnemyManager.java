@@ -43,13 +43,7 @@ public class EnemyManager {
     {
         controller = c;
         spawnArea = area;
-        
-        EnemyGroup group = createEnemyGroup(new Enemy(50, 100, 100), 10); //Arbitrary first wave with 20 enemies w/100 health
-        ArrayList<EnemyGroup> enemies = new ArrayList<EnemyGroup>();
-        enemies.add(group);
-        wave = new EnemyWave(1, enemies);
         gen = new GeneratorThread(controller, spawnArea, this);
-        gen.addWave(wave);
     }
     
     public EnemyGroup createEnemyGroup(Enemy en, int num)
@@ -63,10 +57,15 @@ public class EnemyManager {
     }
 
     /**
-     * Starts the spawning thread.
+     * Starts the spawning thread. Adds an initial wave.
      */
     public void startSpawning()
     {
+        EnemyGroup group = createEnemyGroup(new Enemy(50, 100, 100), 10); //Arbitrary first wave with 20 enemies w/100 health
+        ArrayList<EnemyGroup> enemies = new ArrayList<EnemyGroup>();
+        enemies.add(group);
+        wave = new EnemyWave(1, enemies);
+        gen.addWave(wave);
         gen.start();
     }
 
