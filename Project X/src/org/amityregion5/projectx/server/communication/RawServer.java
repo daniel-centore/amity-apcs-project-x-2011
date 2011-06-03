@@ -89,9 +89,8 @@ public class RawServer extends Thread {
             System.err.println("No raw clients!");
 
         // for (RawClient out : rawClients)
-        for (int i = 0; i < rawClients.size(); i++)
+        for (RawClient out : rawClients)
         {
-            RawClient out = rawClients.get(i);
             out.send(s + "\n");
         }
     }

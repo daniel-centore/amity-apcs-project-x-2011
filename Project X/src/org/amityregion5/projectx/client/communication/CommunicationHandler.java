@@ -93,15 +93,8 @@ public class CommunicationHandler extends Thread {
 
         } catch (IOException e1)
         {
-            JOptionPane.showMessageDialog(null, "Server has closed. You have been disconnected", "Disconnected", JOptionPane.OK_OPTION);
-
-            if (LobbyWindow.getInstance() != null)
-                LobbyWindow.getInstance().setVisible(false);
-            
-            if (GameWindow.getInstance() != null)
-                GameWindow.getInstance().setVisible(false);
-
-            new ServerChooserWindow();
+            // let it die, and let the listeners' tellSocketClosed() method
+            // handle what to do on death
         } catch (ClassNotFoundException e)
         {
             e.printStackTrace();

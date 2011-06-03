@@ -26,12 +26,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 import org.amityregion5.projectx.client.communication.CommunicationHandler;
 import org.amityregion5.projectx.client.communication.RawCommunicationHandler;
 import org.amityregion5.projectx.client.gui.ChatDrawing;
 import org.amityregion5.projectx.client.gui.GameWindow;
 import org.amityregion5.projectx.client.gui.RepaintHandler;
+import org.amityregion5.projectx.client.gui.ServerChooserWindow;
 import org.amityregion5.projectx.client.gui.input.InputHandler;
 import org.amityregion5.projectx.client.gui.input.Keys;
 import org.amityregion5.projectx.client.handlers.EntityHandler;
@@ -48,6 +50,7 @@ import org.amityregion5.projectx.common.communication.messages.FiredMessage;
 import org.amityregion5.projectx.common.communication.messages.FiringMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.common.communication.messages.RemoveEntityMessage;
+import org.amityregion5.projectx.common.communication.messages.StatusUpdateMessage;
 import org.amityregion5.projectx.common.entities.Damageable;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.EntityConstants;
@@ -250,9 +253,6 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         {
             ChatMessage cm = (ChatMessage) m;
             ChatDrawing.drawChat(cm.getFrom() + ": " + cm.getText());
-        } else if (m instanceof AnnounceMessage)
-        {
-
         } else if (m instanceof AddMeMessage)
         {
             AddMeMessage amm = (AddMeMessage) m;
@@ -294,11 +294,26 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                 // TODO: temporary kludge
                 // what's the usual error?
             }
+        } else if (m instanceof StatusUpdateMessage)
+        {
+            StatusUpdateMessage sum = (StatusUpdateMessage) m;
+            if (sum.getType() == StatusUpdateMessage.Type.END_GAME)
+            {
+                JOptionPane.showMessageDialog(null,
+                        "The enemies have taken over!",
+                        "Game Over", JOptionPane.OK_OPTION);
+                // TODO return to lobby?
+            }
         }
     }
 
     public void tellSocketClosed()
     {
+        JOptionPane.showMessageDialog(null,
+                "Server has closed. You have been disconnected",
+                "Disconnected", JOptionPane.OK_OPTION);
+        this.destroy();
+        new ServerChooserWindow();
     }
 
     /**
@@ -385,6 +400,17 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
     public void mouseScrolled(MouseWheelEvent e)
     {
         me.changeWeapon(e.getWheelRotation());
+    }
+
+    /**
+     * Destroys the game.
+     */
+    private void destroy()
+    {
+        dUpThread.kill();
+        communicationHandler.kill();
+        rch.kill();
+        GameWindow.closeWindow();
     }
 
     private class DirectionalUpdateThread extends Thread {

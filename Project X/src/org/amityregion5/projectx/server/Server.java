@@ -168,16 +168,13 @@ public class Server {
     public synchronized void kill()
     {
         if (listening)
-        {
             listening = false;
-            for (Client client : clients.values())
-            {
-                client.send(new AnnounceMessage("Server shutting down now!"));
-                client.kill();
-            }
-        } else
+        for (Client client : clients.values())
         {
-            throw new RuntimeException("Server not running --> why kill it?");
+            client.send(new AnnounceMessage("Server shutting down now!"));
+            client.send(new StatusUpdateMessage(
+                    StatusUpdateMessage.Type.END_GAME));
+            client.kill();
         }
     }
 

@@ -41,6 +41,7 @@ public class EntityMoverThread extends Thread {
     private GameController gameController; // used for getting entities
     private RawServer rawServer; // used for communications e.g. loc updates
     private AbstractMap map; // used for collision detection
+    private boolean alive = true; // used to make sure game over isn't sent 2x
 
     public EntityMoverThread(GameController gc, RawServer rs, AbstractMap m)
     {
@@ -95,13 +96,15 @@ public class EntityMoverThread extends Thread {
                             int dir = (int) Math.toDegrees(Math.atan2(relY, relX));
                             e.setDirectionMoving(dir);
                             e.setDirectionFacing(dir);
-                            System.out.println("enemy hit center");
                             en.stop();
                             en.hit();
                             map.getArea().damage(en.getWeapon(en.getCurrWeapon()).getDamage());
-                            if(map.getArea().killed())
+                            if(map.getArea().killed() && alive)
                             {
-                                JOptionPane.showMessageDialog(null, "The enemies have taken over!", "Game Over", JOptionPane.OK_OPTION);
+                                // keep the joptionpane out, this is serverside remember
+                                //JOptionPane.showMessageDialog(null, "The enemies have taken over!", "Game Over", JOptionPane.OK_OPTION);
+                                System.out.println("Base destroyed, game over");
+                                alive = false;
                                 gameController.getServer().kill();
                                 keepRunning = false;
                                 rawServer.kill();
@@ -127,11 +130,11 @@ public class EntityMoverThread extends Thread {
     private void sendAggregateUpdateMessage()
     {
         StringBuilder buf = new StringBuilder();
-
         synchronized (gameController)
         {
             buf.append("-1,");
-            buf.append((double) gameController.getMap().getArea().getHp());
+            buf.append(gameController.getMap().getArea().getHp());
+            buf.append(";");
             for (Entity e : gameController.getEntities())
             {
                 if (e.updateCheck())

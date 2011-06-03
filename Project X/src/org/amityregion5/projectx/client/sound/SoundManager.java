@@ -19,7 +19,9 @@
 package org.amityregion5.projectx.client.sound;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sound.sampled.AudioInputStream;
@@ -30,69 +32,51 @@ import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineListener;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
 
 /**
  * A class that handles playing sounds client-side.
  *
  * @author Joe Stein
  */
-public class SoundManager implements LineListener {
-    private Clip clip;
-    
-    public SoundManager(String file)
-    {
-        AudioInputStream ais = null;
-        try
-        {
-            File sf = new File(file);
-            System.out.println(sf.exists());
-            ais = AudioSystem.getAudioInputStream(sf);
-            clip = (Clip) AudioSystem.getLine(new DataLine.Info(Clip.class,
-                    AudioSystem.getAudioFileFormat(sf).getFormat()));
-            clip.open(ais);
-            clip.addLineListener(this);
-        }
-        catch(LineUnavailableException ex)
-        {
-            Logger.getLogger(SoundManager.class.getName()).log(Level.SEVERE, null, ex);
-        }        catch(UnsupportedAudioFileException ex)
-        {
-            Logger.getLogger(SoundManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch(IOException ex)
-        {
-            Logger.getLogger(SoundManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        finally
-        {
-            /*try
-            {
-                ais.close();
-            }
-            catch(IOException ex)
-            {
-                Logger.getLogger(SoundManager.class.getName()).log(Level.SEVERE, null, ex);
-            }*/
-        }
-    }
-    public void playSound()
-    {
-        clip.start();
-    }
+public class SoundManager {
+
     public static void main(String[] args)
     {
-        SoundManager sm = new SoundManager("resources/sounds/wav/pistol_shot_short.wav");
+        try
+        {
+        InputStream in = new FileInputStream(new File(
+                "resources/sounds/wav/pistol_shot_short.wav"));
+
+// Create an AudioStream object from the input stream.
+        final AudioStream as = new AudioStream(in);
+
+// Use the static class member "player" from class AudioPlayer to play
+// clip.
         new Thread()
         {
-            // TODO make the sound play
-        };
-    }
-
-    public void update(LineEvent event)
-    {
-        if (event.getType() == LineEvent.Type.STOP)
+            public void run()
+            {
+                while (true)
+                {
+                    System.out.println("shoot");
+                    AudioPlayer.player.start(as);
+                        try
+                        {
+                            Thread.sleep(200);
+                        }
+                        catch(InterruptedException ex)
+                        {
+                            Logger.getLogger(SoundManager.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                }
+            }
+        }.start();
+        
+        } catch (Exception e)
         {
-            System.out.println("stopped");
+            e.printStackTrace();
         }
     }
 }

@@ -52,6 +52,7 @@ public class GameWindow extends JFrame {
     private static GameWindow instance; // the instance of Gui
     private static JComponent panel; // the panel we will draw on
     private static Image buffer; // the image the panel should draw
+
     private int xOffset; // how much screen is offset horizontally
     private int yOffset; // how much screen is offset vertically
 
@@ -134,6 +135,14 @@ public class GameWindow extends JFrame {
         }
         panel.requestFocusInWindow();
         
+    }
+
+    /**
+     * Closes this GameWindow.
+     */
+    public static void closeWindow()
+    {
+        GameWindow.getInstance().dispose();
     }
 
     /**

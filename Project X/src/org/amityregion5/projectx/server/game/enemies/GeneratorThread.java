@@ -48,6 +48,7 @@ public class GeneratorThread extends Thread {
     private ArrayList<Point> enemySpawns;
     private EnemyManager manager;
     //TODO: Get enemy spawning to work
+
     public GeneratorThread(GameController c, ArrayList<Point> spawns, EnemyManager m)
     {
         waves = new LinkedBlockingQueue<EnemyWave>();
@@ -63,14 +64,14 @@ public class GeneratorThread extends Thread {
      */
     private void sendWave(EnemyWave wave)
     {
-        ArrayList<EnemyGroup> groups =  wave.getEnemyGroups();
+        ArrayList<EnemyGroup> groups = wave.getEnemyGroups();
         Random gen = new Random();
-        for (EnemyGroup group: groups)
+        for(EnemyGroup group : groups)
         {
             Enemy e = group.getEnemy();
             AbstractMap map = controller.getMap();
-            Point center = ((TestingMap)map).getCenter(); //I hope we're only using TestingMap...
-            for (int i = 0; i < group.getNumEnemies(); i++)
+            Point center = map.getCenter();
+            for(int i = 0;i < group.getNumEnemies();i++)
             {
                 // picks a random spawn point from the spawn point list
                 Point spawn = enemySpawns.get(gen.nextInt(enemySpawns.size()));
@@ -80,13 +81,16 @@ public class GeneratorThread extends Thread {
                 // puts the enemy at spawn
                 en.setLocation(spawn);
                 // makes enemy face center of map and move towards it
-                en.setDirectionFacing((int)en.getDirectionTowards(center));
+                en.setDirectionFacing((int) en.getDirectionTowards(center));
                 en.setDirectionMoving((int)en.getDirectionTowards(center));
                 // adds the entity to the controller
                 controller.addEntity(en);
-                try {
+                try
+                {
                     Thread.sleep(wave.getSpawnTime());
-                } catch (InterruptedException ex) {
+                }
+                catch(InterruptedException ex)
+                {
                     Logger.getLogger(GeneratorThread.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -109,14 +113,17 @@ public class GeneratorThread extends Thread {
         // TODO will release enemies on some kind of timer
         while(true)
         {
-        if (waves.peek() != null)
-        {
-            sendWave(waves.poll());
-            try {
-                Thread.sleep((long) EnemyManager.TIME_BTW_WAVES);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(GeneratorThread.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            if(waves.peek() != null)
+            {
+                sendWave(waves.poll());
+                try
+                {
+                    Thread.sleep(EnemyManager.TIME_BTW_WAVES);
+                }
+                catch(InterruptedException ex)
+                {
+                    Logger.getLogger(GeneratorThread.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }

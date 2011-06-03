@@ -48,6 +48,11 @@ public class EnemyWave
         return enemies;
     }
 
+    /**
+     * Create the next wave. Will use difficulty, etc. to generate
+     * the wave.
+     * @return the next wave to be sent
+     */
     public EnemyWave nextWave()
     {
         ArrayList<EnemyGroup> newEnemies = new ArrayList<EnemyGroup>();

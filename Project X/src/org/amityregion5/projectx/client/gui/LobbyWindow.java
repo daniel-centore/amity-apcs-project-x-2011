@@ -198,6 +198,7 @@ public class LobbyWindow extends JFrame implements MessageListener {
     private void BackToServerChooserButtonActionPerformed(java.awt.event.ActionEvent evt)
     {
         CommunicationHandler.getInstance().kill(); // close old connection
+        ch.removeListener(this);
         ServerChooserWindow chooser = new ServerChooserWindow();
         MulticastCommunicationHandler mch = new MulticastCommunicationHandler();
         mch.registerListener(chooser);
@@ -322,10 +323,10 @@ public class LobbyWindow extends JFrame implements MessageListener {
             final StatusUpdateMessage sum = (StatusUpdateMessage) m;
             if (sum.getType() == StatusUpdateMessage.Type.STARTING)
             {
-                this.setVisible(false);
-
                 Game g = new Game(ch, new TestingMap(), username);
                 g.initWindow();
+                ch.removeListener(this);
+                this.dispose();
             }
             SwingUtilities.invokeLater(new Runnable() {
 

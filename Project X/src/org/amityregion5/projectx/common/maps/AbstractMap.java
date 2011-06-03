@@ -20,6 +20,7 @@
 package org.amityregion5.projectx.common.maps;
 
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.List;
 
@@ -62,6 +63,8 @@ public abstract class AbstractMap {
         return playArea;
     }
     public abstract Area getArea();
+
+    public abstract Point getCenter();
 
 
 }
