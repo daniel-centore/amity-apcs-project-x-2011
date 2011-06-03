@@ -61,7 +61,6 @@ public class GameController {
     private Server server;
     private AbstractMap map;
     private final EnemyManager enemyManager;
-    private boolean startedSpawning = false;
 
     /**
      * Creates and initializes the game controlling
@@ -109,7 +108,6 @@ public class GameController {
         entityMoverThread.start();
         enemyManager = new EnemyManager(this, getEnemySpawns());
         enemyManager.startSpawning();
-        startedSpawning = true;
     }
 
     public void addEntity(Entity e)

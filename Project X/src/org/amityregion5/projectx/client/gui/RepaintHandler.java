@@ -31,6 +31,7 @@ import org.amityregion5.projectx.client.Game;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.characters.Player;
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
+import org.amityregion5.projectx.common.entities.items.field.Area;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 
 /**
@@ -110,6 +111,16 @@ public class RepaintHandler extends Thread {
                     g.fillRect(x, y, (int) (HEALTHBAR_WIDTH * percent),
                             HEALTHBAR_HEIGHT);
                 }
+                Area a = game.getMap().getArea();
+                double percent = (double) a.getHp() / a.getMaxHp();
+                System.out.println(a.getHp() + ":" + a.getMaxHp());
+                int x = a.getX();
+                int y = a.getY() - 10;
+                g.setColor(Color.RED);
+                g.fillRect(x, y, HEALTHBAR_WIDTH, HEALTHBAR_HEIGHT);
+                g.setColor(Color.GREEN);
+                g.fillRect(x, y, (int) (HEALTHBAR_WIDTH * percent),
+                        HEALTHBAR_HEIGHT);                    
                 if (e instanceof Player)
                 {
                     // draw a laser sight for weapon direction
