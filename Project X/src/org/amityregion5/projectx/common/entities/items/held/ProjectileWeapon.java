@@ -92,4 +92,14 @@ public abstract class ProjectileWeapon extends Weapon {
         return damage;
     }
 
+    public boolean fire()
+    {
+        if (ammo > 0)
+        {
+            ammo--;
+            return true;
+        }
+        return false;
+    }
+
 }

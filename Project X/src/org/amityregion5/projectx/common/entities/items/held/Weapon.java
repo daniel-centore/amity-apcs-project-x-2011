@@ -79,4 +79,5 @@ public abstract class Weapon extends HeldItem implements DamageDealing{
 
     public abstract boolean hasAmmo();
     public abstract int getDamage();
+    public abstract boolean fire();
 }

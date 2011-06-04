@@ -54,7 +54,7 @@ public class ShotThread extends Thread {
     @Override
     public void run()
     {
-        Weapon currWeapon = player.getWeapon(player.getCurrWeapon());
+        Weapon currWeapon = player.getCurrWeapon();
         while (keepRunning)
         {
             // stop shooting if we're not supposed to shoot
@@ -74,13 +74,12 @@ public class ShotThread extends Thread {
             }
             try
             {
-                if (currWeapon.hasAmmo())
+                if (player.fire())
                 {
                     server.playerFired(player);
-                    SoundManager.playOnce(player.getWeapon(player.getCurrWeapon()).getSound());
                 }
                 // sleeps in order to get the attack rate right
-                Thread.sleep(1000 / player.getWeapon(player.getCurrWeapon()).getAttackRate());
+                Thread.sleep(1000 / player.getCurrWeapon().getAttackRate());
             } catch (InterruptedException ex)
             {
                 Logger.getLogger(ShotThread.class.getName()).log(Level.SEVERE, null, ex);

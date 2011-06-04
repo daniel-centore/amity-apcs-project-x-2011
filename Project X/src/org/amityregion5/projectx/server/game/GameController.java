@@ -188,19 +188,27 @@ public class GameController {
         List<Entity> toRemove = new ArrayList<Entity>();
         synchronized(this)
         {
+            double closest = Double.MAX_VALUE;
+            Enemy closestEn = null;
             for(Entity e : entities)
             {
                 if(e instanceof Enemy && line.intersects(e.getHitBox()))
                 {
-                    Enemy en = (Enemy) e;
-                    en.damage(player.getWeapon(player.getCurrWeapon()).getDamage());
-                    en.requestUpdate();
-                    if(en.killed())
+                    double dist = e.getLocation().distance(line.getP1());
+                    if (dist < closest)
                     {
-                        toRemove.add(en);
-                        server.relayMessage(new RemoveEntityMessage(en));
-                    }                    
-                    break;
+                        closestEn = (Enemy) e;
+                    }
+                }
+            }
+            if (closestEn != null)
+            {
+                closestEn.damage(player.getCurrWeapon().getDamage());
+                closestEn.requestUpdate();
+                if(closestEn.killed())
+                {
+                    toRemove.add(closestEn);
+                    server.relayMessage(new RemoveEntityMessage(closestEn));
                 }
             }
 

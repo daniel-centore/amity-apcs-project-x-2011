@@ -87,6 +87,7 @@ public class SoundManager extends Thread {
     public static void playOnce(final Sound s)
     {
         new Thread() {
+            @Override
             public void run()
             {
                 try

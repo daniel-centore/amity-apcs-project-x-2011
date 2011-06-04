@@ -100,7 +100,6 @@ public class RepaintHandler extends Thread {
 
                 if (e instanceof Enemy)
                 {
-                    // TODO draw health bar
                     Enemy en = (Enemy) e;
                     double percent = (double) en.getHp() / en.getMaxHp();
                     int x = en.getX();
@@ -145,7 +144,7 @@ public class RepaintHandler extends Thread {
                     Player p = (Player) e;
                     if (p.hasWeapons())
                     {
-                        BufferedImage wepImg = p.getWeapon(p.getCurrWeapon()).getImage();
+                        BufferedImage wepImg = p.getCurrWeapon().getImage();
                         AffineTransform at = new AffineTransform();
                         at.translate(e.getCenterX(), e.getCenterY());
                         at.rotate(Math.toRadians(p.getDirectionFacing()));

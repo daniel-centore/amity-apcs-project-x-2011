@@ -31,6 +31,7 @@ import org.amityregion5.projectx.common.entities.items.held.Weapon;
  * @author Mike DiBuduo
  * @author Mike Wenke
  * @author Daniel Centore
+ * @author Joe Stein
  */
 public abstract class CharacterEntity extends Entity {
 
@@ -54,14 +55,14 @@ public abstract class CharacterEntity extends Entity {
     public void changeWeapon(int wheelRotation)
     {
         int tmp = currWeapon + wheelRotation;
-        while (tmp < 0)
+        if (tmp < 0)
         {
-            tmp = currWeapon + tmp;
-        }
-        while (tmp > weapons.size() - 1)
+            tmp = weapons.size() - 1;
+        } else if (tmp > weapons.size() - 1)
         {
-            tmp = currWeapon - tmp;
+            tmp = 0;
         }
+        currWeapon = tmp;
     }
 
     /**
@@ -76,13 +77,13 @@ public abstract class CharacterEntity extends Entity {
     }
 
     /**
-     * Gets the identifier for the character's current weapon.
+     * Gets the current character's Weapon.
      *
-     * @return The current weapon's identifier.
+     * @return the current character's Weapon
      */
-    public int getCurrWeapon()
+    public Weapon getCurrWeapon()
     {
-        return currWeapon;
+        return weapons.get(currWeapon);
     }
 
     /**
@@ -116,5 +117,10 @@ public abstract class CharacterEntity extends Entity {
         {
             wep.selectImage(wep.getDefaultImage());
         }
+    }
+
+    public boolean fire()
+    {
+        return weapons.get(currWeapon).fire();
     }
 }

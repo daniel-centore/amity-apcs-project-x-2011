@@ -26,19 +26,25 @@ import org.amityregion5.projectx.common.entities.items.DamageDealing;
  *
  * @author Mike DiBuduo
  */
-public abstract class MeleeWeapon extends Weapon implements DamageDealing
-{
+public abstract class MeleeWeapon extends Weapon implements DamageDealing {
 
-   public static final int MELEE_RANGE = 5; // default to 5 pixels range
-   public int damage;
-   public MeleeWeapon(int rate, int damage)
-   {
-      super(MELEE_RANGE, rate);
-      this.damage = damage;
-   }
+    public static final int MELEE_RANGE = 5; // default to 5 pixels range
+    public int damage;
 
-   public int getDamage()
-   {
-      return damage;
-   }
+    public MeleeWeapon(int rate, int damage)
+    {
+        super(MELEE_RANGE, rate);
+        this.damage = damage;
+    }
+
+    public int getDamage()
+    {
+        return damage;
+    }
+
+    public boolean fire()
+    {
+        // melee weapons don't run out of ammo
+        return true;
+    }
 }

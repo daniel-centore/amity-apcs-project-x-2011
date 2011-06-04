@@ -26,6 +26,7 @@ import org.amityregion5.projectx.common.communication.messages.RemoveEntityMessa
 
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.EntityConstants;
+import org.amityregion5.projectx.common.entities.characters.CharacterEntity;
 import org.amityregion5.projectx.common.entities.characters.Player;
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
 import org.amityregion5.projectx.common.entities.characters.enemies.SuicideBomber;
@@ -109,7 +110,7 @@ public class EntityMoverThread extends Thread {
                                 e.setDirectionFacing(dir);
                                 en.stop();
                                 en.hit();
-                                map.getArea().damage(en.getWeapon(en.getCurrWeapon()).getDamage());
+                                map.getArea().damage(en.getCurrWeapon().getDamage());
                                 if(map.getArea().killed() && alive)
                                 {
                                     // keep the joptionpane out, this is serverside remember
@@ -160,6 +161,11 @@ public class EntityMoverThread extends Thread {
                     buf.append(e.getDirectionFacing());
                     buf.append(",");
                     buf.append(e.getHp());
+                    if (e instanceof CharacterEntity)
+                    {
+                        buf.append(",");
+                        buf.append(((CharacterEntity) e).getCurrWeapon());
+                    }
                     buf.append(";");
                 }
             }
