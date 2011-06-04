@@ -18,121 +18,90 @@
  */
 package org.amityregion5.projectx.client.sound;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.DataLine;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.Player;
 
 /**
  * A class that handles playing sounds client-side.
- *
+ * 
  * @author Joe Stein
  * @author Cam Simpson
+ * @author Daniel Centore
  */
 public class SoundManager extends Thread {
 
     public static enum Sound
     {
-        PISTOL_SHOT("resources/sounds/wav/pistol_shot_short.wav"),
-        BG_1("resources/sounds/wav/bg_02.wav");
-        
-        private Clip clip;
-        Sound(String file)
+        PISTOL_SHOT("resources/sounds/65_Pistol_Shot.mp3"),
+        BG_1("resources/sounds/17_Death_Grip.mp3");
+
+        private Player player;
+        private String file;
+
+        private Sound(String file)
         {
-            AudioInputStream ais = null;
+            this.file = file;
+        }
+
+        private void reset()
+        {
             try
             {
-                File sf = new File(file);
-                ais = AudioSystem.getAudioInputStream(sf.toURI().toURL());
-                clip = (Clip) AudioSystem.getLine(new DataLine.Info(Clip.class,
-                    AudioSystem.getAudioFileFormat(sf).getFormat()));
-                clip.open(ais);
-            }
-            catch(LineUnavailableException ex)
+                player = new Player(new FileInputStream(file));
+            } catch (FileNotFoundException e)
             {
-                Logger.getLogger(SoundManager.class.getName()).log(Level.SEVERE, null, ex);
-            }            catch(UnsupportedAudioFileException ex)
+                e.printStackTrace();
+            } catch (JavaLayerException e)
             {
-                Logger.getLogger(SoundManager.class.getName()).log(Level.SEVERE, null, ex);
+                e.printStackTrace();
             }
-            catch(IOException ex)
+        }
+    }
+
+    public static void playLoop(final Sound s)
+    {
+        new Thread() {
+
+            public void run()
             {
-                Logger.getLogger(SoundManager.class.getName()).log(Level.SEVERE, null, ex);
+                while (true)
+                {
+                    s.reset();
+
+                    try
+                    {
+                        s.player.play();
+                    } catch (JavaLayerException e)
+                    {
+                        e.printStackTrace();
+                    }
+
+                }
             }
-            finally
+        }.start();
+    }
+
+    public static void playOnce(final Sound s)
+    {
+        new Thread() {
+            public void run()
             {
                 try
                 {
-                    ais.close();
-                }
-                catch(IOException ex)
+                    s.reset();
+                    s.player.play();
+                } catch (JavaLayerException e)
                 {
-                    Logger.getLogger(SoundManager.class.getName()).log(Level.SEVERE, null, ex);
+                    e.printStackTrace();
                 }
+
+                s.reset();
             }
-        }
-    }
-
-    /**
-     * Starts looping a sound with the given frame length.
-     * @param s the sound to play
-     * @param endLoopPoint the number of frames to play before looping
-     */
-    public static void playLoop(Sound s, int endLoopPoint)
-    {
-        //System.out.println(s.clip.getFrameLength());
-        //System.out.println(s.clip.getMicrosecondLength());
-        endLoopPoint = Math.min(endLoopPoint, s.clip.getFrameLength());
-        s.clip.setLoopPoints(0, endLoopPoint);
-        s.clip.loop(Clip.LOOP_CONTINUOUSLY);
-        s.clip.start();
-    }
-
-    public static void stopSound(Sound s)
-    {
-        s.clip.stop();
-    }
-
-    public static int getMilliSoundLength(Sound s)
-    {
-        return (int) (s.clip.getMicrosecondLength() / 1000);
-    }
-
-    public static void main(String[] args)
-    {
-        SoundManager.playOnce(Sound.BG_1);
-    }
-    public static void playOnce(Sound s)
-    {
-         s.clip.start();
-    }
-    public static void playFor(Sound s, int time)
-    {
-        //FIXME: I'm not sure if this works. Luckily we don't use it yet.
-        if (getMilliSoundLength(s) > time)
-            playOnce(s);
-        else
-        {
-            s.clip.start();
-            try
-            {
-            Thread.sleep(time);
-            s.clip.stop();
-            }
-            catch(InterruptedException ex)
-            {
-                Logger.getLogger(SoundManager.class.getName()).log(Level.SEVERE, null, ex);
-                s.clip.stop();
-            }
-
-        }
+        }.start();
 
     }
+
 }

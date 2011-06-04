@@ -135,6 +135,7 @@ public class Client extends Thread {
         // remove this client from the server list
         if (username != null) // this client gave us its username
         {
+            shotThread.setShooting(false);
             server.removeClient(username); // take it off the server's list
             server.relayMessage(new AnnounceMessage(username + " has disconnected."));
             server.relayMessage(new RemoveEntityMessage(player));

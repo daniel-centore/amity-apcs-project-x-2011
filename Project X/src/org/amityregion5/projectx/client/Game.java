@@ -99,7 +99,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         ch.registerListener(this);
         InputHandler.registerListener(this);
         RepaintHandler.setGame(this);
-        SoundManager.playLoop(Sound.BG_1, -1);
+        SoundManager.playLoop(Sound.BG_1);
     }
 
     public void mouseDragged(int x, int y)

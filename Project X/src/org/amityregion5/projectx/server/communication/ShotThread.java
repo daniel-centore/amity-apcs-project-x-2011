@@ -33,8 +33,7 @@ import org.amityregion5.projectx.client.sound.SoundManager.Sound;
  * @author Joe Stein
  * @author Cam Simpson
  */
-public class ShotThread extends Thread
-{
+public class ShotThread extends Thread {
     private Player player;
     private Server server;
     private boolean keepShooting = true;
@@ -59,11 +58,15 @@ public class ShotThread extends Thread
         while (keepRunning)
         {
             // stop shooting if we're not supposed to shoot
-            synchronized (this) {
-                while (!keepShooting) {
-                    try {
+            synchronized (this)
+            {
+                while (!keepShooting)
+                {
+                    try
+                    {
                         wait();
-                    } catch (Exception e) {
+                    } catch (Exception e)
+                    {
                         e.printStackTrace();
                         keepRunning = false;
                     }
@@ -77,10 +80,8 @@ public class ShotThread extends Thread
                     SoundManager.playOnce(player.getWeapon(player.getCurrWeapon()).getSound());
                 }
                 // sleeps in order to get the attack rate right
-                Thread.sleep(1000 / player.getWeapon(player.getCurrWeapon())
-                        .getAttackRate());
-            }
-            catch(InterruptedException ex)
+                Thread.sleep(1000 / player.getWeapon(player.getCurrWeapon()).getAttackRate());
+            } catch (InterruptedException ex)
             {
                 Logger.getLogger(ShotThread.class.getName()).log(Level.SEVERE, null, ex);
                 keepShooting = false;
@@ -96,7 +97,7 @@ public class ShotThread extends Thread
      */
     public void setShooting(boolean shooting)
     {
-        synchronized(this)
+        synchronized (this)
         {
             if (shooting)
             {
