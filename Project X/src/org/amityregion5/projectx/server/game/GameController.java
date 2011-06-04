@@ -199,7 +199,8 @@ public class GameController {
                     {
                         toRemove.add(en);
                         server.relayMessage(new RemoveEntityMessage(en));
-                    }
+                    }                    
+                    break;
                 }
             }
 

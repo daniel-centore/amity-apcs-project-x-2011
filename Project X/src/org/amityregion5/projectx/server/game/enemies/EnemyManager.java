@@ -48,7 +48,7 @@ public class EnemyManager {
         controller = c;
         spawnArea = area;
         
-        EnemyGroup group = createEnemyGroup(new Enemy(10, 0, 0), 5); //Arbitrary first wave with 20 enemies w/100 health
+        EnemyGroup group = createEnemyGroup(new Enemy(10, 0, 0), 5); //Arbitrary first wave with 5 enemies w/10 health
         Enemy modelBomber = new SuicideBomber(100, 10, 0, 0);
         modelBomber.setMoveSpeed(Enemy.DEFAULT_SPEED * 2);
         EnemyGroup bomberGroup = createEnemyGroup(modelBomber, 3);
