@@ -93,7 +93,8 @@ public class PopupMenuHandler extends MouseAdapter implements ActionListener {
     public void actionPerformed(ActionEvent e)
     {
         String s = e.getActionCommand();
-
-        ch.send(new RequestEntityAddMessage(s, popupX, popupY));
+        int roundedX = popupX % 40 + Math.round(popupX / 40);
+        int roundedY = popupY % 40 + Math.round(popupY / 40);
+        ch.send(new RequestEntityAddMessage(s, roundedX, roundedY));
     }
 }
