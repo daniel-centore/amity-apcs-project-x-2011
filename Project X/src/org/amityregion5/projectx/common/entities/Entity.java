@@ -41,8 +41,6 @@ public abstract class Entity implements Serializable {
 
     private static volatile transient long nextUniqueID = 0; // so each entity has a unique ID
 
-    public static final long FIRE_TIME = 100; // how many ms to show the thing
-
     private final long uniqueID; // necessary to check identity content changes.
     private Point2D location; // the entity's location
 
@@ -56,10 +54,6 @@ public abstract class Entity implements Serializable {
     private double moveSpeed;
 
     private transient boolean needUpdate; // do we need to resend the location?
-
-    // FIXME: Why is this all in ENTITY? WHEN IS A BLOCK GOING TO FIRE???
-    private transient boolean justFired; // did this client fire since the last repaint?
-    private long firedTime; // when we fired
 
     private Rectangle hitBox; // a rudimentary hit boundary
 
@@ -369,38 +363,6 @@ public abstract class Entity implements Serializable {
         boolean pre = needUpdate;
         needUpdate = false;
         return pre;
-    }
-
-    /**
-     * @return Should we display a fired beam?
-     */
-    public boolean getFired()
-    {
-        return justFired;
-    }
-
-    /**
-     * Sets whether or not we have just fired.
-     * Note: Will not set to false if within FIRE_TIME ms of setting it to true
-     * @param justFired What to set it to
-     * @return Whether or not we actually set it
-     */
-    public boolean setFired(boolean justFired)
-    {
-
-        if (justFired)
-        {
-            firedTime = System.currentTimeMillis();
-            this.justFired = justFired;
-            
-            return true;
-        } else if (System.currentTimeMillis() - firedTime >= FIRE_TIME)
-        {
-            this.justFired = justFired;
-            return true;
-        }
-        
-        return false;
     }
 
     /**

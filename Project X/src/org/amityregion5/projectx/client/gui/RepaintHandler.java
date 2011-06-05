@@ -23,6 +23,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
@@ -32,7 +33,6 @@ import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
 import org.amityregion5.projectx.common.entities.items.field.Area;
-import org.amityregion5.projectx.common.entities.items.held.HeldItem;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 
 /**
@@ -70,6 +70,10 @@ public class RepaintHandler extends Thread {
             return null; // save us from NPE later in this code!
         }
         Graphics2D g = (Graphics2D) img.getGraphics();
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+
 
         g.setColor(Color.white);
         g.fillRect(0, 0, GameWindow.GAME_WIDTH, GameWindow.GAME_HEIGHT);
@@ -123,11 +127,12 @@ public class RepaintHandler extends Thread {
                 // --Drawing of firing--
                 if (e instanceof PlayerEntity)
                 {
+                    PlayerEntity pe = (PlayerEntity) e;
                     // FIXME: This should only draw up to the enemy that was just fired upon
                     int x2 = (int) (Math.cos(Math.toRadians(e.getDirectionFacing())) * 800) + e.getCenterX();
                     int y2 = (int) (Math.sin(Math.toRadians(e.getDirectionFacing())) * 800) + e.getCenterY();
 
-                    if (e.getFired())
+                    if (pe.getFired())
                     {
                         Stroke old = g.getStroke();
                         Color oldColor = g.getColor();
@@ -136,7 +141,7 @@ public class RepaintHandler extends Thread {
                         g.drawLine(e.getCenterX(), e.getCenterY(), x2, y2);
                         g.setColor(oldColor);
                         g.setStroke(old);
-                        e.setFired(false);
+                        pe.setFired(false);
                     }
 
                     // draw the weapon

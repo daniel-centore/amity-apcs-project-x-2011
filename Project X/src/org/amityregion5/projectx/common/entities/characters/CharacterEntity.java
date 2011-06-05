@@ -36,6 +36,12 @@ import org.amityregion5.projectx.common.entities.items.held.Weapon;
 public abstract class CharacterEntity extends Entity {
 
     private static final long serialVersionUID = 1L;
+    
+    public static final long FIRE_TIME = 100; // how many ms to show the thing
+    
+    private transient boolean justFired; // did this client fire since the last repaint?
+    private long firedTime; // when we fired
+    
     protected ArrayList<Weapon> weapons; // The weapons the character owns
     protected int currWeapon; // currently active weapon
 
@@ -122,5 +128,37 @@ public abstract class CharacterEntity extends Entity {
     public boolean fire()
     {
         return weapons.get(currWeapon).fire();
+    }
+    
+    /**
+     * @return Should we display a fired beam?
+     */
+    public boolean getFired()
+    {
+        return justFired;
+    }
+
+    /**
+     * Sets whether or not we have just fired.
+     * Note: Will not set to false if within FIRE_TIME ms of setting it to true
+     * @param justFired What to set it to
+     * @return Whether or not we actually set it
+     */
+    public boolean setFired(boolean justFired)
+    {
+
+        if (justFired)
+        {
+            firedTime = System.currentTimeMillis();
+            this.justFired = justFired;
+            
+            return true;
+        } else if (System.currentTimeMillis() - firedTime >= FIRE_TIME)
+        {
+            this.justFired = justFired;
+            return true;
+        }
+        
+        return false;
     }
 }

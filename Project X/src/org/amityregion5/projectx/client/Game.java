@@ -289,11 +289,8 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         } else if (m instanceof FiredMessage)
         {
             FiredMessage fm = (FiredMessage) m;
-            Entity e = entityHandler.getEntity(fm.getID());
-            if (e.equals(me))
-            {
-                SoundManager.playOnce(me.getCurrWeapon().getSound());
-            }
+            CharacterEntity e = (CharacterEntity) entityHandler.getEntity(fm.getID());
+            SoundManager.playOnce(me.getCurrWeapon().getSound());
             e.setFired(true);
             GameWindow.fireRepaintRequired();
         } else if (m instanceof RemoveEntityMessage)

@@ -52,6 +52,8 @@ import org.amityregion5.projectx.server.game.enemies.EnemyManager;
  * @author Mike DiBuduo
  */
 public class GameController {
+    
+    private static GameController instance;
 
     private List<PlayerEntity> players; // List of current Players (do we even need this..?)
     private Collection<Client> clients; // List of current Clients
@@ -108,6 +110,8 @@ public class GameController {
         entityMoverThread.start();
         enemyManager = new EnemyManager(this, getEnemySpawns());
         enemyManager.startSpawning();
+        
+        instance = this;
     }
 
     /**
@@ -251,5 +255,10 @@ public class GameController {
             entities.remove(e);
         }
         getServer().relayMessage(new RemoveEntityMessage(e));
+    }
+
+    public static GameController getInstance()
+    {
+        return instance;
     }
 }

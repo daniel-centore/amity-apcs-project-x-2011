@@ -47,6 +47,7 @@ import org.amityregion5.projectx.common.communication.messages.RequestEntityAddM
 import org.amityregion5.projectx.common.communication.messages.TextualMessage;
 import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.server.Server;
+import org.amityregion5.projectx.server.game.GameController;
 
 /**
  * Represents a client in the game
@@ -262,9 +263,7 @@ public class Client extends Thread {
             }
         } else if (m instanceof RequestEntityAddMessage)
         {
-            RequestEntityAddMessage ream = (RequestEntityAddMessage) m;
-
-            server.relayMessage(new AddEntityMessage(ream.getNewInstance()));
+            GameController.getInstance().addEntity(((RequestEntityAddMessage) m).getNewInstance());
         }
     }
 

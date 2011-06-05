@@ -30,8 +30,10 @@ import org.amityregion5.projectx.common.entities.characters.CharacterEntity;
 import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
 import org.amityregion5.projectx.common.entities.characters.enemies.SuicideBomber;
+import org.amityregion5.projectx.common.entities.items.field.Block;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 import org.amityregion5.projectx.server.communication.RawServer;
+import org.amityregion5.projectx.server.tools.CollisionDetection;
 
 /**
  * A thread that will move all Entities by need. TODO handles collision detection
@@ -67,19 +69,34 @@ public class EntityMoverThread extends Thread {
                     {
                         // TODO make sure this Entity doesn't collide with anything
                         double theta = e.getDirectionMoving();
-                        double newX = r * Math.cos(Math.toRadians(theta)) + e.getX();
-                        double newY = r * Math.sin(Math.toRadians(theta)) + e.getY();
+
+                        double offsetX = r * Math.cos(Math.toRadians(theta));
+                        double offsetY = r * Math.sin(Math.toRadians(theta));
+                        double newX = offsetX + e.getX();
+                        double newY = offsetY + e.getY();
+
+                        boolean collision = false;
+                        for (Entity q : gameController.getEntities())
+                        {
+                            if (q instanceof Block && q != e)
+                                if (CollisionDetection.hasCollision(e, (int) offsetX, (int) offsetY, q))
+                                {
+                                    collision = true;
+                                    break;
+                                }
+                        }
+
                         if (e instanceof PlayerEntity)
                         {
                             Rectangle thb = e.getHitBox();
                             thb.setLocation((int) newX, (int) newY);
-                            
+
                             if (map.getPlayArea().contains(thb))
                             {
                                 e.setX(newX);
                                 e.setY(newY);
                             }
-                        } else
+                        } else if (!collision)
                         {
                             e.setX(newX);
                             e.setY(newY);
@@ -88,15 +105,14 @@ public class EntityMoverThread extends Thread {
                     if (e instanceof Enemy)
                     {
                         Enemy en = (Enemy) e;
-                        if(en.getHitBox().intersects(map.getPlayArea()))// || en.hasHit())
+                        if (en.getHitBox().intersects(map.getPlayArea()))// || en.hasHit())
                         {
                             if (en instanceof SuicideBomber)
                             {
                                 SuicideBomber sb = (SuicideBomber) en;
                                 map.getArea().damage(sb.getDamage());
                                 gameController.removeEntity(sb);
-                            }
-                            else
+                            } else
                             {
                                 int relY = (int) map.getPlayArea().getCenterY() - e.getCenterY();
                                 int relX = (int) map.getPlayArea().getCenterX() - e.getCenterX();
@@ -105,14 +121,14 @@ public class EntityMoverThread extends Thread {
                                 e.setDirectionFacing(dir);
                                 en.stop();
                                 map.getArea().damage(en.getCurrWeapon().getDamage());
-                                if(map.getArea().killed() && alive)
+                                if (map.getArea().killed() && alive)
                                 {
                                     alive = false;
                                     gameController.getServer().kill();
                                     keepRunning = false;
                                     rawServer.kill();
                                     kill();
-                                    
+
                                     // TODO: restart the server
                                 }
                             }
@@ -135,7 +151,7 @@ public class EntityMoverThread extends Thread {
     private void sendAggregateUpdateMessage()
     {
         StringBuilder buf = new StringBuilder();
-        
+
         synchronized (gameController)
         {
             buf.append("-1,");
