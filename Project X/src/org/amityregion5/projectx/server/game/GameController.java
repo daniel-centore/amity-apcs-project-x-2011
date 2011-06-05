@@ -33,7 +33,7 @@ import org.amityregion5.projectx.common.communication.messages.AddWeaponMessage;
 import org.amityregion5.projectx.common.communication.messages.RemoveEntityMessage;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.characters.CharacterEntity;
-import org.amityregion5.projectx.common.entities.characters.Player;
+import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
 import org.amityregion5.projectx.common.entities.items.held.Gun;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
@@ -42,7 +42,6 @@ import org.amityregion5.projectx.common.maps.TestingMap;
 import org.amityregion5.projectx.server.Server;
 import org.amityregion5.projectx.server.communication.Client;
 import org.amityregion5.projectx.server.game.enemies.EnemyManager;
-
 
 /**
  * Handles the game running.
@@ -54,12 +53,14 @@ import org.amityregion5.projectx.server.game.enemies.EnemyManager;
  */
 public class GameController {
 
-    private List<Player> players; // List of current Players (do we even need this..?)
+    private List<PlayerEntity> players; // List of current Players (do we even need this..?)
     private Collection<Client> clients; // List of current Clients
-    private List<Entity> entities;
+    private List<Entity> entities; // List of current Entities
     private EntityMoverThread entityMoverThread; // will be in charge of moving entities
-    private Server server;
-    private AbstractMap map;
+    private Server server; // Our server
+
+    // TODO: Sent the map to the client, which will then use it!
+    private AbstractMap map; // Our map
     private final EnemyManager enemyManager;
 
     /**
@@ -71,18 +72,17 @@ public class GameController {
     {
         map = new TestingMap();
         this.server = server;
-        players = new ArrayList<Player>();
+        players = new ArrayList<PlayerEntity>();
         clients = server.getClients().values();
         entities = new ArrayList<Entity>();
 
         Random r = new Random();
-        for(Client c : clients)
+        for (Client c : clients)
         {
-            Player p = new Player(0, 0);
+            PlayerEntity p = new PlayerEntity(0, 0);
             int spawnY = (int) (map.getPlayArea().getY() + r.nextInt((int) map.getPlayArea().getHeight() - p.getHeight()));
             int spawnX = (int) (map.getPlayArea().getX() + r.nextInt((int) map.getPlayArea().getWidth() - p.getWidth()));
             p.setLocation(new Point2D.Double(spawnX, spawnY));
-            // p.setHitBox(p.getWidth(), p.getHeight());
 
             players.add(p);
 
@@ -91,15 +91,15 @@ public class GameController {
             c.send(new AddMeMessage(p));
         }
 
-        for(Client c : clients)
+        for (Client c : clients)
         {
-            for(Player p : players)
+            for (PlayerEntity p : players)
             {
                 c.send(new AddEntityMessage(p));
             }
         }
 
-        for(Player p : players)
+        for (PlayerEntity p : players)
         {
             addWeapon(p, new Gun(100, 100, 10, 2, 6, 50, 5));
         }
@@ -110,9 +110,13 @@ public class GameController {
         enemyManager.startSpawning();
     }
 
+    /**
+     * Adds an entity and notifies the client to add it as well
+     * @param e Entity to add
+     */
     public void addEntity(Entity e)
     {
-        synchronized(this)
+        synchronized (this)
         {
             entities.add(e);
         }
@@ -120,16 +124,25 @@ public class GameController {
         server.relayMessage(new AddEntityMessage(e));
     }
 
+    /**
+     * @return A list of current entities
+     */
     public List<Entity> getEntities()
     {
         return entities;
     }
 
+    /**
+     * @return Current Sevrer
+     */
     public Server getServer()
     {
         return server;
     }
 
+    /**
+     * @return All running Clients
+     */
     public Collection<Client> getClients()
     {
         return clients;
@@ -156,14 +169,14 @@ public class GameController {
     {
         ArrayList<Point> spawns = new ArrayList<Point>();
         final int MARGIN = 20;
-        if(map instanceof TestingMap)
+        if (map instanceof TestingMap)
         {
-            for(int i = -MARGIN; i < GameWindow.GAME_HEIGHT + MARGIN;i += 10)
+            for (int i = -MARGIN; i < GameWindow.GAME_HEIGHT + MARGIN; i += 10)
             {
                 spawns.add(new Point(-MARGIN, i));
                 spawns.add(new Point(GameWindow.GAME_WIDTH + MARGIN, i += 10));
             }
-            for(int i = -MARGIN; i < GameWindow.GAME_WIDTH + MARGIN;i += 10)
+            for (int i = -MARGIN; i < GameWindow.GAME_WIDTH + MARGIN; i += 10)
             {
                 spawns.add(new Point(i, -MARGIN));
                 spawns.add(new Point(i, GameWindow.GAME_HEIGHT + MARGIN));
@@ -178,21 +191,23 @@ public class GameController {
      * 
      * @param player the player that fired
      */
-    public void playerFired(Player player)
+    public void playerFired(PlayerEntity player)
     {
         int direction = player.getDirectionFacing();
+        // FIXME: As it is, the 1500 should be a final variable. However, you should be making use of that getRange() method, no?
+        // Afterwards, the same problem needs to be fixed in RepaintHandler!
         int x2 = (int) (Math.cos(Math.toRadians(direction)) * 1500) + player.getCenterX();
         int y2 = (int) (Math.sin(Math.toRadians(direction)) * 1500) + player.getCenterY();
         Line2D.Double line = new Line2D.Double(player.getCenterX(), player.getCenterY(), x2, y2);
 
         List<Entity> toRemove = new ArrayList<Entity>();
-        synchronized(this)
+        synchronized (this)
         {
             double closest = Double.MAX_VALUE;
             Enemy closestEn = null;
-            for(Entity e : entities)
+            for (Entity e : entities)
             {
-                if(e instanceof Enemy && line.intersects(e.getHitBox()))
+                if (e instanceof Enemy && line.intersects(e.getHitBox()))
                 {
                     double dist = e.getLocation().distance(line.getP1());
                     if (dist < closest)
@@ -205,7 +220,7 @@ public class GameController {
             {
                 closestEn.damage(player.getCurrWeapon().getDamage());
                 closestEn.requestUpdate();
-                if(closestEn.killed())
+                if (closestEn.killed())
                 {
                     toRemove.add(closestEn);
                     server.relayMessage(new RemoveEntityMessage(closestEn));
@@ -215,16 +230,26 @@ public class GameController {
             entities.removeAll(toRemove);
         }
 
-
     }
 
+    /**
+     * @return The current map
+     */
     public AbstractMap getMap()
     {
         return map;
     }
 
-    public synchronized void removeEntity(Entity e)
+    /**
+     * Removes an entity from the array and notifies the clients to remove it as well
+     * @param e Entity to remove
+     */
+    public void removeEntity(Entity e)
     {
-        entities.remove(e);
+        synchronized (this)
+        {
+            entities.remove(e);
+        }
+        getServer().relayMessage(new RemoveEntityMessage(e));
     }
 }

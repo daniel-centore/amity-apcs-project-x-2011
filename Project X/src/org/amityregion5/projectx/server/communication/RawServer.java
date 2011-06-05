@@ -28,18 +28,23 @@ import java.util.logging.Logger;
 import org.amityregion5.projectx.server.Server;
 
 /**
- * Class documentation.
+ * The RawServer which looks for new RawClients. Muahahah!
  * 
  * @author Joe Stein
  * @author Daniel Centore
  */
 public class RawServer extends Thread {
 
-    private static ArrayList<RawClient> rawClients;
-    private boolean keepRunning = true;
-    private static ServerSocket rawSock;
+    private static ArrayList<RawClient> rawClients; // THe list of clients
+    private boolean keepRunning = true; // Should we keep looking?
+    private static ServerSocket rawSock; // Socket to search upon
     private Server server; // the main server
 
+    /**
+     * Creates a RawServer
+     * @param port Port to look on
+     * @param serv Regular server
+     */
     public RawServer(int port, Server serv)
     {
         rawClients = new ArrayList<RawClient>();
@@ -71,24 +76,26 @@ public class RawServer extends Thread {
         }
     }
 
+    /**
+     * Stops looking for connections
+     */
     public void kill()
     {
         keepRunning = false;
     }
 
     /**
-     * Writes a string to the raw output. String format should be: "entityUniqueId,x,y,dir". Please keep x, y, and dir to int values.
+     * Writes a string to the raw output. String format should be: "entityUniqueId,x,y,dir". *Please* keep x, y, and dir to int values.
      * 
      * @param s the CSV string to send
      */
     public void send(String s)
     {
         s.trim();
-        
-        if(rawClients.isEmpty())
-            System.err.println("No raw clients!");
 
-        // for (RawClient out : rawClients)
+        if (rawClients.isEmpty())
+            System.err.println("No raw clients! WTF!");
+
         for (RawClient out : rawClients)
         {
             out.send(s + "\n");

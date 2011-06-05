@@ -28,7 +28,11 @@ import org.amityregion5.projectx.common.entities.items.DamageDealing;
  */
 public abstract class MeleeWeapon extends Weapon implements DamageDealing {
 
+    private static final long serialVersionUID = 1L;
+    
+    // TODO: shouldn't the range be the size of the weapon?
     public static final int MELEE_RANGE = 5; // default to 5 pixels range
+    
     public int damage;
 
     public MeleeWeapon(int rate, int damage)
@@ -42,9 +46,16 @@ public abstract class MeleeWeapon extends Weapon implements DamageDealing {
         return damage;
     }
 
+    @Override
     public boolean fire()
     {
         // melee weapons don't run out of ammo
         return true;
+    }
+    
+    @Override
+    public boolean hasAmmo()
+    {
+        return true; // melee always have ammo! :D
     }
 }

@@ -27,7 +27,7 @@ import org.amityregion5.projectx.common.communication.messages.RemoveEntityMessa
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.EntityConstants;
 import org.amityregion5.projectx.common.entities.characters.CharacterEntity;
-import org.amityregion5.projectx.common.entities.characters.Player;
+import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
 import org.amityregion5.projectx.common.entities.characters.enemies.SuicideBomber;
 import org.amityregion5.projectx.common.maps.AbstractMap;
@@ -65,19 +65,15 @@ public class EntityMoverThread extends Thread {
                     double r = e.getMoveSpeed();
                     if (r > 0)
                     {
-                        // TODO make sure this Entity doesn't collide with
-                        // anything.
+                        // TODO make sure this Entity doesn't collide with anything
                         double theta = e.getDirectionMoving();
                         double newX = r * Math.cos(Math.toRadians(theta)) + e.getX();
                         double newY = r * Math.sin(Math.toRadians(theta)) + e.getY();
-                        if (e instanceof Player)
+                        if (e instanceof PlayerEntity)
                         {
-                            // FIXME this may take too much time/memory
                             Rectangle thb = e.getHitBox();
                             thb.setLocation((int) newX, (int) newY);
-                            // TODO if the play area doesn't contain the new
-                            // hit box (thb), move the player to the edge of the
-                            // play area. Keep in mind the player's direction.
+                            
                             if (map.getPlayArea().contains(thb))
                             {
                                 e.setX(newX);
@@ -92,13 +88,12 @@ public class EntityMoverThread extends Thread {
                     if (e instanceof Enemy)
                     {
                         Enemy en = (Enemy) e;
-                        if(en.getHitBox().intersects(map.getPlayArea()) || en.hasHit())
+                        if(en.getHitBox().intersects(map.getPlayArea()))// || en.hasHit())
                         {
                             if (en instanceof SuicideBomber)
                             {
                                 SuicideBomber sb = (SuicideBomber) en;
                                 map.getArea().damage(sb.getDamage());
-                                gameController.getServer().relayMessage(new RemoveEntityMessage(en));
                                 gameController.removeEntity(sb);
                             }
                             else
@@ -109,25 +104,22 @@ public class EntityMoverThread extends Thread {
                                 e.setDirectionMoving(dir);
                                 e.setDirectionFacing(dir);
                                 en.stop();
-                                en.hit();
                                 map.getArea().damage(en.getCurrWeapon().getDamage());
                                 if(map.getArea().killed() && alive)
                                 {
-                                    // keep the joptionpane out, this is serverside remember
-                                    //JOptionPane.showMessageDialog(null, "The enemies have taken over!", "Game Over", JOptionPane.OK_OPTION);
-                                    System.out.println("Base destroyed, game over");
                                     alive = false;
                                     gameController.getServer().kill();
                                     keepRunning = false;
                                     rawServer.kill();
                                     kill();
+                                    
+                                    // TODO: restart the server
                                 }
                             }
                         }
                     }
                 }
             }
-//            System.out.println("sent");
             sendAggregateUpdateMessage();
             try
             {
@@ -143,6 +135,7 @@ public class EntityMoverThread extends Thread {
     private void sendAggregateUpdateMessage()
     {
         StringBuilder buf = new StringBuilder();
+        
         synchronized (gameController)
         {
             buf.append("-1,");
@@ -173,12 +166,14 @@ public class EntityMoverThread extends Thread {
 
         if (buf.length() > 0)
         {
-            // trim last semicolon
             buf.deleteCharAt(buf.length() - 1);
             rawServer.send(buf.toString());
         }
     }
 
+    /**
+     * Kills the mover thread :-(
+     */
     public void kill()
     {
         keepRunning = false;

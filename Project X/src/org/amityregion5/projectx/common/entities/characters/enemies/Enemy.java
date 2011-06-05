@@ -51,7 +51,10 @@ public class Enemy extends CharacterEntity implements Damageable {
         hp = max;
         maxHealth = max;
         setMoveSpeed(DEFAULT_SPEED);
+        
+        //FIXME: The enemy has no weapon (or rather, the sword has no sprite). Unkludge this.
         addWeapon(new Sword(1));
+        
         setCurrWeapon(0);
     }
 
@@ -123,23 +126,18 @@ public class Enemy extends CharacterEntity implements Damageable {
         return "sprites/Enemy";
     }
 
+    
     public int getMaxHp()
     {
         return maxHealth;
     }
     
+    /**
+     * Convenience method for setMoveSpeed(0)
+     */
     public void stop()
     {
         setMoveSpeed(0);
     }
     
-    public boolean hasHit()
-    {
-        return hasHit;
-    }
-    
-    public void hit()
-    {
-        hasHit = true;
-    }
 }

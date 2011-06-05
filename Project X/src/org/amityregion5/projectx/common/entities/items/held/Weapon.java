@@ -30,7 +30,10 @@ import org.amityregion5.projectx.client.sound.SoundManager.Sound;
  * @author Joe Stein
  * @author Cam Simpson
  */
-public abstract class Weapon extends HeldItem implements DamageDealing{
+public abstract class Weapon extends HeldItem implements DamageDealing {
+
+    private static final long serialVersionUID = 1L;
+
     private int range; // Range (in pixels)
     private int attackRate;
     private Sound wepSound;
@@ -78,6 +81,8 @@ public abstract class Weapon extends HeldItem implements DamageDealing{
     }
 
     public abstract boolean hasAmmo();
+
     public abstract int getDamage();
+
     public abstract boolean fire();
 }

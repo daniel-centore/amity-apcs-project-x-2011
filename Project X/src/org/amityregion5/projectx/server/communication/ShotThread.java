@@ -21,11 +21,9 @@ package org.amityregion5.projectx.server.communication;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.amityregion5.projectx.common.entities.characters.Player;
+import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
 import org.amityregion5.projectx.server.Server;
-import org.amityregion5.projectx.client.sound.SoundManager;
-import org.amityregion5.projectx.client.sound.SoundManager.Sound;
 
 /**
  * A thread that helps deal with players shooting. Each client has one.
@@ -34,19 +32,20 @@ import org.amityregion5.projectx.client.sound.SoundManager.Sound;
  * @author Cam Simpson
  */
 public class ShotThread extends Thread {
-    private Player player;
+
+    private PlayerEntity player;
     private Server server;
     private boolean keepShooting = true;
     private boolean keepRunning = true;
 
-    public ShotThread(Player p, Server s)
+    public ShotThread(PlayerEntity p, Server s)
     {
         player = p;
         server = s;
         this.setDaemon(true);
     }
 
-    public void setPlayer(Player p)
+    public void setPlayer(PlayerEntity p)
     {
         player = p;
     }

@@ -26,7 +26,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.amityregion5.projectx.common.communication.messages.RemoveEntityMessage;
-import org.amityregion5.projectx.common.entities.characters.Player;
+import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.server.Server;
 
 /**
@@ -36,12 +36,13 @@ import org.amityregion5.projectx.server.Server;
  * @author Daniel Centore
  */
 public class RawClient extends Thread {
-    private Socket sock;
-    private boolean keepRunning = true;
-    private Server server;
-    private PrintWriter out;
-    private DataInputStream in;
-    private Player player;
+
+    private Socket sock; // The socket we are connected through
+    private boolean keepRunning = true; // Should we keep running?
+    private Server server; // Server we are connected to
+    private PrintWriter out; // What to print out to
+    private DataInputStream in; // What data comes in through
+    private PlayerEntity player; // Our current Player
 
     public RawClient(Socket s, Server serv)
     {
@@ -56,9 +57,9 @@ public class RawClient extends Thread {
         {
             Logger.getLogger(RawClient.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         String user = null;
-        
+
         try
         {
             user = in.readUTF();
@@ -66,13 +67,22 @@ public class RawClient extends Thread {
         {
             e.printStackTrace();
         }
-        
+
         for (Client c : server.getClients().values())
         {
             if (c.getIP().equals(sock.getInetAddress().getHostAddress()) && c.getUsername().equals(user))
             {
+                // FIXME: Do this more correctly
                 while (c.getPlayer() == null)
-                    System.out.println("null waka waka"); // TODO: very temporary!!!!
+                {
+                    try
+                    {
+                        Thread.sleep(1);
+                    } catch (InterruptedException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
 
                 player = c.getPlayer();
                 c.setRaw(this);
@@ -91,17 +101,19 @@ public class RawClient extends Thread {
             try
             {
                 int dir = in.readInt();
-                // System.out.println(dir);
+
                 this.handle(dir);
             } catch (IOException ex)
             {
                 server.relayMessage(new RemoveEntityMessage(player));
-//                Logger.getLogger(RawClient.class.getName()).log(Level.SEVERE, null, ex);
                 kill();
             }
         }
     }
 
+    /**
+     * Kills the RawClient!
+     */
     public void kill()
     {
         keepRunning = false;
@@ -111,12 +123,16 @@ public class RawClient extends Thread {
     {
         if (player == null)
         {
-            System.err.println("null player!");
+            System.err.println("Null Player! AGH!!");
             return;
         }
         player.setDirectionFacing(dir);
     }
 
+    /**
+     * Sends a raw message
+     * @param string The message to send
+     */
     public void send(String string)
     {
         out.print(string);

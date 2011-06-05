@@ -55,14 +55,14 @@ public class LobbyWindow extends JFrame implements MessageListener {
 
     private static final long serialVersionUID = 1L;
 
-    private static LobbyWindow instance;
+    private static LobbyWindow instance; // current instance
 
     private DefaultListModel playerListModel; // the model we change for players
     private CommunicationHandler ch; // the communication with the server
     private boolean ready; // are we ready to play?
     private String lastFrom; // last person to recieve from
     private Game game; // game used by LobbyWindow
-    private String username;
+    private String username; // our username
 
     /**
      * Creates a new LobbyWindow.
@@ -407,6 +407,9 @@ public class LobbyWindow extends JFrame implements MessageListener {
         return instance;
     }
 
+    /**
+     * @return The current game (if any)
+     */
     public Game getGame()
     {
         return game;

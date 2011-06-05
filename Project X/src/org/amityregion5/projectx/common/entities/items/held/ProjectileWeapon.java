@@ -28,14 +28,17 @@ package org.amityregion5.projectx.common.entities.items.held;
  * @author Michael Wenke
  */
 public abstract class ProjectileWeapon extends Weapon {
+
+    private static final long serialVersionUID = 1L;
+
     private int ammo;
     private int maxAmmo;
     private int roundsPerMag;
     private int mags;
     private int damage;
 
-    public ProjectileWeapon(int range, int startAmmo, int _maxAmmo, int rate,
-            int rpm, int mags, int damage)
+    // FIXME: Please comment this!
+    public ProjectileWeapon(int range, int startAmmo, int _maxAmmo, int rate, int rpm, int mags, int damage)
     {
         super(range, rate);
         ammo = startAmmo;
@@ -64,6 +67,7 @@ public abstract class ProjectileWeapon extends Weapon {
     {
         return roundsPerMag;
     }
+
     public int getMags()
     {
         return mags;
@@ -76,7 +80,7 @@ public abstract class ProjectileWeapon extends Weapon {
 
     public void reload()
     {
-        if(ammo == maxAmmo || mags == 0)
+        if (ammo == maxAmmo || mags == 0)
             return;
         ammo = roundsPerMag - ammo;
         mags--;
@@ -86,7 +90,7 @@ public abstract class ProjectileWeapon extends Weapon {
     {
         return (ammo > 0);
     }
-    
+
     public int getDamage()
     {
         return damage;

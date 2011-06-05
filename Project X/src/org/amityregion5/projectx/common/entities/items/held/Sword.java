@@ -41,13 +41,7 @@ public class Sword extends MeleeWeapon implements DamageDealing
     @Override
     public String getDefaultImage()
     {
-        // TODO Auto-generated method stub
         return "sprites/Pistol1";
     }
 
-    @Override
-    public boolean hasAmmo()
-    {
-        return true; // swords always have ammo! :D
-    }
 }

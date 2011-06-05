@@ -56,7 +56,7 @@ import org.amityregion5.projectx.common.communication.messages.StatusUpdateMessa
 import org.amityregion5.projectx.common.entities.Damageable;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.EntityConstants;
-import org.amityregion5.projectx.common.entities.characters.Player;
+import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 import org.amityregion5.projectx.common.tools.ImageHandler;
 import org.amityregion5.projectx.common.entities.characters.CharacterEntity;
@@ -75,14 +75,20 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
     private CommunicationHandler communicationHandler; // current CommunicationHandler
     private RawCommunicationHandler rch; // current raw communications handler
     private AbstractMap map; // current AbstractMap
-    private Player me; // current Player (null at initialization!)
+    private PlayerEntity me; // current Player (null at initialization!)
     private EntityHandler entityHandler; // current EntityHandler
     private List<Integer> depressedKeys = new ArrayList<Integer>();
     private DirectionalUpdateThread dUpThread;
     private int lastMouseX; // last mouse coordinates, so we can update direction as moving
     private int lastMouseY;
-    private String username;
+    private String username; // current username
 
+    /**
+     * Creates a game
+     * @param ch CommunicationHandler for communications
+     * @param m Current AbstractMap
+     * @param username Current username
+     */
     public Game(CommunicationHandler ch, AbstractMap m, String username)
     {
         this.username = username;
@@ -127,14 +133,14 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
 
     public void mousePressed(int x, int y, int button)
     {
-        // SoundManager.playSound(SoundManager.Sound.PISTOL_SHOT, 20000);
-        getCommunicationHandler().send(new FiringMessage(true));
+        if (button == 1)
+            getCommunicationHandler().send(new FiringMessage(true));
     }
 
     public void mouseReleased(int x, int y, int button)
     {
-        // SoundManager.stopSound(SoundManager.Sound.PISTOL_SHOT);
-        getCommunicationHandler().send(new FiringMessage(false));
+        if (button == 1)
+            getCommunicationHandler().send(new FiringMessage(false));
     }
 
     public void keyPressed(KeyEvent e)
@@ -186,11 +192,14 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             {
                 return;
             }
-            ClientMovingMessage c = new ClientMovingMessage(Player.INITIAL_SPEED, deg);
+            ClientMovingMessage c = new ClientMovingMessage(PlayerEntity.INITIAL_SPEED, deg);
             getCommunicationHandler().send(c);
         }
     }
 
+    /**
+     * @return The Entity Model
+     */
     public EntityHandler getEntityHandler()
     {
         return entityHandler;
@@ -221,7 +230,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
 
     public void keyReleased(int keyCode)
     {
-        int speed = Player.INITIAL_SPEED;
+        int speed = PlayerEntity.INITIAL_SPEED;
 
         while (depressedKeys.contains(keyCode))
         {
@@ -262,7 +271,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         } else if (m instanceof AddMeMessage)
         {
             AddMeMessage amm = (AddMeMessage) m;
-            me = (Player) amm.getEntity();
+            me = (PlayerEntity) amm.getEntity();
             me.updateWeaponImages();
             entityHandler.addEntity(me);
             dUpThread.start(); // start directional update thread
@@ -325,7 +334,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
     /**
      * @return Current Player
      */
-    public Player getMe()
+    public PlayerEntity getMe()
     {
         return me;
     }
@@ -335,7 +344,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
      * 
      * @param me Player to set it to
      */
-    public void setMe(Player me)
+    public void setMe(PlayerEntity me)
     {
         this.me = me;
     }
@@ -346,8 +355,6 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
     public Iterable<Entity> getEntities()
     {
         return entityHandler.getEntities();
-        // entityHandler.wait();
-
     }
 
     public void initWindow()
@@ -389,21 +396,18 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                         me.setDirectionFacing(angle);
                     } else
                         e.setDirectionFacing(Integer.valueOf(entVals[3]));
-
-                    // System.out.println("Facing: " + entVals[3]);
                 }
             }
         }
-        // mouseMoved(lastMouseX, lastMouseY); // update angle
 
         if (GameWindow.getInstance() != null)
         {
-            // GameWindow is visible and running
             GameWindow.fireRepaintRequired();
         }
 
     }
 
+    // TODO: There needs to be an alternate way to change weapons, incase we have no scroll wheel!
     public void mouseScrolled(MouseWheelEvent e)
     {
         me.changeWeapon(e.getWheelRotation());
@@ -434,7 +438,6 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             {
                 try
                 {
-                    // System.out.println("sending");
                     rch.send(me.getDirectionFacing());
                     Thread.sleep(EntityConstants.DIR_UPDATE_TIME);
                 } catch (Exception ex)
@@ -448,11 +451,6 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         public void kill()
         {
             keepRunning = false;
-        }
-
-        public AbstractMap getMap()
-        {
-            return map;
         }
     }
 

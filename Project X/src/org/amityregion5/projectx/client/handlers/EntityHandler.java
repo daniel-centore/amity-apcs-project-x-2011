@@ -35,7 +35,11 @@ public class EntityHandler {
 
     private volatile HashMap<Long, Entity> entities = new HashMap<Long, Entity>(); // the set of current entities
 
-    public synchronized void addEntity(Entity e) // adds an entity (should receive request from game)
+    /**
+     * Adds an entity (NOTE: We should NOT create entities client-side!)
+     * @param e Entity to add
+     */
+    public synchronized void addEntity(Entity e)
     {
         if (entities.containsKey(e.getUniqueID()))
             return;
@@ -47,7 +51,12 @@ public class EntityHandler {
         GameWindow.fireRepaintRequired();
     }
 
-    public synchronized Entity removeEntity(Entity e) // receive an entity (should receive request from game)
+    /**
+     * Removes an entity
+     * @param e Entity to remove
+     * @return The entity we removed (not that you don't already have it)
+     */
+    public synchronized Entity removeEntity(Entity e)
     {
         return entities.remove(e.getUniqueID());
     }
@@ -69,8 +78,6 @@ public class EntityHandler {
     public synchronized Collection<Entity> getEntities()
     {
         return entities.values();
-        // clone the collection to avoid CMEs!!
-        // return ((HashMap<Long, Entity>) entities.clone()).values();
     }
 
     /**
@@ -83,6 +90,7 @@ public class EntityHandler {
 
     public void tellSocketClosed()
     {
+        // unused
     }
 
     /**

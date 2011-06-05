@@ -57,7 +57,7 @@ public abstract class Entity implements Serializable {
 
     private transient boolean needUpdate; // do we need to resend the location?
 
-    // TODO: move this to Player
+    // FIXME: Why is this all in ENTITY? WHEN IS A BLOCK GOING TO FIRE???
     private transient boolean justFired; // did this client fire since the last repaint?
     private long firedTime; // when we fired
 
@@ -69,7 +69,7 @@ public abstract class Entity implements Serializable {
     public Entity()
     {
         uniqueID = nextUniqueID++;
-        hitBox = new Rectangle(1, 1); // default tiny hitbox
+        hitBox = null;
         location = new Point2D.Double(0, 0);
         image = null;
         directionFacing = 0;
@@ -286,7 +286,6 @@ public abstract class Entity implements Serializable {
         currentImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = (Graphics2D) currentImage.getGraphics();
 
-        // TODO: fix it so it doesnt cut off anymore
         setHitBox(image.getWidth(), image.getHeight());
 
         g2.drawImage(image, getAffineTransform(), null);
@@ -372,22 +371,36 @@ public abstract class Entity implements Serializable {
         return pre;
     }
 
+    /**
+     * @return Should we display a fired beam?
+     */
     public boolean getFired()
     {
         return justFired;
     }
 
-    public void setFired(boolean justFired)
+    /**
+     * Sets whether or not we have just fired.
+     * Note: Will not set to false if within FIRE_TIME ms of setting it to true
+     * @param justFired What to set it to
+     * @return Whether or not we actually set it
+     */
+    public boolean setFired(boolean justFired)
     {
 
         if (justFired)
         {
             firedTime = System.currentTimeMillis();
             this.justFired = justFired;
+            
+            return true;
         } else if (System.currentTimeMillis() - firedTime >= FIRE_TIME)
         {
             this.justFired = justFired;
+            return true;
         }
+        
+        return false;
     }
 
     /**
@@ -401,8 +414,8 @@ public abstract class Entity implements Serializable {
         hitBox = new Rectangle(width, height);
     }
 
-    /*
-     * Returns the hit box including the x and y.
+    /**
+     * @return The hit box
      */
     public Rectangle getHitBox()
     {

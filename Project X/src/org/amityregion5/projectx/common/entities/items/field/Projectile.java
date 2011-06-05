@@ -25,11 +25,13 @@ package org.amityregion5.projectx.common.entities.items.field;
  */
 public abstract class Projectile extends FieldItem {
 
+    private static final long serialVersionUID = 1L;
+    
     private int damage;
 
     public Projectile(int dm)
     {
-        super(0, 0); //TODO
+        super(0, 0); //TODO Implement it!
         damage = dm;
     }
 

@@ -24,15 +24,11 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
-
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
 import org.amityregion5.projectx.common.maps.AbstractMap;
-import org.amityregion5.projectx.common.maps.TestingMap;
 import org.amityregion5.projectx.server.game.GameController;
 
 /**
@@ -47,7 +43,6 @@ public class GeneratorThread extends Thread {
     private BlockingQueue<EnemyWave> waves;
     private ArrayList<Point> enemySpawns;
     private EnemyManager manager;
-    //TODO: Get enemy spawning to work
 
     public GeneratorThread(GameController c, ArrayList<Point> spawns, EnemyManager m)
     {
@@ -57,7 +52,7 @@ public class GeneratorThread extends Thread {
         manager = m;
     }
 
-    /*
+    /**
      * Adds a wave of enemies to the game, staggering timing by the specified
      * spawn time in the given wave's getSpawnTime().
      * Note: THIS METHOD BLOCKS UNTIL THE ENTIRE WAVE IS FINISHED.
@@ -110,7 +105,6 @@ public class GeneratorThread extends Thread {
     @Override
     public void run()
     {
-        // TODO will release enemies on some kind of timer
         while(true)
         {
             if(waves.peek() != null)

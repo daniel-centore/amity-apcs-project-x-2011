@@ -41,7 +41,6 @@ public class ImageHandler {
      */
     public static BufferedImage loadImage(String str)
     {
-        // FIXME: make this actually figure out what directory to look in.
         return loadFile("resources/" + str + ".png");
     }
 

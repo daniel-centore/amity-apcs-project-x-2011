@@ -40,7 +40,7 @@ public class EntityConstants {
      * Number of milliseconds between moves. Move speed is number of linear pixels per this number of milliseconds.
      */
     public static final int MOVE_UPDATE_TIME = 1000 / 20;
-    public static final int DIR_UPDATE_TIME  = 1000 / 40;
+    public static final int DIR_UPDATE_TIME = 1000 / 40;
 
     // names of field items
     public static final String FENCE = "Fence";

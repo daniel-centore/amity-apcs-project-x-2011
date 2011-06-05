@@ -28,11 +28,6 @@ import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
-import org.amityregion5.projectx.client.gui.GameWindow;
-import org.amityregion5.projectx.client.gui.LobbyWindow;
-import org.amityregion5.projectx.client.gui.ServerChooserWindow;
 import org.amityregion5.projectx.common.communication.Constants;
 import org.amityregion5.projectx.common.communication.MessageListener;
 import org.amityregion5.projectx.common.communication.messages.BlockingMessage;

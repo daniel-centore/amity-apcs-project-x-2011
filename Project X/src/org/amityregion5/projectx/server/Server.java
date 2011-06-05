@@ -26,8 +26,6 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.amityregion5.projectx.common.communication.Constants;
 import org.amityregion5.projectx.common.communication.messages.ActivePlayersMessage;
@@ -37,7 +35,7 @@ import org.amityregion5.projectx.common.communication.messages.FiredMessage;
 import org.amityregion5.projectx.common.communication.messages.GoodbyeMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.common.communication.messages.StatusUpdateMessage;
-import org.amityregion5.projectx.common.entities.characters.Player;
+import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.server.communication.Client;
 import org.amityregion5.projectx.server.communication.Multicaster;
 import org.amityregion5.projectx.server.communication.RawServer;
@@ -61,8 +59,9 @@ public class Server {
     private Multicaster multicaster; // for multicasting IP and String
     private ServerController controller; // controls the server
     private int waiting; // how many people we are waiting for
-    private GameController gameController;
-    /*
+    private GameController gameController; // Current game controller
+    
+    /**
      * A HashMap of the connected Clients to this Server.
      * Will not include clients until they have sent an IntroduceMessage
      * see Client
@@ -76,28 +75,23 @@ public class Server {
      */
     public Server(String name)
     {
-        System.out.println("Initializing server...");
+        System.out.println("Starting server...");
         this.name = name;
         gameController = null;
         try
         {
-            System.out.println("Creating server socket...");
             servSock = new ServerSocket(Constants.PORT);
-            System.out.println("Starting to listen on port " + Constants.PORT);
             startListening();
-            System.out.println("Creating multicaster...");
             multicaster = new Multicaster(name);
             multicaster.setDaemon(true);
-            System.out.println("Starting multicaster...");
             multicaster.start();
-            System.out.println("Creating raw server...");
             rawServ = new RawServer(Constants.RAW_PORT, this);
             rawServ.start();
-            System.out.println("Raw listening on port " + Constants.RAW_PORT);
+            System.out.println("Server successfully started! Yipee!");
+            System.out.println("-----------------------------------------");
         } catch (IOException e)
         {
-            // usually means a server is already running
-            e.printStackTrace();
+            System.err.println("A server is already running ont his computer!");
             System.exit(1);
         }
     }
@@ -343,6 +337,9 @@ public class Server {
         return clients;
     }
 
+    /**
+     * @return The current Raw Server
+     */
     public RawServer getRawServer()
     {
         return rawServ;
@@ -354,7 +351,7 @@ public class Server {
      * for damage handling.
      * @param player the player that fired
      */
-    public void playerFired(Player player)
+    public void playerFired(PlayerEntity player)
     {
         if (gameController != null)
         {
@@ -404,6 +401,10 @@ public class Server {
         return gameController;
     }
 
+    /**
+     * Sends a Raw Message
+     * @param s Message to send
+     */
     public void sendRaw(String s)
     {
         rawServ.send(s);

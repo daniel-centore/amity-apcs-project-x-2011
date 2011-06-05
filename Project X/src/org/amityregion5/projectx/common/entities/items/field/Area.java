@@ -25,16 +25,18 @@ import org.amityregion5.projectx.common.entities.Damageable;
  *
  * @author Daniel Centore
  */
-public class Area extends FieldItem implements Damageable{
-    
+public class Area extends FieldItem implements Damageable {
+
     private static final long serialVersionUID = 1L;
+    
+    public static final int MAXIMUM_HEALTH = 1000;
+    
     private int hp;
-    private int maxHealth = 1000;//TODO arbitrary
 
     public Area(int x, int y)
     {
         super(x, y);
-        hp = maxHealth;
+        hp = MAXIMUM_HEALTH;
     }
 
     @Override
@@ -59,7 +61,6 @@ public class Area extends FieldItem implements Damageable{
     public void damage(int damage)
     {
         hp -= damage;
-        //System.out.println("Current: " + hp);
     }
 
     /**
@@ -70,8 +71,8 @@ public class Area extends FieldItem implements Damageable{
     public void heal(int health)
     {
         hp += health;
-        if (hp > maxHealth)
-            hp = maxHealth;
+        if (hp > MAXIMUM_HEALTH)
+            hp = MAXIMUM_HEALTH;
     }
 
     @Override
@@ -82,7 +83,7 @@ public class Area extends FieldItem implements Damageable{
 
     public int getMaxHp()
     {
-        return maxHealth;
+        return MAXIMUM_HEALTH;
     }
 
     public void setHp(int hp)

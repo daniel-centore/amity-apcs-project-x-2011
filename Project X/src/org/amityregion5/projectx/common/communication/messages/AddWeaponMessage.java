@@ -25,8 +25,12 @@ import org.amityregion5.projectx.common.entities.items.held.Weapon;
  * with the given uniqueID.
  *
  * @author Joe Stein
+ * @author Daniel Centore
  */
 public class AddWeaponMessage extends Message {
+    
+    private static final long serialVersionUID = 1L;
+    
     private Weapon weapon;
     private long uniqueID; // the id of the person whose weapon to add
     private String wepSpriteLoc;

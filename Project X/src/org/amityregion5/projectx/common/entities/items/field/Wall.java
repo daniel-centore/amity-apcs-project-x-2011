@@ -19,7 +19,6 @@
  */
 package org.amityregion5.projectx.common.entities.items.field;
 
-import org.amityregion5.projectx.common.entities.Damageable;
 import org.amityregion5.projectx.common.entities.Entity;
 
 /**

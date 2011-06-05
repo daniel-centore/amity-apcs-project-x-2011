@@ -30,6 +30,7 @@ import org.amityregion5.projectx.common.entities.Damageable;
 public class Block extends FieldItem implements Damageable {
 
     private static final long serialVersionUID = 1L;
+    
     public static final int DEFAULT_HEALTH = 100;
     private int hp;
     private final int maxHealth;

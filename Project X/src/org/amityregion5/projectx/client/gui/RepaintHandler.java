@@ -29,9 +29,10 @@ import java.awt.image.BufferedImage;
 
 import org.amityregion5.projectx.client.Game;
 import org.amityregion5.projectx.common.entities.Entity;
-import org.amityregion5.projectx.common.entities.characters.Player;
+import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
 import org.amityregion5.projectx.common.entities.items.field.Area;
+import org.amityregion5.projectx.common.entities.items.held.HeldItem;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 
 /**
@@ -42,9 +43,9 @@ import org.amityregion5.projectx.common.maps.AbstractMap;
  */
 public class RepaintHandler extends Thread {
 
+    public static final int HEALTHBAR_HEIGHT = 5; // default healthbar height
+
     private static Game game; // game we are based from
-    private static final int HEALTHBAR_WIDTH = 50;
-    private static final int HEALTHBAR_HEIGHT = 5;
 
     /**
      * Sets the game we are using
@@ -95,9 +96,8 @@ public class RepaintHandler extends Thread {
                 g.drawImage(e.getImage(), e.getX(), e.getY(), null);
                 g.setColor(Color.WHITE);
                 g.setStroke(new BasicStroke(1));
-                // g.draw(e.getHitBox());
-                // draw health bar
 
+                // --Healthbar Drawing--
                 if (e instanceof Enemy)
                 {
                     Enemy en = (Enemy) e;
@@ -105,9 +105,9 @@ public class RepaintHandler extends Thread {
                     int x = en.getX();
                     int y = en.getY() - 10;
                     g.setColor(Color.RED);
-                    g.fillRect(x, y, HEALTHBAR_WIDTH, HEALTHBAR_HEIGHT);
+                    g.fillRect(x, y, e.getWidth(), HEALTHBAR_HEIGHT);
                     g.setColor(Color.GREEN);
-                    g.fillRect(x, y, (int) (HEALTHBAR_WIDTH * percent), HEALTHBAR_HEIGHT);
+                    g.fillRect(x, y, (int) (e.getWidth() * percent), HEALTHBAR_HEIGHT);
                 }
                 Area a = game.getMap().getArea();
                 double percent = (double) a.getHp() / a.getMaxHp();
@@ -117,17 +117,16 @@ public class RepaintHandler extends Thread {
                 g.fillRect(x, y, a.getWidth(), HEALTHBAR_HEIGHT);
                 g.setColor(Color.GREEN);
                 g.fillRect(x, y, (int) (a.getWidth() * percent), HEALTHBAR_HEIGHT);
-                if (e instanceof Player)
-                {
-                    // draw a laser sight for weapon direction
-                    g.setColor(Color.red);
-                    g.setStroke(new BasicStroke(2));
 
+                // --End Healthbar Drawing--
+
+                // --Drawing of firing--
+                if (e instanceof PlayerEntity)
+                {
+                    // FIXME: This should only draw up to the enemy that was just fired upon
                     int x2 = (int) (Math.cos(Math.toRadians(e.getDirectionFacing())) * 800) + e.getCenterX();
                     int y2 = (int) (Math.sin(Math.toRadians(e.getDirectionFacing())) * 800) + e.getCenterY();
-                    // g.drawLine(e.getCenterX(), e.getCenterY(), x2, y2);
 
-                    // TODO draw a fire if it just fired
                     if (e.getFired())
                     {
                         Stroke old = g.getStroke();
@@ -141,7 +140,7 @@ public class RepaintHandler extends Thread {
                     }
 
                     // draw the weapon
-                    Player p = (Player) e;
+                    PlayerEntity p = (PlayerEntity) e;
                     if (p.hasWeapons())
                     {
                         BufferedImage wepImg = p.getCurrWeapon().getImage();
@@ -152,10 +151,10 @@ public class RepaintHandler extends Thread {
                         g.drawImage(wepImg, at, null);
                     }
                 }
+
+                // --End of fire drawing--
             }
         }
-
-        // g.draw(game.getMap().getPlayArea());
 
         return img;
     }

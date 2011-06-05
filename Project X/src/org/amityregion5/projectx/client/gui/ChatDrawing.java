@@ -63,7 +63,6 @@ public class ChatDrawing {
         Graphics2D g2 = (Graphics2D) result.getGraphics();
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        int k = 1;// used for making the text not ovrflow
         Rectangle r = new Rectangle(X_MARGIN, (HEIGHT_MARGIN * NUM_CHATS), width - Y_MARGIN, g2.getFont().getSize() + 2);
         final int DISTANCE_BETWEEN_CHATS = g2.getFont().getSize();
         final int MARGIN = Y_MARGIN - (HEIGHT_MARGIN * 2);
@@ -77,6 +76,7 @@ public class ChatDrawing {
         if (isChatting)
         {
             // TODO make the letters also appear on the new line
+            // Alternative: just give it a limit on how many characters we can type
             g2.setColor(Color.BLACK);
             g2.draw(r);
             g2.drawString(currChat.toString() + "|", X_MARGIN + 5, g2.getFont().getSize() + (HEIGHT_MARGIN * NUM_CHATS));
@@ -113,7 +113,7 @@ public class ChatDrawing {
     public static void setChatting(boolean chatting)
     {
         isChatting = chatting;
-        GameWindow.getInstance().fireRepaintRequired();
+        GameWindow.fireRepaintRequired();
     }
 
     /**
@@ -134,7 +134,7 @@ public class ChatDrawing {
         if (currChat.length() > 0)
         {
             currChat.delete(currChat.length() - 1, currChat.length());
-            GameWindow.getInstance().fireRepaintRequired();
+            GameWindow.fireRepaintRequired();
         }
     }
 
@@ -148,7 +148,7 @@ public class ChatDrawing {
         if (currChat.length() < TEXT_LIMIT)
         {
             currChat.append(c);
-            GameWindow.getInstance().fireRepaintRequired();
+            GameWindow.fireRepaintRequired();
         }
     }
 

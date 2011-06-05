@@ -33,6 +33,9 @@ import javazoom.jl.player.Player;
  */
 public class SoundManager extends Thread {
 
+    /**
+     * All sounds are here :-)
+     */
     public static enum Sound
     {
         PISTOL_SHOT("resources/sounds/65_Pistol_Shot.mp3"),
@@ -61,6 +64,10 @@ public class SoundManager extends Thread {
         }
     }
 
+    /**
+     * Loops a sound
+     * @param s Sound to loop
+     */
     public static void playLoop(final Sound s)
     {
         new Thread() {
@@ -84,6 +91,10 @@ public class SoundManager extends Thread {
         }.start();
     }
 
+    /**
+     * Plays a sound once
+     * @param s Sound to play
+     */
     public static void playOnce(final Sound s)
     {
         new Thread() {

@@ -44,6 +44,11 @@ public class RawCommunicationHandler extends Thread {
     private boolean keepRunning = true; // do we keep running?
     private ArrayList<RawListener> rawListeners; // listens for communications
 
+    /**
+     * Creates a raw communications handler
+     * @param serverIP The server to connect to
+     * @param username Our (unique) username
+     */
     public RawCommunicationHandler(String serverIP, String username)
     {
         rawListeners = new ArrayList<RawListener>();

@@ -28,5 +28,6 @@ package org.amityregion5.projectx.common.entities.items;
  * @author Mike DiBuduo
  */
 public interface DamageDealing {
+    
     public int getDamage();
 }

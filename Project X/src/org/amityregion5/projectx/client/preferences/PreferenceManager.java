@@ -33,11 +33,12 @@ import java.util.prefs.Preferences;
  * @author Joe Stein
  */
 public class PreferenceManager {
+
     public static final String USERNAME = "username";
     public static final String SPLASH_SHOWN = "splash";
     public static final String KEY_CSV = "keycsv";
 
-    public static final long SPLASH_PERIOD = 60 * 60 * 24; //one day.
+    public static final long SPLASH_PERIOD = 60 * 60 * 24; // one day.
 
     private static ArrayList<PrefListener> listeners = new ArrayList<PrefListener>();
     private static Preferences prefs;
@@ -107,10 +108,11 @@ public class PreferenceManager {
         return prefs.get(KEY_CSV, "w,a,s,d,t");
     }
 
-    public static boolean checkSplashScreen() {
+    public static boolean checkSplashScreen()
+    {
         long last = Long.parseLong(prefs.get(SPLASH_SHOWN, "0"));
         long time = (new Date()).getTime();
-        prefs.put(SPLASH_SHOWN, ""+ time);
+        prefs.put(SPLASH_SHOWN, "" + time);
         return time - last > SPLASH_PERIOD;
     }
 }

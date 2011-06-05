@@ -19,7 +19,6 @@
  */
 package org.amityregion5.projectx.common.entities.characters;
 
-import org.amityregion5.projectx.common.entities.items.held.Weapon;
 
 /**
  * Character controlled by a Client which fights Enemies. Capable of using multiple weapons.
@@ -27,35 +26,20 @@ import org.amityregion5.projectx.common.entities.items.held.Weapon;
  * @author Mike DiBuduo
  * @author Joe Stein
  */
-public class Player extends CharacterEntity {
-    public  static final int INITIAL_SPEED = 10; // initial move speed
+public class PlayerEntity extends CharacterEntity {
+    
     private static final long serialVersionUID = 1L;
-    private static final int MAX_HEALTH = 100; // Player's health should be 100
+    
+    public  static final int INITIAL_SPEED = 10; // initial move speed
 
-    public Player()
+    /**
+     * Creates a player
+     * @param x X and Y coordinates
+     * @param y
+     */
+    public PlayerEntity(int x, int y)
     {
-        super(0, 0);
-        this.setMoveSpeed(INITIAL_SPEED);
-        /*System.out.println("adding weapon!");
-        addWeapon(new Weapon(1000,1) {
-
-            @Override
-            public String getDefaultImage()
-            {
-                return "sprites/Pistol1";
-            }
-        }); */
-    }
-
-    public Player(Weapon wp)
-    {
-        this();
-        addWeapon(wp);
-    }
-
-    public Player(int i, int j)
-    {
-        super(i, j);
+        super(x, y);
     }
 
     @Override

@@ -30,7 +30,6 @@ import org.amityregion5.projectx.common.entities.Entity;
  */
 public class CollisionDetection
 {
-
     // what level of opacity (0 = transparent, 255 = completely opaque) is considered opaque for pixel collisions
     public static final int OPACITY_THRESHOLD = 100;
 

@@ -45,7 +45,7 @@ import org.amityregion5.projectx.common.communication.messages.ReadyMessage;
 import org.amityregion5.projectx.common.communication.messages.RemoveEntityMessage;
 import org.amityregion5.projectx.common.communication.messages.RequestEntityAddMessage;
 import org.amityregion5.projectx.common.communication.messages.TextualMessage;
-import org.amityregion5.projectx.common.entities.characters.Player;
+import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.server.Server;
 
 /**
@@ -64,7 +64,7 @@ public class Client extends Thread {
     private ObjectInputStream inObjects; // what we read from
     private boolean quit = false; // should we quit?
     private boolean waiting = true; // are we waiting on this client?
-    private Player player; // client's player (once we make it!)
+    private PlayerEntity player; // client's player (once we make it!)
     private RawClient raw; // client's raw client (once created)
     private ShotThread shotThread; // helps this client with shooting
 
@@ -88,7 +88,7 @@ public class Client extends Thread {
         {
             e.printStackTrace();
         }
-        shotThread = new ShotThread(player,server);
+        shotThread = new ShotThread(player, server);
     }
 
     @Override
@@ -240,8 +240,8 @@ public class Client extends Thread {
         } else if (m instanceof FiringMessage)
         {
             FiringMessage fm = (FiringMessage) m;
-            // TODO do stuff when the client starts or stops firing
-            synchronized(shotThread)
+
+            synchronized (shotThread)
             {
                 if (fm.getFireStart()) // starting firing
                 {
@@ -252,7 +252,7 @@ public class Client extends Thread {
                     {
                         shotThread.start();
                     }
-                    //server.relayMessage(new FiredMessage(player.getUniqueID()));
+                    // server.relayMessage(new FiredMessage(player.getUniqueID()));
                 } else
                 {
                     // shotThread will wait by itself after we set setShooting
@@ -263,7 +263,7 @@ public class Client extends Thread {
         } else if (m instanceof RequestEntityAddMessage)
         {
             RequestEntityAddMessage ream = (RequestEntityAddMessage) m;
-            
+
             server.relayMessage(new AddEntityMessage(ream.getNewInstance()));
         }
     }
@@ -312,7 +312,7 @@ public class Client extends Thread {
      * 
      * @param p Player to set it to
      */
-    public void setPlayer(Player p)
+    public void setPlayer(PlayerEntity p)
     {
         player = p;
         shotThread.setPlayer(player);
@@ -321,7 +321,7 @@ public class Client extends Thread {
     /**
      * @return The Client's player
      */
-    public Player getPlayer()
+    public PlayerEntity getPlayer()
     {
         return player;
     }
