@@ -37,8 +37,8 @@ public abstract class ProjectileWeapon extends Weapon {
     private int mags;
     private int damage;
 
-    // FIXME: Please comment this!
-    
+    // FIXME: Please comment this! MIKE D!
+    // Also, implement the mags and reload and stuff. -1 mags should indicate infinite perhaps?
     public ProjectileWeapon(int range, int startAmmo, int _maxAmmo, int rate, int rpm, int mags, int damage)
     {
         super(range, rate);

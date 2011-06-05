@@ -35,7 +35,7 @@ import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.characters.CharacterEntity;
 import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
-import org.amityregion5.projectx.common.entities.items.held.Gun;
+import org.amityregion5.projectx.common.entities.items.held.Pistol;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 import org.amityregion5.projectx.common.maps.TestingMap;
@@ -103,7 +103,7 @@ public class GameController {
 
         for (PlayerEntity p : players)
         {
-            addWeapon(p, new Gun(300, 100, 10, 2, 6, 50, 5));
+            addWeapon(p, new Pistol());
         }
 
         entityMoverThread = new EntityMoverThread(this, server.getRawServer(), map);

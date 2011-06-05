@@ -72,7 +72,6 @@ public class EntityMoverThread extends Thread {
                     double r = e.getMoveSpeed();
                     if (r > 0)
                     {
-                        // TODO make sure this Entity doesn't collide with anything
                         double theta = e.getDirectionMoving();
 
                         double offsetX = r * Math.cos(Math.toRadians(theta));
