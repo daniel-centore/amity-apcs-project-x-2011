@@ -32,7 +32,6 @@ import org.amityregion5.projectx.client.Game;
 import org.amityregion5.projectx.common.entities.Damageable;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
-import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
 import org.amityregion5.projectx.common.entities.items.field.Area;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 
@@ -46,6 +45,7 @@ public class RepaintHandler extends Thread {
 
     public static final int HEALTHBAR_HEIGHT = 5; // default healthbar height
 
+    private static boolean showingGrid = false;
     private static Game game; // game we are based from
 
     /**
@@ -75,7 +75,6 @@ public class RepaintHandler extends Thread {
 
         g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
-
         g.setColor(Color.white);
         g.fillRect(0, 0, GameWindow.GAME_WIDTH, GameWindow.GAME_HEIGHT);
 
@@ -87,6 +86,22 @@ public class RepaintHandler extends Thread {
             g.drawImage(k, 0, 0, null);
         }
 
+        // Grid drawing
+        if (isShowingGrid())
+        {
+            g.setColor(Color.white);
+            g.setStroke(new BasicStroke(1.5f));
+            for (int i = 0; i < GameWindow.GAME_HEIGHT; i += PopupMenuHandler.GRID_SIZE)
+            {
+                g.drawLine(0, i, GameWindow.GAME_WIDTH, i);
+            }
+
+            for (int i = 0; i < GameWindow.GAME_WIDTH; i += PopupMenuHandler.GRID_SIZE)
+            {
+                g.drawLine(i, 0, i, GameWindow.GAME_HEIGHT);
+            }
+        }
+        
         for (Entity e : map.getEntities()) // draw constant entities
         {
             g.drawImage(e.getImage(), e.getX(), e.getY(), null);
@@ -137,13 +152,13 @@ public class RepaintHandler extends Thread {
 
                 // --End of fire drawing--
             }
-            
+
             for (Entity e : game.getEntityHandler().getEntities())
             {
                 // --Healthbar Drawing--
                 if (e instanceof Damageable)
                 {
-//                    Enemy en = (Enemy) e;
+                    // Enemy en = (Enemy) e;
                     Damageable d = (Damageable) e;
                     double percent = (double) d.getHp() / d.getMaxHp();
                     int x = e.getX();
@@ -164,8 +179,24 @@ public class RepaintHandler extends Thread {
 
                 // --End Healthbar Drawing--
             }
+
         }
 
         return img;
+    }
+
+    public static void setShowingGrid(boolean showingGrid)
+    {
+        RepaintHandler.showingGrid = showingGrid;
+    }
+
+    public static boolean isShowingGrid()
+    {
+        return showingGrid;
+    }
+    
+    public static void switchShowingGrid()
+    {
+        showingGrid = !showingGrid;
     }
 }

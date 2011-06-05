@@ -38,6 +38,10 @@ public class Keys {
     public static int[] LEFT    = { KeyEvent.VK_H, KeyEvent.VK_LEFT };
     public static int[] RIGHT   = { KeyEvent.VK_L, KeyEvent.VK_RIGHT };
     public static int[] CHAT    = { KeyEvent.VK_T, KeyEvent.VK_SEMICOLON };
+    public static int[] GRID    = { KeyEvent.VK_G };
+    public static int[] FIRE    = { KeyEvent.VK_SPACE };
+    
+    public static int[] BLOCK  = { KeyEvent.VK_F1 };
 
     public static void refreshKeyPrefs()
     {

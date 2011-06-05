@@ -18,6 +18,7 @@
  */
 package org.amityregion5.projectx.client;
 
+import java.awt.Point;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
@@ -32,6 +33,7 @@ import org.amityregion5.projectx.client.communication.CommunicationHandler;
 import org.amityregion5.projectx.client.communication.RawCommunicationHandler;
 import org.amityregion5.projectx.client.gui.ChatDrawing;
 import org.amityregion5.projectx.client.gui.GameWindow;
+import org.amityregion5.projectx.client.gui.PopupMenuHandler;
 import org.amityregion5.projectx.client.gui.RepaintHandler;
 import org.amityregion5.projectx.client.gui.ServerChooserWindow;
 import org.amityregion5.projectx.client.gui.input.InputHandler;
@@ -52,6 +54,7 @@ import org.amityregion5.projectx.common.communication.messages.FiredMessage;
 import org.amityregion5.projectx.common.communication.messages.FiringMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.common.communication.messages.RemoveEntityMessage;
+import org.amityregion5.projectx.common.communication.messages.RequestEntityAddMessage;
 import org.amityregion5.projectx.common.communication.messages.StatusUpdateMessage;
 import org.amityregion5.projectx.common.entities.Damageable;
 import org.amityregion5.projectx.common.entities.Entity;
@@ -105,7 +108,9 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         ch.registerListener(this);
         InputHandler.registerListener(this);
         RepaintHandler.setGame(this);
-        SoundManager.playLoop(Sound.BG_1);
+
+        if (SoundManager.BACKGROUND)
+            SoundManager.playLoop(Sound.BG_1);
     }
 
     public void mouseDragged(int x, int y)
@@ -174,6 +179,18 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             {
                 ChatDrawing.setChatting(true);
                 return;
+            } else if (Keys.isKey(Keys.GRID, keyCode))
+            {
+                RepaintHandler.switchShowingGrid();
+                return;
+            } else if (Keys.isKey(Keys.BLOCK, keyCode))
+            {
+                Point p = PopupMenuHandler.roundToGrid(lastMouseX, lastMouseY);
+
+                communicationHandler.send(new RequestEntityAddMessage(EntityConstants.BLOCK, p.x, p.y));
+            } else if (Keys.isKey(Keys.FIRE, keyCode))
+            {
+                getCommunicationHandler().send(new FiringMessage(true));
             }
             if (me == null)
             {
@@ -248,6 +265,11 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         }
         ClientMovingMessage c = new ClientMovingMessage(speed, deg);
         getCommunicationHandler().send(c);
+        
+        if (Keys.isKey(Keys.FIRE, keyCode))
+        {
+            getCommunicationHandler().send(new FiringMessage(false));
+        }
     }
 
     /**

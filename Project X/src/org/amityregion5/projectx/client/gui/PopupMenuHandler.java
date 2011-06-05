@@ -33,7 +33,6 @@ import org.amityregion5.projectx.client.communication.CommunicationHandler;
 import org.amityregion5.projectx.client.gui.input.MouseInput;
 import org.amityregion5.projectx.common.communication.messages.RequestEntityAddMessage;
 import org.amityregion5.projectx.common.entities.EntityConstants;
-import org.amityregion5.projectx.common.entities.items.field.FieldItem;
 
 /**
  * Note: To add more field items, just modify {@link RequestEntityAddMessage}. It has everything.
@@ -44,6 +43,8 @@ import org.amityregion5.projectx.common.entities.items.field.FieldItem;
 public class PopupMenuHandler extends MouseAdapter implements ActionListener {
 
     private static String lastAdded = null;
+    
+    public static final int GRID_SIZE = 40;
     
     public static final String REPEAT = "Repeat add ";
 
@@ -105,13 +106,23 @@ public class PopupMenuHandler extends MouseAdapter implements ActionListener {
             popup.show(e.getComponent(), e.getX(), e.getY());
         }
     }
+    
+    public static Point roundToGrid(int x, int y)
+    {
+        int roundedX = (x / GRID_SIZE + Math.round((x % GRID_SIZE) / GRID_SIZE)) * GRID_SIZE;
+        int roundedY = (y / GRID_SIZE + Math.round((y % GRID_SIZE) / GRID_SIZE)) * GRID_SIZE;
+        
+        return new Point(roundedX, roundedY);
+    }
 
     @Override
     public void actionPerformed(ActionEvent e)
     {
         String s = e.getActionCommand();
-        int roundedX = (popupX / 40 + Math.round((popupX % 40) / 40)) * 40;
-        int roundedY = (popupY / 40 + Math.round((popupY % 40) / 40)) * 40;
+
+        Point p = roundToGrid(popupX, popupY);
+        int roundedX = p.x;
+        int roundedY = p.y;
         
         if (s.startsWith(REPEAT))
             s = lastAdded;

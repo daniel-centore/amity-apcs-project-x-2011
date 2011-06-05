@@ -33,6 +33,9 @@ import javazoom.jl.player.Player;
  */
 public class SoundManager extends Thread {
 
+    public static boolean PLAY = true;
+    public static boolean BACKGROUND = false;
+
     /**
      * All sounds are here :-)
      */
@@ -70,6 +73,9 @@ public class SoundManager extends Thread {
      */
     public static void playLoop(final Sound s)
     {
+        if (!PLAY)
+            return;
+        
         new Thread() {
 
             public void run()
@@ -97,6 +103,9 @@ public class SoundManager extends Thread {
      */
     public static void playOnce(final Sound s)
     {
+        if (!PLAY)
+            return;
+        
         new Thread() {
             @Override
             public void run()
@@ -115,7 +124,7 @@ public class SoundManager extends Thread {
         }.start();
 
     }
-    
+
     /**
      * Kludge to load a sound but not play it so we speed up sound loading later :-)
      */
