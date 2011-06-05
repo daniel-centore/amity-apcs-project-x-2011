@@ -33,6 +33,7 @@ import org.amityregion5.projectx.client.communication.CommunicationHandler;
 import org.amityregion5.projectx.client.gui.input.MouseInput;
 import org.amityregion5.projectx.common.communication.messages.RequestEntityAddMessage;
 import org.amityregion5.projectx.common.entities.EntityConstants;
+import org.amityregion5.projectx.common.entities.items.field.FieldItem;
 
 /**
  * Note: To add more field items, just modify {@link RequestEntityAddMessage}. It has everything.
@@ -42,6 +43,10 @@ import org.amityregion5.projectx.common.entities.EntityConstants;
  */
 public class PopupMenuHandler extends MouseAdapter implements ActionListener {
 
+    private static String lastAdded = null;
+    
+    public static final String REPEAT = "Repeat add ";
+
     private int popupX; // where the popup came
     private int popupY;
     private JPopupMenu popup;
@@ -50,10 +55,22 @@ public class PopupMenuHandler extends MouseAdapter implements ActionListener {
     public PopupMenuHandler(CommunicationHandler ch)
     {
         this.ch = ch;
+        init();
+    }
+    
+    private void init()
+    {
         popup = new JPopupMenu();
         JMenu subMenu;
         JMenuItem menuItem;
 
+        if (lastAdded != null)
+        {
+            menuItem = new JMenuItem(REPEAT + lastAdded);
+            menuItem.addActionListener(this);
+            popup.add(menuItem);
+        }
+        
         // Field Item sub-menu
         subMenu = new JMenu("Add Field Item");
 
@@ -95,6 +112,14 @@ public class PopupMenuHandler extends MouseAdapter implements ActionListener {
         String s = e.getActionCommand();
         int roundedX = (popupX / 40 + Math.round((popupX % 40) / 40)) * 40;
         int roundedY = (popupY / 40 + Math.round((popupY % 40) / 40)) * 40;
+        
+        if (s.startsWith(REPEAT))
+            s = lastAdded;
+        else
+            lastAdded = s;
+        
         ch.send(new RequestEntityAddMessage(s, roundedX, roundedY));
+        
+        init();
     }
 }
