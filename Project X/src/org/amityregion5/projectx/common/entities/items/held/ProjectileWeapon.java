@@ -38,6 +38,7 @@ public abstract class ProjectileWeapon extends Weapon {
     private int damage;
 
     // FIXME: Please comment this!
+    
     public ProjectileWeapon(int range, int startAmmo, int _maxAmmo, int rate, int rpm, int mags, int damage)
     {
         super(range, rate);

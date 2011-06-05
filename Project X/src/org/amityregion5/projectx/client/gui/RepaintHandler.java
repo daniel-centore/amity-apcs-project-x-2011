@@ -33,6 +33,7 @@ import org.amityregion5.projectx.common.entities.Damageable;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.common.entities.items.field.Area;
+import org.amityregion5.projectx.common.entities.items.held.Weapon;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 
 /**
@@ -101,7 +102,7 @@ public class RepaintHandler extends Thread {
                 g.drawLine(i, 0, i, GameWindow.GAME_HEIGHT);
             }
         }
-        
+
         for (Entity e : map.getEntities()) // draw constant entities
         {
             g.drawImage(e.getImage(), e.getX(), e.getY(), null);
@@ -121,30 +122,30 @@ public class RepaintHandler extends Thread {
                 if (e instanceof PlayerEntity)
                 {
                     PlayerEntity pe = (PlayerEntity) e;
-                    // FIXME: This should only draw up to the enemy that was just fired upon
-                    int x2 = (int) (Math.cos(Math.toRadians(e.getDirectionFacing())) * 800) + e.getCenterX();
-                    int y2 = (int) (Math.sin(Math.toRadians(e.getDirectionFacing())) * 800) + e.getCenterY();
-
-                    if (pe.getFired())
+                    if (pe.hasWeapons())
                     {
-                        Stroke old = g.getStroke();
-                        Color oldColor = g.getColor();
-                        g.setStroke(new BasicStroke(6));
-                        g.setColor(Color.YELLOW);
-                        g.drawLine(e.getCenterX(), e.getCenterY(), x2, y2);
-                        g.setColor(oldColor);
-                        g.setStroke(old);
-                        pe.setFired(false);
-                    }
+                        Weapon wep = pe.getCurrWeapon();
 
-                    // draw the weapon
-                    PlayerEntity p = (PlayerEntity) e;
-                    if (p.hasWeapons())
-                    {
-                        BufferedImage wepImg = p.getCurrWeapon().getImage();
+                        int x2 = (int) (Math.cos(Math.toRadians(e.getDirectionFacing())) * wep.getRange()) + e.getCenterX();
+                        int y2 = (int) (Math.sin(Math.toRadians(e.getDirectionFacing())) * wep.getRange()) + e.getCenterY();
+
+                        if (pe.getFired())
+                        {
+                            Stroke old = g.getStroke();
+                            Color oldColor = g.getColor();
+                            g.setStroke(new BasicStroke(6));
+                            g.setColor(Color.YELLOW);
+                            g.drawLine(e.getCenterX(), e.getCenterY(), x2, y2);
+                            g.setColor(oldColor);
+                            g.setStroke(old);
+                            pe.setFired(false);
+                        }
+
+                        // draw the weapon
+                        BufferedImage wepImg = pe.getCurrWeapon().getImage();
                         AffineTransform at = new AffineTransform();
                         at.translate(e.getCenterX(), e.getCenterY());
-                        at.rotate(Math.toRadians(p.getDirectionFacing()));
+                        at.rotate(Math.toRadians(pe.getDirectionFacing()));
                         at.translate(0, -1 * wepImg.getHeight() / 2);
                         g.drawImage(wepImg, at, null);
                     }
@@ -194,7 +195,7 @@ public class RepaintHandler extends Thread {
     {
         return showingGrid;
     }
-    
+
     public static void switchShowingGrid()
     {
         showingGrid = !showingGrid;

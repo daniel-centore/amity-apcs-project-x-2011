@@ -103,7 +103,7 @@ public class GameController {
 
         for (PlayerEntity p : players)
         {
-            addWeapon(p, new Gun(100, 100, 10, 2, 6, 50, 5));
+            addWeapon(p, new Gun(300, 100, 10, 2, 6, 50, 5));
         }
 
         entityMoverThread = new EntityMoverThread(this, server.getRawServer(), map);
@@ -198,10 +198,13 @@ public class GameController {
     public void playerFired(PlayerEntity player)
     {
         int direction = player.getDirectionFacing();
-        // FIXME: As it is, the 1500 should be a final variable. However, you should be making use of that getRange() method, no?
-        // Afterwards, the same problem needs to be fixed in RepaintHandler!
-        int x2 = (int) (Math.cos(Math.toRadians(direction)) * 1500) + player.getCenterX();
-        int y2 = (int) (Math.sin(Math.toRadians(direction)) * 1500) + player.getCenterY();
+        Weapon wep = player.getCurrWeapon();
+        
+        int range = wep.getRange();
+        
+        int x2 = (int) (Math.cos(Math.toRadians(direction)) * range) + player.getCenterX();
+        int y2 = (int) (Math.sin(Math.toRadians(direction)) * range) + player.getCenterY();
+        
         Line2D.Double line = new Line2D.Double(player.getCenterX(), player.getCenterY(), x2, y2);
 
         List<Entity> toRemove = new ArrayList<Entity>();

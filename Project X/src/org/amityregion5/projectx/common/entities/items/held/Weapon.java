@@ -37,10 +37,6 @@ public abstract class Weapon extends HeldItem implements DamageDealing {
     private int range; // Range (in pixels)
     private int attackRate;
     private Sound wepSound;
-    /**
-     * Degrees of spread from direction of fire. This is basically accuracy.
-     */
-    private int accuracySpread;
 
     public Weapon(int range, int rate)
     {
@@ -68,11 +64,6 @@ public abstract class Weapon extends HeldItem implements DamageDealing {
     public int getAttackRate()
     {
         return attackRate;
-    }
-
-    public int getAccuracySpread()
-    {
-        return accuracySpread;
     }
 
     public Sound getSound()
