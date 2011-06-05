@@ -112,7 +112,7 @@ public class EntityMoverThread extends Thread {
 
                         for (Entity q : gameController.getEntities())
                         {
-                            if (q instanceof Damageable && q != e)
+                            if (q instanceof Block && q != e)
                                 if (CollisionDetection.hasCollision(e, 0, 0, q))
                                 {
                                     Damageable damn = (Damageable) q;

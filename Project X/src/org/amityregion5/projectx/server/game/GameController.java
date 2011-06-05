@@ -61,7 +61,7 @@ public class GameController {
     private EntityMoverThread entityMoverThread; // will be in charge of moving entities
     private Server server; // Our server
 
-    // TODO: Sent the map to the client, which will then use it!
+    // TODO: Send the map to the client, which will then use it!
     private AbstractMap map; // Our map
     private final EnemyManager enemyManager;
 
