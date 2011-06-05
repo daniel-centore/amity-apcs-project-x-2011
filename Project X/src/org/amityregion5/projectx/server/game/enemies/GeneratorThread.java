@@ -61,30 +61,28 @@ public class GeneratorThread extends Thread {
     {
         ArrayList<EnemyGroup> groups = wave.getEnemyGroups();
         Random gen = new Random();
-        for(EnemyGroup group : groups)
+        for (EnemyGroup group : groups)
         {
             Enemy e = group.getEnemy();
             AbstractMap map = controller.getMap();
             Point center = map.getCenter();
-            for(int i = 0;i < group.getNumEnemies();i++)
+            for (int i = 0; i < group.getNumEnemies(); i++)
             {
                 // picks a random spawn point from the spawn point list
                 Point spawn = enemySpawns.get(gen.nextInt(enemySpawns.size()));
                 // creates an enemy
-                Enemy en = new Enemy(e.getHp(), (int) spawn.getX(),
-                        (int) spawn.getY());      //TODO: arbitrary location
+                Enemy en = new Enemy(e.getHp(), (int) spawn.getX(), (int) spawn.getY()); // TODO: arbitrary location
                 // puts the enemy at spawn
                 en.setLocation(spawn);
                 // makes enemy face center of map and move towards it
                 en.setDirectionFacing((int) en.getDirectionTowards(center));
-                en.setDirectionMoving((int)en.getDirectionTowards(center));
+                en.setDirectionMoving((int) en.getDirectionTowards(center));
                 // adds the entity to the controller
                 controller.addEntity(en);
                 try
                 {
                     Thread.sleep(wave.getSpawnTime());
-                }
-                catch(InterruptedException ex)
+                } catch (InterruptedException ex)
                 {
                     Logger.getLogger(GeneratorThread.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -105,16 +103,15 @@ public class GeneratorThread extends Thread {
     @Override
     public void run()
     {
-        while(true)
+        while (true)
         {
-            if(waves.peek() != null)
+            if (waves.peek() != null)
             {
                 sendWave(waves.poll());
                 try
                 {
                     Thread.sleep(EnemyManager.TIME_BTW_WAVES);
-                }
-                catch(InterruptedException ex)
+                } catch (InterruptedException ex)
                 {
                     Logger.getLogger(GeneratorThread.class.getName()).log(Level.SEVERE, null, ex);
                 }

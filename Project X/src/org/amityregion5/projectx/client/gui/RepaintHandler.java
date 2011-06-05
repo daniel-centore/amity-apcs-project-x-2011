@@ -88,22 +88,9 @@ public class RepaintHandler extends Thread {
             g.drawImage(k, 0, 0, null);
         }
 
-        // Grid drawing
         if (isShowingGrid())
         {
-            g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
-            g.setColor(Color.green);
-            g.setStroke(new BasicStroke(2f));
-            for (int i = 0; i < GameWindow.GAME_HEIGHT; i += PopupMenuHandler.GRID_SIZE)
-            {
-                g.drawLine(0, i, GameWindow.GAME_WIDTH, i);
-            }
-
-            for (int i = 0; i < GameWindow.GAME_WIDTH; i += PopupMenuHandler.GRID_SIZE)
-            {
-                g.drawLine(i, 0, i, GameWindow.GAME_HEIGHT);
-            }
-            g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+            drawGrid(g);
         }
 
         for (Entity e : map.getEntities()) // draw constant entities
@@ -121,72 +108,92 @@ public class RepaintHandler extends Thread {
                 g.setColor(Color.WHITE);
                 g.setStroke(new BasicStroke(1));
 
-                // --Drawing of firing--
                 if (e instanceof PlayerEntity)
                 {
-                    PlayerEntity pe = (PlayerEntity) e;
-                    if (pe.hasWeapons())
-                    {
-                        Weapon wep = pe.getCurrWeapon();
-
-                        int x2 = (int) (Math.cos(Math.toRadians(e.getDirectionFacing())) * wep.getRange()) + e.getCenterX();
-                        int y2 = (int) (Math.sin(Math.toRadians(e.getDirectionFacing())) * wep.getRange()) + e.getCenterY();
-
-                        if (pe.getFired())
-                        {
-                            Stroke old = g.getStroke();
-                            Color oldColor = g.getColor();
-                            g.setStroke(new BasicStroke(6));
-                            g.setColor(Color.YELLOW);
-                            g.drawLine(e.getCenterX(), e.getCenterY(), x2, y2);
-                            g.setColor(oldColor);
-                            g.setStroke(old);
-                            pe.setFired(false);
-                        }
-
-                        // draw the weapon
-                        BufferedImage wepImg = pe.getCurrWeapon().getImage();
-                        AffineTransform at = new AffineTransform();
-                        at.translate(e.getCenterX(), e.getCenterY());
-                        at.rotate(Math.toRadians(pe.getDirectionFacing()));
-                        at.translate(0, -1 * wepImg.getHeight() / 2);
-                        g.drawImage(wepImg, at, null);
-                    }
+                    drawFiring((PlayerEntity) e, g);
                 }
-
-                // --End of fire drawing--
             }
 
             for (Entity e : game.getEntityHandler().getEntities())
             {
-                // --Healthbar Drawing--
-                if (e instanceof Damageable)
-                {
-                    // Enemy en = (Enemy) e;
-                    Damageable d = (Damageable) e;
-                    double percent = (double) d.getHp() / d.getMaxHp();
-                    int x = e.getX();
-                    int y = e.getY() - HEALTHBAR_HEIGHT;
-                    g.setColor(Color.RED);
-                    g.fillRect(x, y, e.getWidth(), HEALTHBAR_HEIGHT);
-                    g.setColor(Color.GREEN);
-                    g.fillRect(x, y, (int) (e.getWidth() * percent), HEALTHBAR_HEIGHT);
-                }
-                Area a = game.getMap().getArea();
-                double percent = (double) a.getHp() / a.getMaxHp();
-                int x = a.getX();
-                int y = a.getY() - 10;
-                g.setColor(Color.RED);
-                g.fillRect(x, y, a.getWidth(), HEALTHBAR_HEIGHT);
-                g.setColor(Color.GREEN);
-                g.fillRect(x, y, (int) (a.getWidth() * percent), HEALTHBAR_HEIGHT);
-
-                // --End Healthbar Drawing--
+                drawHealthbar(e, g);
             }
 
         }
 
         return img;
+    }
+    
+    private static void drawHealthbar(Entity e, Graphics2D g)
+    {
+        if (e instanceof Damageable)
+        {
+            // Enemy en = (Enemy) e;
+            Damageable d = (Damageable) e;
+            double percent = (double) d.getHp() / d.getMaxHp();
+            int x = e.getX();
+            int y = e.getY() - HEALTHBAR_HEIGHT;
+            g.setColor(Color.RED);
+            g.fillRect(x, y, e.getWidth(), HEALTHBAR_HEIGHT);
+            g.setColor(Color.GREEN);
+            g.fillRect(x, y, (int) (e.getWidth() * percent), HEALTHBAR_HEIGHT);
+        }
+        Area a = game.getMap().getArea();
+        double percent = (double) a.getHp() / a.getMaxHp();
+        int x = a.getX();
+        int y = a.getY() - 10;
+        g.setColor(Color.RED);
+        g.fillRect(x, y, a.getWidth(), HEALTHBAR_HEIGHT);
+        g.setColor(Color.GREEN);
+        g.fillRect(x, y, (int) (a.getWidth() * percent), HEALTHBAR_HEIGHT);
+    }
+
+    private static void drawFiring(PlayerEntity pe, Graphics2D g)
+    {
+        if (pe.hasWeapons())
+        {
+            Weapon wep = pe.getCurrWeapon();
+
+            int x2 = (int) (Math.cos(Math.toRadians(pe.getDirectionFacing())) * wep.getRange()) + pe.getCenterX();
+            int y2 = (int) (Math.sin(Math.toRadians(pe.getDirectionFacing())) * wep.getRange()) + pe.getCenterY();
+
+            if (pe.getFired())
+            {
+                Stroke old = g.getStroke();
+                Color oldColor = g.getColor();
+                g.setStroke(new BasicStroke(6));
+                g.setColor(Color.YELLOW);
+                g.drawLine(pe.getCenterX(), pe.getCenterY(), x2, y2);
+                g.setColor(oldColor);
+                g.setStroke(old);
+                pe.setFired(false);
+            }
+
+            // draw the weapon
+            BufferedImage wepImg = pe.getCurrWeapon().getImage();
+            AffineTransform at = new AffineTransform();
+            at.translate(pe.getCenterX(), pe.getCenterY());
+            at.rotate(Math.toRadians(pe.getDirectionFacing()));
+            at.translate(0, -1 * wepImg.getHeight() / 2);
+            g.drawImage(wepImg, at, null);
+        }
+    }
+
+    private static void drawGrid(Graphics2D g)
+    {
+        g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
+        g.setColor(Color.green);
+        g.setStroke(new BasicStroke(2f));
+        for (int i = 0; i < GameWindow.GAME_HEIGHT; i += PopupMenuHandler.GRID_SIZE)
+        {
+            g.drawLine(0, i, GameWindow.GAME_WIDTH, i);
+        }
+
+        for (int i = 0; i < GameWindow.GAME_WIDTH; i += PopupMenuHandler.GRID_SIZE)
+        {
+            g.drawLine(i, 0, i, GameWindow.GAME_HEIGHT);
+        }
+        g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
     }
 
     public static void setShowingGrid(boolean showingGrid)
