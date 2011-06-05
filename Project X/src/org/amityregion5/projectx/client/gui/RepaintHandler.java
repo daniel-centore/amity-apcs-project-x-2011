@@ -19,6 +19,7 @@
  */
 package org.amityregion5.projectx.client.gui;
 
+import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -90,8 +91,9 @@ public class RepaintHandler extends Thread {
         // Grid drawing
         if (isShowingGrid())
         {
-            g.setColor(Color.white);
-            g.setStroke(new BasicStroke(1.5f));
+            g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
+            g.setColor(Color.green);
+            g.setStroke(new BasicStroke(2f));
             for (int i = 0; i < GameWindow.GAME_HEIGHT; i += PopupMenuHandler.GRID_SIZE)
             {
                 g.drawLine(0, i, GameWindow.GAME_WIDTH, i);
@@ -101,6 +103,7 @@ public class RepaintHandler extends Thread {
             {
                 g.drawLine(i, 0, i, GameWindow.GAME_HEIGHT);
             }
+            g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
         }
 
         for (Entity e : map.getEntities()) // draw constant entities
