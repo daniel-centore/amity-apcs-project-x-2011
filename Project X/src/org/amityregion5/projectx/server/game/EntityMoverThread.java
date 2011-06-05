@@ -19,11 +19,14 @@
 package org.amityregion5.projectx.server.game;
 
 import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.amityregion5.projectx.common.communication.messages.RemoveEntityMessage;
 
+import org.amityregion5.projectx.common.entities.Damageable;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.EntityConstants;
 import org.amityregion5.projectx.common.entities.characters.CharacterEntity;
@@ -40,6 +43,7 @@ import org.amityregion5.projectx.server.tools.CollisionDetection;
  * 
  * @author Joe Stein
  * @author Mike DiBuduo
+ * @author Daniel Centore
  */
 public class EntityMoverThread extends Thread {
     private boolean keepRunning = true; // keep moving entities
@@ -60,6 +64,7 @@ public class EntityMoverThread extends Thread {
     {
         while (keepRunning)
         {
+            List<Entity> toRemove = new ArrayList<Entity>();
             synchronized (gameController)
             {
                 for (Entity e : gameController.getEntities())
@@ -105,6 +110,23 @@ public class EntityMoverThread extends Thread {
                     if (e instanceof Enemy)
                     {
                         Enemy en = (Enemy) e;
+
+                        for (Entity q : gameController.getEntities())
+                        {
+                            if (q instanceof Damageable && q != e)
+                                if (CollisionDetection.hasCollision(e, 0, 0, q))
+                                {
+                                    Damageable damn = (Damageable) q;
+                                    damn.damage(en.getCurrWeapon().getDamage());
+
+                                    if (damn.killed())
+                                    {
+                                        toRemove.add(q);
+                                    } else
+                                        q.requestUpdate();
+                                }
+                        }
+
                         if (en.getHitBox().intersects(map.getPlayArea()))// || en.hasHit())
                         {
                             if (en instanceof SuicideBomber)
@@ -136,6 +158,10 @@ public class EntityMoverThread extends Thread {
                     }
                 }
             }
+
+            for (Entity ent : toRemove)
+                gameController.removeEntity(ent);
+
             sendAggregateUpdateMessage();
             try
             {

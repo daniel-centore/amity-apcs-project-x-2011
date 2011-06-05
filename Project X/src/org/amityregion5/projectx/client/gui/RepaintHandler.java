@@ -29,6 +29,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 import org.amityregion5.projectx.client.Game;
+import org.amityregion5.projectx.common.entities.Damageable;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
@@ -101,29 +102,6 @@ public class RepaintHandler extends Thread {
                 g.setColor(Color.WHITE);
                 g.setStroke(new BasicStroke(1));
 
-                // --Healthbar Drawing--
-                if (e instanceof Enemy)
-                {
-                    Enemy en = (Enemy) e;
-                    double percent = (double) en.getHp() / en.getMaxHp();
-                    int x = en.getX();
-                    int y = en.getY() - 10;
-                    g.setColor(Color.RED);
-                    g.fillRect(x, y, e.getWidth(), HEALTHBAR_HEIGHT);
-                    g.setColor(Color.GREEN);
-                    g.fillRect(x, y, (int) (e.getWidth() * percent), HEALTHBAR_HEIGHT);
-                }
-                Area a = game.getMap().getArea();
-                double percent = (double) a.getHp() / a.getMaxHp();
-                int x = a.getX();
-                int y = a.getY() - 10;
-                g.setColor(Color.RED);
-                g.fillRect(x, y, a.getWidth(), HEALTHBAR_HEIGHT);
-                g.setColor(Color.GREEN);
-                g.fillRect(x, y, (int) (a.getWidth() * percent), HEALTHBAR_HEIGHT);
-
-                // --End Healthbar Drawing--
-
                 // --Drawing of firing--
                 if (e instanceof PlayerEntity)
                 {
@@ -158,6 +136,33 @@ public class RepaintHandler extends Thread {
                 }
 
                 // --End of fire drawing--
+            }
+            
+            for (Entity e : game.getEntityHandler().getEntities())
+            {
+                // --Healthbar Drawing--
+                if (e instanceof Damageable)
+                {
+//                    Enemy en = (Enemy) e;
+                    Damageable d = (Damageable) e;
+                    double percent = (double) d.getHp() / d.getMaxHp();
+                    int x = e.getX();
+                    int y = e.getY() - HEALTHBAR_HEIGHT;
+                    g.setColor(Color.RED);
+                    g.fillRect(x, y, e.getWidth(), HEALTHBAR_HEIGHT);
+                    g.setColor(Color.GREEN);
+                    g.fillRect(x, y, (int) (e.getWidth() * percent), HEALTHBAR_HEIGHT);
+                }
+                Area a = game.getMap().getArea();
+                double percent = (double) a.getHp() / a.getMaxHp();
+                int x = a.getX();
+                int y = a.getY() - 10;
+                g.setColor(Color.RED);
+                g.fillRect(x, y, a.getWidth(), HEALTHBAR_HEIGHT);
+                g.setColor(Color.GREEN);
+                g.fillRect(x, y, (int) (a.getWidth() * percent), HEALTHBAR_HEIGHT);
+
+                // --End Healthbar Drawing--
             }
         }
 
