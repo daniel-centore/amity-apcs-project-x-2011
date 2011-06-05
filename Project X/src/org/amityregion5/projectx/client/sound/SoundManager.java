@@ -46,7 +46,7 @@ public class SoundManager extends Thread {
             this.file = file;
         }
 
-        private void reset()
+        public void reset()
         {
             try
             {
@@ -103,6 +103,14 @@ public class SoundManager extends Thread {
             }
         }.start();
 
+    }
+    
+    /**
+     * Kludge to load a sound but not play it so we speed up sound loading later :-)
+     */
+    public static void preload()
+    {
+        SoundManager.Sound.BG_1.reset();
     }
 
 }

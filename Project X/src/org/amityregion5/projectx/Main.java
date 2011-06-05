@@ -18,6 +18,7 @@
  */
 package org.amityregion5.projectx;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
@@ -26,9 +27,13 @@ import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 
+import javazoom.jl.player.Player;
+
 import org.amityregion5.projectx.client.communication.CommunicationHandler;
 import org.amityregion5.projectx.client.gui.LobbyWindow;
 import org.amityregion5.projectx.client.preferences.PreferenceManager;
+import org.amityregion5.projectx.client.sound.SoundManager;
+import org.amityregion5.projectx.client.sound.SoundManager.Sound;
 import org.amityregion5.projectx.common.communication.messages.ActivePlayersMessage;
 import org.amityregion5.projectx.common.communication.messages.BooleanReplyMessage;
 import org.amityregion5.projectx.common.communication.messages.IntroduceMessage;
@@ -44,9 +49,9 @@ import java.net.InetAddress;
  * @author Joe Stein
  */
 public class Main {
-    public static void main(String[] args)
-        throws Exception
+    public static void main(String[] args) throws Exception
     {
+        SoundManager.preload();
         Server s = new Server("test server @ " + InetAddress.getLocalHost().getCanonicalHostName());
         ServerController sc = new DefaultServerController();
         s.setController(sc);
@@ -65,8 +70,7 @@ public class Main {
             {
                 System.err.println("username already in use");
                 System.exit(1);
-            }
-            else if (reply instanceof ActivePlayersMessage)
+            } else if (reply instanceof ActivePlayersMessage)
             {
                 ActivePlayersMessage apm = (ActivePlayersMessage) reply;
                 joined = true;
