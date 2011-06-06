@@ -32,10 +32,13 @@ import org.amityregion5.projectx.common.communication.messages.AddMeMessage;
 import org.amityregion5.projectx.common.communication.messages.AddWeaponMessage;
 import org.amityregion5.projectx.common.communication.messages.CashMessage;
 import org.amityregion5.projectx.common.communication.messages.RemoveEntityMessage;
+import org.amityregion5.projectx.common.entities.Damageable;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.characters.CharacterEntity;
 import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
+import org.amityregion5.projectx.common.entities.items.field.Area;
+import org.amityregion5.projectx.common.entities.items.held.Laser;
 import org.amityregion5.projectx.common.entities.items.held.Pistol;
 import org.amityregion5.projectx.common.entities.items.held.Uzi;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
@@ -106,10 +109,8 @@ public final class GameController {
         for (PlayerEntity p : players)
         {
             addWeapon(p, new Pistol());
-            if (!p.getUsername().matches("cow"))
-            {
-                addWeapon(p, new Uzi());
-            }
+            addWeapon(p, new Laser());
+            addWeapon(p, new Uzi());
         }
 
         entityMoverThread = new EntityMoverThread(this, server.getRawServer(), map);
@@ -229,46 +230,65 @@ public final class GameController {
         List<Entity> toRemove = new ArrayList<Entity>();
         synchronized (this)
         {
-            double closest = Double.MAX_VALUE;
-            Enemy closestEn = null;
-            for (Entity e : entities)
-            {
-                if (e instanceof Enemy && line.intersects(e.getHitBox()))
+            // should be Damageable, too, but java is kind of stupid
+            // need to enforce by ourselves
+            ArrayList<Entity> toDamage = new ArrayList<Entity>();
+
+            if (wep instanceof Laser) {
+                for (Entity e : entities)
                 {
+                    if (e instanceof Enemy && line.intersects(e.getHitBox()))
+                        toDamage.add(e);
+                }
+            }
+            else {
+                double closest = Double.MAX_VALUE;
+                Enemy closestEn = null;
+                for (Entity e : entities)
+                {
+                    if (e instanceof Enemy && line.intersects(e.getHitBox()))
+                    {
+                        double dist = e.getCenterLocation().distance(
+                                new Point(player.getCenterX(), player.getCenterY()));
+                        // AN, accuracy: "pass through"
+                        if (dist < closest && Math.random() < player.getCurrWeapon().getAccuracy())
+                        {
+                            closestEn = (Enemy) e;
+                            closest = dist;
+                        }
+                    }
+                }
+
+                toDamage.add(closestEn);
+            }
+
+            for (Entity e : toDamage) {
+                if (e != null) {
+                    Damageable d = (Damageable) e;
                     double dist = e.getCenterLocation().distance(
                             new Point(player.getCenterX(), player.getCenterY()));
-                    // AN, accuracy: "pass through"
-                    if (dist < closest && Math.random() < player.getCurrWeapon().getAccuracy())
+                    int damage = d.damage(player.getCurrWeapon().getDamage(dist));
+                    for (Client c : clients)
                     {
-                        closestEn = (Enemy) e;
-                        closest = dist;
+                        if (c.getPlayer().equals(player))
+                        {
+                            PlayerEntity p = c.getPlayer();
+                            p.changePoints(damage);
+                            server.relayMessage(new CashMessage(
+                                        p.getPoints(), p.getUniqueID()));
+                        }
+                    }
+                    e.requestUpdate();
+                    if (d.killed())
+                    {
+                        toRemove.add(e);
+                        server.relayMessage(new RemoveEntityMessage(e));
                     }
                 }
             }
-            if (closestEn != null)
-            {
-                int damage = closestEn.damage(player.getCurrWeapon().getDamage(closest));
-                for (Client c : clients)
-                {
-                    if (c.getPlayer().equals(player))
-                    {
-                        PlayerEntity p = c.getPlayer();
-                        p.changePoints(damage);
-                        server.relayMessage(new CashMessage(
-                                p.getPoints(), p.getUniqueID()));
-                    }
-                }
-                closestEn.requestUpdate();
-                if (closestEn.killed())
-                {
-                    toRemove.add(closestEn);
-                    server.relayMessage(new RemoveEntityMessage(closestEn));
-                }
-            }
-
-            entities.removeAll(toRemove);
         }
 
+        entities.removeAll(toRemove);
     }
 
     /**

@@ -19,16 +19,17 @@
 package org.amityregion5.projectx.common.entities.items.held;
 
 /**
- * A submachine gun. Starts out with low damage and range but high fire rate.
+ * Shoots through stuff. Ridiculously long range. Perfect accuracy.
+ * Really, really fast.
  *
- * @author Joe Stein
+ * @author Michael Zuo
  */
-public class Uzi extends Gun {
+public class Laser extends Gun {
 
     private static final long serialVersionUID = 1L;
 
-    public Uzi()
+    public Laser()
     {
-        super(300, -1, -1, 10, -1, -1, 2, .8);
+        super(900, -1, -1, 20, -1, -1, 1, 1);
     }
 }
