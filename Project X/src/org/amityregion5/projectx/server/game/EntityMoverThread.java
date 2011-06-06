@@ -18,6 +18,7 @@
  */
 package org.amityregion5.projectx.server.game;
 
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
@@ -108,6 +109,11 @@ public class EntityMoverThread extends Thread {
                     if (e instanceof Enemy)
                     {
                         Enemy en = (Enemy) e;
+                        
+                        Point center = map.getCenter();
+                        // makes enemy face center of map and move towards it
+                        en.setDirectionFacing((int) en.getDirectionTowards(center));
+                        en.setDirectionMoving((int) en.getDirectionTowards(center));
 
                         for (Entity q : gameController.getEntities())
                         {
