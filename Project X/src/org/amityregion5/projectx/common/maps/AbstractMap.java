@@ -67,7 +67,5 @@ public abstract class AbstractMap {
 
     public abstract Point getCenter();
 
-    public abstract Wall getWall();
-
 
 }

@@ -46,7 +46,6 @@ public class TestingMap extends AbstractMap
 
     private Image image;
     private Area area;
-    private Wall wall;
     private final List<Entity> entities;
 
     public TestingMap()
@@ -65,7 +64,7 @@ public class TestingMap extends AbstractMap
 
 
         entities.add(a);
-        entities.add(wall = new Wall(a));
+//        entities.add(wall = new Wall(a));
 
         try {
             image = ImageHandler.loadImage("maps/TestMap");
@@ -98,11 +97,6 @@ public class TestingMap extends AbstractMap
         return area;
     }
 
-    @Override
-    public Wall getWall() 
-    {
-        return wall;
-    }
     
     
 }
