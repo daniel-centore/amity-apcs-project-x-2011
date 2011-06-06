@@ -94,7 +94,7 @@ public class RawServer extends Thread {
         s.trim();
 
         if (rawClients.isEmpty())
-            System.err.println("No raw clients! WTF!");
+            System.err.println("No raw clients!");
 
         for (RawClient out : rawClients)
         {

@@ -193,9 +193,9 @@ public class EntityMoverThread extends Thread {
                 {
                     buf.append(e.getUniqueID());
                     buf.append(",");
-                    buf.append((int) e.getX());
+                    buf.append(Math.round(e.getX()));
                     buf.append(",");
-                    buf.append((int) e.getY());
+                    buf.append(Math.round(e.getY()));
                     buf.append(",");
                     buf.append(e.getDirectionFacing());
                     buf.append(",");

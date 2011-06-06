@@ -108,7 +108,6 @@ public class RepaintHandler extends Thread {
                 if (e == null)
                     break;
                 AffineTransform at = e.getAffineTransform();
-                //at.translate(e.getX(), e.getY());
                 g.drawImage(e.getImage(), at, null);
                 //g.drawImage(e.getImage(), (int) e.getX(), (int) e.getY(), null);
                 g.setColor(Color.WHITE);
@@ -243,10 +242,5 @@ public class RepaintHandler extends Thread {
     public static void setLeaderboardShowing(boolean b)
     {
         showingLb = b;
-    }
-
-    private static boolean isShowingLeaderboard()
-    {
-        return showingLb;
     }
 }

@@ -28,22 +28,7 @@ import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.amityregion5.projectx.common.communication.messages.ActivePlayersMessage;
-import org.amityregion5.projectx.common.communication.messages.AnnounceMessage;
-import org.amityregion5.projectx.common.communication.messages.BlockingMessage;
-import org.amityregion5.projectx.common.communication.messages.BooleanReplyMessage;
-import org.amityregion5.projectx.common.communication.messages.ChatMessage;
-import org.amityregion5.projectx.common.communication.messages.ClientMovingMessage;
-import org.amityregion5.projectx.common.communication.messages.ClientPositionMessage;
-import org.amityregion5.projectx.common.communication.messages.EntityMovedMessage;
-import org.amityregion5.projectx.common.communication.messages.FiringMessage;
-import org.amityregion5.projectx.common.communication.messages.IntroduceMessage;
-import org.amityregion5.projectx.common.communication.messages.Message;
-import org.amityregion5.projectx.common.communication.messages.NotifyMessage;
-import org.amityregion5.projectx.common.communication.messages.ReadyMessage;
-import org.amityregion5.projectx.common.communication.messages.RemoveEntityMessage;
-import org.amityregion5.projectx.common.communication.messages.RequestEntityAddMessage;
-import org.amityregion5.projectx.common.communication.messages.TextualMessage;
+import org.amityregion5.projectx.common.communication.messages.*;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.server.Server;
@@ -69,8 +54,7 @@ public class Client extends Thread {
     private PlayerEntity player; // client's player (once we make it!)
     private RawClient raw; // client's raw client (once created)
     private ShotThread shotThread; // helps this client with shooting
-    private int points; // the points that this client has
-
+    
     /**
      * Creates a client
      * 
@@ -269,6 +253,12 @@ public class Client extends Thread {
 
             if (!CollisionDetection.hasCollision(e, GameController.getInstance().getEntities()))
                 GameController.getInstance().addEntity(e);
+        } else if (m instanceof ChangedWeaponMessage)
+        {
+            ChangedWeaponMessage cwm = (ChangedWeaponMessage) m;
+            cwm.setID(player.getUniqueID());
+            player.changeWeapon(cwm.getAmt());
+            // TODO tell everyone else about the weapon change?
         }
     }
 

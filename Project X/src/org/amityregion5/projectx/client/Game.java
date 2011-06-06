@@ -33,7 +33,6 @@ import org.amityregion5.projectx.client.communication.CommunicationHandler;
 import org.amityregion5.projectx.client.communication.RawCommunicationHandler;
 import org.amityregion5.projectx.client.gui.ChatDrawing;
 import org.amityregion5.projectx.client.gui.GameWindow;
-import org.amityregion5.projectx.client.gui.Leaderboard;
 import org.amityregion5.projectx.client.gui.PopupMenuHandler;
 import org.amityregion5.projectx.client.gui.RepaintHandler;
 import org.amityregion5.projectx.client.gui.ServerChooserWindow;
@@ -49,6 +48,7 @@ import org.amityregion5.projectx.common.communication.messages.AddMeMessage;
 import org.amityregion5.projectx.common.communication.messages.AddWeaponMessage;
 import org.amityregion5.projectx.common.communication.messages.AnnounceMessage;
 import org.amityregion5.projectx.common.communication.messages.CashMessage;
+import org.amityregion5.projectx.common.communication.messages.ChangedWeaponMessage;
 import org.amityregion5.projectx.common.communication.messages.ChatMessage;
 import org.amityregion5.projectx.common.communication.messages.ClientMovingMessage;
 import org.amityregion5.projectx.common.communication.messages.EntityMovedMessage;
@@ -421,7 +421,6 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                     e.setX(Double.valueOf(entVals[1]));
                     e.setY(Double.valueOf(entVals[2]));
                     int hp = Integer.valueOf(entVals[4]);
-                    // System.out.println(hp);
                     if (hp > Byte.MIN_VALUE)
                     {
                         ((Damageable) e).setHp(hp);
@@ -450,7 +449,8 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
     // TODO: There needs to be an alternate way to change weapons, incase we have no scroll wheel!
     public void mouseScrolled(MouseWheelEvent e)
     {
-        me.changeWeapon(e.getWheelRotation());
+        communicationHandler.send(new ChangedWeaponMessage(e.getWheelRotation()));
+        //me.changeWeapon(e.getWheelRotation());
     }
 
     /**

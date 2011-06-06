@@ -37,6 +37,7 @@ import org.amityregion5.projectx.common.entities.characters.CharacterEntity;
 import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
 import org.amityregion5.projectx.common.entities.items.held.Pistol;
+import org.amityregion5.projectx.common.entities.items.held.Uzi;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 import org.amityregion5.projectx.common.maps.TestingMap;
@@ -52,7 +53,7 @@ import org.amityregion5.projectx.server.game.enemies.EnemyManager;
  * @author Joe Stein
  * @author Mike DiBuduo
  */
-public class GameController {
+public final class GameController {
     
     private static GameController instance;
 
@@ -105,6 +106,10 @@ public class GameController {
         for (PlayerEntity p : players)
         {
             addWeapon(p, new Pistol());
+            if (p.getUsername().equals("cowguru2000"))
+            {
+                addWeapon(p, new Uzi());
+            }
         }
 
         entityMoverThread = new EntityMoverThread(this, server.getRawServer(), map);
@@ -217,11 +222,12 @@ public class GameController {
             {
                 if (e instanceof Enemy && line.intersects(e.getHitBox()))
                 {
-                    double dist = e.getLocation().distance(new Point(player.getCenterX(), player.getCenterY()));
+                    double dist = e.getCenterLocation().distance(
+                            new Point(player.getCenterX(), player.getCenterY()));
                     if (dist < closest)
                     {
-                        closest = dist;
                         closestEn = (Enemy) e;
+                        closest = dist;
                     }
                 }
             }

@@ -16,37 +16,19 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
-package org.amityregion5.projectx.common.communication.messages;
+package org.amityregion5.projectx.common.entities.items.held;
 
 /**
- * A message indicating a change in points.
+ * A submachine gun. Starts out with low damage and range but high fire rate.
  *
  * @author Joe Stein
  */
-public class CashMessage extends Message
-{
+public class Uzi extends Gun {
+
     private static final long serialVersionUID = 1L;
-    private int amount;
-    private long id;
 
-    /**
-     * Create a new CashMessage.
-     * @param amount the new amount of points/cash the player has
-     * @param id the unique id of the player
-     */
-    public CashMessage(int amount, long id)
+    public Uzi()
     {
-        this.amount = amount;
-        this.id = id;
-    }
-
-    public int getAmount()
-    {
-        return amount;
-    }
-
-    public long getID()
-    {
-        return id;
+        super(300, 200, 200, 10, 6, -1, 1,0.8);
     }
 }

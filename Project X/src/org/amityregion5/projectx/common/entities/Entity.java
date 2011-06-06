@@ -268,7 +268,6 @@ public abstract class Entity implements Serializable {
      */
     public void selectImage(String src)
     {
-        // System.out.println(new File(RESOURCES + src + ".png").exists());
         image = ImageHandler.loadImage(src);
         updateImage();
     }
@@ -333,6 +332,11 @@ public abstract class Entity implements Serializable {
     public Point2D getLocation()
     {
         return location;
+    }
+
+    public Point2D getCenterLocation()
+    {
+        return new Point2D.Double(getCenterX(),getCenterY());
     }
 
     /**

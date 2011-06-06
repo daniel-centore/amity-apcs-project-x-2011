@@ -19,34 +19,34 @@
 package org.amityregion5.projectx.common.communication.messages;
 
 /**
- * A message indicating a change in points.
+ * Class documentation.
  *
  * @author Joe Stein
  */
-public class CashMessage extends Message
-{
+public class ChangedWeaponMessage extends Message {
     private static final long serialVersionUID = 1L;
-    private int amount;
-    private long id;
 
-    /**
-     * Create a new CashMessage.
-     * @param amount the new amount of points/cash the player has
-     * @param id the unique id of the player
-     */
-    public CashMessage(int amount, long id)
-    {
-        this.amount = amount;
-        this.id = id;
-    }
+    private long uniqueID = Byte.MIN_VALUE;
+    private int changeAmt;
 
-    public int getAmount()
+    public ChangedWeaponMessage(int changeAmt)
     {
-        return amount;
+        this.changeAmt = changeAmt;
     }
 
     public long getID()
     {
-        return id;
+        return uniqueID;
     }
+
+    public void setID(long id)
+    {
+        uniqueID = id;
+    }
+
+    public int getAmt()
+    {
+        return changeAmt;
+    }
+
 }

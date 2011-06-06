@@ -55,7 +55,6 @@ public class Leaderboard
     public static BufferedImage getBoard(int width, int height,
             ArrayList<PlayerEntity> players)
     {
-        System.out.println("drawing a board");
         // create and set up canvas
         BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = (Graphics2D) result.getGraphics();
@@ -83,7 +82,6 @@ public class Leaderboard
         int vh = g2.getFontMetrics().getHeight() + 5;
         for (PlayerEntity p : players)
         {
-            System.out.println("drawing at " + X_MARGIN + "," + draw);
             g2.drawString(p.getUsername(), X_MARGIN, draw);
             g2.drawString(String.valueOf(p.getPoints()),X_MARGIN + USER_WIDTH, draw);
             draw += vh;
