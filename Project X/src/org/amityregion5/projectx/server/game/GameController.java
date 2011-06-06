@@ -216,7 +216,7 @@ public class GameController {
             {
                 if (e instanceof Enemy && line.intersects(e.getHitBox()))
                 {
-                    double dist = e.getLocation().distance(line.getP1());
+                    double dist = e.getLocation().distance(new Point(player.getCenterX(), player.getCenterY()));
                     if (dist < closest)
                     {
                         closestEn = (Enemy) e;
