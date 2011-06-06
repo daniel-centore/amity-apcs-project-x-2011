@@ -67,7 +67,7 @@ public class EntityMovedMessage extends Message {
     /**
      * @return Gets the new entity location
      */
-    public Point2D getNewLoc()
+    public Point2D.Double getNewLoc()
     {
         return new Point2D.Double(newX,newY);
     }

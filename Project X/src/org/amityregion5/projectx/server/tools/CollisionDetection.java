@@ -97,7 +97,9 @@ public class CollisionDetection
      */
     public static boolean hasPixelCollision(Entity a, int xOffset, int yOffset, Entity b)
     {
-        return isPixelCollide(a.getX() + xOffset, a.getY() + yOffset, a.getImage(), b.getX(), b.getY(), b.getImage());
+        return isPixelCollide((int) a.getX() + xOffset,
+                (int) a.getY() + yOffset,
+                a.getImage(), (int) b.getX(), (int) b.getY(), b.getImage());
     }
 
     // original credits: http://www.gamedev.net/topic/329033-pixel-perfect-collision-detection/

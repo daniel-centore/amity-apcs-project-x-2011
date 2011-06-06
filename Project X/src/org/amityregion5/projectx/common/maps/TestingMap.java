@@ -60,7 +60,7 @@ public class TestingMap extends AbstractMap
         a.setX(x);
         a.setY(y);
 
-        setPlayArea(new Rectangle(a.getX(), a.getY(), a.getWidth(), a.getHeight()));
+        setPlayArea(new Rectangle((int) a.getX(), (int) a.getY(), a.getWidth(), a.getHeight()));
 
 
         entities.add(a);

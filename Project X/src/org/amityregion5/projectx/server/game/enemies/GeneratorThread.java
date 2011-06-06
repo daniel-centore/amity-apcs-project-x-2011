@@ -20,6 +20,7 @@
 package org.amityregion5.projectx.server.game.enemies;
 
 import java.awt.Point;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.BlockingQueue;
@@ -69,7 +70,9 @@ public class GeneratorThread extends Thread {
             for (int i = 0; i < group.getNumEnemies(); i++)
             {
                 // picks a random spawn point from the spawn point list
-                Point spawn = enemySpawns.get(gen.nextInt(enemySpawns.size()));
+                Point pt = enemySpawns.get(gen.nextInt(enemySpawns.size()));
+                Point2D.Double spawn = new Point2D.Double(pt.getX(),pt.getY());
+
                 // creates an enemy
                 Enemy en;
                 if (e instanceof SuicideBomber)

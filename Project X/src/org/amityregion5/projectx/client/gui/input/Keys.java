@@ -43,6 +43,7 @@ public class Keys {
     public static int[] FIRE    = { KeyEvent.VK_SPACE };
     
     public static int[] BLOCK  = { KeyEvent.VK_F1 };
+    public static int[] LEADERBOARD = { KeyEvent.VK_TAB };
 
     public static void refreshKeyPrefs()
     {

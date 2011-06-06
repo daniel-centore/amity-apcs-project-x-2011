@@ -42,7 +42,7 @@ public abstract class Entity implements Serializable {
     private static volatile transient long nextUniqueID = 0; // so each entity has a unique ID
 
     private final long uniqueID; // necessary to check identity content changes.
-    private Point2D location; // the entity's location
+    private Point2D.Double location; // the entity's location
 
     protected transient BufferedImage image; // default image representing the entity
     protected transient BufferedImage currentImage; // current image (ie including rotation)
@@ -97,7 +97,7 @@ public abstract class Entity implements Serializable {
      * @param image Image to represent it.
      * @param location Location to occupy.
      */
-    public Entity(BufferedImage image, Point2D location)
+    public Entity(BufferedImage image, Point2D.Double location)
     {
         this();
 
@@ -108,9 +108,9 @@ public abstract class Entity implements Serializable {
     /**
      * @return X coordinate
      */
-    public int getX()
+    public double getX()
     {
-        return (int) location.getX();
+        return location.getX();
     }
 
     /**
@@ -129,9 +129,9 @@ public abstract class Entity implements Serializable {
      * 
      * @return Y coordinate
      */
-    public int getY()
+    public double getY()
     {
-        return (int) location.getY();
+        return location.getY();
     }
 
     /**
@@ -300,7 +300,7 @@ public abstract class Entity implements Serializable {
      */
     public int getCenterX()
     {
-        return getX() + (getWidth() / 2);
+        return (int) (getX() + (getWidth() / 2));
     }
 
     /**
@@ -308,7 +308,7 @@ public abstract class Entity implements Serializable {
      */
     public int getCenterY()
     {
-        return getY() + (getHeight() / 2);
+        return (int) (getY() + (getHeight() / 2));
     }
 
     /**
@@ -337,7 +337,7 @@ public abstract class Entity implements Serializable {
      * 
      * @param location Location to set it to
      */
-    public void setLocation(Point2D location)
+    public void setLocation(Point2D.Double location)
     {
         this.location = location;
         requestUpdate();
@@ -392,7 +392,7 @@ public abstract class Entity implements Serializable {
     {
         double deltaY = target.getY() - this.getY();
         double deltaX = target.getX() - this.getX();
-        return Math.atan2(deltaY, deltaX) * 180 / Math.PI;
+        return Math.toDegrees(Math.atan2(deltaY, deltaX));
     }
 
 }

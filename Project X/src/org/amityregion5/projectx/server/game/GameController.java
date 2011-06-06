@@ -82,7 +82,7 @@ public class GameController {
         Random r = new Random();
         for (Client c : clients)
         {
-            PlayerEntity p = new PlayerEntity(0, 0);
+            PlayerEntity p = new PlayerEntity(0, 0, c.getUsername());
             int spawnY = (int) (map.getPlayArea().getY() + r.nextInt((int) map.getPlayArea().getHeight() - p.getHeight()));
             int spawnX = (int) (map.getPlayArea().getX() + r.nextInt((int) map.getPlayArea().getWidth() - p.getWidth()));
             p.setLocation(new Point2D.Double(spawnX, spawnY));

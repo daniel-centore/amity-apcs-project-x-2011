@@ -33,6 +33,7 @@ import org.amityregion5.projectx.client.communication.CommunicationHandler;
 import org.amityregion5.projectx.client.communication.RawCommunicationHandler;
 import org.amityregion5.projectx.client.gui.ChatDrawing;
 import org.amityregion5.projectx.client.gui.GameWindow;
+import org.amityregion5.projectx.client.gui.Leaderboard;
 import org.amityregion5.projectx.client.gui.PopupMenuHandler;
 import org.amityregion5.projectx.client.gui.RepaintHandler;
 import org.amityregion5.projectx.client.gui.ServerChooserWindow;
@@ -152,6 +153,11 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
     public void keyPressed(KeyEvent e)
     {
         int keyCode = e.getKeyCode();
+        if (Keys.isKey(Keys.LEADERBOARD, keyCode))
+        {
+            RepaintHandler.setLeaderboardShowing(true);
+            return;
+        }
         if (ChatDrawing.isChatting() && !(e.isActionKey() || e.getKeyCode() == KeyEvent.VK_SHIFT || e.getKeyCode() == KeyEvent.VK_ALT || e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_BACK_SPACE || e.getKeyCode() == KeyEvent.VK_CONTROL))
         {
             ChatDrawing.addLetter(e.getKeyChar());
@@ -248,6 +254,11 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
 
     public void keyReleased(int keyCode)
     {
+        if (Keys.isKey(Keys.LEADERBOARD, keyCode))
+        {
+            RepaintHandler.setLeaderboardShowing(false);
+            return;
+        }
         int speed = PlayerEntity.INITIAL_SPEED;
 
         while (depressedKeys.contains(keyCode))
@@ -334,7 +345,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                 ((CharacterEntity) entityHandler.getEntity(awm.getID())).addWeapon(awm.getWeapon());
             } catch (Exception e)
             {
-                // TODO: temporary kludge
+                // FIXME: temporary kludge
                 // what's the usual error?
             }
         } else if (m instanceof StatusUpdateMessage)
@@ -451,6 +462,19 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         communicationHandler.kill();
         rch.kill();
         GameWindow.closeWindow();
+    }
+
+    public ArrayList<PlayerEntity> getPlayers()
+    {
+        ArrayList<PlayerEntity> toReturn = new ArrayList<PlayerEntity>();
+        for (Entity e : entityHandler.getEntities())
+        {
+            if (e instanceof PlayerEntity)
+            {
+                toReturn.add((PlayerEntity) e);
+            }
+        }
+        return toReturn;
     }
 
     private class DirectionalUpdateThread extends Thread {

@@ -47,8 +47,11 @@ import org.amityregion5.projectx.common.maps.AbstractMap;
 public class RepaintHandler extends Thread {
 
     public static final int HEALTHBAR_HEIGHT = 5; // default healthbar height
+    public static final int LB_HEIGHT = 200; // default leaderboard height
+    public static final int LB_WIDTH  = 300; // default leaderboard width
 
     private static boolean showingGrid = false;
+    private static boolean showingLb = false;
     private static Game game; // game we are based from
 
     /**
@@ -88,14 +91,14 @@ public class RepaintHandler extends Thread {
             g.drawImage(k, 0, 0, null);
         }
 
-        if (isShowingGrid()) // draw the grid if it's supposed to be showing
+        if (showingGrid) // draw the grid if it's supposed to be showing
         {
             drawGrid(g);
         }
 
         for (Entity e : map.getEntities()) // draw constant entities
         {
-            g.drawImage(e.getImage(), e.getX(), e.getY(), null);
+            g.drawImage(e.getImage(), (int) e.getX(), (int) e.getY(), null);
         }
 
         synchronized (game.getEntityHandler())
@@ -104,7 +107,7 @@ public class RepaintHandler extends Thread {
             {
                 if (e == null)
                     break;
-                g.drawImage(e.getImage(), e.getX(), e.getY(), null);
+                g.drawImage(e.getImage(), (int) e.getX(), (int) e.getY(), null);
                 g.setColor(Color.WHITE);
                 g.setStroke(new BasicStroke(1));
 
@@ -126,6 +129,11 @@ public class RepaintHandler extends Thread {
                 drawHealthbar(e, g);
             }
 
+            if (showingLb) // draw the leaderboard if it's supposed to be showing
+            {
+                drawLeaderboard(g,img.getWidth(null),img.getHeight(null));
+            }
+
         }
 
         return img;
@@ -138,8 +146,8 @@ public class RepaintHandler extends Thread {
             // Enemy en = (Enemy) e;
             Damageable d = (Damageable) e;
             double percent = (double) d.getHp() / d.getMaxHp();
-            int x = e.getX();
-            int y = e.getY() - HEALTHBAR_HEIGHT;
+            int x = (int) e.getX();
+            int y = (int) e.getY() - HEALTHBAR_HEIGHT;
             g.setColor(Color.RED);
             g.fillRect(x, y, e.getWidth(), HEALTHBAR_HEIGHT);
             g.setColor(Color.GREEN);
@@ -147,8 +155,8 @@ public class RepaintHandler extends Thread {
         }
         Area a = game.getMap().getArea();
         double percent = (double) a.getHp() / a.getMaxHp();
-        int x = a.getX();
-        int y = a.getY() - 10;
+        int x = (int) a.getX();
+        int y = (int) a.getY() - 10;
         g.setColor(Color.RED);
         g.fillRect(x, y, a.getWidth(), HEALTHBAR_HEIGHT);
         g.setColor(Color.GREEN);
@@ -206,6 +214,14 @@ public class RepaintHandler extends Thread {
         g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
     }
 
+    private static void drawLeaderboard(Graphics2D g, int width, int height)
+    {
+        int tlx = (width / 2) - (LB_WIDTH / 2);
+        int tly = (height / 2) - (LB_HEIGHT / 2);
+        g.drawImage(Leaderboard.getBoard(LB_WIDTH, LB_HEIGHT,
+                game.getPlayers()), tlx, tly , null);
+    }
+
     public static void setShowingGrid(boolean showingGrid)
     {
         RepaintHandler.showingGrid = showingGrid;
@@ -219,5 +235,15 @@ public class RepaintHandler extends Thread {
     public static void switchShowingGrid()
     {
         showingGrid = !showingGrid;
+    }
+
+    public static void setLeaderboardShowing(boolean b)
+    {
+        showingLb = b;
+    }
+
+    private static boolean isShowingLeaderboard()
+    {
+        return showingLb;
     }
 }

@@ -44,7 +44,7 @@ public class Wall extends Block {
 
     public Wall(Entity e)
     {
-        this(e.getX(), e.getY());
+        this((int) e.getX(), (int) e.getY());
     }
     
     @Override
