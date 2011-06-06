@@ -172,7 +172,7 @@ public class GameController {
     public ArrayList<Point> getEnemySpawns()
     {
         ArrayList<Point> spawns = new ArrayList<Point>();
-        final int MARGIN = 20;
+        final int MARGIN = 40;
         if (map instanceof TestingMap)
         {
             for (int i = -MARGIN; i < GameWindow.GAME_HEIGHT + MARGIN; i += 10)

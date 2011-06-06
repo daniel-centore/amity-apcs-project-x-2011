@@ -28,6 +28,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
+import org.amityregion5.projectx.common.entities.characters.enemies.SuicideBomber;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 import org.amityregion5.projectx.server.game.GameController;
 
@@ -70,7 +71,15 @@ public class GeneratorThread extends Thread {
                 // picks a random spawn point from the spawn point list
                 Point spawn = enemySpawns.get(gen.nextInt(enemySpawns.size()));
                 // creates an enemy
-                Enemy en = new Enemy(e.getHp(), (int) spawn.getX(), (int) spawn.getY()); // TODO: arbitrary location
+                Enemy en;
+                if (e instanceof SuicideBomber)
+                {
+                    en = new SuicideBomber(((SuicideBomber)e).getDamage(), e.getHp(), (int) spawn.getX(), (int) spawn.getY());
+                }
+                else
+                {
+                    en = new Enemy(e.getHp(), (int) spawn.getX(), (int) spawn.getY()); // TODO: arbitrary location
+                }
                 // puts the enemy at spawn
                 en.setLocation(spawn);
                 // makes enemy face center of map and move towards it

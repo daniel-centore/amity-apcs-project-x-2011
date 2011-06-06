@@ -22,6 +22,7 @@ package org.amityregion5.projectx.server.game.enemies;
 import java.util.ArrayList;
 
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
+import org.amityregion5.projectx.common.entities.characters.enemies.SuicideBomber;
 
 /**
  * A wave of enemies, consisting of several EnemyGroups.
@@ -72,8 +73,16 @@ public class EnemyWave {
         {
             EnemyGroup group = enemies.get(i);
             Enemy oldEnemy = group.getEnemy();
-            Enemy newEnemy = new Enemy((int) (oldEnemy.getMaxHp() * waveEnemyHealth(waveNumber)), 0, 0);
-            EnemyGroup newGroup = new EnemyGroup(newEnemy, (int) (group.getNumEnemies() * waveNumEnemies(waveNumber)));
+            Enemy newEnemy;
+            if(oldEnemy instanceof SuicideBomber)
+            {
+                newEnemy = new SuicideBomber(((SuicideBomber)oldEnemy).getDamage(), (int)(oldEnemy.getMaxHp() * waveEnemyHealth(waveNumber)), 0, 0);
+            }
+            else
+            {
+                newEnemy = new Enemy((int) (oldEnemy.getMaxHp() * waveEnemyHealth(waveNumber)), 0, 0);
+            }
+            EnemyGroup newGroup = new EnemyGroup(newEnemy, (int)(group.getNumEnemies() * waveNumEnemies(waveNumber)));
             newEnemies.add(newGroup);
         }
         EnemyWave nextWave = new EnemyWave(waveNumber + 1, newEnemies);

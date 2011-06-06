@@ -47,10 +47,9 @@ public class EnemyManager {
         controller = c;
         spawnArea = area;
         
-        EnemyGroup group = createEnemyGroup(new Enemy(1, 0, 0), 5); //Arbitrary first wave with 5 enemies w/10 health
+        EnemyGroup group = createEnemyGroup(new Enemy(1, 0, 0), 5, Enemy.DEFAULT_SPEED); //Arbitrary first wave with 5 enemies w/10 health
         Enemy modelBomber = new SuicideBomber(100, 10, 0, 0);
-        modelBomber.setMoveSpeed(Enemy.DEFAULT_SPEED * 2);
-        EnemyGroup bomberGroup = createEnemyGroup(modelBomber, 3);
+        EnemyGroup bomberGroup = createEnemyGroup(new SuicideBomber(100, 10, 0, 0), 3, Enemy.DEFAULT_SPEED * 5);
         ArrayList<EnemyGroup> enemies = new ArrayList<EnemyGroup>();
         enemies.add(group);
         enemies.add(bomberGroup);
@@ -59,8 +58,9 @@ public class EnemyManager {
         gen.addWave(wave);
     }
     
-    public EnemyGroup createEnemyGroup(Enemy en, int num)
+    public EnemyGroup createEnemyGroup(Enemy en, int num, int speed)
     {
+        en.setMoveSpeed(speed);
         return new EnemyGroup(en, num);
     }
 
@@ -74,9 +74,11 @@ public class EnemyManager {
      */
     public void startSpawning()
     {
-        EnemyGroup group = createEnemyGroup(new Enemy(10, 0, 0), 5);
+        EnemyGroup group = createEnemyGroup(new Enemy(10, 0, 0), 5, Enemy.DEFAULT_SPEED);
+        EnemyGroup bomberGroup = createEnemyGroup(new SuicideBomber(100, 10, 0, 0), 3, Enemy.DEFAULT_SPEED * 5);
         ArrayList<EnemyGroup> enemies = new ArrayList<EnemyGroup>();
         enemies.add(group);
+        enemies.add(bomberGroup);
         wave = new EnemyWave(1, enemies);
         for(int i = 0; i < NUM_WAVES; i++)
         {
