@@ -41,4 +41,10 @@ public class SuicideBomber extends Enemy {
         return damage;
     }
 
+    @Override
+    public String getDefaultImage()
+    {
+        return "sprites/Suicide";
+    }
+
 }
