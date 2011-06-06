@@ -33,6 +33,9 @@ import java.util.List;
  */
 public class KeyboardInput implements KeyListener {
 
+    public static final int REQUIRED_TIMEOUT = 70; //ms between keypresses
+    
+    private long lastPress = 0;
     private volatile List<Integer> depressed = new ArrayList<Integer>(); // keys currently pressed down
 
     public void keyTyped(KeyEvent e)
@@ -43,6 +46,10 @@ public class KeyboardInput implements KeyListener {
 
     public void keyPressed(KeyEvent e)
     {
+        if (System.currentTimeMillis() - lastPress < REQUIRED_TIMEOUT)
+            return;
+        
+        lastPress = System.currentTimeMillis();
         if (!depressed.contains((Integer) e.getKeyCode()))
         {
             depressed.add(e.getKeyCode());
