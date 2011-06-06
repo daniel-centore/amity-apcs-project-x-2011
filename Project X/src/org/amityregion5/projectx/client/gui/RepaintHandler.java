@@ -32,6 +32,7 @@ import java.awt.image.BufferedImage;
 import org.amityregion5.projectx.client.Game;
 import org.amityregion5.projectx.common.entities.Damageable;
 import org.amityregion5.projectx.common.entities.Entity;
+import org.amityregion5.projectx.common.entities.characters.CharacterEntity;
 import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.common.entities.items.field.Area;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
@@ -112,6 +113,13 @@ public class RepaintHandler extends Thread {
                 {
                     drawFiring((PlayerEntity) e, g);
                 }
+
+                if (e instanceof CharacterEntity)
+                {
+                    CharacterEntity ce = (CharacterEntity) e;
+                    if (ce.hasWeapons())
+                        drawWeapon(ce, g);
+                }
             }
 
             for (Entity e : game.getEntityHandler().getEntities())
@@ -123,7 +131,7 @@ public class RepaintHandler extends Thread {
 
         return img;
     }
-    
+
     private static void drawHealthbar(Entity e, Graphics2D g)
     {
         if (e instanceof Damageable)
@@ -168,15 +176,18 @@ public class RepaintHandler extends Thread {
                 g.setStroke(old);
                 pe.setFired(false);
             }
-
-            // draw the weapon
-            BufferedImage wepImg = pe.getCurrWeapon().getImage();
-            AffineTransform at = new AffineTransform();
-            at.translate(pe.getCenterX(), pe.getCenterY());
-            at.rotate(Math.toRadians(pe.getDirectionFacing()));
-            at.translate(0, -1 * wepImg.getHeight() / 2);
-            g.drawImage(wepImg, at, null);
         }
+    }
+
+    private static void drawWeapon(CharacterEntity pe, Graphics2D g)
+    {
+        // draw the weapon
+        BufferedImage wepImg = pe.getCurrWeapon().getImage();
+        AffineTransform at = new AffineTransform();
+        at.translate(pe.getCenterX(), pe.getCenterY());
+        at.rotate(Math.toRadians(pe.getDirectionFacing()));
+        at.translate(0, -1 * wepImg.getHeight() / 2);
+        g.drawImage(wepImg, at, null);
     }
 
     private static void drawGrid(Graphics2D g)

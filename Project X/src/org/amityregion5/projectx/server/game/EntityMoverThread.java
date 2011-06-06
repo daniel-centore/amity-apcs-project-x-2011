@@ -126,7 +126,7 @@ public class EntityMoverThread extends Thread {
                                 }
                         }
 
-                        if (en.getHitBox().intersects(map.getPlayArea()))// || en.hasHit())
+                        if (CollisionDetection.hasCollision(en, 0, 0, map.getArea()))
                         {
                             if (en instanceof SuicideBomber)
                             {

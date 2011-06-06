@@ -300,7 +300,11 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         } else if (m instanceof AddEntityMessage)
         {
             AddEntityMessage aem = (AddEntityMessage) m;
-            entityHandler.addEntity(aem.getEntity());
+            Entity e = aem.getEntity();
+            if(e instanceof CharacterEntity)
+                ((CharacterEntity) e).updateWeaponImages();
+            
+            entityHandler.addEntity(e);
         } else if (m instanceof EntityMovedMessage)
         {
             EntityMovedMessage emm = (EntityMovedMessage) m;

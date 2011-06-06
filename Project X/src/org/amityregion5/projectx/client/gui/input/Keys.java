@@ -33,10 +33,11 @@ import org.amityregion5.projectx.client.preferences.PreferenceManager;
  */
 public class Keys {
     
-    public static int[] UP      = { KeyEvent.VK_K, KeyEvent.VK_UP };
-    public static int[] DOWN    = { KeyEvent.VK_J, KeyEvent.VK_DOWN };
-    public static int[] LEFT    = { KeyEvent.VK_H, KeyEvent.VK_LEFT };
-    public static int[] RIGHT   = { KeyEvent.VK_L, KeyEvent.VK_RIGHT };
+    public static int[] UP      = { KeyEvent.VK_K, KeyEvent.VK_UP, KeyEvent.VK_W };
+    public static int[] DOWN    = { KeyEvent.VK_J, KeyEvent.VK_DOWN, KeyEvent.VK_S };
+    public static int[] LEFT    = { KeyEvent.VK_H, KeyEvent.VK_LEFT, KeyEvent.VK_A };
+    public static int[] RIGHT   = { KeyEvent.VK_L, KeyEvent.VK_RIGHT, KeyEvent.VK_D };
+    
     public static int[] CHAT    = { KeyEvent.VK_T, KeyEvent.VK_SEMICOLON };
     public static int[] GRID    = { KeyEvent.VK_G };
     public static int[] FIRE    = { KeyEvent.VK_SPACE };
