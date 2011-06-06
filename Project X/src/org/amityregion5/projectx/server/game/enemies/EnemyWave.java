@@ -32,15 +32,15 @@ public class EnemyWave {
     private int waveNumber;
     private ArrayList<EnemyGroup> enemies;
     private long spawnTime;
-    private final double SPAWNTIME_DIFFICULTY_RAMP = 0.75;
-    private final double NUM_ENEMIES_DIFFICULTY_RAMP = 1.5;
-    private final double ENEMY_HEALTH_DIFFICULTY_RAMP = 1.5;
+    private final double SPAWNTIME_DIFFICULTY_RAMP = 0.95;
+    private final double NUM_ENEMIES_DIFFICULTY_RAMP = 1.25;
+    private final double ENEMY_HEALTH_DIFFICULTY_RAMP = 1.25;
 
     public EnemyWave(int n, ArrayList<EnemyGroup> en)
     {
         waveNumber = n;
         enemies = en;
-        spawnTime = 500; // Random spawn time
+        spawnTime = 1000; // Random spawn time
     }
 
     public long getSpawnTime()

@@ -30,7 +30,6 @@ import org.amityregion5.projectx.server.game.GameController;
  * Class documentation.
  *
  * @author Michal Wenke
- * @author Jenny Liu
  * @author Mike DiBuduo
  */
 public class EnemyManager {
