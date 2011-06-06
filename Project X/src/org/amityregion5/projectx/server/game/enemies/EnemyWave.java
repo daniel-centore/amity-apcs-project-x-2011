@@ -32,9 +32,6 @@ public class EnemyWave {
     private int waveNumber;
     private ArrayList<EnemyGroup> enemies;
     private long spawnTime;
-    private final double SPAWNTIME_DIFFICULTY_RAMP = 0.95;
-    private final double NUM_ENEMIES_DIFFICULTY_RAMP = 1.25;
-    private final double ENEMY_HEALTH_DIFFICULTY_RAMP = 1.25;
 
     public EnemyWave(int n, ArrayList<EnemyGroup> en)
     {
@@ -75,14 +72,31 @@ public class EnemyWave {
         {
             EnemyGroup group = enemies.get(i);
             Enemy oldEnemy = group.getEnemy();
-            Enemy newEnemy = new Enemy((int) (oldEnemy.getMaxHp() * ENEMY_HEALTH_DIFFICULTY_RAMP), 0, 0);
-            EnemyGroup newGroup = new EnemyGroup(newEnemy, (int) (group.getNumEnemies() * NUM_ENEMIES_DIFFICULTY_RAMP));
+            Enemy newEnemy = new Enemy((int) (oldEnemy.getMaxHp() * waveEnemyHealth(waveNumber)), 0, 0);
+            EnemyGroup newGroup = new EnemyGroup(newEnemy, (int) (group.getNumEnemies() * waveNumEnemies(waveNumber)));
             newEnemies.add(newGroup);
         }
-        EnemyWave nextWave = new EnemyWave(this.getWaveNumber() + 1, newEnemies);
-        nextWave.setSpawnTime(this.spawnTime * (long) SPAWNTIME_DIFFICULTY_RAMP);
+        EnemyWave nextWave = new EnemyWave(waveNumber + 1, newEnemies);
+        nextWave.setSpawnTime((int) (spawnTime * waveSpawnTime(waveNumber)));
         return nextWave;
 
+    }
+
+    public static double waveSpawnTime(int wn)
+    {
+        //return 4 / (wn + 3); // inversely-decreasing time
+        return Math.pow(.95, wn); // exponentially-decreasing time
+    }
+
+    public static double waveNumEnemies(int wn)
+    {
+        //return (wn*wn + 6*wn + 9) / 16; // quadratically-increasing number
+        return Math.pow(1.2,wn); // exponentially-increasing number
+    }
+
+    public static double waveEnemyHealth(int wn) {
+        //return (wn*wn + 6*wn + 9) / 16; // quadratically-increasing health
+        return Math.pow(1.2,wn); // exponetially-increasing health
     }
 
 }

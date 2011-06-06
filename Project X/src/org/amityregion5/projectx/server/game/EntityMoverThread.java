@@ -93,6 +93,7 @@ public class EntityMoverThread extends Thread {
                             Rectangle thb = e.getHitBox();
                             thb.setLocation((int) newX, (int) newY);
 
+                            // AN, player base
                             if (map.getPlayArea().contains(thb))
                             {
                                 e.setX(newX);

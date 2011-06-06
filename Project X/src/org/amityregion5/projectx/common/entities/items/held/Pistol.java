@@ -25,7 +25,7 @@ public class Pistol extends Gun {
     
     public Pistol()
     {
-        super(300, 200, 200, 2, 6, 50, 5);
+        super(300, 200, 200, 2, 6, -1, 5);
     }
 
 }

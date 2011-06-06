@@ -89,7 +89,7 @@ public abstract class ProjectileWeapon extends Weapon {
 
     public boolean hasAmmo()
     {
-        return (ammo > 0);
+        return ammo != 0;
     }
 
     public int getDamage()
@@ -99,7 +99,7 @@ public abstract class ProjectileWeapon extends Weapon {
 
     public boolean fire()
     {
-        if (ammo > 0)
+        if (ammo != 0)
         {
             ammo--;
             return true;
