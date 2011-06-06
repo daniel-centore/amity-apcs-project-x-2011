@@ -153,7 +153,6 @@ public class EntityMoverThread extends Thread {
                                     gameController.getServer().kill();
                                     gameController.kill();
                                     keepRunning = false;
-                                    // rawServer.kill();
                                     kill();
                                     System.out.println("Ended game");
                                 }

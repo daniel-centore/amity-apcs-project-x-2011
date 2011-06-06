@@ -41,6 +41,7 @@ import org.amityregion5.projectx.client.gui.input.Keys;
 import org.amityregion5.projectx.client.handlers.EntityHandler;
 import org.amityregion5.projectx.client.sound.SoundManager;
 import org.amityregion5.projectx.client.sound.SoundManager.Sound;
+import org.amityregion5.projectx.common.communication.Constants;
 import org.amityregion5.projectx.common.communication.MessageListener;
 import org.amityregion5.projectx.common.communication.RawListener;
 import org.amityregion5.projectx.common.communication.messages.AddEntityMessage;
@@ -324,14 +325,14 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             ent.setLocation(emm.getNewLoc());
             ent.setDirectionMoving(emm.getNewDir());
             GameWindow.fireRepaintRequired();
-        } else if (m instanceof FiredMessage)
+        } /*else if (m instanceof FiredMessage)
         {
             FiredMessage fm = (FiredMessage) m;
             CharacterEntity e = (CharacterEntity) entityHandler.getEntity(fm.getID());
-            SoundManager.playOnce(me.getCurrWeapon().getSound());
+            
             e.setFired(true);
             GameWindow.fireRepaintRequired();
-        } else if (m instanceof RemoveEntityMessage)
+        } */ else if (m instanceof RemoveEntityMessage)
         {
             RemoveEntityMessage rem = (RemoveEntityMessage) m;
             entityHandler.removeEntity(rem.getPlayer());
@@ -404,6 +405,14 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
 
     public void handle(String str)
     {
+        if (str.startsWith(Constants.FIRE_PREF))
+        {
+            ((PlayerEntity) entityHandler.getEntity(
+                    Long.valueOf(str.substring(1)))).setFired(true);
+            SoundManager.playOnce(me.getCurrWeapon().getSound());
+            GameWindow.fireRepaintRequired();
+            return;
+        }
         String[] entStrs = str.split(";");
         for (int i = 0; i < entStrs.length; i++)
         {
