@@ -50,6 +50,6 @@ public class Wall extends Block {
     @Override
     public String getDefaultImage()
     {
-        return "sprites/Wall";
+        return "sprites/Wall_Straight";
     }
 }
