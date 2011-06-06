@@ -41,7 +41,7 @@ public class Sword extends MeleeWeapon implements DamageDealing
     @Override
     public String getDefaultImage()
     {
-        return "sprites/Pistol1";
+        return "sprites/Pistol_1";
     }
 
 }

@@ -38,6 +38,6 @@ public class Gun extends ProjectileWeapon
     @Override
     public String getDefaultImage()
     {
-        return "sprites/Pistol1";
+        return "sprites/Pistol_1";
     }
 }
