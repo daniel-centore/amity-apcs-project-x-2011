@@ -107,7 +107,10 @@ public class RepaintHandler extends Thread {
             {
                 if (e == null)
                     break;
-                g.drawImage(e.getImage(), (int) e.getX(), (int) e.getY(), null);
+                AffineTransform at = e.getAffineTransform();
+                //at.translate(e.getX(), e.getY());
+                g.drawImage(e.getImage(), at, null);
+                //g.drawImage(e.getImage(), (int) e.getX(), (int) e.getY(), null);
                 g.setColor(Color.WHITE);
                 g.setStroke(new BasicStroke(1));
 

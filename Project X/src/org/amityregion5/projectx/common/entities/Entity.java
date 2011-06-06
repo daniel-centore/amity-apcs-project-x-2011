@@ -182,7 +182,7 @@ public abstract class Entity implements Serializable {
     public void setDirectionFacing(int directionFacing)
     {
         this.directionFacing = directionFacing;
-        updateImage();
+        //updateImage();
         requestUpdate();
     }
 
@@ -279,10 +279,11 @@ public abstract class Entity implements Serializable {
             return;
         currentImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = (Graphics2D) currentImage.getGraphics();
+        g2.drawImage(image, 0, 0, null);
 
         setHitBox(image.getWidth(), image.getHeight());
 
-        g2.drawImage(image, getAffineTransform(), null);
+        //g2.drawImage(image, getAffineTransform(), null);
     }
 
     /**
@@ -291,7 +292,9 @@ public abstract class Entity implements Serializable {
     public AffineTransform getAffineTransform()
     {
         AffineTransform at = new AffineTransform();
+        at.translate(location.getX(),location.getY());
         at.rotate(Math.toRadians(getDirectionFacing()), (getWidth() / 2), (getHeight() / 2));
+        //at.translate(location.getX(),location.getY());
         return at;
     }
 
