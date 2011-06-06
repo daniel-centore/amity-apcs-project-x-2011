@@ -45,9 +45,11 @@ import org.amityregion5.projectx.common.communication.messages.ReadyMessage;
 import org.amityregion5.projectx.common.communication.messages.RemoveEntityMessage;
 import org.amityregion5.projectx.common.communication.messages.RequestEntityAddMessage;
 import org.amityregion5.projectx.common.communication.messages.TextualMessage;
+import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.server.Server;
 import org.amityregion5.projectx.server.game.GameController;
+import org.amityregion5.projectx.server.tools.CollisionDetection;
 
 /**
  * Represents a client in the game
@@ -263,7 +265,10 @@ public class Client extends Thread {
             }
         } else if (m instanceof RequestEntityAddMessage)
         {
-            GameController.getInstance().addEntity(((RequestEntityAddMessage) m).getNewInstance());
+            Entity e = ((RequestEntityAddMessage) m).getNewInstance();
+
+            if (!CollisionDetection.hasCollision(e, GameController.getInstance().getEntities()))
+                GameController.getInstance().addEntity(e);
         }
     }
 

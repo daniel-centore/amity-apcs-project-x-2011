@@ -20,6 +20,7 @@
 package org.amityregion5.projectx.server.tools;
 
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 import org.amityregion5.projectx.common.entities.Entity;
 
@@ -33,6 +34,22 @@ public class CollisionDetection
     // what level of opacity (0 = transparent, 255 = completely opaque) is considered opaque for pixel collisions
     public static final int OPACITY_THRESHOLD = 100;
 
+    /**
+     * Checks if an entity collides with any other entity in a list (excluding itself)
+     * @param a Entity to check
+     * @param ents List of entities
+     * @return Whether or not it has a collision
+     */
+    public static boolean hasCollision(Entity a, List<Entity> ents)
+    {
+        for (Entity e : ents)
+        {
+            if(e != a && hasCollision(a, 0, 0, e))
+                return true;
+        }
+
+        return false;
+    }
     /**
      * Checks if two entities would collide if entity a were to move First checks if their surrounding boxes collide, then uses the pixel method if so
      * 
