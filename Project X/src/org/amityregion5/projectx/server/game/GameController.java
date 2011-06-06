@@ -30,6 +30,7 @@ import org.amityregion5.projectx.client.gui.GameWindow;
 import org.amityregion5.projectx.common.communication.messages.AddEntityMessage;
 import org.amityregion5.projectx.common.communication.messages.AddMeMessage;
 import org.amityregion5.projectx.common.communication.messages.AddWeaponMessage;
+import org.amityregion5.projectx.common.communication.messages.CashMessage;
 import org.amityregion5.projectx.common.communication.messages.RemoveEntityMessage;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.characters.CharacterEntity;
@@ -225,7 +226,17 @@ public class GameController {
             }
             if (closestEn != null)
             {
-                closestEn.damage(player.getCurrWeapon().getDamage());
+                int damage = closestEn.damage(player.getCurrWeapon().getDamage());
+                for (Client c : clients)
+                {
+                    if (c.getPlayer().equals(player))
+                    {
+                        PlayerEntity p = c.getPlayer();
+                        p.changePoints(damage);
+                        server.relayMessage(new CashMessage(
+                                p.getPoints(), p.getUniqueID()));
+                    }
+                }
                 closestEn.requestUpdate();
                 if (closestEn.killed())
                 {

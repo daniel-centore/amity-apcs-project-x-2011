@@ -18,22 +18,13 @@
  */
 package org.amityregion5.projectx;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.net.SocketTimeoutException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import javax.swing.JOptionPane;
 
-import javazoom.jl.player.Player;
 
 import org.amityregion5.projectx.client.communication.CommunicationHandler;
 import org.amityregion5.projectx.client.gui.LobbyWindow;
 import org.amityregion5.projectx.client.preferences.PreferenceManager;
 import org.amityregion5.projectx.client.sound.SoundManager;
-import org.amityregion5.projectx.client.sound.SoundManager.Sound;
 import org.amityregion5.projectx.common.communication.messages.ActivePlayersMessage;
 import org.amityregion5.projectx.common.communication.messages.BooleanReplyMessage;
 import org.amityregion5.projectx.common.communication.messages.IntroduceMessage;

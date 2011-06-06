@@ -29,8 +29,9 @@ public interface Damageable {
     /**
      * Deals damage to the entity
      * @param damage Damage to apply
+     * @return the amount of damage applied
      */
-    public void damage(int damage);
+    public int damage(int damage);
 
     /**
      * Heals the enemy

@@ -75,7 +75,6 @@ public class RepaintHandler extends Thread {
         }
         Graphics2D g = (Graphics2D) img.getGraphics();
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
         g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
         g.setColor(Color.white);
@@ -89,7 +88,7 @@ public class RepaintHandler extends Thread {
             g.drawImage(k, 0, 0, null);
         }
 
-        if (isShowingGrid())
+        if (isShowingGrid()) // draw the grid if it's supposed to be showing
         {
             drawGrid(g);
         }

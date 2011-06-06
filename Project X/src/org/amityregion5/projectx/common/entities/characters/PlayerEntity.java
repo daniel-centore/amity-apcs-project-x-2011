@@ -29,8 +29,9 @@ package org.amityregion5.projectx.common.entities.characters;
 public class PlayerEntity extends CharacterEntity {
     
     private static final long serialVersionUID = 1L;
-    
     public  static final int INITIAL_SPEED = 10; // initial move speed
+    private int points;
+    private String username;
 
     /**
      * Creates a player
@@ -40,6 +41,12 @@ public class PlayerEntity extends CharacterEntity {
     public PlayerEntity(int x, int y)
     {
         super(x, y);
+    }
+
+    public PlayerEntity(int x, int y, String username)
+    {
+        this(x,y);
+        this.username = username;
     }
 
     @Override
@@ -56,5 +63,30 @@ public class PlayerEntity extends CharacterEntity {
     public void incrementY(double offSetY)
     {
         setY(getY() + offSetY);
+    }
+
+    public void changePoints(int pts)
+    {
+        points += pts;
+    }
+
+    public int getPoints()
+    {
+        return points;
+    }
+
+    public void setPoints(int amount)
+    {
+        points = amount;
+    }
+
+    public void setUsername(String name)
+    {
+        username = name;
+    }
+
+    public String getUsername()
+    {
+        return username;
     }
 }

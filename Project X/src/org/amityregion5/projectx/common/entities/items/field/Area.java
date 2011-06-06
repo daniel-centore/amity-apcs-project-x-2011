@@ -58,9 +58,10 @@ public class Area extends FieldItem implements Damageable {
      *
      * @param damage the amount of health to remove
      */
-    public void damage(int damage)
+    public int damage(int damage)
     {
         hp -= damage;
+        return damage;
     }
 
     /**

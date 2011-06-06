@@ -29,7 +29,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.amityregion5.projectx.common.communication.messages.ActivePlayersMessage;
-import org.amityregion5.projectx.common.communication.messages.AddEntityMessage;
 import org.amityregion5.projectx.common.communication.messages.AnnounceMessage;
 import org.amityregion5.projectx.common.communication.messages.BlockingMessage;
 import org.amityregion5.projectx.common.communication.messages.BooleanReplyMessage;
@@ -70,6 +69,7 @@ public class Client extends Thread {
     private PlayerEntity player; // client's player (once we make it!)
     private RawClient raw; // client's raw client (once created)
     private ShotThread shotThread; // helps this client with shooting
+    private int points; // the points that this client has
 
     /**
      * Creates a client

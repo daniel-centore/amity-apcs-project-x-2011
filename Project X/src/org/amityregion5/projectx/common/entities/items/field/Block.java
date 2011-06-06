@@ -47,6 +47,7 @@ public class Block extends FieldItem implements Damageable {
         maxHealth = health;
     }
 
+    @Override
     public int getHp()
     {
         return hp;
@@ -57,10 +58,10 @@ public class Block extends FieldItem implements Damageable {
         this.hp = hp;
     }
 
-    public void damage(int damage)
+    public int damage(int damage)
     {
         hp -= damage;
-        killed();
+        return damage;
     }
 
     /**
@@ -78,11 +79,7 @@ public class Block extends FieldItem implements Damageable {
      */
     public boolean killed()
     {
-        if (hp <= 0)
-        {
-            return true;
-        }
-        return false;
+        return hp <= 0;
     }
 
     @Override

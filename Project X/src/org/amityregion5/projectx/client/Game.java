@@ -47,6 +47,7 @@ import org.amityregion5.projectx.common.communication.messages.AddEntityMessage;
 import org.amityregion5.projectx.common.communication.messages.AddMeMessage;
 import org.amityregion5.projectx.common.communication.messages.AddWeaponMessage;
 import org.amityregion5.projectx.common.communication.messages.AnnounceMessage;
+import org.amityregion5.projectx.common.communication.messages.CashMessage;
 import org.amityregion5.projectx.common.communication.messages.ChatMessage;
 import org.amityregion5.projectx.common.communication.messages.ClientMovingMessage;
 import org.amityregion5.projectx.common.communication.messages.EntityMovedMessage;
@@ -344,6 +345,11 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                 JOptionPane.showMessageDialog(null, "The enemies have taken over!", "Game Over", JOptionPane.OK_OPTION);
                 // TODO return to lobby?
             }
+        } else if (m instanceof CashMessage)
+        {
+            CashMessage cm = (CashMessage) m;
+            ((PlayerEntity) entityHandler.getEntity(cm.getID())).setPoints(
+                    cm.getAmount());
         }
     }
 
