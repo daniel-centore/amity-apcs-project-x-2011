@@ -35,9 +35,9 @@ public abstract class MeleeWeapon extends Weapon implements DamageDealing {
     
     public int damage;
 
-    public MeleeWeapon(int rate, int damage)
+    public MeleeWeapon(int rate, int damage, int accuracy)
     {
-        super(MELEE_RANGE, rate);
+        super(MELEE_RANGE, rate, accuracy);
         this.damage = damage;
     }
 

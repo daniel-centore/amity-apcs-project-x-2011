@@ -30,9 +30,9 @@ public class Gun extends ProjectileWeapon
     private static final long serialVersionUID = 1L;
     private int damage;
 
-    public Gun(int range, int ammo, int maxAmmo, int fireRate, int roundsPerMag, int mags, int damage)
+    public Gun(int range, int ammo, int maxAmmo, int fireRate, int roundsPerMag, int mags, int damage, double accuracy)
     {
-        super(range, ammo, maxAmmo, fireRate, roundsPerMag, mags, damage);
+        super(range, ammo, maxAmmo, fireRate, roundsPerMag, mags, damage, accuracy);
     }
 
     @Override

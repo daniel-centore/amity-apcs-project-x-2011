@@ -220,13 +220,14 @@ public class GameController {
                     double dist = e.getLocation().distance(new Point(player.getCenterX(), player.getCenterY()));
                     if (dist < closest)
                     {
+                        closest = dist;
                         closestEn = (Enemy) e;
                     }
                 }
             }
             if (closestEn != null)
             {
-                int damage = closestEn.damage(player.getCurrWeapon().getDamage());
+                int damage = closestEn.damage(player.getCurrWeapon().getDamage(closest));
                 for (Client c : clients)
                 {
                     if (c.getPlayer().equals(player))
