@@ -21,8 +21,9 @@
 package org.amityregion5.projectx.common.entities.characters.enemies;
 
 /**
- *
- * @author dibuduomi
+ * Fast enemy that explodes upon reaching base
+ * @author Mike Dibuduo
+ * @author Mike Wenke
  */
 public class SuicideBomber extends Enemy {
 
@@ -34,6 +35,7 @@ public class SuicideBomber extends Enemy {
     {
         super(max, x, y);
         this.damage = damage;
+        setMoveSpeed(Enemy.DEFAULT_SPEED * 4);
     }
 
     public int getDamage()

@@ -99,12 +99,12 @@ public class EnemyWave {
 
     public static double waveNumEnemies(int wn)
     {
-        return (wn*wn + 6*wn + 9) / 16; // quadratically-increasing number
+        return (wn*wn + 8*wn + 16) / 25; // quadratically-increasing number
         //return Math.pow(1.2,wn); // exponentially-increasing number
     }
 
     public static double waveEnemyHealth(int wn) {
-        return (wn*wn + 6*wn + 9) / 16; // quadratically-increasing health
+        return (wn*wn + 8*wn + 16) / 25; // quadratically-increasing health
         //return Math.pow(1.2,wn); // exponetially-increasing health
     }
 
