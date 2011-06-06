@@ -19,6 +19,7 @@
 package org.amityregion5.projectx.client.gui;
 
 import java.awt.AlphaComposite;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -37,6 +38,7 @@ public class Leaderboard
 {
     private static final int Y_MARGIN = 20;
     private static final int X_MARGIN = 10;
+    private static final int USER_WIDTH = 150;
     public static BufferedImage getBoard(int width, int height,
             ArrayList<PlayerEntity> players)
     {
@@ -44,12 +46,14 @@ public class Leaderboard
         Graphics2D g2 = (Graphics2D) result.getGraphics();
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
+        g2.setColor(Color.BLACK);
         int draw = Y_MARGIN;
         
         for (PlayerEntity p : players)
         {
+            System.out.println("drawing at " + X_MARGIN + "," + draw);
             g2.drawString(p.getUsername(), X_MARGIN, draw);
+            g2.drawString(String.valueOf(p.getPoints()),X_MARGIN + USER_WIDTH, draw);
             draw += g2.getFontMetrics().getHeight() + 5;
         }
 
