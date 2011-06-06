@@ -131,7 +131,7 @@ public class EntityMoverThread extends Thread {
                             {
                                 SuicideBomber sb = (SuicideBomber) en;
                                 map.getArea().damage(sb.getDamage());
-                                gameController.removeEntity(sb);
+                                toRemove.add(sb);
                             } else
                             {
                                 int relY = (int) map.getPlayArea().getCenterY() - e.getCenterY();

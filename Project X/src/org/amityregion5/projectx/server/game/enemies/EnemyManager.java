@@ -48,7 +48,6 @@ public class EnemyManager {
         spawnArea = area;
         
         EnemyGroup group = createEnemyGroup(new Enemy(1, 0, 0), 5, Enemy.DEFAULT_SPEED); //Arbitrary first wave with 5 enemies w/10 health
-        Enemy modelBomber = new SuicideBomber(100, 10, 0, 0);
         EnemyGroup bomberGroup = createEnemyGroup(new SuicideBomber(100, 10, 0, 0), 3, Enemy.DEFAULT_SPEED * 5);
         ArrayList<EnemyGroup> enemies = new ArrayList<EnemyGroup>();
         enemies.add(group);
