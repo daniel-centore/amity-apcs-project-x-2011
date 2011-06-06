@@ -243,4 +243,9 @@ public class RepaintHandler extends Thread {
     {
         showingLb = b;
     }
+    
+    public static void switchLeaderBoard()
+    {
+        showingLb = !showingLb;
+    }
 }

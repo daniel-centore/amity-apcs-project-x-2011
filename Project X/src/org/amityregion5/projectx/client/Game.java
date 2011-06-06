@@ -156,7 +156,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         int keyCode = e.getKeyCode();
         if (Keys.isKey(Keys.LEADERBOARD, keyCode))
         {
-            RepaintHandler.setLeaderboardShowing(true);
+            RepaintHandler.switchLeaderBoard();
             return;
         }
         if (ChatDrawing.isChatting() && !(e.isActionKey() || e.getKeyCode() == KeyEvent.VK_SHIFT || e.getKeyCode() == KeyEvent.VK_ALT || e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_BACK_SPACE || e.getKeyCode() == KeyEvent.VK_CONTROL))
@@ -255,11 +255,6 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
 
     public void keyReleased(int keyCode)
     {
-        if (Keys.isKey(Keys.LEADERBOARD, keyCode))
-        {
-            RepaintHandler.setLeaderboardShowing(false);
-            return;
-        }
         int speed = PlayerEntity.INITIAL_SPEED;
 
         while (depressedKeys.contains(keyCode))
