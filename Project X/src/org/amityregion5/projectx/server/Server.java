@@ -95,6 +95,15 @@ public class Server {
             System.exit(1);
         }
     }
+    
+//    /**
+//     * Restarts the server afresh
+//     */
+//    public void restartServer()
+//    {
+//        waiting = 0;
+//        gameController.kill();
+//    }
 
     /**
      * Sets this server's controller.
@@ -192,7 +201,7 @@ public class Server {
     public void setListening(boolean listening)
     {
         this.listening = listening;
-        multicaster.setMulticasting(listening);
+//        multicaster.setMulticasting(listening);
     }
 
     /**
@@ -328,7 +337,7 @@ public class Server {
         gameController = new GameController(this);
 
     }
-
+    
     /**
      * @return A HashMap of connected clients
      */

@@ -275,4 +275,10 @@ public class GameController {
     {
         return instance;
     }
+
+    public void kill()
+    {
+        entityMoverThread.kill();
+        enemyManager.kill();
+    }
 }

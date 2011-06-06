@@ -44,6 +44,7 @@ public class GeneratorThread extends Thread {
     private BlockingQueue<EnemyWave> waves;
     private ArrayList<Point> enemySpawns;
     private EnemyManager manager;
+    private boolean spawn;
 
     public GeneratorThread(GameController c, ArrayList<Point> spawns, EnemyManager m)
     {
@@ -114,7 +115,8 @@ public class GeneratorThread extends Thread {
     @Override
     public void run()
     {
-        while (true)
+        spawn = true;
+        while (spawn)
         {
             if (waves.peek() != null)
             {
@@ -128,5 +130,10 @@ public class GeneratorThread extends Thread {
                 }
             }
         }
+    }
+
+    public void kill()
+    {
+        spawn = false;
     }
 }

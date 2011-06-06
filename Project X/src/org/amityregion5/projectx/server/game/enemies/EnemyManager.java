@@ -35,19 +35,19 @@ import org.amityregion5.projectx.server.game.GameController;
 public class EnemyManager {
 
     private GeneratorThread gen;
-    private EnemyWave wave; //Current wave
+    private EnemyWave wave; // Current wave
     private ArrayList<Point> spawnArea;
     private GameController controller;
-    private final int NUM_WAVES = 8; //Completely arbitrary
-    
+    private final int NUM_WAVES = 8; // Completely arbitrary
+
     public static final int TIME_BTW_WAVES = 20000;
 
     public EnemyManager(GameController c, ArrayList<Point> area)
     {
         controller = c;
         spawnArea = area;
-        
-        EnemyGroup group = createEnemyGroup(new Enemy(1, 0, 0), 5, Enemy.DEFAULT_SPEED); //Arbitrary first wave with 5 enemies w/10 health
+
+        EnemyGroup group = createEnemyGroup(new Enemy(1, 0, 0), 5, Enemy.DEFAULT_SPEED); // Arbitrary first wave with 5 enemies w/10 health
         EnemyGroup bomberGroup = createEnemyGroup(new SuicideBomber(100, 10, 0, 0), 3, Enemy.DEFAULT_SPEED * 5);
         ArrayList<EnemyGroup> enemies = new ArrayList<EnemyGroup>();
         enemies.add(group);
@@ -56,7 +56,7 @@ public class EnemyManager {
         gen = new GeneratorThread(controller, spawnArea, this);
         gen.addWave(wave);
     }
-    
+
     public EnemyGroup createEnemyGroup(Enemy en, int num, int speed)
     {
         en.setMoveSpeed(speed);
@@ -79,12 +79,17 @@ public class EnemyManager {
         enemies.add(group);
         enemies.add(bomberGroup);
         wave = new EnemyWave(1, enemies);
-        for(int i = 0; i < NUM_WAVES; i++)
+        for (int i = 0; i < NUM_WAVES; i++)
         {
             gen.addWave(wave);
             wave = wave.nextWave();
         }
         gen.start();
+    }
+
+    public void kill()
+    {
+        gen.kill();
     }
 
 }

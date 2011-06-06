@@ -33,7 +33,7 @@ import javazoom.jl.player.Player;
  */
 public class SoundManager extends Thread {
 
-    public static boolean PLAY = true;
+    public static boolean PLAY = false;
     public static boolean BACKGROUND = false;
 
     /**

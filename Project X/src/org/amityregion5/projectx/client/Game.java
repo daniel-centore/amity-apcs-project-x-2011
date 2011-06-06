@@ -354,7 +354,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             if (sum.getType() == StatusUpdateMessage.Type.END_GAME)
             {
                 JOptionPane.showMessageDialog(null, "The enemies have taken over!", "Game Over", JOptionPane.OK_OPTION);
-                // TODO return to lobby?
+                InputHandler.removeListener(this);
             }
         } else if (m instanceof CashMessage)
         {

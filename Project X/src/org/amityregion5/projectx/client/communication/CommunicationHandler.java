@@ -24,6 +24,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,7 @@ import org.amityregion5.projectx.common.communication.messages.Message;
 public class CommunicationHandler extends Thread {
 
     private static CommunicationHandler instance = null; // the latest instance
-
+    
     private String serverIP; // IP to work with
     private Socket socket = null; // socket we create
     private boolean keepReading = true; // should we be reading from the server?
@@ -50,6 +51,8 @@ public class CommunicationHandler extends Thread {
     private volatile List<ReplyWaiting> replies = new ArrayList<ReplyWaiting>(); // list of places to check for replies
     private ObjectOutputStream outObjects; // what we write to
     private ObjectInputStream inObjects; // what we read from
+    
+    // TODO: remove all the "instance" kludges so we can restart the game more easily.
 
     /**
      * Creates and initializes communications with a server
@@ -151,7 +154,7 @@ public class CommunicationHandler extends Thread {
             socket.close();
         } catch (IOException e)
         {
-            e.printStackTrace();
+//            e.printStackTrace();
         } catch (NullPointerException e)
         {
 
