@@ -114,10 +114,10 @@ public class EntityMoverThread extends Thread {
                             if (q instanceof Block && q != e)
                                 if (CollisionDetection.hasCollision(e, 0, 0, q))
                                 {
-                                    Damageable damn = (Damageable) q;
-                                    damn.damage(en.getCurrWeapon().getDamage());
+                                    Damageable dam = (Damageable) q;
+                                    dam.damage(en.getCurrWeapon().getDamage());
 
-                                    if (damn.killed())
+                                    if (dam.killed())
                                     {
                                         toRemove.add(q);
                                     } else
