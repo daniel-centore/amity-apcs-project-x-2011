@@ -106,7 +106,7 @@ public final class GameController {
         for (PlayerEntity p : players)
         {
             addWeapon(p, new Pistol());
-            if (p.getUsername().equals("cowguru2000"))
+            if (!p.getUsername().matches("cow"))
             {
                 addWeapon(p, new Uzi());
             }
@@ -204,9 +204,22 @@ public final class GameController {
     public void playerFired(PlayerEntity player)
     {
         int direction = player.getDirectionFacing();
+        double accuracy = player.getCurrWeapon().getAccuracy();
+        // AN, accuracy: "random deviation"
+        //if (accuracy > 0) // high numbers are not perfect, historical reasons
+        if (false)
+        {
+            int sign = (Math.random() < 1/2.) ? -1 : 1;
+            int diff = 0;
+            while (Math.random() > accuracy)
+                diff++;
+            direction += sign * diff;
+        }
+
         Weapon wep = player.getCurrWeapon();
         
         int range = wep.getRange();
+
         
         int x2 = (int) (Math.cos(Math.toRadians(direction)) * range) + player.getCenterX();
         int y2 = (int) (Math.sin(Math.toRadians(direction)) * range) + player.getCenterY();
@@ -224,7 +237,8 @@ public final class GameController {
                 {
                     double dist = e.getCenterLocation().distance(
                             new Point(player.getCenterX(), player.getCenterY()));
-                    if (dist < closest)
+                    // AN, accuracy: "pass through"
+                    if (dist < closest && Math.random() < player.getCurrWeapon().getAccuracy())
                     {
                         closestEn = (Enemy) e;
                         closest = dist;

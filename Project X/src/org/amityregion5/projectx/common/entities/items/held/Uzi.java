@@ -29,6 +29,6 @@ public class Uzi extends Gun {
 
     public Uzi()
     {
-        super(300, 200, 200, 10, 6, -1, 1,0.8);
+        super(300, -1, -1, 10, -1, -1, 1, .8);
     }
 }

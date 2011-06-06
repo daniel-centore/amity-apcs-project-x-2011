@@ -365,8 +365,8 @@ public class Server {
         if (gameController != null)
         {
             //relayMessage(new FiredMessage(player.getUniqueID()));
-            rawServ.send(Constants.FIRE_PREF + player.getUniqueID());
             gameController.playerFired(player);
+            rawServ.send(Constants.FIRE_PREF + player.getUniqueID());
         }
     }
 
