@@ -27,6 +27,7 @@ import org.amityregion5.projectx.common.tools.Sound;
  *
  * @author Mike DiBuduo
  * @author Joe Stein
+ * @deprecated Not used. And it doesn't have a sprite ATM.
  */
 public class Sword extends MeleeWeapon implements DamageDealing
 {

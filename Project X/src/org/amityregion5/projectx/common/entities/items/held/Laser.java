@@ -44,6 +44,7 @@ public class Laser extends Gun {
     @Override
     public String getDefaultImage()
     {
+        // TODO: we need a sprite here :-)
         return "sprites/Pistol";
     }
 }
