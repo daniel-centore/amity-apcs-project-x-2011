@@ -43,21 +43,7 @@ import org.amityregion5.projectx.client.sound.SoundManager;
 import org.amityregion5.projectx.common.communication.Constants;
 import org.amityregion5.projectx.common.communication.MessageListener;
 import org.amityregion5.projectx.common.communication.RawListener;
-import org.amityregion5.projectx.common.communication.messages.AddEntityMessage;
-import org.amityregion5.projectx.common.communication.messages.AddMeMessage;
-import org.amityregion5.projectx.common.communication.messages.AddWeaponMessage;
-import org.amityregion5.projectx.common.communication.messages.AnnounceMessage;
-import org.amityregion5.projectx.common.communication.messages.CashMessage;
-import org.amityregion5.projectx.common.communication.messages.ChangedWeaponMessage;
-import org.amityregion5.projectx.common.communication.messages.ChatMessage;
-import org.amityregion5.projectx.common.communication.messages.ClientMovingMessage;
-import org.amityregion5.projectx.common.communication.messages.EntityMovedMessage;
-import org.amityregion5.projectx.common.communication.messages.FiringMessage;
-import org.amityregion5.projectx.common.communication.messages.Message;
-import org.amityregion5.projectx.common.communication.messages.PlaySoundMessage;
-import org.amityregion5.projectx.common.communication.messages.RemoveEntityMessage;
-import org.amityregion5.projectx.common.communication.messages.RequestEntityAddMessage;
-import org.amityregion5.projectx.common.communication.messages.StatusUpdateMessage;
+import org.amityregion5.projectx.common.communication.messages.*;
 import org.amityregion5.projectx.common.entities.Damageable;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.EntityConstants;
@@ -65,6 +51,7 @@ import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 import org.amityregion5.projectx.common.tools.ImageHandler;
 import org.amityregion5.projectx.common.entities.characters.CharacterEntity;
+import org.amityregion5.projectx.common.entities.items.field.Block;
 import org.amityregion5.projectx.common.tools.Sound;
 
 /**
@@ -198,9 +185,12 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             }
             else if(Keys.isKey(Keys.BLOCK, keyCode))
             {
-                Point p = PopupMenuHandler.roundToGrid(lastMouseX, lastMouseY);
-
-                communicationHandler.send(new RequestEntityAddMessage(EntityConstants.BLOCK, p.x, p.y));
+                if (me.getCash() > Block.PRICE)
+                {
+                    Point p = PopupMenuHandler.roundToGrid(lastMouseX, lastMouseY);
+                    communicationHandler.send(new RequestEntityAddMessage(EntityConstants.BLOCK, p.x, p.y));
+                    me.spendCash(Block.PRICE);
+                }
             }
             else if(Keys.isKey(Keys.FIRE, keyCode))
             {
@@ -370,8 +360,12 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         else if(m instanceof CashMessage)
         {
             CashMessage cm = (CashMessage) m;
-            ((PlayerEntity) entityHandler.getEntity(cm.getID())).setPoints(
+            ((PlayerEntity) entityHandler.getEntity(cm.getID())).setCash(
                     cm.getAmount());
+        } else if (m instanceof PointMessage)
+        {
+            PointMessage pm = (PointMessage) m;
+            ((PlayerEntity) entityHandler.getEntity(pm.getID())).setPoints(pm.getAmount());
         }
         else if(m instanceof PlaySoundMessage)
         {

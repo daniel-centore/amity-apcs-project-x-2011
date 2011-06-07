@@ -32,6 +32,7 @@ import org.amityregion5.projectx.common.communication.messages.AddMeMessage;
 import org.amityregion5.projectx.common.communication.messages.AddWeaponMessage;
 import org.amityregion5.projectx.common.communication.messages.AnnounceMessage;
 import org.amityregion5.projectx.common.communication.messages.CashMessage;
+import org.amityregion5.projectx.common.communication.messages.PointMessage;
 import org.amityregion5.projectx.common.communication.messages.RemoveEntityMessage;
 import org.amityregion5.projectx.common.entities.Damageable;
 import org.amityregion5.projectx.common.entities.Entity;
@@ -275,8 +276,10 @@ public final class GameController {
                         {
                             PlayerEntity p = c.getPlayer();
                             p.changePoints(damage);
+                            p.addCash(damage);
+                            server.relayMessage(new PointMessage(p.getPoints(), p.getUniqueID()));
                             server.relayMessage(new CashMessage(
-                                        p.getPoints(), p.getUniqueID()));
+                                        p.getCash(), p.getUniqueID()));
                         }
                     }
                     e.requestUpdate();

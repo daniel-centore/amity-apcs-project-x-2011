@@ -19,6 +19,7 @@
  **/
 package org.amityregion5.projectx.common.entities.items.field;
 
+import org.amityregion5.projectx.common.entities.Buyable;
 import org.amityregion5.projectx.common.entities.Damageable;
 
 /**
@@ -27,13 +28,14 @@ import org.amityregion5.projectx.common.entities.Damageable;
  * @author Mike DiBuduo
  * @author Mike Wenke
  */
-public class Block extends FieldItem implements Damageable {
+public class Block extends FieldItem implements Damageable, Buyable {
 
     private static final long serialVersionUID = 1L;
     
     public static final int DEFAULT_HEALTH = 100;
     private int hp;
     private final int maxHealth;
+    public final static int PRICE = 10;
 
     public Block(int x, int y)
     {
@@ -91,5 +93,9 @@ public class Block extends FieldItem implements Damageable {
     public int getMaxHp()
     {
         return maxHealth;
+    }
+
+    public int getCost() {
+        return PRICE;
     }
 }

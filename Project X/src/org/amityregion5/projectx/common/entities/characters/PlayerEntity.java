@@ -31,6 +31,7 @@ public class PlayerEntity extends CharacterEntity {
     private static final long serialVersionUID = 1L;
     public  static final int INITIAL_SPEED = 10; // initial move speed
     private int points;
+    private int cash;
     private String username;
 
     /**
@@ -80,6 +81,27 @@ public class PlayerEntity extends CharacterEntity {
         points = amount;
     }
 
+
+    public int getCash()
+    {
+        return cash;
+    }
+
+    public void addCash(int amount)
+    {
+        cash += amount;
+    }
+
+    public void spendCash(int amount)
+    {
+        cash -= amount;
+    }
+
+    public void setCash(int amount)
+    {
+        cash = amount;
+    }
+    
     public void setUsername(String name)
     {
         username = name;
