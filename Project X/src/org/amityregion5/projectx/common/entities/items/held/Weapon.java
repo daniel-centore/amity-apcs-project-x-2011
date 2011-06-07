@@ -21,7 +21,7 @@
 package org.amityregion5.projectx.common.entities.items.held;
 
 import org.amityregion5.projectx.common.entities.items.DamageDealing;
-import org.amityregion5.projectx.client.sound.SoundManager.Sound;
+import org.amityregion5.projectx.common.tools.Sound;
 
 /**
  * A HeldItem used to effect effects on a target.

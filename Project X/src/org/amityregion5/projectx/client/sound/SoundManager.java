@@ -23,6 +23,7 @@ import java.io.FileNotFoundException;
 
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
+import org.amityregion5.projectx.common.tools.Sound;
 
 /**
  * A class that handles playing sounds client-side.
@@ -33,40 +34,8 @@ import javazoom.jl.player.Player;
  */
 public class SoundManager extends Thread {
 
-    public static boolean PLAY = false;
+    public static boolean PLAY = true;
     public static boolean BACKGROUND = false;
-
-    /**
-     * All sounds are here :-)
-     */
-    public static enum Sound
-    {
-        PISTOL_SHOT("resources/sounds/65_Pistol_Shot.mp3"),
-        BG_1("resources/sounds/17_Death_Grip.mp3");
-
-        private Player player;
-        private String file;
-
-        private Sound(String file)
-        {
-            this.file = file;
-        }
-
-        public void reset()
-        {
-            try
-            {
-                player = new Player(new FileInputStream(file));
-            } catch (FileNotFoundException e)
-            {
-                e.printStackTrace();
-            } catch (JavaLayerException e)
-            {
-                e.printStackTrace();
-            }
-        }
-    }
-
     /**
      * Loops a sound
      * @param s Sound to loop
@@ -86,7 +55,7 @@ public class SoundManager extends Thread {
 
                     try
                     {
-                        s.player.play();
+                        s.getPlayer().play();
                     } catch (JavaLayerException e)
                     {
                         e.printStackTrace();
@@ -113,7 +82,7 @@ public class SoundManager extends Thread {
                 try
                 {
                     s.reset();
-                    s.player.play();
+                    s.getPlayer().play();
                 } catch (JavaLayerException e)
                 {
                     e.printStackTrace();
@@ -130,7 +99,7 @@ public class SoundManager extends Thread {
      */
     public static void preload()
     {
-        SoundManager.Sound.BG_1.reset();
+        Sound.BG_1.reset();
     }
 
 }
