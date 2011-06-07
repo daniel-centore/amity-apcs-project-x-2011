@@ -40,7 +40,7 @@ public interface Damageable {
     public void heal(int health);
 
     /**
-     * Kills the entity
+     * Check if the entity is dead
      */
     public boolean killed();
 

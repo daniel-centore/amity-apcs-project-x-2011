@@ -124,7 +124,12 @@ public class EntityMoverThread extends Thread {
                                 if (CollisionDetection.hasCollision(e, (int) offsetX, (int) offsetY, q))
                                 {
                                     Damageable dam = (Damageable) q;
-                                    dam.damage(en.getCurrWeapon().getDamage());
+                                    if (e instanceof SuicideBomber)
+                                    {
+                                        toRemove.add(q);
+                                        toRemove.add(e);
+                                    } else
+                                        dam.damage(en.getCurrWeapon().getDamage());
 
                                     if (dam.killed())
                                     {
