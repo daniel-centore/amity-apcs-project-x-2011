@@ -42,7 +42,7 @@ import java.net.InetAddress;
 public class Main {
     public static void main(String[] args) throws Exception
     {
-        SoundManager.preload();
+        //SoundManager.preload();
         Server s = new Server("test server @ " + InetAddress.getLocalHost().getCanonicalHostName());
         ServerController sc = new DefaultServerController();
         s.setController(sc);

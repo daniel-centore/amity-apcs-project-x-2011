@@ -36,7 +36,7 @@ import org.amityregion5.projectx.server.game.GameController;
 
 /**
  * Class documentation.
- * 
+ *
  * @author Michael Wenke
  */
 public class GeneratorThread extends Thread {

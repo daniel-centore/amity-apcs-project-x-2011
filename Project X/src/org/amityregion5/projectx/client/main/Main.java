@@ -40,7 +40,7 @@ public class Main {
 
     public static void main(String[] args)
     {
-        SoundManager.preload();
+        //SoundManager.preload();
         try
         {
             // default look and feel for prettiness :D

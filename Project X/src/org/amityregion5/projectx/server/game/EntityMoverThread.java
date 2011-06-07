@@ -141,7 +141,8 @@ public class EntityMoverThread extends Thread {
                                                     q.requestUpdate();
                                             }
                                         }
-                                        gameController.getServer().relayMessage(new PlaySoundMessage(Sound.EXPLOSION));
+                                        //FIXME explosiosn!!
+                                        //gameController.getServer().relayMessage(new PlaySoundMessage(Sound.EXPLOSION));
                                     } else {
                                         Damageable dam = (Damageable) q;
 
@@ -163,7 +164,8 @@ public class EntityMoverThread extends Thread {
                                 SuicideBomber sb = (SuicideBomber) en;
                                 map.getArea().damage(sb.getDamage()); // attack the area specifically
                                 toRemove.add(sb);
-                                gameController.getServer().relayMessage(new PlaySoundMessage(Sound.EXPLOSION));
+                                // FIXME explosions!!
+                                //gameController.getServer().relayMessage(new PlaySoundMessage(Sound.EXPLOSION));
                             } else
                             {
                                 int relY = (int) map.getPlayArea().getCenterY() - e.getCenterY();

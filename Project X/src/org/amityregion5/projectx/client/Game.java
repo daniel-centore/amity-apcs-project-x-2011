@@ -99,8 +99,8 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         InputHandler.registerListener(this);
         RepaintHandler.setGame(this);
 
-        if(SoundManager.BACKGROUND)
-            SoundManager.playLoop(Sound.BG_1);
+        //if (SoundManager.BACKGROUND)
+        //    SoundManager.playLoop(Sound.BG_1);
     }
 
     public void mouseDragged(int x, int y)
@@ -369,7 +369,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         }
         else if(m instanceof PlaySoundMessage)
         {
-            SoundManager.playOnce(((PlaySoundMessage) m).getSound());
+            //SoundManager.playOnce(((PlaySoundMessage) m).getSound());
         }
     }
 
@@ -417,7 +417,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         {
             ((PlayerEntity) entityHandler.getEntity(
                     Long.valueOf(str.substring(1)))).setFired(true);
-            SoundManager.playOnce(me.getCurrWeapon().getSound());
+            //SoundManager.playOnce(me.getCurrWeapon().getSound());
             GameWindow.fireRepaintRequired();
             return;
         }
