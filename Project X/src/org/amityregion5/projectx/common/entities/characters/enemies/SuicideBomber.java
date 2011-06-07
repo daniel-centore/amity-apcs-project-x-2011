@@ -50,5 +50,4 @@ public class SuicideBomber extends Enemy {
     {
         return "sprites/Suicide_Bomber";
     }
-
 }

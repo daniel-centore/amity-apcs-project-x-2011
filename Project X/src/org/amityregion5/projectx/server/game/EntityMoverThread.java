@@ -125,20 +125,33 @@ public class EntityMoverThread extends Thread {
                             {
                                 if (CollisionDetection.hasCollision(e, (int) offsetX, (int) offsetY, q))
                                 {
-                                    Damageable dam = (Damageable) q;
                                     if (e instanceof SuicideBomber)
                                     {
-                                        toRemove.add(q);
-                                        toRemove.add(e);
+                                        for (Entity v : gameController.getEntities()) {
+                                            SuicideBomber sb = (SuicideBomber) en;
+                                            sb.damage(sb.getMaxHp() + sb.getDamage()); // overkill
+                                            double dist = e.getCenterLocation().distance(
+                                                    new Point(v.getCenterX(), v.getCenterY()));
+                                            if (dist < 30) {
+                                                Damageable dam = (Damageable) q;
+                                                dam.damage(sb.getDamage() / 2); // unfocused damage
+                                                if (dam.killed())
+                                                    toRemove.add(v);
+                                                else
+                                                    q.requestUpdate();
+                                            }
+                                        }
                                         gameController.getServer().relayMessage(new PlaySoundMessage(Sound.EXPLOSION));
-                                    } else
+                                    } else {
+                                        Damageable dam = (Damageable) q;
+
                                         dam.damage(en.getCurrWeapon().getDamage());
 
-                                    if (dam.killed())
-                                    {
-                                        toRemove.add(q);
-                                    } else
-                                        q.requestUpdate();
+                                        if (dam.killed())
+                                            toRemove.add(q);
+                                        else
+                                            q.requestUpdate();
+                                    }
                                 }
                             }
                         }
@@ -148,7 +161,7 @@ public class EntityMoverThread extends Thread {
                             if (en instanceof SuicideBomber)
                             {
                                 SuicideBomber sb = (SuicideBomber) en;
-                                map.getArea().damage(sb.getDamage());
+                                map.getArea().damage(sb.getDamage()); // attack the area specifically
                                 toRemove.add(sb);
                                 gameController.getServer().relayMessage(new PlaySoundMessage(Sound.EXPLOSION));
                             } else
