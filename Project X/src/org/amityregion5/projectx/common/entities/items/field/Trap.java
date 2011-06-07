@@ -22,39 +22,38 @@ package org.amityregion5.projectx.common.entities.items.field;
 import org.amityregion5.projectx.common.entities.items.DamageDealing;
 
 /**
- *Not sure what kind of traps we're going to have yet.
+ * Not sure what kind of traps we're going to have yet.
  * Traps could deal direct damage, damage over time, slow down enemies, etc.
  *
  * @author Michael Wenke
+ * @author Daniel Centore
  */
-public class Trap extends FieldItem implements DamageDealing{
+public abstract class Trap extends FieldItem implements DamageDealing {
+    
     private static final long serialVersionUID = 1L;
+    
     private int damage;
     private boolean active;
 
-    public Trap(int dm)
+    public Trap(int damage, int x, int y)
     {
-        super(0, 0);    //TODO
-        damage = dm;
+        super(x, y);
+        this.damage = damage;
         active = false;
     }
 
-    public int getDamage() {
+    public int getDamage()
+    {
         return damage;
     }
-
-    public boolean isActivated()
+    
+    public boolean isActive()
     {
         return active;
     }
-
-    @Override
-    public String getDefaultImage()
+    
+    public void setActive(boolean active)
     {
-        // TODO Auto-generated method stub
-        return null;
+        this.active = active;
     }
-
-
-
 }

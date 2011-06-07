@@ -52,7 +52,6 @@ public class Enemy extends CharacterEntity implements Damageable {
         maxHealth = max;
         setMoveSpeed(DEFAULT_SPEED);
         
-        //FIXME: The enemy has no weapon (or rather, the sword has no sprite). Unkludge this.
         addWeapon(new Zombie_Hands(1));
         
         setCurrWeapon(0);
