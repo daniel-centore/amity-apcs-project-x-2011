@@ -18,6 +18,8 @@
  */
 package org.amityregion5.projectx.common.entities.items.held;
 
+import org.amityregion5.projectx.common.tools.Sound;
+
 /**
  * A submachine gun. Starts out with low damage and range but high fire rate.
  *
@@ -30,5 +32,11 @@ public class Uzi extends Gun {
     public Uzi()
     {
         super(300, -1, -1, 10, -1, -1, 2);
+    }
+
+    @Override
+    public Sound getSound()
+    {
+        return Sound.NULL_SOUND;
     }
 }

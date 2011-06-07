@@ -20,6 +20,7 @@
 package org.amityregion5.projectx.common.entities.items.held;
 
 import org.amityregion5.projectx.common.entities.items.DamageDealing;
+import org.amityregion5.projectx.common.tools.Sound;
 
 /**
  * Basic melee weapon.
@@ -42,6 +43,12 @@ public class Sword extends MeleeWeapon implements DamageDealing
     public String getDefaultImage()
     {
         return "sprites/Pistol_1";
+    }
+
+    @Override
+    public Sound getSound()
+    {
+        return Sound.NULL_SOUND;
     }
 
 }

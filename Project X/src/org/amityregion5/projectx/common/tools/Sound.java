@@ -29,6 +29,7 @@ import javazoom.jl.player.Player;
 public enum Sound {
 
     PISTOL_SHOT("resources/sounds/65_Pistol_Shot.mp3"),
+    NULL_SOUND(null),
     BG_1("resources/sounds/17_Death_Grip.mp3"),
     EXPLOSION("resources/sounds/65_Pistol_Shot.mp3");  //TODO: add path!
     
@@ -38,10 +39,13 @@ public enum Sound {
     private Sound(String file)
     {
         this.file = file;
+        player = null;
     }
 
     public void reset()
     {
+        if (file == null)
+            return;
         try
         {
             player = new Player(new FileInputStream(file));

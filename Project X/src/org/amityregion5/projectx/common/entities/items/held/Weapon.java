@@ -36,18 +36,11 @@ public abstract class Weapon extends HeldItem implements DamageDealing {
 
     private int range; // Range (in pixels)
     private int attackRate;
-    private Sound wepSound;
 
     public Weapon(int range, int rate)
     {
-        this(range, rate, Sound.PISTOL_SHOT);
-    }
-
-    public Weapon(int range, int rate, Sound s)
-    {
         this.range = range;
         this.attackRate = rate;
-        this.wepSound = s;
     }
 
     public int getRange()
@@ -64,10 +57,7 @@ public abstract class Weapon extends HeldItem implements DamageDealing {
         return attackRate;
     }
 
-    public Sound getSound()
-    {
-        return wepSound;
-    }
+    public abstract Sound getSound();
 
     public abstract boolean hasAmmo();
 

@@ -19,6 +19,8 @@
  */
 package org.amityregion5.projectx.common.entities.items.held;
 
+import org.amityregion5.projectx.common.tools.Sound;
+
 public class Pistol extends Gun {
 
     private static final long serialVersionUID = 1L;
@@ -26,6 +28,12 @@ public class Pistol extends Gun {
     public Pistol()
     {
         super(600, -1, -1, 2, -1, -1, 5);
+    }
+
+    @Override
+    public Sound getSound()
+    {
+        return Sound.PISTOL_SHOT;
     }
 
 }

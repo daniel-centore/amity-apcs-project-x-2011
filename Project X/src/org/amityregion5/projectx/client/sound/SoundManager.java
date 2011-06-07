@@ -36,27 +36,30 @@ public class SoundManager extends Thread {
 
     public static boolean PLAY = true;
     public static boolean BACKGROUND = false;
+
     /**
      * Loops a sound
      * @param s Sound to loop
      */
     public static void playLoop(final Sound s)
     {
-        if (!PLAY)
+        if(!PLAY)
             return;
-        
+
         new Thread() {
 
             public void run()
             {
-                while (true)
+                while(true)
                 {
                     s.reset();
 
                     try
                     {
-                        s.getPlayer().play();
-                    } catch (JavaLayerException e)
+                        if(s.getPlayer() != null)
+                            s.getPlayer().play();
+                    }
+                    catch(JavaLayerException e)
                     {
                         e.printStackTrace();
                     }
@@ -72,18 +75,21 @@ public class SoundManager extends Thread {
      */
     public static void playOnce(final Sound s)
     {
-        if (!PLAY)
+        if(!PLAY)
             return;
-        
+
         new Thread() {
+
             @Override
             public void run()
             {
                 try
                 {
                     s.reset();
-                    s.getPlayer().play();
-                } catch (JavaLayerException e)
+                    if(s.getPlayer() != null)
+                        s.getPlayer().play();
+                }
+                catch(JavaLayerException e)
                 {
                     e.printStackTrace();
                 }
@@ -101,5 +107,4 @@ public class SoundManager extends Thread {
     {
         Sound.BG_1.reset();
     }
-
 }

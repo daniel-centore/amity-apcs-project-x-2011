@@ -20,6 +20,7 @@
 package org.amityregion5.projectx.common.entities.items.held;
 
 import org.amityregion5.projectx.common.entities.items.DamageDealing;
+import org.amityregion5.projectx.common.tools.Sound;
 /**
  * Proper Enemy melee weapon
  *
@@ -40,6 +41,12 @@ public class Zombie_Hands extends MeleeWeapon implements DamageDealing
     public String getDefaultImage()
     {
         return "sprites/E_Hands";
+    }
+
+    @Override
+    public Sound getSound()
+    {
+        return Sound.NULL_SOUND;
     }
 
 }

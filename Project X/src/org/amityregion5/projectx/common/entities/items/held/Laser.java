@@ -18,6 +18,8 @@
  */
 package org.amityregion5.projectx.common.entities.items.held;
 
+import org.amityregion5.projectx.common.tools.Sound;
+
 /**
  * Shoots through stuff. Ridiculously long range. Perfect accuracy.
  * Really, really fast.
@@ -31,5 +33,11 @@ public class Laser extends Gun {
     public Laser()
     {
         super(900, -1, -1, 20, -1, -1, 1);
+    }
+
+    @Override
+    public Sound getSound()
+    {
+        return Sound.NULL_SOUND;
     }
 }
