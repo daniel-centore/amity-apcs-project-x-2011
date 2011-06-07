@@ -35,7 +35,7 @@ public class Sword extends MeleeWeapon implements DamageDealing
 
     public Sword(int damage)
     {
-        super(SWORD_RATE, damage, 0);
+        super(SWORD_RATE, damage);
     }
 
     @Override

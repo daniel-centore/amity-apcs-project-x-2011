@@ -33,7 +33,7 @@ public class Zombie_Hands extends MeleeWeapon implements DamageDealing
 
     public Zombie_Hands(int damage)
     {
-        super(SWORD_RATE, damage, 0);
+        super(SWORD_RATE, damage);
     }
 
     @Override

@@ -37,18 +37,16 @@ public abstract class Weapon extends HeldItem implements DamageDealing {
     private int range; // Range (in pixels)
     private int attackRate;
     private Sound wepSound;
-    private double accuracy;
 
-    public Weapon(int range, int rate, double accuracy)
+    public Weapon(int range, int rate)
     {
-        this(range, rate, accuracy, Sound.PISTOL_SHOT);
+        this(range, rate, Sound.PISTOL_SHOT);
     }
 
-    public Weapon(int range, int rate, double accuracy, Sound s)
+    public Weapon(int range, int rate, Sound s)
     {
         this.range = range;
         this.attackRate = rate;
-        this.accuracy = accuracy;
         this.wepSound = s;
     }
 
@@ -75,11 +73,6 @@ public abstract class Weapon extends HeldItem implements DamageDealing {
 
     public abstract int getDamage();
 
-    public double getAccuracy()
-    {
-        return accuracy;
-    }
-
     public int getDamage(double dist) {
         System.err.println("dist " + dist + " vs range " + range);
 
@@ -87,19 +80,19 @@ public abstract class Weapon extends HeldItem implements DamageDealing {
             return 0; // out of range!
 
         // AN, accuracy: "random missing"
-        if (accuracy < 1) // 1 is perfect accuracy
-        {
-            double subrange = range / 2;
-            double accurate = subrange;
-            while (subrange > 1)
-                accurate += Math.random() * (subrange /= 2);
-            accurate *= accuracy / 2 + Math.random() * accuracy;
-
-            System.err.println(accurate + " from " + dist + "; range " + range);
-            if (dist > accurate) {
-                return 0; // missed
-            }
-        }
+//        if (accuracy < 1) // 1 is perfect accuracy
+//        {
+//            double subrange = range / 2;
+//            double accurate = subrange;
+//            while (subrange > 1)
+//                accurate += Math.random() * (subrange /= 2);
+//            accurate *= accuracy / 2 + Math.random() * accuracy;
+//
+//            System.err.println(accurate + " from " + dist + "; range " + range);
+//            if (dist > accurate) {
+//                return 0; // missed
+//            }
+//        }
 
         double modifier = (4 - dist / range) / 4; // linear, down to 75% at full range.
         System.err.println("modifier is " + modifier);

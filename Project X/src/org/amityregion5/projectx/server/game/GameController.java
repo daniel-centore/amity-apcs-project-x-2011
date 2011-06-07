@@ -207,17 +207,16 @@ public final class GameController {
     public void playerFired(PlayerEntity player)
     {
         int direction = player.getDirectionFacing();
-        double accuracy = player.getCurrWeapon().getAccuracy();
         // AN, accuracy: "random deviation"
         //if (accuracy > 0) // high numbers are not perfect, historical reasons
-        if (false)
-        {
-            int sign = (Math.random() < 1/2.) ? -1 : 1;
-            int diff = 0;
-            while (Math.random() > accuracy)
-                diff++;
-            direction += sign * diff;
-        }
+//        if (false)
+//        {
+//            int sign = (Math.random() < 1/2.) ? -1 : 1;
+//            int diff = 0;
+//            while (Math.random() > accuracy)
+//                diff++;
+//            direction += sign * diff;
+//        }
 
         Weapon wep = player.getCurrWeapon();
         
@@ -253,7 +252,7 @@ public final class GameController {
                         double dist = e.getCenterLocation().distance(
                                 new Point(player.getCenterX(), player.getCenterY()));
                         // AN, accuracy: "pass through"
-                        if (dist < closest && Math.random() < player.getCurrWeapon().getAccuracy())
+                        if (dist < closest)// && Math.random() < player.getCurrWeapon().getAccuracy())
                         {
                             closestEn = (Enemy) e;
                             closest = dist;
