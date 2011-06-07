@@ -69,7 +69,7 @@ public class SplashScreen extends JFrame {
         setResizable(false);
         setUndecorated(true);
 
-        jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 48)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 48));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("PROJECT X");
 
@@ -81,29 +81,29 @@ public class SplashScreen extends JFrame {
         jLabel4.setFont(new java.awt.Font("Lucida Sans", 0, 12));
         jLabel4.setText("Michael \"Dr. No\" Wenke");
 
-        jLabel5.setFont(new java.awt.Font("Lucida Sans", 0, 12));
-        jLabel5.setText("Mike \"Mikey-Mike\" DiBuduo");
+        jLabel5.setFont(new java.awt.Font("Lucida Sans", 0, 12)); // NOI18N
+        jLabel5.setText("Mike \"My Ked\" DiBuduo");
 
-        jLabel6.setFont(new java.awt.Font("Lucida Sans", 0, 12));
-        jLabel6.setText("Joe \"Bagels\" Stein");
+        jLabel6.setFont(new java.awt.Font("Lucida Sans", 0, 12)); // NOI18N
+        jLabel6.setText("Joe \"Einstein\" Stein");
 
-        jLabel7.setFont(new java.awt.Font("Lucida Sans", 0, 12));
-        jLabel7.setText("Cameron \"Lazy\" Simpson");
+        jLabel7.setFont(new java.awt.Font("Lucida Sans", 0, 12)); // NOI18N
+        jLabel7.setText("Cameron \"Awesome\" Simpson");
 
         jLabel8.setFont(new java.awt.Font("Lucida Sans", 0, 12)); // NOI18N
         jLabel8.setText("Jenny \"Keep Voting!!\" Liu");
 
-        jLabel9.setFont(new java.awt.Font("Lucida Sans", 0, 12));
-        jLabel9.setText("Mike \"Zool\" Zuo");
+        jLabel9.setFont(new java.awt.Font("Lucida Sans", 0, 12)); // NOI18N
+        jLabel9.setText("Mike \"Zuul\" Zuo");
 
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel10.setText("Special Thanks:");
 
         jLabel11.setFont(new java.awt.Font("Lucida Sans", 0, 12)); // NOI18N
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel11.setText("Mr. \"Mister\" Barretta");
+        jLabel11.setText("Mr. \"Franky\" Barretta");
 
-        jLabel12.setFont(new java.awt.Font("Lucida Sans", 0, 12));
+        jLabel12.setFont(new java.awt.Font("Lucida Sans", 0, 12)); // NOI18N
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel12.setText("Scott \"Scotty D\" DellaTorre");
 
@@ -126,14 +126,14 @@ public class SplashScreen extends JFrame {
                             .addComponent(jLabel7)
                             .addComponent(jLabel8)
                             .addComponent(jLabel9))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel11)
                             .addComponent(jLabel12)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 260, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 314, Short.MAX_VALUE)
                         .addComponent(jLabel10)))
                 .addContainerGap())
         );

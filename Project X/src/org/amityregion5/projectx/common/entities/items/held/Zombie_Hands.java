@@ -19,24 +19,27 @@
  */
 package org.amityregion5.projectx.common.entities.items.held;
 
+import org.amityregion5.projectx.common.entities.items.DamageDealing;
 /**
- * A ProjectileWeapon that fires Bullets into field.
+ * Proper Enemy melee weapon
  *
- * @author Mike DiBuduo
  * @author Joe Stein
  */
-public class Gun extends ProjectileWeapon
+public class Zombie_Hands extends MeleeWeapon implements DamageDealing
 {
     private static final long serialVersionUID = 1L;
 
-    public Gun(int range, int ammo, int maxAmmo, int fireRate, int roundsPerMag, int mags, int damage, double accuracy)
+    private static int SWORD_RATE = 42; // FIXME: arbitrary.
+
+    public Zombie_Hands(int damage)
     {
-        super(range, ammo, maxAmmo, fireRate, roundsPerMag, mags, damage, accuracy);
+        super(SWORD_RATE, damage, 0);
     }
 
     @Override
     public String getDefaultImage()
     {
-        return "sprites/Pistol";
+        return "sprites/E_Hands";
     }
+
 }

@@ -21,7 +21,7 @@ package org.amityregion5.projectx.common.entities.characters.enemies;
 
 import org.amityregion5.projectx.common.entities.Damageable;
 import org.amityregion5.projectx.common.entities.characters.CharacterEntity;
-import org.amityregion5.projectx.common.entities.items.held.Sword;
+import org.amityregion5.projectx.common.entities.items.held.Zombie_Hands;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
 
 /**
@@ -53,7 +53,7 @@ public class Enemy extends CharacterEntity implements Damageable {
         setMoveSpeed(DEFAULT_SPEED);
         
         //FIXME: The enemy has no weapon (or rather, the sword has no sprite). Unkludge this.
-        addWeapon(new Sword(1));
+        addWeapon(new Zombie_Hands(1));
         
         setCurrWeapon(0);
     }

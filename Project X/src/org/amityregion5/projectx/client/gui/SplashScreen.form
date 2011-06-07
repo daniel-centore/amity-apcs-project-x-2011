@@ -42,7 +42,7 @@
                           <Component id="jLabel8" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel9" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="89" max="32767" attributes="0"/>
+                      <EmptySpace pref="97" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel12" alignment="1" min="-2" max="-2" attributes="0"/>
@@ -51,7 +51,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="260" max="32767" attributes="0"/>
+                      <EmptySpace pref="314" max="32767" attributes="0"/>
                       <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -130,7 +130,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Lucida Sans" size="12" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Mike &quot;Mikey-Mike&quot; DiBuduo"/>
+        <Property name="text" type="java.lang.String" value="Mike &quot;My Ked&quot; DiBuduo"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
@@ -138,7 +138,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Lucida Sans" size="12" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Joe &quot;Bagels&quot; Stein"/>
+        <Property name="text" type="java.lang.String" value="Joe &quot;Einstein&quot; Stein"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel7">
@@ -146,7 +146,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Lucida Sans" size="12" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Cameron &quot;Lazy&quot; Simpson"/>
+        <Property name="text" type="java.lang.String" value="Cameron &quot;Awesome&quot; Simpson"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel8">
@@ -162,7 +162,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Lucida Sans" size="12" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Mike &quot;Zool&quot; Zuo"/>
+        <Property name="text" type="java.lang.String" value="Mike &quot;Zuul&quot; Zuo"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel10">
@@ -177,7 +177,7 @@
           <Font name="Lucida Sans" size="12" style="0"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="4"/>
-        <Property name="text" type="java.lang.String" value="Mr. &quot;Mister&quot; Barretta"/>
+        <Property name="text" type="java.lang.String" value="Mr. &quot;Franky&quot; Barretta"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel12">
