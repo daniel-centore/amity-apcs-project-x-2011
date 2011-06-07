@@ -23,9 +23,10 @@ import org.amityregion5.projectx.common.tools.Sound;
 /**
  * Class documentation.
  *
- * @author centoreda
+ * @author Dan Centore
  */
 public class PlaySoundMessage extends Message {
+    private static final long serialVersionUID = 1L;
 
     private Sound sound;
 
