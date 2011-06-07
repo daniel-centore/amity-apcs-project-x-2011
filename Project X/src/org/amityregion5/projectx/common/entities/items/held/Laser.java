@@ -32,12 +32,18 @@ public class Laser extends Gun {
 
     public Laser()
     {
-        super(900, -1, -1, 20, -1, -1, 1);
+        super(400, -1, -1, 20, -1, -1, 1);
     }
 
     @Override
     public Sound getSound()
     {
         return Sound.NULL_SOUND;
+    }
+    
+    @Override
+    public String getDefaultImage()
+    {
+        return "sprites/Pistol";
     }
 }

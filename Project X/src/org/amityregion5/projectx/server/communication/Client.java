@@ -261,7 +261,8 @@ public class Client extends Thread {
             ChangedWeaponMessage cwm = (ChangedWeaponMessage) m;
             cwm.setID(player.getUniqueID());
             player.changeWeapon(cwm.getAmt());
-            // TODO tell everyone else about the weapon change?
+            
+            server.relayMessage(new UpdateWeaponMessage(player.getWeapon(), player.getUniqueID()));
         }
     }
 

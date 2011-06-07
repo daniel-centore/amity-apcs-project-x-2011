@@ -99,8 +99,8 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         InputHandler.registerListener(this);
         RepaintHandler.setGame(this);
 
-        //if (SoundManager.BACKGROUND)
-        //    SoundManager.playLoop(Sound.BG_1);
+        // if (SoundManager.BACKGROUND)
+        // SoundManager.playLoop(Sound.BG_1);
     }
 
     public void mouseDragged(int x, int y)
@@ -114,7 +114,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         lastMouseY = y;
 
         // send to server and let server deal with it?
-        if(me == null || me.getImage() == null)
+        if (me == null || me.getImage() == null)
         {
             return;
         }
@@ -128,35 +128,34 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
 
     public void mousePressed(int x, int y, int button)
     {
-        if(button == 1)
+        if (button == 1)
             getCommunicationHandler().send(new FiringMessage(true));
     }
 
     public void mouseReleased(int x, int y, int button)
     {
-        if(button == 1)
+        if (button == 1)
             getCommunicationHandler().send(new FiringMessage(false));
     }
 
     public void keyPressed(KeyEvent e)
     {
         int keyCode = e.getKeyCode();
-        if(Keys.isKey(Keys.LEADERBOARD, keyCode))
+        if (Keys.isKey(Keys.LEADERBOARD, keyCode))
         {
             RepaintHandler.switchLeaderBoard();
             return;
         }
-        if(ChatDrawing.isChatting() && !(e.isActionKey() || e.getKeyCode() == KeyEvent.VK_SHIFT || e.getKeyCode() == KeyEvent.VK_ALT || e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_BACK_SPACE || e.getKeyCode() == KeyEvent.VK_CONTROL))
+        if (ChatDrawing.isChatting() && !(e.isActionKey() || e.getKeyCode() == KeyEvent.VK_SHIFT || e.getKeyCode() == KeyEvent.VK_ALT || e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_BACK_SPACE || e.getKeyCode() == KeyEvent.VK_CONTROL))
         {
             ChatDrawing.addLetter(e.getKeyChar());
-        }
-        else if(ChatDrawing.isChatting())
+        } else if (ChatDrawing.isChatting())
         {
-            if(keyCode == KeyEvent.VK_ENTER)
+            if (keyCode == KeyEvent.VK_ENTER)
             {
 
                 String s = ChatDrawing.getTextChat().trim();
-                if(s.length() <= 0)
+                if (s.length() <= 0)
                 {
                     ChatDrawing.clearChat();
                     return;
@@ -164,26 +163,22 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                 ChatMessage cm = new ChatMessage(ChatDrawing.getTextChat(), username);
                 ChatDrawing.clearChat();
                 getCommunicationHandler().send(cm);
-            }
-            else if(keyCode == KeyEvent.VK_BACK_SPACE)
+            } else if (keyCode == KeyEvent.VK_BACK_SPACE)
             {
                 ChatDrawing.backspace();
             }
-        }
-        else
+        } else
         // not chatting
         {
-            if(Keys.isKey(Keys.CHAT, keyCode))
+            if (Keys.isKey(Keys.CHAT, keyCode))
             {
                 ChatDrawing.setChatting(true);
                 return;
-            }
-            else if(Keys.isKey(Keys.GRID, keyCode))
+            } else if (Keys.isKey(Keys.GRID, keyCode))
             {
                 RepaintHandler.switchShowingGrid();
                 return;
-            }
-            else if(Keys.isKey(Keys.BLOCK, keyCode))
+            } else if (Keys.isKey(Keys.BLOCK, keyCode))
             {
                 if (me.getCash() > Block.PRICE)
                 {
@@ -191,26 +186,30 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                     communicationHandler.send(new RequestEntityAddMessage(EntityConstants.BLOCK, p.x, p.y));
                     me.spendCash(Block.PRICE);
                 }
-            }
-            else if(Keys.isKey(Keys.FIRE, keyCode))
+            } else if (Keys.isKey(Keys.FIRE, keyCode))
             {
                 getCommunicationHandler().send(new FiringMessage(true));
+            } else if (Keys.isKey(Keys.CHANGE_WEAPON_1, keyCode))
+            {
+                communicationHandler.send(new ChangedWeaponMessage(-1));
+            } else if (Keys.isKey(Keys.CHANGE_WEAPON_2, keyCode))
+            {
+                communicationHandler.send(new ChangedWeaponMessage(1));
             }
-            if(me == null)
+            if (me == null)
             {
                 return;
             }
-            if(!depressedKeys.contains(keyCode))
+            if (!depressedKeys.contains(keyCode))
             {
                 depressedKeys.add(keyCode);
-            }
-            else
+            } else
             // key already pressed, don't need to do anything!
             {
                 return;
             }
             int deg = calcMeDeg();
-            if(deg == Integer.MIN_VALUE)
+            if (deg == Integer.MIN_VALUE)
             {
                 return;
             }
@@ -244,7 +243,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         // two, it's always right anyway
         deg = (int) Math.toDegrees(Math.atan2(ud, lr));
 
-        if(lr == 0 && ud == 0)
+        if (lr == 0 && ud == 0)
             deg = Integer.MIN_VALUE;
 
         return deg;
@@ -254,16 +253,16 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
     {
         int speed = PlayerEntity.INITIAL_SPEED;
 
-        while(depressedKeys.contains(keyCode))
+        while (depressedKeys.contains(keyCode))
         {
             depressedKeys.remove((Integer) keyCode);
         }
-        if(depressedKeys.isEmpty()) // stop moving
+        if (depressedKeys.isEmpty()) // stop moving
         {
             speed = 0;
         }
         int deg = calcMeDeg();
-        if(deg == Integer.MIN_VALUE)
+        if (deg == Integer.MIN_VALUE)
         {
             speed = 0;
             deg = me.getDirectionMoving();
@@ -271,7 +270,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         ClientMovingMessage c = new ClientMovingMessage(speed, deg);
         getCommunicationHandler().send(c);
 
-        if(Keys.isKey(Keys.FIRE, keyCode))
+        if (Keys.isKey(Keys.FIRE, keyCode))
         {
             getCommunicationHandler().send(new FiringMessage(false));
         }
@@ -287,34 +286,30 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
 
     public void handle(Message m)
     {
-        if(m instanceof AnnounceMessage)
+        if (m instanceof AnnounceMessage)
         {
             AnnounceMessage am = (AnnounceMessage) m;
             ChatDrawing.drawChat(am.getText());
-        }
-        else if(m instanceof ChatMessage)
+        } else if (m instanceof ChatMessage)
         {
             ChatMessage cm = (ChatMessage) m;
             ChatDrawing.drawChat(cm.getFrom() + ": " + cm.getText());
-        }
-        else if(m instanceof AddMeMessage)
+        } else if (m instanceof AddMeMessage)
         {
             AddMeMessage amm = (AddMeMessage) m;
             me = (PlayerEntity) amm.getEntity();
             me.updateWeaponImages();
             entityHandler.addEntity(me);
             dUpThread.start(); // start directional update thread
-        }
-        else if(m instanceof AddEntityMessage)
+        } else if (m instanceof AddEntityMessage)
         {
             AddEntityMessage aem = (AddEntityMessage) m;
             Entity e = aem.getEntity();
-            if(e instanceof CharacterEntity)
+            if (e instanceof CharacterEntity)
                 ((CharacterEntity) e).updateWeaponImages();
 
             entityHandler.addEntity(e);
-        }
-        else if(m instanceof EntityMovedMessage)
+        } else if (m instanceof EntityMovedMessage)
         {
             EntityMovedMessage emm = (EntityMovedMessage) m;
             Entity ent = entityHandler.getEntity(emm.getEntityID());
@@ -322,54 +317,55 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             ent.setDirectionMoving(emm.getNewDir());
             GameWindow.fireRepaintRequired();
         } /*else if (m instanceof FiredMessage)
-        {
-        FiredMessage fm = (FiredMessage) m;
-        CharacterEntity e = (CharacterEntity) entityHandler.getEntity(fm.getID());
+          {
+          FiredMessage fm = (FiredMessage) m;
+          CharacterEntity e = (CharacterEntity) entityHandler.getEntity(fm.getID());
 
-        e.setFired(true);
-        GameWindow.fireRepaintRequired();
-        } */ else if(m instanceof RemoveEntityMessage)
+          e.setFired(true);
+          GameWindow.fireRepaintRequired();
+          } */else if (m instanceof RemoveEntityMessage)
         {
             RemoveEntityMessage rem = (RemoveEntityMessage) m;
             entityHandler.removeEntity(rem.getPlayer());
             GameWindow.fireRepaintRequired();
-        }
-        else if(m instanceof AddWeaponMessage)
+        } else if (m instanceof AddWeaponMessage)
         {
             AddWeaponMessage awm = (AddWeaponMessage) m;
             awm.getWeapon().setImage(ImageHandler.loadImage(awm.getWeapon().getDefaultImage()));
             try
             {
                 ((CharacterEntity) entityHandler.getEntity(awm.getID())).addWeapon(awm.getWeapon());
-            }
-            catch(Exception e)
+                me.updateWeaponImages();
+            } catch (Exception e)
             {
                 // FIXME: temporary kludge
                 // what's the usual error?
             }
-        }
-        else if(m instanceof StatusUpdateMessage)
+        } else if (m instanceof StatusUpdateMessage)
         {
             StatusUpdateMessage sum = (StatusUpdateMessage) m;
-            if(sum.getType() == StatusUpdateMessage.Type.END_GAME)
+            if (sum.getType() == StatusUpdateMessage.Type.END_GAME)
             {
                 JOptionPane.showMessageDialog(null, "The enemies have taken over!", "Game Over", JOptionPane.OK_OPTION);
                 InputHandler.removeListener(this);
             }
-        }
-        else if(m instanceof CashMessage)
+        } else if (m instanceof CashMessage)
         {
             CashMessage cm = (CashMessage) m;
-            ((PlayerEntity) entityHandler.getEntity(cm.getID())).setCash(
-                    cm.getAmount());
+            ((PlayerEntity) entityHandler.getEntity(cm.getID())).setCash(cm.getAmount());
         } else if (m instanceof PointMessage)
         {
             PointMessage pm = (PointMessage) m;
             ((PlayerEntity) entityHandler.getEntity(pm.getID())).setPoints(pm.getAmount());
-        }
-        else if(m instanceof PlaySoundMessage)
+        } else if (m instanceof PlaySoundMessage)
         {
-            //SoundManager.playOnce(((PlaySoundMessage) m).getSound());
+            // SoundManager.playOnce(((PlaySoundMessage) m).getSound());
+        } else if (m instanceof UpdateWeaponMessage)
+        {
+            int wep = ((UpdateWeaponMessage) m).getWeapon();
+            
+            ((CharacterEntity) entityHandler.getEntity(((UpdateWeaponMessage) m).getPlayerID())).setCurrWeapon(wep);
+//            me.changeWeapon(wep);
         }
     }
 
@@ -413,52 +409,49 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
 
     public void handle(String str)
     {
-        if(str.startsWith(Constants.FIRE_PREF))
+        if (str.startsWith(Constants.FIRE_PREF))
         {
-            ((PlayerEntity) entityHandler.getEntity(
-                    Long.valueOf(str.substring(1)))).setFired(true);
-            //SoundManager.playOnce(me.getCurrWeapon().getSound());
+            ((PlayerEntity) entityHandler.getEntity(Long.valueOf(str.substring(1)))).setFired(true);
+            // SoundManager.playOnce(me.getCurrWeapon().getSound());
             GameWindow.fireRepaintRequired();
             return;
         }
         String[] entStrs = str.split(";");
-        for(int i = 0;i < entStrs.length;i++)
+        for (int i = 0; i < entStrs.length; i++)
         {
             String[] entVals = entStrs[i].split(",");
             long id = Long.valueOf(entVals[0]);
-            if(id == -1)
+            if (id == -1)
             {
                 // affects the base
                 map.getArea().setHp(Integer.valueOf(entVals[1]));
-            }
-            else
+            } else
             {
                 Entity e = entityHandler.getEntity(Long.valueOf(entVals[0]));
-                if(e != null)
+                if (e != null)
                 {
                     e.setX(Double.valueOf(entVals[1]));
                     e.setY(Double.valueOf(entVals[2]));
                     int hp = Integer.valueOf(entVals[4]);
-                    if(hp > Byte.MIN_VALUE)
+                    if (hp > Byte.MIN_VALUE)
                     {
                         ((Damageable) e).setHp(hp);
                     }
 
-                    if(e == me)
+                    if (e == me)
                     {
                         int x1 = me.getCenterX();
                         int y1 = me.getCenterY();
                         int angle = (int) Math.toDegrees(Math.atan2(lastMouseY - y1, lastMouseX - x1));
 
                         me.setDirectionFacing(angle);
-                    }
-                    else
+                    } else
                         e.setDirectionFacing(Integer.valueOf(entVals[3]));
                 }
             }
         }
 
-        if(GameWindow.getInstance() != null)
+        if (GameWindow.getInstance() != null)
         {
             GameWindow.fireRepaintRequired();
         }
@@ -469,7 +462,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
     public void mouseScrolled(MouseWheelEvent e)
     {
         communicationHandler.send(new ChangedWeaponMessage(e.getWheelRotation()));
-        //me.changeWeapon(e.getWheelRotation());
+        // me.changeWeapon(e.getWheelRotation());
     }
 
     /**
@@ -486,9 +479,9 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
     public ArrayList<PlayerEntity> getPlayers()
     {
         ArrayList<PlayerEntity> toReturn = new ArrayList<PlayerEntity>();
-        for(Entity e : entityHandler.getEntities())
+        for (Entity e : entityHandler.getEntities())
         {
-            if(e instanceof PlayerEntity)
+            if (e instanceof PlayerEntity)
             {
                 toReturn.add((PlayerEntity) e);
             }
@@ -506,14 +499,13 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         @Override
         public void run()
         {
-            while(keepRunning)
+            while (keepRunning)
             {
                 try
                 {
                     rch.send(me.getDirectionFacing());
                     Thread.sleep(EntityConstants.DIR_UPDATE_TIME);
-                }
-                catch(Exception ex)
+                } catch (Exception ex)
                 {
                     Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
                     kill();
@@ -536,7 +528,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
     public void focusLost(FocusEvent arg0)
     {
         depressedKeys.clear();
-        if(me != null)
+        if (me != null)
             me.setMoveSpeed(0);
     }
 

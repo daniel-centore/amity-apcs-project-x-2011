@@ -39,4 +39,10 @@ public class Uzi extends Gun {
     {
         return Sound.NULL_SOUND;
     }
+    
+    @Override
+    public String getDefaultImage()
+    {
+        return "sprites/Uzi";
+    }
 }

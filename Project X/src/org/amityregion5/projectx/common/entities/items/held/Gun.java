@@ -36,11 +36,5 @@ public abstract class Gun extends ProjectileWeapon
         super(range, ammo, maxAmmo, fireRate, roundsPerMag, mags, damage);
     }
 
-    @Override
-    public String getDefaultImage()
-    {
-        return "sprites/Pistol";
-    }
-
 
 }

@@ -44,6 +44,9 @@ public class Keys {
     
     public static int[] BLOCK  = { KeyEvent.VK_F1 };
     public static int[] LEADERBOARD = { KeyEvent.VK_U };
+    
+    public static int[] CHANGE_WEAPON_1 = { KeyEvent.VK_COMMA };
+    public static int[] CHANGE_WEAPON_2 = { KeyEvent.VK_PERIOD };
 
     public static void refreshKeyPrefs()
     {

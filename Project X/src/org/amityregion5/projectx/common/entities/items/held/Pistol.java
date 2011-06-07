@@ -35,5 +35,11 @@ public class Pistol extends Gun {
     {
         return Sound.PISTOL_SHOT;
     }
+    
+    @Override
+    public String getDefaultImage()
+    {
+        return "sprites/Pistol";
+    }
 
 }

@@ -70,6 +70,11 @@ public abstract class CharacterEntity extends Entity {
         }
         currWeapon = tmp;
     }
+    
+    public int getWeapon()
+    {
+        return currWeapon;
+    }
 
     /**
      * Gets a weapon the character has.

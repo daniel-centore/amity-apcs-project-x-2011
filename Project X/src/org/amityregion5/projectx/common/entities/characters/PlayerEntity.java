@@ -111,4 +111,5 @@ public class PlayerEntity extends CharacterEntity {
     {
         return username;
     }
+
 }

@@ -24,8 +24,31 @@ package org.amityregion5.projectx.common.communication.messages;
  * @author centoreda
  */
 public class UpdateWeaponMessage extends Message {
+    
+    private static final long serialVersionUID = 1L;
+    
+    private int weapon;
+    private long playerID;
 
-    // TODO: implement this in CharacterEntity.updateWeapon
-    // It should get sent to all the clients, which then update the
-    // corresponding entity's weapon. This should fix the sounds
+    public UpdateWeaponMessage(int wep, long playerID)
+    {
+        weapon = wep;
+        this.playerID = playerID;
+    }
+
+    public void setWeapon(int weapon)
+    {
+        this.weapon = weapon;
+    }
+
+    public int getWeapon()
+    {
+        return weapon;
+    }
+
+    public long getPlayerID()
+    {
+        return playerID;
+    }
+    
 }
