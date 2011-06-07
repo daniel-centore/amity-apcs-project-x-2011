@@ -48,5 +48,5 @@ public class EntityConstants {
     public static final String BLOCK = "Block";
 
     public static final String[] fieldItems =
-    { BLOCK, WALL, FENCE };
+    { BLOCK, FENCE, WALL };
 }

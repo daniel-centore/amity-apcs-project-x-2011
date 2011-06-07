@@ -21,6 +21,7 @@ public class ArmoredEnemy extends Enemy {
         armor = ar;
 
         setMoveSpeed(Enemy.DEFAULT_SPEED * MULTIPLIER);
+        setValue(2);
 
         //Should make this enemy slower than normal enemy, but normal enemy has slowest speed possible right now
     }

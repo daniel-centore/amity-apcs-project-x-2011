@@ -30,7 +30,11 @@ import java.util.logging.Logger;
 
 import org.amityregion5.projectx.common.communication.messages.*;
 import org.amityregion5.projectx.common.entities.Entity;
+import org.amityregion5.projectx.common.entities.EntityConstants;
 import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
+import org.amityregion5.projectx.common.entities.items.field.Block;
+import org.amityregion5.projectx.common.entities.items.field.Fence;
+import org.amityregion5.projectx.common.entities.items.field.Wall;
 import org.amityregion5.projectx.server.Server;
 import org.amityregion5.projectx.server.game.GameController;
 import org.amityregion5.projectx.server.tools.CollisionDetection;
@@ -54,7 +58,7 @@ public class Client extends Thread {
     private PlayerEntity player; // client's player (once we make it!)
     private RawClient raw; // client's raw client (once created)
     private ShotThread shotThread; // helps this client with shooting
-    
+
     /**
      * Creates a client
      * 
@@ -251,17 +255,33 @@ public class Client extends Thread {
         {
             Entity e = ((RequestEntityAddMessage) m).getNewInstance();
 
+            String s = ((RequestEntityAddMessage) m).getEntity();
+            int price = -1;
+
+            if (s.equals(EntityConstants.BLOCK))
+                price = Block.PRICE;
+            else if (s.equals(EntityConstants.FENCE))
+                price = Fence.PRICE;
+            else if (s.equals(EntityConstants.WALL))
+                price = Wall.PRICE;
+            else
+                throw new RuntimeException("No entity price set up for: " + s);
+            
             synchronized (GameController.getInstance())
             {
-                if (!CollisionDetection.hasCollision(e, GameController.getInstance().getEntities()))
+                if (!CollisionDetection.hasCollision(e, GameController.getInstance().getEntities()) && player.getCash() >= price)
+                {
+                    player.spendCash(price);
+                    server.relayMessage(new CashMessage(player.getCash(), player.getUniqueID()));
                     GameController.getInstance().addEntity(e);
+                }
             }
         } else if (m instanceof ChangedWeaponMessage)
         {
             ChangedWeaponMessage cwm = (ChangedWeaponMessage) m;
             cwm.setID(player.getUniqueID());
             player.changeWeapon(cwm.getAmt());
-            
+
             server.relayMessage(new UpdateWeaponMessage(player.getWeapon(), player.getUniqueID()));
         }
     }

@@ -35,7 +35,7 @@ public class Block extends FieldItem implements Damageable, Buyable {
     public static final int DEFAULT_HEALTH = 100;
     private int hp;
     private final int maxHealth;
-    public final static int PRICE = 10;
+    public final static int PRICE = 2;
 
     public Block(int x, int y)
     {

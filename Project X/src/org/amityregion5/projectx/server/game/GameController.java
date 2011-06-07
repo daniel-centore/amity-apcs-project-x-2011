@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.amityregion5.projectx.client.gui.GameWindow;
 import org.amityregion5.projectx.common.communication.messages.AddEntityMessage;
@@ -59,12 +60,14 @@ import org.amityregion5.projectx.server.game.enemies.EnemyManager;
  * @author Mike DiBuduo
  */
 public final class GameController {
-    
+
+    public static final int DEFAULT_CASH = 20;
+
     private static GameController instance;
 
     private List<PlayerEntity> players; // List of current Players (do we even need this..?)
     private Collection<Client> clients; // List of current Clients
-    private List<Entity> entities; // List of current Entities
+    private volatile List<Entity> entities; // List of current Entities
     private EntityMoverThread entityMoverThread; // will be in charge of moving entities
     private Server server; // Our server
 
@@ -83,7 +86,7 @@ public final class GameController {
         this.server = server;
         players = new ArrayList<PlayerEntity>();
         clients = server.getClients().values();
-        entities = new ArrayList<Entity>();
+        entities = new CopyOnWriteArrayList<Entity>(); // TODO: remove the synchronized, unneeded now
 
         Random r = new Random();
         for (Client c : clients)
@@ -114,13 +117,15 @@ public final class GameController {
             addWeapon(p, new Pistol());
             addWeapon(p, new Laser());
             addWeapon(p, new Uzi());
+            p.setCash(DEFAULT_CASH);
+            server.relayMessage(new CashMessage(p.getCash(), p.getUniqueID()));
         }
 
         entityMoverThread = new EntityMoverThread(this, server.getRawServer(), map);
         entityMoverThread.start();
         enemyManager = new EnemyManager(this, getEnemySpawns());
         enemyManager.startSpawning();
-        
+
         instance = this;
     }
 
@@ -209,24 +214,23 @@ public final class GameController {
     {
         int direction = player.getDirectionFacing();
         // AN, accuracy: "random deviation"
-        //if (accuracy > 0) // high numbers are not perfect, historical reasons
-//        if (false)
-//        {
-//            int sign = (Math.random() < 1/2.) ? -1 : 1;
-//            int diff = 0;
-//            while (Math.random() > accuracy)
-//                diff++;
-//            direction += sign * diff;
-//        }
+        // if (accuracy > 0) // high numbers are not perfect, historical reasons
+        // if (false)
+        // {
+        // int sign = (Math.random() < 1/2.) ? -1 : 1;
+        // int diff = 0;
+        // while (Math.random() > accuracy)
+        // diff++;
+        // direction += sign * diff;
+        // }
 
         Weapon wep = player.getCurrWeapon();
-        
+
         int range = wep.getRange();
 
-        
         int x2 = (int) (Math.cos(Math.toRadians(direction)) * range) + player.getCenterX();
         int y2 = (int) (Math.sin(Math.toRadians(direction)) * range) + player.getCenterY();
-        
+
         Line2D.Double line = new Line2D.Double(player.getCenterX(), player.getCenterY(), x2, y2);
 
         List<Entity> toRemove = new ArrayList<Entity>();
@@ -234,24 +238,24 @@ public final class GameController {
         {
             // should be Damageable, too, but java is kind of stupid
             // need to enforce by ourselves
-            ArrayList<Entity> toDamage = new ArrayList<Entity>();
+            ArrayList<Enemy> toDamage = new ArrayList<Enemy>();
 
-            if (wep instanceof Laser) {
+            if (wep instanceof Laser)
+            {
                 for (Entity e : entities)
                 {
                     if (e instanceof Enemy && line.intersects(e.getHitBox()))
-                        toDamage.add(e);
+                        toDamage.add((Enemy) e);
                 }
-            }
-            else {
+            } else
+            {
                 double closest = Double.MAX_VALUE;
                 Enemy closestEn = null;
                 for (Entity e : entities)
                 {
                     if (e instanceof Enemy && line.intersects(e.getHitBox()))
                     {
-                        double dist = e.getCenterLocation().distance(
-                                new Point(player.getCenterX(), player.getCenterY()));
+                        double dist = e.getCenterLocation().distance(new Point(player.getCenterX(), player.getCenterY()));
                         // AN, accuracy: "pass through"
                         if (dist < closest)// && Math.random() < player.getCurrWeapon().getAccuracy())
                         {
@@ -264,22 +268,24 @@ public final class GameController {
                 toDamage.add(closestEn);
             }
 
-            for (Entity e : toDamage) {
-                if (e != null) {
+            for (Enemy e : toDamage)
+            {
+                if (e != null)
+                {
                     Damageable d = (Damageable) e;
-                    double dist = e.getCenterLocation().distance(
-                            new Point(player.getCenterX(), player.getCenterY()));
+                    double dist = e.getCenterLocation().distance(new Point(player.getCenterX(), player.getCenterY()));
                     int damage = d.damage(player.getCurrWeapon().getDamage(dist));
                     for (Client c : clients)
                     {
                         if (c.getPlayer().equals(player))
                         {
                             PlayerEntity p = c.getPlayer();
-                            p.changePoints(damage);
+                            p.addPoints(damage);
                             p.addCash(damage);
+                            // p.addPoints(e.getValue());
+                            // p.addCash(e.getValue());
                             server.relayMessage(new PointMessage(p.getPoints(), p.getUniqueID()));
-                            server.relayMessage(new CashMessage(
-                                        p.getCash(), p.getUniqueID()));
+                            server.relayMessage(new CashMessage(p.getCash(), p.getUniqueID()));
                         }
                     }
                     e.requestUpdate();

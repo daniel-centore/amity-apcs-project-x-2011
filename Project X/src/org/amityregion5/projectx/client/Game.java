@@ -180,12 +180,15 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                 return;
             } else if (Keys.isKey(Keys.BLOCK, keyCode))
             {
-                if (me.getCash() > Block.PRICE)
-                {
-                    Point p = PopupMenuHandler.roundToGrid(lastMouseX, lastMouseY);
-                    communicationHandler.send(new RequestEntityAddMessage(EntityConstants.BLOCK, p.x, p.y));
-                    me.spendCash(Block.PRICE);
-                }
+                // if (me.getCash() >= Block.PRICE)
+                // {
+                Point p = PopupMenuHandler.roundToGrid(lastMouseX, lastMouseY);
+
+                communicationHandler.send(new RequestEntityAddMessage(EntityConstants.BLOCK, p.x, p.y));
+
+                // me.spendCash(Block.PRICE); // TODO: send to server
+                // } else
+                // ChatDrawing.drawChat("No more money");
             } else if (Keys.isKey(Keys.FIRE, keyCode))
             {
                 getCommunicationHandler().send(new FiringMessage(true));
@@ -353,6 +356,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         {
             CashMessage cm = (CashMessage) m;
             ((PlayerEntity) entityHandler.getEntity(cm.getID())).setCash(cm.getAmount());
+            ChatDrawing.drawChat("You now have: $" + cm.getAmount());
         } else if (m instanceof PointMessage)
         {
             PointMessage pm = (PointMessage) m;
@@ -363,9 +367,9 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         } else if (m instanceof UpdateWeaponMessage)
         {
             int wep = ((UpdateWeaponMessage) m).getWeapon();
-            
+
             ((CharacterEntity) entityHandler.getEntity(((UpdateWeaponMessage) m).getPlayerID())).setCurrWeapon(wep);
-//            me.changeWeapon(wep);
+            // me.changeWeapon(wep);
         }
     }
 

@@ -66,7 +66,7 @@ public class PlayerEntity extends CharacterEntity {
         setY(getY() + offSetY);
     }
 
-    public void changePoints(int pts)
+    public void addPoints(int pts)
     {
         points += pts;
     }

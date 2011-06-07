@@ -22,7 +22,7 @@ package org.amityregion5.projectx.common.entities.items.field;
 import org.amityregion5.projectx.common.entities.Entity;
 
 /**
- * Main fortress wall.
+ * Straight wall
  *
  * @author Mike DiBuduo
  */
@@ -30,7 +30,8 @@ public class Wall extends Block {
     
     private static final long serialVersionUID = 1L;
     
-    public static final int DEFAULT_HEALTH = 100;
+    public static final int DEFAULT_HEALTH = 1500;
+    public static final int PRICE = 200;
 
     public Wall(int x, int y)
     {

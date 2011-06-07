@@ -26,19 +26,26 @@ import org.amityregion5.projectx.common.entities.Damageable;
  *
  * @author Mike DiBuduo
  */
-public class Fence extends Block implements Damageable{
-    
+public class Fence extends Block implements Damageable {
+
     private static final long serialVersionUID = 1L;
-    
-    public static final int DEFAULT_HEALTH = 100;
+
+    public static final int DEFAULT_HEALTH = 700;
+    public static final int PRICE = 50;
 
     public Fence(int x, int y, int health)
     {
         super(x, y, health);
     }
-    
+
     public Fence(int x, int y)
     {
         this(x, y, DEFAULT_HEALTH);
+    }
+
+    @Override
+    public String getDefaultImage()
+    {
+        return "sprites/Fence_Straight";
     }
 }

@@ -36,6 +36,7 @@ public class SuicideBomber extends Enemy {
     public SuicideBomber(int damage, int max, int x, int y)
     {
         super(max, x, y);
+        setValue(2);
         this.damage = damage;
         setMoveSpeed(Enemy.DEFAULT_SPEED * MULTIPLIER);
     }
@@ -50,4 +51,5 @@ public class SuicideBomber extends Enemy {
     {
         return "sprites/Suicide_Bomber";
     }
+    
 }

@@ -75,19 +75,18 @@ public class EnemyWave {
             EnemyGroup group = enemies.get(i);
             Enemy oldEnemy = group.getEnemy();
             Enemy newEnemy;
-            if(oldEnemy instanceof SuicideBomber)
+            if (oldEnemy instanceof SuicideBomber)
             {
-                newEnemy = new SuicideBomber(((SuicideBomber)oldEnemy).getDamage(), (int)(oldEnemy.getMaxHp() * waveEnemyHealth(waveNumber)), 0, 0);
+                newEnemy = new SuicideBomber(((SuicideBomber) oldEnemy).getDamage(), (int) (oldEnemy.getMaxHp() * waveEnemyHealth(waveNumber)), 0, 0);
             }
-            if(oldEnemy instanceof ArmoredEnemy)
+            if (oldEnemy instanceof ArmoredEnemy)
             {
-                newEnemy = new ArmoredEnemy(((ArmoredEnemy)oldEnemy).getArmor(),(int)(oldEnemy.getMaxHp() * waveEnemyHealth(waveNumber)), 0, 0);
-            }
-            else
+                newEnemy = new ArmoredEnemy(((ArmoredEnemy) oldEnemy).getArmor(), (int) (oldEnemy.getMaxHp() * waveEnemyHealth(waveNumber)), 0, 0);
+            } else
             {
                 newEnemy = new Enemy((int) (oldEnemy.getMaxHp() * waveEnemyHealth(waveNumber)), 0, 0);
             }
-            EnemyGroup newGroup = new EnemyGroup(newEnemy, (int)(group.getNumEnemies() * waveNumEnemies(waveNumber)));
+            EnemyGroup newGroup = new EnemyGroup(newEnemy, (int) (group.getNumEnemies() * waveNumEnemies(waveNumber)));
             newEnemies.add(newGroup);
         }
         EnemyWave nextWave = new EnemyWave(waveNumber + 1, newEnemies);
@@ -99,18 +98,19 @@ public class EnemyWave {
     public static double waveSpawnTime(int wn)
     {
         return 4 / (wn + 3); // inversely-decreasing time
-        //return Math.pow(.95, wn); // exponentially-decreasing time
+        // return Math.pow(.95, wn); // exponentially-decreasing time
     }
 
     public static double waveNumEnemies(int wn)
     {
-        return (wn*wn + 8*wn + 16) / 25; // quadratically-increasing number
-        //return Math.pow(1.2,wn); // exponentially-increasing number
+        return (wn * wn + 8 * wn + 16) / 25; // quadratically-increasing number
+        // return Math.pow(1.2,wn); // exponentially-increasing number
     }
 
-    public static double waveEnemyHealth(int wn) {
-        return (wn*wn + 8*wn + 16) / 25; // quadratically-increasing health
-        //return Math.pow(1.2,wn); // exponetially-increasing health
+    public static double waveEnemyHealth(int wn)
+    {
+        return (wn * wn + 8 * wn + 16) / 25; // quadratically-increasing health
+        // return Math.pow(1.2,wn); // exponetially-increasing health
     }
 
 }

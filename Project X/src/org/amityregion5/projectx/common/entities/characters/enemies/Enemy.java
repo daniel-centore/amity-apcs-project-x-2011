@@ -34,6 +34,7 @@ public class Enemy extends CharacterEntity implements Damageable {
 
     private static final long serialVersionUID = 1L;
 
+    private int value;
     private int hp; // hitpoints
     private final int maxHealth;
     private boolean hasHit = false;
@@ -48,6 +49,7 @@ public class Enemy extends CharacterEntity implements Damageable {
     public Enemy(int max, int x, int y)
     {
         super(x, y);
+        value = 1;
         hp = max;
         maxHealth = max;
         setMoveSpeed(DEFAULT_SPEED);
@@ -144,6 +146,19 @@ public class Enemy extends CharacterEntity implements Damageable {
     public void stop()
     {
         setMoveSpeed(0);
+    }
+
+    public void setValue(int value)
+    {
+        this.value = value;
+    }
+
+    /**
+     * @return How much score and money the enemy is worth
+     */
+    public int getValue()
+    {
+        return value;
     }
     
 }
