@@ -251,8 +251,11 @@ public class Client extends Thread {
         {
             Entity e = ((RequestEntityAddMessage) m).getNewInstance();
 
-            if (!CollisionDetection.hasCollision(e, GameController.getInstance().getEntities()))
-                GameController.getInstance().addEntity(e);
+            synchronized (GameController.getInstance())
+            {
+                if (!CollisionDetection.hasCollision(e, GameController.getInstance().getEntities()))
+                    GameController.getInstance().addEntity(e);
+            }
         } else if (m instanceof ChangedWeaponMessage)
         {
             ChangedWeaponMessage cwm = (ChangedWeaponMessage) m;

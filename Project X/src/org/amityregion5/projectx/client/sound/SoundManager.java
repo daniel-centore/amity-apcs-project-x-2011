@@ -43,31 +43,34 @@ public class SoundManager extends Thread {
     {
         //System.out.println(s.clip.getFrameLength());
         //System.out.println(s.clip.getMicrosecondLength());
-        if (rate < 1)
-        {
-            s.clip.setLoopPoints(0,-1);
-        } else {
-            double fps = s.clip.getFrameLength() / s.clip.getMicrosecondLength() / 1000.0;
-            int endFrame = (int) (fps * rate);
-            endFrame = Math.min(endFrame, s.clip.getFrameLength());
-            s.clip.setLoopPoints(0, endFrame);
-        }
-        s.clip.loop(Clip.LOOP_CONTINUOUSLY);
+        
+        
+//        if (rate < 1)
+//        {
+//            s.clip.setLoopPoints(0,-1);
+//        } else {
+//            double fps = s.clip.getFrameLength() / s.clip.getMicrosecondLength() / 1000.0;
+//            int endFrame = (int) (fps * rate);
+//            endFrame = Math.min(endFrame, s.clip.getFrameLength());
+//            s.clip.setLoopPoints(0, endFrame);
+//        }
+//        s.clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
     public static void stopSound(Sound s)
     {
-        s.clip.stop();
+//        s.clip.stop();
     }
 
     public static int getMilliSoundLength(Sound s)
     {
-        return (int) (s.clip.getMicrosecondLength() / 1000);
+        return -1;
+//        return (int) (s.clip.getMicrosecondLength() / 1000);
     }
 
     public static void playOnce(Sound s)
     {
-        s.clip.start();
+//        s.clip.start();
     }
 
     public static void main(String[] args)

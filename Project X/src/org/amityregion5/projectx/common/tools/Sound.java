@@ -36,7 +36,8 @@ import org.amityregion5.projectx.client.sound.SoundManager;
 public enum Sound
     {
         PISTOL_SHOT("resources/sounds/pistol_shot_comp.wav"),
-        BG_1("resources/sounds/death_grip.wav");
+        BG_1("resources/sounds/death_grip.wav"),
+        NULL_SOUND(null);
 
         private Clip clip;
 
