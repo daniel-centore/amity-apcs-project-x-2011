@@ -72,15 +72,14 @@ public class GeneratorThread extends Thread {
             {
                 // picks a random spawn point from the spawn point list
                 Point pt = enemySpawns.get(gen.nextInt(enemySpawns.size()));
-                Point2D.Double spawn = new Point2D.Double(pt.getX(),pt.getY());
+                Point2D.Double spawn = new Point2D.Double(pt.getX(), pt.getY());
 
                 // creates an enemy
                 Enemy en;
                 if (e instanceof SuicideBomber)
                 {
-                    en = new SuicideBomber(((SuicideBomber)e).getDamage(), e.getHp(), (int) spawn.getX(), (int) spawn.getY());
-                }
-                else
+                    en = new SuicideBomber(((SuicideBomber) e).getDamage(), e.getHp(), (int) spawn.getX(), (int) spawn.getY());
+                } else
                 {
                     en = new Enemy(e.getHp(), (int) spawn.getX(), (int) spawn.getY()); // TODO: arbitrary location
                 }

@@ -69,12 +69,14 @@ public class EntityMoverThread extends Thread {
                 for (Entity e : gameController.getEntities())
                 {
                     double r = e.getMoveSpeed();
+                    double offsetX = 0;
+                    double offsetY = 0;
                     if (r > 0)
                     {
                         double theta = e.getDirectionMoving();
 
-                        double offsetX = r * Math.cos(Math.toRadians(theta));
-                        double offsetY = r * Math.sin(Math.toRadians(theta));
+                        offsetX = r * Math.cos(Math.toRadians(theta));
+                        offsetY = r * Math.sin(Math.toRadians(theta));
                         double newX = offsetX + e.getX();
                         double newY = offsetY + e.getY();
 
@@ -118,7 +120,8 @@ public class EntityMoverThread extends Thread {
                         for (Entity q : gameController.getEntities())
                         {
                             if (q instanceof Block && q != e)
-                                if (CollisionDetection.hasCollision(e, 0, 0, q))
+                            {
+                                if (CollisionDetection.hasCollision(e, (int) offsetX, (int) offsetY, q))
                                 {
                                     Damageable dam = (Damageable) q;
                                     dam.damage(en.getCurrWeapon().getDamage());
@@ -129,6 +132,7 @@ public class EntityMoverThread extends Thread {
                                     } else
                                         q.requestUpdate();
                                 }
+                            }
                         }
 
                         if (CollisionDetection.hasCollision(en, 0, 0, map.getArea()))
