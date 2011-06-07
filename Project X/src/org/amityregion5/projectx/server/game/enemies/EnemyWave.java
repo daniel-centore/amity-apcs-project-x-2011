@@ -20,6 +20,7 @@
 package org.amityregion5.projectx.server.game.enemies;
 
 import java.util.ArrayList;
+import org.amityregion5.projectx.common.entities.characters.enemies.ArmoredEnemy;
 
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
 import org.amityregion5.projectx.common.entities.characters.enemies.SuicideBomber;
@@ -77,6 +78,10 @@ public class EnemyWave {
             if(oldEnemy instanceof SuicideBomber)
             {
                 newEnemy = new SuicideBomber(((SuicideBomber)oldEnemy).getDamage(), (int)(oldEnemy.getMaxHp() * waveEnemyHealth(waveNumber)), 0, 0);
+            }
+            if(oldEnemy instanceof ArmoredEnemy)
+            {
+                newEnemy = new ArmoredEnemy(((ArmoredEnemy)oldEnemy).getArmor(),(int)(oldEnemy.getMaxHp() * waveEnemyHealth(waveNumber)), 0, 0);
             }
             else
             {

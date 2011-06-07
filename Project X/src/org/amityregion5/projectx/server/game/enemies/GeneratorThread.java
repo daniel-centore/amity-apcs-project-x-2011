@@ -27,6 +27,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.amityregion5.projectx.common.entities.characters.enemies.ArmoredEnemy;
 
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
 import org.amityregion5.projectx.common.entities.characters.enemies.SuicideBomber;
@@ -79,7 +80,12 @@ public class GeneratorThread extends Thread {
                 if (e instanceof SuicideBomber)
                 {
                     en = new SuicideBomber(((SuicideBomber) e).getDamage(), e.getHp(), (int) spawn.getX(), (int) spawn.getY());
-                } else
+                }
+                else if(e instanceof ArmoredEnemy)
+                {
+                    en = new ArmoredEnemy(((ArmoredEnemy)e).getArmor(), e.getHp(), (int)spawn.getX(), (int)spawn.getY());
+                }
+                else
                 {
                     en = new Enemy(e.getHp(), (int) spawn.getX(), (int) spawn.getY()); // TODO: arbitrary location
                 }

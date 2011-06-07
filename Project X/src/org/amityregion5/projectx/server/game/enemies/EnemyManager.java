@@ -21,6 +21,7 @@ package org.amityregion5.projectx.server.game.enemies;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import org.amityregion5.projectx.common.entities.characters.enemies.ArmoredEnemy;
 
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
 import org.amityregion5.projectx.common.entities.characters.enemies.SuicideBomber;
@@ -51,9 +52,11 @@ public class EnemyManager {
 
         EnemyGroup group = createEnemyGroup(new Enemy(1, 0, 0), 5); // Arbitrary first wave with 5 enemies w/10 health
         EnemyGroup bomberGroup = createEnemyGroup(new SuicideBomber(100, 1, 0, 0), 3);
+        EnemyGroup armorGroup = createEnemyGroup(new ArmoredEnemy(2, 1, 0, 0), 3);
         ArrayList<EnemyGroup> enemies = new ArrayList<EnemyGroup>();
         enemies.add(group);
         enemies.add(bomberGroup);
+        enemies.add(armorGroup);
         wave = new EnemyWave(1, enemies);
         gen = new GeneratorThread(controller, spawnArea, this);
         gen.addWave(wave);
@@ -88,9 +91,11 @@ public class EnemyManager {
                 }
                 EnemyGroup group = createEnemyGroup(new Enemy(10, 0, 0), 5);
                 EnemyGroup bomberGroup = createEnemyGroup(new SuicideBomber(100, 5, 0, 0), 3);
+                EnemyGroup armorGroup = createEnemyGroup(new ArmoredEnemy(2, 10, 0, 0), 3);
                 ArrayList<EnemyGroup> enemies = new ArrayList<EnemyGroup>();
                 enemies.add(group);
                 enemies.add(bomberGroup);
+                enemies.add(armorGroup);
                 wave = new EnemyWave(1, enemies);
                 for (int i = 0; i < NUM_WAVES; i++)
                 {

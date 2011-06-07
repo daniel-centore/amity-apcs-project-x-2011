@@ -13,13 +13,14 @@ public class ArmoredEnemy extends Enemy {
     private static final long serialVersionUID = 1L;
 
     private int armor;
+    public static final double MULTIPLIER = 1/2; //How many times slower this is slowe than normal enemy
 
     public ArmoredEnemy(int ar, int max, int x, int y)
     {
         super(max, x, y);
         armor = ar;
 
-        setMoveSpeed(Enemy.DEFAULT_SPEED * 2 / 3);
+        setMoveSpeed(Enemy.DEFAULT_SPEED * MULTIPLIER);
 
         //Should make this enemy slower than normal enemy, but normal enemy has slowest speed possible right now
     }
@@ -29,6 +30,7 @@ public class ArmoredEnemy extends Enemy {
         return armor;
     }
 
+    @Override
     public int damage(int amt)
     {
         return super.damage(amt - armor);
@@ -37,7 +39,7 @@ public class ArmoredEnemy extends Enemy {
     @Override
     public String getDefaultImage()
     {
-        return null;
+        return "sprites/Suicide_Bomber"; //Need real graphic!!
     }
 
 }
