@@ -34,6 +34,8 @@ import org.amityregion5.projectx.server.game.GameController;
  */
 public class EnemyManager {
 
+    public static final int INITIAL_SPAWN_TIMEOUT = 4500; // how many ms before we start spawining
+
     private GeneratorThread gen;
     private EnemyWave wave; // Current wave
     private ArrayList<Point> spawnArea;
@@ -69,21 +71,35 @@ public class EnemyManager {
 
     /**
      * Starts the spawning thread. Adds an initial wave.
+     * Note: starts in a new thread. This method returns immediately
      */
     public void startSpawning()
     {
-        EnemyGroup group = createEnemyGroup(new Enemy(10, 0, 0), 5);
-        EnemyGroup bomberGroup = createEnemyGroup(new SuicideBomber(100, 5, 0, 0), 3);
-        ArrayList<EnemyGroup> enemies = new ArrayList<EnemyGroup>();
-        enemies.add(group);
-        enemies.add(bomberGroup);
-        wave = new EnemyWave(1, enemies);
-        for (int i = 0; i < NUM_WAVES; i++)
+        new Thread()
         {
-            gen.addWave(wave);
-            wave = wave.nextWave();
-        }
-        gen.start();
+            public void run()
+            {
+                try
+                {
+                    Thread.sleep(INITIAL_SPAWN_TIMEOUT);
+                } catch (InterruptedException e)
+                {
+                    e.printStackTrace();
+                }
+                EnemyGroup group = createEnemyGroup(new Enemy(10, 0, 0), 5);
+                EnemyGroup bomberGroup = createEnemyGroup(new SuicideBomber(100, 5, 0, 0), 3);
+                ArrayList<EnemyGroup> enemies = new ArrayList<EnemyGroup>();
+                enemies.add(group);
+                enemies.add(bomberGroup);
+                wave = new EnemyWave(1, enemies);
+                for (int i = 0; i < NUM_WAVES; i++)
+                {
+                    gen.addWave(wave);
+                    wave = wave.nextWave();
+                }
+                gen.start();
+            }
+        }.start();
     }
 
     public void kill()

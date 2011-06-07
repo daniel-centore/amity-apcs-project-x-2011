@@ -28,14 +28,16 @@ package org.amityregion5.projectx.common.entities.characters.enemies;
 public class SuicideBomber extends Enemy {
 
     private static final long serialVersionUID = 1L;
-    
+
+    public static final int MULTIPLIER = 3; // how many times faster than enemy default
+
     private int damage;
 
     public SuicideBomber(int damage, int max, int x, int y)
     {
         super(max, x, y);
         this.damage = damage;
-        setMoveSpeed(Enemy.DEFAULT_SPEED * 4);
+        setMoveSpeed(Enemy.DEFAULT_SPEED * MULTIPLIER);
     }
 
     public int getDamage()

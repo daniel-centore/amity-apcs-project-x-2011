@@ -30,6 +30,7 @@ import org.amityregion5.projectx.client.gui.GameWindow;
 import org.amityregion5.projectx.common.communication.messages.AddEntityMessage;
 import org.amityregion5.projectx.common.communication.messages.AddMeMessage;
 import org.amityregion5.projectx.common.communication.messages.AddWeaponMessage;
+import org.amityregion5.projectx.common.communication.messages.AnnounceMessage;
 import org.amityregion5.projectx.common.communication.messages.CashMessage;
 import org.amityregion5.projectx.common.communication.messages.RemoveEntityMessage;
 import org.amityregion5.projectx.common.entities.Damageable;
@@ -103,6 +104,7 @@ public final class GameController {
             for (PlayerEntity p : players)
             {
                 c.send(new AddEntityMessage(p));
+                c.send(new AnnounceMessage("You should begin preparing your defences!"));
             }
         }
 
