@@ -75,8 +75,6 @@ public class ChatDrawing {
         }
         if (isChatting)
         {
-            // TODO make the letters also appear on the new line
-            // Alternative: just give it a limit on how many characters we can type
             g2.setColor(Color.BLACK);
             g2.draw(r);
             g2.drawString(currChat.toString() + "|", X_MARGIN + 5, g2.getFont().getSize() + (HEIGHT_MARGIN * NUM_CHATS));

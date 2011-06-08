@@ -79,7 +79,7 @@ public class GeneratorThread extends Thread {
                 Enemy en;
                 if (e instanceof SuicideBomber)
                 {
-                    en = new SuicideBomber(((SuicideBomber) e).getDamage(), e.getHp(), (int) spawn.getX(), (int) spawn.getY());
+                    en = new SuicideBomber(((SuicideBomber) e).getCurrWeapon().getDamage(), e.getHp(), (int) spawn.getX(), (int) spawn.getY());
                 }
                 else if(e instanceof ArmoredEnemy)
                 {

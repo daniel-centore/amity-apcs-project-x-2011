@@ -77,7 +77,7 @@ public class EnemyWave {
             Enemy newEnemy;
             if (oldEnemy instanceof SuicideBomber)
             {
-                newEnemy = new SuicideBomber(((SuicideBomber) oldEnemy).getDamage(), (int) (oldEnemy.getMaxHp() * waveEnemyHealth(waveNumber)), 0, 0);
+                newEnemy = new SuicideBomber(((SuicideBomber) oldEnemy).getCurrWeapon().getDamage(), (int) (oldEnemy.getMaxHp() * waveEnemyHealth(waveNumber)), 0, 0);
             }
             if (oldEnemy instanceof ArmoredEnemy)
             {

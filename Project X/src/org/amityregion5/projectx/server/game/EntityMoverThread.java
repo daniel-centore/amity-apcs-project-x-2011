@@ -127,12 +127,12 @@ public class EntityMoverThread extends Thread {
                                     for (Entity v : gameController.getEntities())
                                     {
                                         SuicideBomber sb = (SuicideBomber) en;
-                                        sb.damage(sb.getMaxHp() + sb.getDamage()); // overkill
+                                        sb.damage(sb.getMaxHp() + sb.getCurrWeapon().getDamage()); // overkill
                                         double dist = e.getCenterLocation().distance(new Point(v.getCenterX(), v.getCenterY()));
                                         if (dist < 30)
                                         {
                                             Damageable dam = (Damageable) q;
-                                            dam.damage(sb.getDamage() / 2); // unfocused damage
+                                            dam.damage(sb.getCurrWeapon().getDamage() / 2); // unfocused damage
                                             if (dam.killed())
                                                 toRemove.add(v);
                                             else
@@ -161,7 +161,7 @@ public class EntityMoverThread extends Thread {
                         if (en instanceof SuicideBomber)
                         {
                             SuicideBomber sb = (SuicideBomber) en;
-                            map.getArea().damage(sb.getDamage()); // attack the area specifically
+                            map.getArea().damage(sb.getCurrWeapon().getDamage()); // attack the area specifically
                             toRemove.add(sb);
                             // FIXME explosions!!
                             // gameController.getServer().relayMessage(new PlaySoundMessage(Sound.EXPLOSION));

@@ -3,7 +3,6 @@
     b. Need to give player a default weapon (maybe Pistol?) at start of game
     c. Need to stop shooting upon weapon change
 
-src/org/amityregion5/projectx/client/gui/ChatDrawing.java:            // TODO make the letters also appear on the new line
 src/org/amityregion5/projectx/client/gui/RepaintHandler.java:                // TODO draw a fire if it just fired
 src/org/amityregion5/projectx/common/communication/messages/GoodbyeMessage.java:    //TODO: fix disconnected message displaying in option pane ("phantom window")
 src/org/amityregion5/projectx/common/entities/Entity.java:        requestUpdate(); // TODO: do we need this?

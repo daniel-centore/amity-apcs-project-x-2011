@@ -20,6 +20,8 @@
 
 package org.amityregion5.projectx.common.entities.characters.enemies;
 
+import org.amityregion5.projectx.common.entities.items.held.Bomb;
+
 /**
  * Fast enemy that explodes upon reaching base
  * @author Mike Dibuduo
@@ -28,22 +30,16 @@ package org.amityregion5.projectx.common.entities.characters.enemies;
 public class SuicideBomber extends Enemy {
 
     private static final long serialVersionUID = 1L;
-
+    
     public static final double MULTIPLIER = 1.5; // how many times faster than enemy default
 
-    private int damage;
 
     public SuicideBomber(int damage, int max, int x, int y)
     {
         super(max, x, y);
         setValue(2);
-        this.damage = damage;
+        addWeapon(new Bomb(damage));
         setMoveSpeed(Enemy.DEFAULT_SPEED * MULTIPLIER);
-    }
-
-    public int getDamage()
-    {
-        return damage;
     }
 
     @Override
