@@ -69,7 +69,7 @@ public class Main
             if (s != null)
                 s.dispose();
 
-            new Main();
+            new MainWindow();
         }
     }
 }
