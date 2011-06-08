@@ -103,10 +103,12 @@ public class EntityMoverThread extends Thread {
                         }
                     } else if (!collision)
                     {
+                        System.out.println(newX+" "+newY);
                         e.setX(newX);
                         e.setY(newY);
                     }
                 }
+                
                 if (e instanceof Enemy)
                 {
                     Enemy en = (Enemy) e;

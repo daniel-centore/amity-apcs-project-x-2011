@@ -45,6 +45,12 @@ public class PlayerEntity extends CharacterEntity implements Comparable {
         super(x, y);
     }
 
+    /**
+     * Creates a player
+     * @param x X and Y coordinates
+     * @param y
+     * @param username Their username
+     */
     public PlayerEntity(int x, int y, String username)
     {
         this(x,y);
@@ -57,37 +63,62 @@ public class PlayerEntity extends CharacterEntity implements Comparable {
         return "sprites/Player";
     }
 
+    /**
+     * Increments X
+     * @param offSetX How much to increment it by (can be negative)
+     */
     public void incrementX(double offSetX)
     {
         setX(getX() + offSetX);
     }
 
+    /**
+     * Increments Y
+     * @param offSetY How much to increment it by (can be negative)
+     */
     public void incrementY(double offSetY)
     {
         setY(getY() + offSetY);
     }
 
+    /**
+     * Adds points
+     * @param pts Number of points to add
+     */
     public void addPoints(int pts)
     {
         points += pts;
     }
 
+    /**
+     * @return Number of points the player has
+     */
     public int getPoints()
     {
         return points;
     }
 
+    /**
+     * Sets the player's points
+     * @param amount What to set it to
+     */
     public void setPoints(int amount)
     {
         points = amount;
     }
 
-
+    /**
+     * @return Amount of cash the player has
+     */
     public int getCash()
     {
         return cash;
     }
 
+    /**
+     * Adds money
+     * @param amount How much to add
+     */
     public void addCash(int amount)
     {
         cash += amount;
