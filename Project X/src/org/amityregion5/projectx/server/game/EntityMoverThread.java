@@ -126,7 +126,6 @@ public class EntityMoverThread extends Thread {
                             {
                                 if (e instanceof SuicideBomber)
                                 {
-                                    System.out.println("damage: "+((SuicideBomber) e).getCurrWeapon());
                                     ((Block) q).damage(((SuicideBomber) e).getCurrWeapon().getDamage());
                                     if (((Damageable) q).killed())
                                         toRemove.add(q);
