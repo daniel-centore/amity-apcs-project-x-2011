@@ -26,7 +26,6 @@ import org.amityregion5.projectx.client.gui.ServerChooserWindow;
 import org.amityregion5.projectx.client.gui.SplashScreen;
 import org.amityregion5.projectx.client.gui.UsernameWindow;
 import org.amityregion5.projectx.client.preferences.PreferenceManager;
-import org.amityregion5.projectx.client.sound.SoundManager;
 
 /**
  * Main class for loading the Client
@@ -36,7 +35,7 @@ import org.amityregion5.projectx.client.sound.SoundManager;
  */
 public class Main {
 
-    public static final int SPLASH_TIME = 1500; // how long to show the splash screen (ms)
+    public static final int SPLASH_TIME = 2000; // how long to show the splash screen (ms)
 
     public static void main(String[] args)
     {
@@ -50,23 +49,11 @@ public class Main {
             // ignore
         }
 
-        SplashScreen s = null;
-
-        if (PreferenceManager.checkSplashScreen()) {
-            s = new SplashScreen();
-            try
-            {
-                Thread.sleep(SPLASH_TIME);
-            } catch (InterruptedException e)
-            {
-            }
-        }
-
         if (PreferenceManager.getUsername() == null)
         {
             // user has never used Project X before!
 
-            new UsernameWindow(s, true, true);
+            new UsernameWindow(null, true, true);
         }
 
         final ServerChooserWindow chooser = new ServerChooserWindow();
@@ -74,9 +61,6 @@ public class Main {
         MulticastCommunicationHandler mch = new MulticastCommunicationHandler();
         mch.registerListener(chooser);
         mch.start();
-
-        if (s != null)
-            s.setVisible(false);
 
         chooser.setVisible(true);
     }

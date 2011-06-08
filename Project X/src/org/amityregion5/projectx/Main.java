@@ -4,9 +4,9 @@
  */
 
 /*
- * Main.java
+ * MainWindow.java
  *
- * Created on Jun 7, 2011, 10:48:40 PM
+ * Created on Jun 8, 2011, 10:49:51 AM
  */
 
 package org.amityregion5.projectx;
@@ -17,9 +17,11 @@ package org.amityregion5.projectx;
  */
 public class Main extends javax.swing.JFrame {
 
-    /** Creates new form Main */
+    /** Creates new form MainWindow */
     public Main() {
         initComponents();
+        getRootPane().setDefaultButton(clientBtn);
+        this.setVisible(true);
     }
 
     /** This method is called from within the constructor to
@@ -32,7 +34,8 @@ public class Main extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        clientBtn = new javax.swing.JButton();
+        serverBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -40,7 +43,19 @@ public class Main extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("project x");
 
-        jButton1.setText("jButton1");
+        clientBtn.setText("Join a Game");
+        clientBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clientBtnActionPerformed(evt);
+            }
+        });
+
+        serverBtn.setText("Start a Server");
+        serverBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                serverBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -49,8 +64,11 @@ public class Main extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 381, Short.MAX_VALUE)
-                    .addComponent(jButton1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(clientBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(serverBtn))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -58,13 +76,27 @@ public class Main extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addContainerGap(283, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(clientBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
+                    .addComponent(serverBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void serverBtnActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_serverBtnActionPerformed
+    {//GEN-HEADEREND:event_serverBtnActionPerformed
+        org.amityregion5.projectx.server.Main.main(null);
+        this.dispose();
+    }//GEN-LAST:event_serverBtnActionPerformed
+
+    private void clientBtnActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_clientBtnActionPerformed
+    {//GEN-HEADEREND:event_clientBtnActionPerformed
+        org.amityregion5.projectx.client.main.Main.main(null);
+        this.dispose();
+    }//GEN-LAST:event_clientBtnActionPerformed
 
     /**
     * @param args the command line arguments
@@ -78,8 +110,9 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton clientBtn;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton serverBtn;
     // End of variables declaration//GEN-END:variables
 
 }
