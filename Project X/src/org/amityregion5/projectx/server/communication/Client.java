@@ -259,15 +259,12 @@ public class Client extends Thread {
                 price = Wall.PRICE;
             else
                 throw new RuntimeException("No entity price set up for: " + s);
-            
-            synchronized (GameController.getInstance())
+
+            if (!CollisionDetection.hasCollision(e, GameController.getInstance().getEntities()) && player.getCash() >= price)
             {
-                if (!CollisionDetection.hasCollision(e, GameController.getInstance().getEntities()) && player.getCash() >= price)
-                {
-                    player.spendCash(price);
-                    server.relayMessage(new CashMessage(player.getCash(), player.getUniqueID()));
-                    GameController.getInstance().addEntity(e);
-                }
+                player.spendCash(price);
+                server.relayMessage(new CashMessage(player.getCash(), player.getUniqueID()));
+                GameController.getInstance().addEntity(e);
             }
         } else if (m instanceof ChangedWeaponMessage)
         {

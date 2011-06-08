@@ -86,7 +86,7 @@ public final class GameController {
         this.server = server;
         players = new ArrayList<PlayerEntity>();
         clients = server.getClients().values();
-        entities = new CopyOnWriteArrayList<Entity>(); // TODO: remove the synchronized, unneeded now
+        entities = new CopyOnWriteArrayList<Entity>();
 
         Random r = new Random();
         for (Client c : clients)
@@ -135,10 +135,7 @@ public final class GameController {
      */
     public void addEntity(Entity e)
     {
-        synchronized (this)
-        {
-            entities.add(e);
-        }
+        entities.add(e);
 
         server.relayMessage(new AddEntityMessage(e));
     }
@@ -234,66 +231,63 @@ public final class GameController {
         Line2D.Double line = new Line2D.Double(player.getCenterX(), player.getCenterY(), x2, y2);
 
         List<Entity> toRemove = new ArrayList<Entity>();
-        synchronized (this)
-        {
-            // should be Damageable, too, but java is kind of stupid
-            // need to enforce by ourselves
-            ArrayList<Enemy> toDamage = new ArrayList<Enemy>();
+        // should be Damageable, too, but java is kind of stupid
+        // need to enforce by ourselves
+        ArrayList<Enemy> toDamage = new ArrayList<Enemy>();
 
-            if (wep instanceof Laser)
+        if (wep instanceof Laser)
+        {
+            for (Entity e : entities)
             {
-                for (Entity e : entities)
-                {
-                    if (e instanceof Enemy && line.intersects(e.getHitBox()))
-                        toDamage.add((Enemy) e);
-                }
-            } else
+                if (e instanceof Enemy && line.intersects(e.getHitBox()))
+                    toDamage.add((Enemy) e);
+            }
+        } else
+        {
+            double closest = Double.MAX_VALUE;
+            Enemy closestEn = null;
+            for (Entity e : entities)
             {
-                double closest = Double.MAX_VALUE;
-                Enemy closestEn = null;
-                for (Entity e : entities)
+                if (e instanceof Enemy && line.intersects(e.getHitBox()))
                 {
-                    if (e instanceof Enemy && line.intersects(e.getHitBox()))
+                    double dist = e.getCenterLocation().distance(new Point(player.getCenterX(), player.getCenterY()));
+                    // AN, accuracy: "pass through"
+                    if (dist < closest)// && Math.random() < player.getCurrWeapon().getAccuracy())
                     {
-                        double dist = e.getCenterLocation().distance(new Point(player.getCenterX(), player.getCenterY()));
-                        // AN, accuracy: "pass through"
-                        if (dist < closest)// && Math.random() < player.getCurrWeapon().getAccuracy())
-                        {
-                            closestEn = (Enemy) e;
-                            closest = dist;
-                        }
+                        closestEn = (Enemy) e;
+                        closest = dist;
                     }
                 }
-
-                toDamage.add(closestEn);
             }
 
-            for (Enemy e : toDamage)
+            toDamage.add(closestEn);
+        }
+
+        for (Enemy e : toDamage)
+        {
+            if (e != null)
             {
-                if (e != null)
+                Damageable d = (Damageable) e;
+                double dist = e.getCenterLocation().distance(new Point(player.getCenterX(), player.getCenterY()));
+                int damage = d.damage(player.getCurrWeapon().getDamage(dist));
+                for (Client c : clients)
                 {
-                    Damageable d = (Damageable) e;
-                    double dist = e.getCenterLocation().distance(new Point(player.getCenterX(), player.getCenterY()));
-                    int damage = d.damage(player.getCurrWeapon().getDamage(dist));
-                    for (Client c : clients)
+                    if (c.getPlayer().equals(player))
                     {
-                        if (c.getPlayer().equals(player))
-                        {
-                            PlayerEntity p = c.getPlayer();
-                            p.addPoints(damage);
-                            p.addCash(damage);
-                            // p.addPoints(e.getValue());
-                            // p.addCash(e.getValue());
-                            server.relayMessage(new PointMessage(p.getPoints(), p.getUniqueID()));
-                            server.relayMessage(new CashMessage(p.getCash(), p.getUniqueID()));
-                        }
+                        PlayerEntity p = c.getPlayer();
+                        p.addPoints(damage);
+                        p.addCash(damage);
+                        // p.addPoints(e.getValue());
+                        // p.addCash(e.getValue());
+                        server.relayMessage(new PointMessage(p.getPoints(), p.getUniqueID()));
+                        server.relayMessage(new CashMessage(p.getCash(), p.getUniqueID()));
                     }
-                    e.requestUpdate();
-                    if (d.killed())
-                    {
-                        toRemove.add(e);
-                        server.relayMessage(new RemoveEntityMessage(e));
-                    }
+                }
+                e.requestUpdate();
+                if (d.killed())
+                {
+                    toRemove.add(e);
+                    server.relayMessage(new RemoveEntityMessage(e));
                 }
             }
         }
@@ -315,10 +309,7 @@ public final class GameController {
      */
     public void removeEntity(Entity e)
     {
-        synchronized (this)
-        {
-            entities.remove(e);
-        }
+        entities.remove(e);
         getServer().relayMessage(new RemoveEntityMessage(e));
     }
 
