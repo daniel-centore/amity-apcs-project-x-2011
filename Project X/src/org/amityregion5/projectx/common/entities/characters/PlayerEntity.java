@@ -117,7 +117,7 @@ public class PlayerEntity extends CharacterEntity implements Comparable {
     {
         if (o instanceof PlayerEntity)
         {
-            return this.getPoints() - ((PlayerEntity) o).getPoints();
+            return ((PlayerEntity) o).getPoints() - this.getPoints();
         }
         throw new IllegalArgumentException("Must compare PlayerEntities!");
     }
