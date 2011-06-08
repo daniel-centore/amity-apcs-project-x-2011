@@ -38,5 +38,6 @@ public class Constants {
     public static final int MULTICAST_INTERVAL = 2000;
 
     public static final String FIRE_PREF = ">";
+    public static String SOUND_PREF = "#";
 
 }

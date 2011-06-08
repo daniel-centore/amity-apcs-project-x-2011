@@ -28,18 +28,26 @@ import javazoom.jl.player.Player;
  */
 public enum Sound {
 
-    PISTOL_SHOT("resources/sounds/65_Pistol_Shot.mp3"),
-    NULL_SOUND(null),
-    BG_1("resources/sounds/17_Death_Grip.mp3"),
-    EXPLOSION("resources/sounds/65_Pistol_Shot.mp3");  //TODO: add path! 
+    PISTOL_SHOT("resources/sounds/65_Pistol_Shot.mp3",false),
+    NULL_SOUND(null,false),
+    BG_1("resources/sounds/17_Death_Grip.mp3",true),
+    LASER("resources/sounds/laser_shot.mp3",true),
+    EXPLOSION("resources/sounds/65_Pistol_Shot.mp3",false);  //TODO: add path!
     
     private Player player;
     private String file;
+    private boolean continuous;
 
-    private Sound(String file)
+    private Sound(String file, boolean cont)
     {
         this.file = file;
         player = null;
+        continuous = cont;
+    }
+
+    public boolean getContinuous()
+    {
+        return continuous;
     }
 
     public void reset()

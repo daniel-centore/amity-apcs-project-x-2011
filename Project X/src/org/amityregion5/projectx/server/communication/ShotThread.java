@@ -75,6 +75,7 @@ public class ShotThread extends Thread {
                 if (player.fire())
                 {
                     server.playerFired(player);
+                    //server.getClients().get(player.getUsername()).s;
                 }
                 // sleeps in order to get the attack rate right
                 Thread.sleep(1000 / player.getCurrWeapon().getAttackRate());

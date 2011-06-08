@@ -46,6 +46,7 @@ import org.amityregion5.projectx.common.communication.Constants;
 import org.amityregion5.projectx.common.communication.MessageListener;
 import org.amityregion5.projectx.common.communication.RawListener;
 import org.amityregion5.projectx.common.communication.messages.*;
+import org.amityregion5.projectx.common.communication.messages.sound.SoundControlMessage.Type;
 import org.amityregion5.projectx.common.entities.Damageable;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.EntityConstants;
@@ -435,10 +436,20 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         {
             PlayerEntity p = (PlayerEntity) entityHandler.getEntity(Long.valueOf(str.substring(1)));
             p.setFired(true);
-            if (p.equals(me))
-                SoundManager.playOnce(Sound.valueOf(me.getCurrWeapon().getSound().toString()));
             GameWindow.fireRepaintRequired();
             return;
+        }
+        if (str.startsWith(Constants.SOUND_PREF))
+        {
+            String[] ln = str.substring(1).split(",");
+            Sound sound = Sound.valueOf(ln[0]);
+            Type cmd = SoundControlMessage.Type.valueOf(ln[1]);
+            switch (cmd)
+            {
+                case ONCE:
+                    SoundManager.playOnce(sound);
+                    break;
+            }
         }
         String[] entStrs = str.split(";");
         for (int i = 0; i < entStrs.length; i++)
