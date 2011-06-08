@@ -41,7 +41,7 @@ public class EnemyManager {
     private EnemyWave wave; // Current wave
     private ArrayList<Point> spawnArea;
     private GameController controller;
-    private final int NUM_WAVES = 666; // Completely arbitrary
+    private final int NUM_WAVES = 10; // Completely arbitrary
 
     public EnemyManager(GameController c, ArrayList<Point> area)
     {

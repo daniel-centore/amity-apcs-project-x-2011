@@ -78,8 +78,7 @@ public class EnemyWave {
             if (oldEnemy instanceof SuicideBomber)
             {
                 newEnemy = new SuicideBomber(((SuicideBomber) oldEnemy).getCurrWeapon().getDamage(), (int) (oldEnemy.getMaxHp() * waveEnemyHealth(waveNumber)), 0, 0);
-            }
-            if (oldEnemy instanceof ArmoredEnemy)
+            } else if (oldEnemy instanceof ArmoredEnemy)
             {
                 newEnemy = new ArmoredEnemy(((ArmoredEnemy) oldEnemy).getArmor(), (int) (oldEnemy.getMaxHp() * waveEnemyHealth(waveNumber)), 0, 0);
             } else
@@ -102,11 +101,11 @@ public class EnemyWave {
 
     public static double waveNumEnemies(int wn)
     {
-        return (wn*wn + 34*wn + 289) / 324; // quadratically-increasing number
+        return (wn * wn + 34 * wn + 289) / 324; // quadratically-increasing number
     }
 
     public static double waveEnemyHealth(int wn)
     {
-        return (wn*wn + 34*wn + 289) / 324; // quadratically-increasing number
+        return (wn * wn + 34 * wn + 289) / 324; // quadratically-increasing number
     }
 }
