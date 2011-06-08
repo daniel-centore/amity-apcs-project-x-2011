@@ -103,12 +103,12 @@ public class EntityMoverThread extends Thread {
                         }
                     } else if (!collision)
                     {
-//                        System.out.println(newX+" "+newY);
+                        // System.out.println(newX+" "+newY);
                         e.setX(newX);
                         e.setY(newY);
                     }
                 }
-                
+
                 if (e instanceof Enemy)
                 {
                     Enemy en = (Enemy) e;
@@ -126,21 +126,14 @@ public class EntityMoverThread extends Thread {
                             {
                                 if (e instanceof SuicideBomber)
                                 {
-                                    for (Entity v : gameController.getEntities())
-                                    {
-                                        SuicideBomber sb = (SuicideBomber) en;
-                                        sb.damage(sb.getMaxHp() + sb.getCurrWeapon().getDamage()); // overkill
-                                        double dist = e.getCenterLocation().distance(new Point(v.getCenterX(), v.getCenterY()));
-                                        if (dist < 30)
-                                        {
-                                            Damageable dam = (Damageable) q;
-                                            dam.damage(sb.getCurrWeapon().getDamage() / 2); // unfocused damage
-                                            if (dam.killed())
-                                                toRemove.add(v);
-                                            else
-                                                q.requestUpdate();
-                                        }
-                                    }
+                                    System.out.println("damage: "+((SuicideBomber) e).getCurrWeapon());
+                                    ((Block) q).damage(((SuicideBomber) e).getCurrWeapon().getDamage());
+                                    if (((Damageable) q).killed())
+                                        toRemove.add(q);
+                                    else
+                                        q.requestUpdate();
+                                    toRemove.add(e);
+                                    
                                     // FIXME explosiosn!!
                                     // gameController.getServer().relayMessage(new PlaySoundMessage(Sound.EXPLOSION));
                                 } else
@@ -225,7 +218,7 @@ public class EntityMoverThread extends Thread {
                 buf.append(e.getDirectionFacing());
                 buf.append(",");
                 buf.append(e.getHp());
-                if (e instanceof CharacterEntity)
+                if (e instanceof CharacterEntity && ((CharacterEntity) e).hasWeapons())
                 {
                     buf.append(",");
                     buf.append(((CharacterEntity) e).getCurrWeapon());

@@ -17,36 +17,19 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
-
 package org.amityregion5.projectx.common.entities.characters.enemies;
 
-import org.amityregion5.projectx.common.entities.items.held.Bomb;
-import org.amityregion5.projectx.common.entities.items.held.Weapon;
+import org.amityregion5.projectx.common.entities.items.held.Zombie_Hands;
 
-/**
- * Fast enemy that explodes upon reaching base
- * @author Mike Dibuduo
- * @author Mike Wenke
- */
-public class SuicideBomber extends Enemy {
+public class DefaultEnemy extends Enemy {
 
     private static final long serialVersionUID = 1L;
-    
-    public static final double MULTIPLIER = 1.5; // how many times faster than enemy default
 
-
-    public SuicideBomber(int damage, int max, int x, int y)
+    public DefaultEnemy(int max, int x, int y)
     {
         super(max, x, y);
-        setValue(2);
-        addWeapon(new Bomb(damage));
-        setMoveSpeed(Enemy.DEFAULT_SPEED * MULTIPLIER);
-    }
-    
-    @Override
-    public String getDefaultImage()
-    {
-        return "sprites/Suicide_Bomber";
+        
+        addWeapon(new Zombie_Hands(1));
     }
 
 }

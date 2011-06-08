@@ -33,7 +33,7 @@ public abstract class MeleeWeapon extends Weapon implements DamageDealing {
     // TODO: shouldn't the range be the size of the weapon?
     public static final int MELEE_RANGE = 5; // default to 5 pixels range
     
-    public int damage;
+    private int damage;
 
     public MeleeWeapon(int rate, int damage)
     {
@@ -41,6 +41,7 @@ public abstract class MeleeWeapon extends Weapon implements DamageDealing {
         this.damage = damage;
     }
 
+    @Override
     public int getDamage()
     {
         return damage;

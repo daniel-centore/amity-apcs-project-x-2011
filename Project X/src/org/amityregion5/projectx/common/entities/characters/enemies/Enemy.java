@@ -30,7 +30,7 @@ import org.amityregion5.projectx.common.entities.items.held.Weapon;
  * @author Mike DiBuduo
  * @author Daniel Centore
  */
-public class Enemy extends CharacterEntity implements Damageable {
+public abstract class Enemy extends CharacterEntity implements Damageable {
 
     private static final long serialVersionUID = 1L;
 
@@ -53,8 +53,6 @@ public class Enemy extends CharacterEntity implements Damageable {
         hp = max;
         maxHealth = max;
         setMoveSpeed(DEFAULT_SPEED);
-        
-        addWeapon(new Zombie_Hands(1));
         
         setCurrWeapon(0);
     }

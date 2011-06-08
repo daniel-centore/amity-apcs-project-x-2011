@@ -23,6 +23,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import org.amityregion5.projectx.common.entities.characters.enemies.ArmoredEnemy;
 
+import org.amityregion5.projectx.common.entities.characters.enemies.DefaultEnemy;
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
 import org.amityregion5.projectx.common.entities.characters.enemies.SuicideBomber;
 import org.amityregion5.projectx.server.game.GameController;
@@ -48,7 +49,7 @@ public class EnemyManager {
         controller = c;
         spawnArea = area;
 
-        EnemyGroup group = createEnemyGroup(new Enemy(1, 0, 0), 5); // Arbitrary first wave with 5 enemies w/10 health
+        EnemyGroup group = createEnemyGroup(new DefaultEnemy(1, 0, 0), 5); // Arbitrary first wave with 5 enemies w/10 health
         EnemyGroup bomberGroup = createEnemyGroup(new SuicideBomber(100, 1, 0, 0), 3);
         EnemyGroup armorGroup = createEnemyGroup(new ArmoredEnemy(2, 1, 0, 0), 3);
         ArrayList<EnemyGroup> enemies = new ArrayList<EnemyGroup>();
@@ -87,7 +88,7 @@ public class EnemyManager {
                 {
                     e.printStackTrace();
                 }
-                EnemyGroup group = createEnemyGroup(new Enemy(10, 0, 0), 5);
+                EnemyGroup group = createEnemyGroup(new DefaultEnemy(10, 0, 0), 5);
                 EnemyGroup bomberGroup = createEnemyGroup(new SuicideBomber(100, 5, 0, 0), 3);
                 EnemyGroup armorGroup = createEnemyGroup(new ArmoredEnemy(2, 10, 0, 0), 3);
                 ArrayList<EnemyGroup> enemies = new ArrayList<EnemyGroup>();

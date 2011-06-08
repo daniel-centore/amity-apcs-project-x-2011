@@ -29,6 +29,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.amityregion5.projectx.common.entities.characters.enemies.ArmoredEnemy;
 
+import org.amityregion5.projectx.common.entities.characters.enemies.DefaultEnemy;
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
 import org.amityregion5.projectx.common.entities.characters.enemies.SuicideBomber;
 import org.amityregion5.projectx.common.maps.AbstractMap;
@@ -90,7 +91,7 @@ public class GeneratorThread extends Thread {
                 }
                 else
                 {
-                    en = new Enemy(e.getHp(), (int) spawn.getX(), (int) spawn.getY()); // TODO: arbitrary location
+                    en = new DefaultEnemy(e.getHp(), (int) spawn.getX(), (int) spawn.getY()); // TODO: arbitrary location
                 }
                 // puts the enemy at spawn
                 en.setLocation(spawn);
