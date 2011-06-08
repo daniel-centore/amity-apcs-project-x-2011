@@ -466,11 +466,9 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
 
     }
 
-    // TODO: There needs to be an alternate way to change weapons, incase we have no scroll wheel!
     public void mouseScrolled(MouseWheelEvent e)
     {
         communicationHandler.send(new ChangedWeaponMessage(e.getWheelRotation()));
-        // me.changeWeapon(e.getWheelRotation());
     }
 
     /**

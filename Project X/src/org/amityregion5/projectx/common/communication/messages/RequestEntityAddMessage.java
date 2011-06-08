@@ -28,8 +28,6 @@ import org.amityregion5.projectx.common.entities.items.field.Wall;
 /**
  * Requests that the server add an entity to the game :-)
  * 
- * TODO: implement server side
- * 
  * @author Daniel Centore
  * 
  */

@@ -202,7 +202,7 @@ public abstract class Entity implements Serializable {
     public void setDirectionMoving(int directionMoving)
     {
         this.directionMoving = directionMoving;
-        requestUpdate(); // TODO: do we need this?
+        requestUpdate();
     }
 
     /**

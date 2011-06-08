@@ -40,7 +40,7 @@ import org.amityregion5.projectx.server.communication.RawServer;
 import org.amityregion5.projectx.server.tools.CollisionDetection;
 
 /**
- * A thread that will move all Entities by need. TODO handles collision detection
+ * A thread that will move all Entities by need.
  * 
  * @author Joe Stein
  * @author Mike DiBuduo
