@@ -112,6 +112,9 @@ public class EnemyManager {
 
     public static int waveDelayTime(int wn)
     {
-        return 10000 * (wn*wn + 34*wn + 289) / 324; // quadratically-increasing time
+         int delay = 10000 * (wn*wn + 34*wn + 289) / 324; // quadratically-increasing time
+         if(delay > 60000)
+             return 60000;
+         return delay;
     }
 }

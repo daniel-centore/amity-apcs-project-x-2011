@@ -46,6 +46,8 @@ public class GeneratorThread extends Thread {
     private ArrayList<Point> enemySpawns;
     private EnemyManager manager;
     private boolean spawn;
+    private int timeBetweenWaves;
+    private int waveNumber;
 
     public GeneratorThread(GameController c, ArrayList<Point> spawns, EnemyManager m)
     {
@@ -53,6 +55,7 @@ public class GeneratorThread extends Thread {
         controller = c;
         enemySpawns = c.getEnemySpawns();
         manager = m;
+        waveNumber = 1;
     }
 
     /**
@@ -127,6 +130,7 @@ public class GeneratorThread extends Thread {
             if (waves.peek() != null)
             {
                 sendWave(waves.poll());
+                waveNumber++;
                 try
                 {
                     Thread.sleep(EnemyManager.waveDelayTime(waveCount++));
