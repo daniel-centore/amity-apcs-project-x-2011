@@ -97,18 +97,16 @@ public class EnemyWave {
 
     public static double waveSpawnTime(int wn)
     {
-        return 34 / (wn + 33); // inversely-decreasing time
+        return (wn*wn + 34*wn + 289) / 324; // quadratically-increasing number
     }
 
     public static double waveNumEnemies(int wn)
     {
         return (wn*wn + 34*wn + 289) / 324; // quadratically-increasing number
-        //return Math.pow(1.2,wn); // exponentially-increasing number
     }
 
     public static double waveEnemyHealth(int wn) {
         return (wn*wn + 34*wn + 289) / 324; // quadratically-increasing number
-        //return Math.pow(1.2,wn); // exponetially-increasing health
     }
 
 }
