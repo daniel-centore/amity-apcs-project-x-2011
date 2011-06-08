@@ -75,6 +75,7 @@ public class ShotThread extends Thread {
                 if (player.fire())
                 {
                     server.playerFired(player);
+                    // TODO SOUND fire if sound is not continuous
                     //server.getClients().get(player.getUsername()).s;
                 }
                 // sleeps in order to get the attack rate right
@@ -101,9 +102,11 @@ public class ShotThread extends Thread {
             if (shooting)
             {
                 //t = SoundControlMessage.Type.START;
+                // TODO SOUND send start fire loop message if continuous sound
                 this.notify();
             }/* else
             {
+               // TODO SOUND send stop fire loop message if continuous sound
                 t = SoundControlMessage.Type.STOP;
             } */
         }
