@@ -433,8 +433,10 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
     {
         if (str.startsWith(Constants.FIRE_PREF))
         {
-            ((PlayerEntity) entityHandler.getEntity(Long.valueOf(str.substring(1)))).setFired(true);
-            SoundManager.playOnce(Sound.valueOf(me.getCurrWeapon().getSound().toString()));
+            PlayerEntity p = (PlayerEntity) entityHandler.getEntity(Long.valueOf(str.substring(1)));
+            p.setFired(true);
+            if (p.equals(me))
+                SoundManager.playOnce(Sound.valueOf(me.getCurrWeapon().getSound().toString()));
             GameWindow.fireRepaintRequired();
             return;
         }
