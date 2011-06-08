@@ -87,9 +87,9 @@ public class ChatDrawing {
     }
 
     /**
-     * adds the chat to the ArrayList
+     * Appends a chat to the list
      * 
-     * @param chat the chat that is about to be sent
+     * @param chat The chat to display
      */
     public static void drawChat(String chat)
     {

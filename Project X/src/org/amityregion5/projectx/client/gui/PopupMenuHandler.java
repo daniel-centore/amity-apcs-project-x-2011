@@ -107,6 +107,13 @@ public class PopupMenuHandler extends MouseAdapter implements ActionListener {
         }
     }
     
+    /**
+     * Rounds a coordinate to the origin of a position on the grid.
+     * This is based on the constant GRID_SIZE
+     * @param x X and Y to round
+     * @param y
+     * @return A point thats rounded
+     */
     public static Point roundToGrid(int x, int y)
     {
         int roundedX = (x / GRID_SIZE + Math.round((x % GRID_SIZE) / GRID_SIZE)) * GRID_SIZE;

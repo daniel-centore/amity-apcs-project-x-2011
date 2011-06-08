@@ -35,8 +35,8 @@ import org.amityregion5.projectx.client.GameInputListener;
  * @author Mike DiBuduo
  */
 public class InputHandler {
-    
-    private static ArrayList<GameInputListener> gils = new ArrayList<GameInputListener>();
+
+    private static ArrayList<GameInputListener> gils = new ArrayList<GameInputListener>(); // Input listeners
 
     /**
      * Registers the given GameInputListener with the input handler
@@ -58,34 +58,34 @@ public class InputHandler {
 
     public static void mouseDragged(int x, int y)
     {
-        for(GameInputListener g : gils)
+        for (GameInputListener g : gils)
             g.mouseDragged(x, y);
     }
 
     public static void mouseMoved(int x, int y)
     {
-        for(GameInputListener g : gils)
+        for (GameInputListener g : gils)
             g.mouseMoved(x, y);
     }
 
     public static void mousePressed(int x, int y, int button)
     {
-        for(GameInputListener g : gils)
+        for (GameInputListener g : gils)
             g.mousePressed(x, y, button);
     }
 
     public static void mouseReleased(int x, int y, int button)
     {
-        for(GameInputListener g : gils)
+        for (GameInputListener g : gils)
             g.mouseReleased(x, y, button);
     }
 
     public static void keyReleased(int keyCode) // only when key is released
     {
-        for(GameInputListener g : gils)
+        for (GameInputListener g : gils)
             g.keyReleased(keyCode);
     }
-    
+
     public static void keyPressed(KeyEvent e)
     {
         for (GameInputListener g : gils)

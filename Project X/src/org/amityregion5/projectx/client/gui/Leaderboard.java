@@ -36,8 +36,7 @@ import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
  *
  * @author Joe Stein
  */
-public class Leaderboard
-{
+public class Leaderboard {
     private static final int Y_MARGIN = 5;
     private static final int X_MARGIN = 30;
     private static final int USER_WIDTH = 150;
@@ -52,8 +51,7 @@ public class Leaderboard
      * @param players
      * @return
      */
-    public static BufferedImage getBoard(int width, int height,
-            ArrayList<PlayerEntity> players)
+    public static BufferedImage getBoard(int width, int height, ArrayList<PlayerEntity> players)
     {
         // create and set up canvas
         BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
@@ -66,7 +64,7 @@ public class Leaderboard
 
         // draw border
         g2.setStroke(new BasicStroke(B_WIDTH));
-        g2.drawRect(B_MARG,B_MARG, width - B_MARG * 2, height - B_MARG * 2);
+        g2.drawRect(B_MARG, B_MARG, width - B_MARG * 2, height - B_MARG * 2);
 
         // draw leaderboard title
         g2.setFont(g2.getFont().deriveFont(24.0f).deriveFont(Font.BOLD));
@@ -77,40 +75,40 @@ public class Leaderboard
         int draw = Y_MARGIN + g2.getFontMetrics().getHeight() + 5;
         g2.setFont(g2.getFont().deriveFont(16.0f).deriveFont(Font.PLAIN));
         draw += g2.getFontMetrics().getHeight();
-        
+
         // draw players
         int vh = g2.getFontMetrics().getHeight() + 5;
         for (PlayerEntity p : players)
         {
             g2.drawString(p.getUsername(), X_MARGIN, draw);
-            g2.drawString(String.valueOf(p.getPoints()),X_MARGIN + USER_WIDTH, draw);
+            g2.drawString(String.valueOf(p.getPoints()), X_MARGIN + USER_WIDTH, draw);
             draw += vh;
         }
 
         return result;
     }
 
-    public static void main(String[] args)
-    {
-        JFrame frame = new JFrame();
-        frame.setSize(500,500);
-        final ArrayList<PlayerEntity> p = new ArrayList<PlayerEntity>();
-        p.add(new PlayerEntity(0,0,"bob"));
-        p.get(0).setPoints(20970);
-        p.add(new PlayerEntity(0,0,"bill"));
-        p.get(1).setPoints(1000);
-        final JPanel panel = new JPanel() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void paintComponent(Graphics g)
-            {
-                g.drawImage(getBoard(300,200,p), 0, 0, 300, 200, null);
-            }
-        };
-        frame.add(panel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-
-    }
+    // public static void main(String[] args)
+    // {
+    // JFrame frame = new JFrame();
+    // frame.setSize(500, 500);
+    // final ArrayList<PlayerEntity> p = new ArrayList<PlayerEntity>();
+    // p.add(new PlayerEntity(0, 0, "bob"));
+    // p.get(0).setPoints(20970);
+    // p.add(new PlayerEntity(0, 0, "bill"));
+    // p.get(1).setPoints(1000);
+    // final JPanel panel = new JPanel() {
+    // private static final long serialVersionUID = 1L;
+    //
+    // @Override
+    // public void paintComponent(Graphics g)
+    // {
+    // g.drawImage(getBoard(300, 200, p), 0, 0, 300, 200, null);
+    // }
+    // };
+    // frame.add(panel);
+    // frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    // frame.setVisible(true);
+    //
+    // }
 }
