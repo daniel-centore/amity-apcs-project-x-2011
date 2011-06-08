@@ -43,8 +43,6 @@ public class EnemyManager {
     private GameController controller;
     private final int NUM_WAVES = 666; // Completely arbitrary
 
-    public static final int TIME_BTW_WAVES = 20000;
-
     public EnemyManager(GameController c, ArrayList<Point> area)
     {
         controller = c;
@@ -112,4 +110,8 @@ public class EnemyManager {
         gen.kill();
     }
 
+    public static int waveDelayTime(int wn)
+    {
+        return 10000 * (wn*wn + 34*wn + 289) / 324; // quadratically-increasing time
+    }
 }

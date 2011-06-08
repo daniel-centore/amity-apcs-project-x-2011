@@ -123,12 +123,13 @@ public class GeneratorThread extends Thread {
         spawn = true;
         while (spawn)
         {
+            int waveCount = 1;
             if (waves.peek() != null)
             {
                 sendWave(waves.poll());
                 try
                 {
-                    Thread.sleep(EnemyManager.TIME_BTW_WAVES);
+                    Thread.sleep(EnemyManager.waveDelayTime(waveCount++));
                 } catch (InterruptedException ex)
                 {
                     Logger.getLogger(GeneratorThread.class.getName()).log(Level.SEVERE, null, ex);
