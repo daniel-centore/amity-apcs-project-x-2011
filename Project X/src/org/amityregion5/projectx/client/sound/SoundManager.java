@@ -20,16 +20,8 @@
 
 package org.amityregion5.projectx.client.sound;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.sound.sampled.DataLine;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.sound.sampled.FloatControl;
 import org.amityregion5.projectx.common.tools.Sound;
 
 public class SoundManager extends Thread {
@@ -38,43 +30,84 @@ public class SoundManager extends Thread {
      * Starts looping a sound with the given frame length.
      * @param s the sound to play
      * @param endLoopPoint the number of frames to play before looping
+     * @param level the volume at which to play the clip. 0 <= level <= 100
      */
-    public static void loopSound(final Sound s, final int rate)
+    public static void loopSound(final Sound s, final int rate, int level)
     {
-        //System.out.println(s.clip.getFrameLength());
-        //System.out.println(s.clip.getMicrosecondLength());
+        Clip c = s.getClip();
+        if (c == null)
+            return; // exit if trying to loop null sound
+        synchronized (s.getClip())
+        {
+            s.getClip().notify();
+        }
+        // make sure level meets 0 <= level <= 100
+        level = Math.max(0, level);
+        level = Math.min(level, 100);
+
+        // starts sound from beginning
+        c.setFramePosition(0);
+        if (rate < 1)
+        {
+            c.setLoopPoints(0,-1);
+        } else {
+            double fps = c.getFrameLength() / (c.getMicrosecondLength() / 1000.0);
+            int endFrame = (int) (fps * (1.0 / rate));
+            endFrame = Math.min(endFrame, c.getFrameLength());
+            c.setLoopPoints(0, endFrame);
+
+        }
+
+        // sets the volume according to the given level
+        FloatControl fc = (FloatControl) c.getControl(FloatControl.Type.VOLUME);
+        fc.setValue((level / 100f) * fc.getMaximum());
+
         
-        
-//        if (rate < 1)
-//        {
-//            s.clip.setLoopPoints(0,-1);
-//        } else {
-//            double fps = s.clip.getFrameLength() / s.clip.getMicrosecondLength() / 1000.0;
-//            int endFrame = (int) (fps * rate);
-//            endFrame = Math.min(endFrame, s.clip.getFrameLength());
-//            s.clip.setLoopPoints(0, endFrame);
-//        }
-//        s.clip.loop(Clip.LOOP_CONTINUOUSLY);
+        c.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
     public static void stopSound(Sound s)
     {
-//        s.clip.stop();
+        if (s.getClip() == null) return;
+        
+        FloatControl fc = (FloatControl) s.getClip().getControl(FloatControl.Type.VOLUME);
+        fc.setValue(0f);
+        //s.getClip().stop();
+        //s.getClip().setFramePosition(0);
     }
 
     public static int getMilliSoundLength(Sound s)
     {
-        return -1;
-//        return (int) (s.clip.getMicrosecondLength() / 1000);
+        return (int) (s.getClip().getMicrosecondLength() / 1000);
     }
 
     public static void playOnce(Sound s)
     {
-//        s.clip.start();
+        if (s.getClip() != null)
+            s.getClip().start();
     }
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws InterruptedException
     {
-        SoundManager.loopSound(Sound.PISTOL_SHOT, 3);
+        /*
+        SoundManager.loopSound(Sound.PISTOL_SHOT, 3,100);
+        Thread.sleep(2000);
+        SoundManager.stopSound(Sound.PISTOL_SHOT);
+        SoundManager.loopSound(Sound.BG_1, -1, 70);
+        SoundManager.loopSound(Sound.PISTOL_SHOT,2,100);
+        Thread.sleep(3000);
+         */
+
+        SoundManager.loopSound(Sound.NULL_SOUND,2,100);
+        /*
+         SoundManager.loopSound(Sound.PISTOL_SHOT,2,100);
+        Thread.sleep(1000);
+        SoundManager.stopSound(Sound.PISTOL_SHOT);
+        SoundManager.loopSound(Sound.PISTOL_SHOT,1,100);
+        Thread.sleep(1000);
+        SoundManager.stopSound(Sound.PISTOL_SHOT);
+        SoundManager.loopSound(Sound.PISTOL_SHOT,10,100);
+        Thread.sleep(1500);
+        SoundManager.stopSound(Sound.PISTOL_SHOT); */
     }
 }

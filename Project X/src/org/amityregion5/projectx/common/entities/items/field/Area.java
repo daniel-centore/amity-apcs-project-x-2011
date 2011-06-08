@@ -46,7 +46,7 @@ public class Area extends FieldItem implements Damageable {
     }
 
     /**
-     * Checks to see if a character's health is below 0.
+     * Checks to see if the area's health is equal to or below 0.
      */
     public boolean killed()
     {

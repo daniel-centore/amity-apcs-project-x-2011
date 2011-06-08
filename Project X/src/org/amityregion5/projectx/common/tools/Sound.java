@@ -20,6 +20,7 @@ package org.amityregion5.projectx.common.tools;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sound.sampled.AudioInputStream;
@@ -33,51 +34,54 @@ import org.amityregion5.projectx.client.sound.SoundManager;
 /**
  * All sounds are here :-)
  */
-public enum Sound
+public enum Sound implements Serializable {
+
+    PISTOL_SHOT("resources/sounds/pistol_shot.wav"),
+    BG_1("resources/sounds/death_grip.wav"),
+    NULL_SOUND(null);
+    private Clip clip;
+
+    public Clip getClip()
     {
-        PISTOL_SHOT("resources/sounds/pistol_shot_comp.wav"),
-        BG_1("resources/sounds/death_grip.wav"),
-        NULL_SOUND(null);
+        return clip;
+    }
 
-        private Clip clip;
+    Sound(String file)
+    {
+        if(file == null)
+            return;
 
-        public Clip getClip()
+        AudioInputStream ais = null;
+        try
         {
-            return clip;
+            File sf = new File(file);
+            ais = AudioSystem.getAudioInputStream(sf);
+            clip = (Clip) AudioSystem.getLine(new DataLine.Info(Clip.class,
+                    AudioSystem.getAudioFileFormat(sf).getFormat()));
+            clip.open(ais);
         }
-        Sound(String file)
+        catch(LineUnavailableException ex)
         {
-            AudioInputStream ais = null;
+            Logger.getLogger(SoundManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch(UnsupportedAudioFileException ex)
+        {
+            Logger.getLogger(SoundManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch(IOException ex)
+        {
+            Logger.getLogger(SoundManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally
+        {
             try
             {
-                File sf = new File(file);
-                ais = AudioSystem.getAudioInputStream(sf.toURI().toURL());
-                clip = (Clip) AudioSystem.getLine(new DataLine.Info(Clip.class,
-                    AudioSystem.getAudioFileFormat(sf).getFormat()));
-                clip.open(ais);
-            }
-            catch(LineUnavailableException ex)
-            {
-                Logger.getLogger(SoundManager.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            catch(UnsupportedAudioFileException ex)
-            {
-                Logger.getLogger(SoundManager.class.getName()).log(Level.SEVERE, null, ex);
+                ais.close();
             }
             catch(IOException ex)
             {
                 Logger.getLogger(SoundManager.class.getName()).log(Level.SEVERE, null, ex);
             }
-            finally
-            {
-                try
-                {
-                    ais.close();
-                }
-                catch(IOException ex)
-                {
-                    Logger.getLogger(SoundManager.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
         }
     }
+}

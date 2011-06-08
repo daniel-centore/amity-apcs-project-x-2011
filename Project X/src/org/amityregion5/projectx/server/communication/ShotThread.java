@@ -20,9 +20,9 @@ package org.amityregion5.projectx.server.communication;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.amityregion5.projectx.common.communication.messages.sound.SoundControlMessage;
 
 import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
-import org.amityregion5.projectx.common.entities.items.held.Weapon;
 import org.amityregion5.projectx.server.Server;
 
 /**
@@ -53,7 +53,6 @@ public class ShotThread extends Thread {
     @Override
     public void run()
     {
-        Weapon currWeapon = player.getCurrWeapon();
         while (keepRunning)
         {
             // stop shooting if we're not supposed to shoot
@@ -95,13 +94,23 @@ public class ShotThread extends Thread {
      */
     public void setShooting(boolean shooting)
     {
+        SoundControlMessage.Type t;
         synchronized (this)
         {
             if (shooting)
             {
+                t = SoundControlMessage.Type.START;
                 this.notify();
+            } else
+            {
+                t = SoundControlMessage.Type.STOP;
             }
         }
+        // send a sound control message to the shooter
+        server.getClients().get(player.getUsername()).send(
+                new SoundControlMessage(player.getCurrWeapon().getSound(),
+                    player.getCurrWeapon().getAttackRate(), t , 100));
+        
         keepShooting = shooting;
     }
 }

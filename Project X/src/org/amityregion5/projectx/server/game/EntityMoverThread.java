@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.amityregion5.projectx.common.communication.messages.PlaySoundMessage;
+import org.amityregion5.projectx.common.communication.messages.sound.SoundControlMessage;
 
 import org.amityregion5.projectx.common.entities.Damageable;
 import org.amityregion5.projectx.common.entities.Entity;

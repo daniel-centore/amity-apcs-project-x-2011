@@ -29,6 +29,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.amityregion5.projectx.common.communication.messages.*;
+import org.amityregion5.projectx.common.communication.messages.sound.SoundControlMessage;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.EntityConstants;
 import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
@@ -214,13 +215,6 @@ public class Client extends Thread {
                 server.incrementWaiting();
                 break;
             }
-        } else if (m instanceof ClientPositionMessage)
-        {
-            ClientPositionMessage cmm = (ClientPositionMessage) m;
-            player.incrementX(cmm.getOffSetX());
-            player.incrementY(cmm.getOffSetY());
-            EntityMovedMessage emm = new EntityMovedMessage(player);
-            server.relayMessage(emm);
         } else if (m instanceof ClientMovingMessage)
         {
             ClientMovingMessage cmm = (ClientMovingMessage) m;
@@ -231,7 +225,6 @@ public class Client extends Thread {
         } else if (m instanceof FiringMessage)
         {
             FiringMessage fm = (FiringMessage) m;
-
             synchronized (shotThread)
             {
                 if (fm.getFireStart()) // starting firing
@@ -280,6 +273,7 @@ public class Client extends Thread {
         {
             ChangedWeaponMessage cwm = (ChangedWeaponMessage) m;
             cwm.setID(player.getUniqueID());
+            shotThread.setShooting(false); // stops shooting on weapon change
             player.changeWeapon(cwm.getAmt());
 
             server.relayMessage(new UpdateWeaponMessage(player.getWeapon(), player.getUniqueID()));

@@ -16,23 +16,42 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
-package org.amityregion5.projectx.common.communication.messages;
+package org.amityregion5.projectx.common.communication.messages.sound;
 
+import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.common.tools.Sound;
 
 /**
- * Class documentation.
+ * A sound control message that controls the client's sound system.
  *
  * @author Dan Centore
+ * @author Joe Stein
  */
-public class PlaySoundMessage extends Message {
+public class SoundControlMessage extends Message {
+
     private static final long serialVersionUID = 1L;
-
     private Sound sound;
+    private int rate;
+    private Type type;
+    private int vol = 100;
 
-    public PlaySoundMessage(Sound s)
+    public static enum Type {
+        START,
+        STOP,
+        ONCE;
+    }
+
+    public SoundControlMessage(Sound s, Type t)
     {
         sound = s;
+        type = t;
+    }
+
+    public SoundControlMessage(Sound s, int r, Type t, int vol)
+    {
+        this(s, t);
+        rate = r;
+        this.vol = vol;
     }
 
     public Sound getSound()
@@ -40,4 +59,18 @@ public class PlaySoundMessage extends Message {
         return sound;
     }
 
+    public Type getType()
+    {
+        return type;
+    }
+
+    public int getRate()
+    {
+        return rate;
+    }
+
+    public int getVol()
+    {
+        return vol;
+    }
 }

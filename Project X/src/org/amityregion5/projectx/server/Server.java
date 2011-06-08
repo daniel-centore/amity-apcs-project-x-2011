@@ -31,7 +31,6 @@ import org.amityregion5.projectx.common.communication.Constants;
 import org.amityregion5.projectx.common.communication.messages.ActivePlayersMessage;
 import org.amityregion5.projectx.common.communication.messages.AnnounceMessage;
 import org.amityregion5.projectx.common.communication.messages.ChatMessage;
-import org.amityregion5.projectx.common.communication.messages.FiredMessage;
 import org.amityregion5.projectx.common.communication.messages.GoodbyeMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.common.communication.messages.StatusUpdateMessage;
