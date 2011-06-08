@@ -45,14 +45,11 @@ import org.amityregion5.projectx.common.maps.AbstractMap;
 public class GameWindow extends JFrame {
 
     private static final long serialVersionUID = 1L;
-
     public static final int GAME_WIDTH = 1024; // the game size we will draw at before resizing
     public static final int GAME_HEIGHT = 768;
-
     private static GameWindow instance; // the instance of Gui
     private static JComponent panel; // the panel we will draw on
     private static Image buffer; // the image the panel should draw
-
     private int xOffset; // how much screen is offset horizontally
     private int yOffset; // how much screen is offset vertically
 
@@ -86,7 +83,7 @@ public class GameWindow extends JFrame {
             // called when we run RepaintHandler.fireUpdateRequired()
             public void paintComponent(Graphics g)
             {
-                if (buffer == null)
+                if(buffer == null)
                 {
                     return;
                 }
@@ -101,9 +98,16 @@ public class GameWindow extends JFrame {
 
                 // draw chat
                 BufferedImage chat = ChatDrawing.getChat(ChatDrawing.CHAT_WIDTH, ChatDrawing.CHAT_HEIGHT);
-                if (chat != null)
+                if(chat != null)
                 {
                     img.getGraphics().drawImage(chat, xOffset, img.getHeight(null) - ChatDrawing.CHAT_HEIGHT - yOffset, null);
+                }
+
+                // draw stat bar
+                if(game.getMe() != null)
+                {
+                    img.getGraphics().drawImage(StatBarDrawing.getStatBar(game.getMe()),xOffset,
+                        img.getHeight(null) - StatBarDrawing.HEIGHT - yOffset,null);
                 }
 
                 g.drawImage(img, 0, 0, null);
@@ -130,11 +134,12 @@ public class GameWindow extends JFrame {
         try
         {
             Thread.sleep(100);
-        } catch (InterruptedException e)
+        }
+        catch(InterruptedException e)
         {
         }
         panel.requestFocusInWindow();
-        
+
     }
 
     /**
@@ -163,13 +168,14 @@ public class GameWindow extends JFrame {
         int x = 0;
         int y = 0;
 
-        if (thumbRatio < aspectRatio)
+        if(thumbRatio < aspectRatio)
         {
             y = newHeight;
             newHeight = (int) (newWidth / aspectRatio);
             y /= 2;
             y -= newHeight / 2;
-        } else
+        }
+        else
         {
             x = newWidth;
             newWidth = (int) (newHeight * aspectRatio);
@@ -178,7 +184,9 @@ public class GameWindow extends JFrame {
         }
 
         return new int[]
-        { newWidth, newHeight, x, y };
+                {
+                    newWidth, newHeight, x, y
+                };
     }
 
     /**
@@ -188,7 +196,7 @@ public class GameWindow extends JFrame {
     {
         buffer = RepaintHandler.getMapFlatImage();
 
-        if (panel == null)
+        if(panel == null)
         {
             System.err.println("Null panel");
             return;
@@ -203,7 +211,7 @@ public class GameWindow extends JFrame {
      */
     public static Image createImage()
     {
-        if (instance == null)
+        if(instance == null)
             return null;
         return instance.createImage(GAME_WIDTH, GAME_HEIGHT);
     }

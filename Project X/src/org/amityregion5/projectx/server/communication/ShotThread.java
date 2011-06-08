@@ -94,22 +94,24 @@ public class ShotThread extends Thread {
      */
     public void setShooting(boolean shooting)
     {
-        SoundControlMessage.Type t;
+        //SoundControlMessage.Type t;
         synchronized (this)
         {
             if (shooting)
             {
-                t = SoundControlMessage.Type.START;
+                //t = SoundControlMessage.Type.START;
                 this.notify();
-            } else
+            }/* else
             {
                 t = SoundControlMessage.Type.STOP;
-            }
+            } */
         }
         // send a sound control message to the shooter
-        server.getClients().get(player.getUsername()).send(
+        /*
+         server.getClients().get(player.getUsername()).send(
                 new SoundControlMessage(player.getCurrWeapon().getSound(),
                     player.getCurrWeapon().getAttackRate(), t , 100));
+         */
         
         keepShooting = shooting;
     }

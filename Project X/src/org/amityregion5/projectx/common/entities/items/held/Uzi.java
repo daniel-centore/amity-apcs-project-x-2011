@@ -45,4 +45,10 @@ public class Uzi extends Gun {
     {
         return "sprites/Uzi";
     }
+
+    @Override
+    public String getName()
+    {
+        return "Uzi";
+    }
 }

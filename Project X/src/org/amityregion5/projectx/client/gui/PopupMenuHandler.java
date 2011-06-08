@@ -46,7 +46,7 @@ public class PopupMenuHandler extends MouseAdapter implements ActionListener {
     
     public static final int GRID_SIZE = 40;
     
-    public static final String REPEAT = "Repeat add ";
+    public static final String REPEAT = "Add another ";
 
     private int popupX; // where the popup came
     private int popupY;

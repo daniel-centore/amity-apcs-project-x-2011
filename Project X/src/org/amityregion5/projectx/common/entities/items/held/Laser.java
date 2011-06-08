@@ -47,4 +47,10 @@ public class Laser extends Gun {
         // TODO: we need a sprite here :-)
         return "sprites/Pistol";
     }
+
+    @Override
+    public String getName()
+    {
+        return "Laser";
+    }
 }

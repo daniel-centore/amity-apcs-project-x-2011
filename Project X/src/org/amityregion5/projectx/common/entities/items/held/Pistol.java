@@ -42,4 +42,10 @@ public class Pistol extends Gun {
         return "sprites/Pistol";
     }
 
+    @Override
+    public String getName()
+    {
+        return "Magnum";
+    }
+
 }

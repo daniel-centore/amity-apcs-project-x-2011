@@ -58,8 +58,8 @@ public abstract class Weapon extends HeldItem implements DamageDealing {
     }
 
     public abstract Sound getSound();
-
     public abstract boolean hasAmmo();
+    public abstract int getAmmo();
 
     public abstract int getDamage();
 
@@ -88,5 +88,6 @@ public abstract class Weapon extends HeldItem implements DamageDealing {
     }
 
     public abstract boolean fire();
+    public abstract String getName();
 
 }

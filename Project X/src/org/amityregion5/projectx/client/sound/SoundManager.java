@@ -18,8 +18,8 @@
  */
 package org.amityregion5.projectx.client.sound;
 
-import javazoom.jl.decoder.JavaLayerException;
 
+import javazoom.jl.decoder.JavaLayerException;
 import org.amityregion5.projectx.common.tools.Sound;
 
 /**
@@ -45,6 +45,7 @@ public class SoundManager extends Thread {
 
         new Thread() {
 
+            @Override
             public void run()
             {
                 while(true)

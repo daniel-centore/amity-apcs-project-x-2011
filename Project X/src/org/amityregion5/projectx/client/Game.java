@@ -356,7 +356,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         {
             CashMessage cm = (CashMessage) m;
             ((PlayerEntity) entityHandler.getEntity(cm.getID())).setCash(cm.getAmount());
-            ChatDrawing.drawChat("You now have: $" + cm.getAmount());
+            //ChatDrawing.drawChat("You now have: $" + cm.getAmount());
         } else if (m instanceof PointMessage)
         {
             PointMessage pm = (PointMessage) m;
@@ -433,7 +433,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         if (str.startsWith(Constants.FIRE_PREF))
         {
             ((PlayerEntity) entityHandler.getEntity(Long.valueOf(str.substring(1)))).setFired(true);
-            // SoundManager.playOnce(me.getCurrWeapon().getSound());
+            SoundManager.playOnce(Sound.valueOf(me.getCurrWeapon().getSound().toString()));
             GameWindow.fireRepaintRequired();
             return;
         }

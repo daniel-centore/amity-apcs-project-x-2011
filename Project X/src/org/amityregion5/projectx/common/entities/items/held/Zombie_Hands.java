@@ -49,4 +49,16 @@ public class Zombie_Hands extends MeleeWeapon implements DamageDealing
         return Sound.NULL_SOUND;
     }
 
+    @Override
+    public String getName()
+    {
+        return "Hands";
+    }
+
+    @Override
+    public int getAmmo()
+    {
+        return -1;
+    }
+
 }
