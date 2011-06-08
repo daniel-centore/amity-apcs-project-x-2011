@@ -180,15 +180,19 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                 return;
             } else if (Keys.isKey(Keys.BLOCK, keyCode))
             {
-                // if (me.getCash() >= Block.PRICE)
-                // {
                 Point p = PopupMenuHandler.roundToGrid(lastMouseX, lastMouseY);
 
                 communicationHandler.send(new RequestEntityAddMessage(EntityConstants.BLOCK, p.x, p.y));
+            } else if (Keys.isKey(Keys.FENCE, keyCode))
+            {
+                Point p = PopupMenuHandler.roundToGrid(lastMouseX, lastMouseY);
 
-                // me.spendCash(Block.PRICE); // TODO: send to server
-                // } else
-                // ChatDrawing.drawChat("No more money");
+                communicationHandler.send(new RequestEntityAddMessage(EntityConstants.FENCE, p.x, p.y));
+            } else if (Keys.isKey(Keys.WALL, keyCode))
+            {
+                Point p = PopupMenuHandler.roundToGrid(lastMouseX, lastMouseY);
+
+                communicationHandler.send(new RequestEntityAddMessage(EntityConstants.WALL, p.x, p.y));
             } else if (Keys.isKey(Keys.FIRE, keyCode))
             {
                 getCommunicationHandler().send(new FiringMessage(true));

@@ -43,6 +43,9 @@ public class Keys {
     public static int[] FIRE    = { KeyEvent.VK_SPACE };
     
     public static int[] BLOCK  = { KeyEvent.VK_F1 };
+    public static int[] FENCE  = { KeyEvent.VK_F2 };
+    public static int[] WALL   = { KeyEvent.VK_F3 };
+    
     public static int[] LEADERBOARD = { KeyEvent.VK_U };
     
     public static int[] CHANGE_WEAPON_1 = { KeyEvent.VK_COMMA };
