@@ -26,7 +26,7 @@ public class Bomb extends MeleeWeapon implements DamageDealing
     @Override
     public String getDefaultImage()
     {
-        return "sprites/E_Hands";
+        return "sprites/E_Hands";// TODO make bomb sprite
     }
 
     @Override
