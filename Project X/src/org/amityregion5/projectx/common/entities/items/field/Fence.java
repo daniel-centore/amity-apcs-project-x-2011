@@ -30,8 +30,8 @@ public class Fence extends Block implements Damageable {
 
     private static final long serialVersionUID = 1L;
 
-    public static final int DEFAULT_HEALTH = 700;
-    public static final int PRICE = 50;
+    public static final int DEFAULT_HEALTH = 1000;
+    public static final int PRICE = 20;
 
     public Fence(int x, int y, int health)
     {

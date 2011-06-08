@@ -30,7 +30,7 @@ public class Wall extends Block {
     
     private static final long serialVersionUID = 1L;
     
-    public static final int DEFAULT_HEALTH = 1500;
+    public static final int DEFAULT_HEALTH = 10000;
     public static final int PRICE = 200;
 
     public Wall(int x, int y)

@@ -64,7 +64,6 @@ public abstract class Weapon extends HeldItem implements DamageDealing {
     public abstract int getDamage();
 
     public int getDamage(double dist) {
-        System.err.println("dist " + dist + " vs range " + range);
 
         if (dist > range)
             return 0; // out of range!
@@ -78,14 +77,12 @@ public abstract class Weapon extends HeldItem implements DamageDealing {
 //                accurate += Math.random() * (subrange /= 2);
 //            accurate *= accuracy / 2 + Math.random() * accuracy;
 //
-//            System.err.println(accurate + " from " + dist + "; range " + range);
 //            if (dist > accurate) {
 //                return 0; // missed
 //            }
 //        }
 
         double modifier = (4 - dist / range) / 4; // linear, down to 75% at full range.
-        System.err.println("modifier is " + modifier);
 
         return (int) (getDamage() * modifier + 1);
     }
