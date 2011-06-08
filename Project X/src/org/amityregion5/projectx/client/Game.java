@@ -320,13 +320,6 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                 ((CharacterEntity) e).updateWeaponImages();
 
             entityHandler.addEntity(e);
-        } else if (m instanceof EntityMovedMessage)
-        {
-            EntityMovedMessage emm = (EntityMovedMessage) m;
-            Entity ent = entityHandler.getEntity(emm.getEntityID());
-            ent.setLocation(emm.getNewLoc());
-            ent.setDirectionMoving(emm.getNewDir());
-            GameWindow.fireRepaintRequired();
         } else if (m instanceof RemoveEntityMessage)
         {
             RemoveEntityMessage rem = (RemoveEntityMessage) m;

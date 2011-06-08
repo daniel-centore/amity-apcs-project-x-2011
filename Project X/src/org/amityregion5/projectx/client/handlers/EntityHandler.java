@@ -92,23 +92,4 @@ public class EntityHandler {
     {
         // unused
     }
-
-    /**
-     * Updates an entity.
-     * 
-     * @param entity Entity to compare (by id) and update to.
-     * 
-     * @return whether such an entity was properly updated.
-     * @deprecated It is preferable to modify the original entity
-     */
-    public boolean updateEntity(Entity entity)
-    {
-        if (entities.containsKey(entity.getUniqueID()))
-        {
-            entities.put(entity.getUniqueID(), entity);
-            return true;
-        }
-
-        return false;
-    }
 }
