@@ -383,7 +383,6 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             int wep = ((UpdateWeaponMessage) m).getWeapon();
 
             ((CharacterEntity) entityHandler.getEntity(((UpdateWeaponMessage) m).getPlayerID())).setCurrWeapon(wep);
-            // me.changeWeapon(wep);
         } else
         {
             System.err.println("Unknown message type encountered. " + "Please make sure you have the latest game version!");
@@ -428,6 +427,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         new GameWindow(map, this);
     }
 
+    @Override
     public void handle(String str)
     {
         if (str.startsWith(Constants.FIRE_PREF))
@@ -495,6 +495,9 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         GameWindow.closeWindow();
     }
 
+    /**
+     * @return All the players in the game
+     */
     public ArrayList<PlayerEntity> getPlayers()
     {
         ArrayList<PlayerEntity> toReturn = new ArrayList<PlayerEntity>();
@@ -551,6 +554,9 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             me.setMoveSpeed(0);
     }
 
+    /**
+     * @return Current {@link CommunicationHandler}
+     */
     public CommunicationHandler getCommunicationHandler()
     {
         return communicationHandler;

@@ -29,7 +29,7 @@ public class SuicideBomber extends Enemy {
 
     private static final long serialVersionUID = 1L;
 
-    public static final int MULTIPLIER = 2; // how many times faster than enemy default
+    public static final double MULTIPLIER = 1.5; // how many times faster than enemy default
 
     private int damage;
 
@@ -51,5 +51,5 @@ public class SuicideBomber extends Enemy {
     {
         return "sprites/Suicide_Bomber";
     }
-    
+
 }

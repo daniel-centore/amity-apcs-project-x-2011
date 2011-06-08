@@ -19,11 +19,12 @@
 package org.amityregion5.projectx.common.communication.messages;
 
 /**
- * Class documentation.
+ * Tells the server to change the client's weapon
  *
  * @author Joe Stein
  */
 public class ChangedWeaponMessage extends Message {
+    
     private static final long serialVersionUID = 1L;
 
     private long uniqueID = Byte.MIN_VALUE;

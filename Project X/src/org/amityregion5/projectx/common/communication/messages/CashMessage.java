@@ -19,7 +19,7 @@
 package org.amityregion5.projectx.common.communication.messages;
 
 /**
- * A message indicating a change in points.
+ * A message indicating a change in cash.
  *
  * @author Joe Stein
  */

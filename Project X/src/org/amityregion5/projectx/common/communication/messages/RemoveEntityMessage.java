@@ -21,7 +21,8 @@ package org.amityregion5.projectx.common.communication.messages;
 import org.amityregion5.projectx.common.entities.Entity;
 
 /**
- * Class documentation.
+ * Tells the client to remove an entity
+ * TODO: this should be sending the uniqueID to remove, not the entity
  *
  * @author Mike DiBuduo
  */

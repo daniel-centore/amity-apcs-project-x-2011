@@ -29,6 +29,7 @@ import org.amityregion5.projectx.common.entities.Entity;
  * @author Michael Zuo <sreservoir@gmail.com>
  * @author Joe Stein
  * @author Daniel Centore
+ * @deprecated Fast stream now
  */
 public class EntityMovedMessage extends Message {
 

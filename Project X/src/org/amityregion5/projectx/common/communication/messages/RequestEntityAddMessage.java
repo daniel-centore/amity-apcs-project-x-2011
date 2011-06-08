@@ -39,6 +39,12 @@ public class RequestEntityAddMessage extends Message {
     private int x;
     private int y;
 
+    /**
+     * 
+     * @param s Type of entity to add (from {@link EntityConstants})
+     * @param x Where to put it
+     * @param y
+     */
     public RequestEntityAddMessage(String s, int x, int y)
     {
         this.entity = s;
@@ -51,6 +57,9 @@ public class RequestEntityAddMessage extends Message {
         return entity;
     }
 
+    /**
+     * @return A new instance of the type of entity to be added
+     */
     public Entity getNewInstance()
     {
         if (entity.equals(EntityConstants.BLOCK))

@@ -29,10 +29,11 @@ package org.amityregion5.projectx.common.entities.characters;
 public class PlayerEntity extends CharacterEntity {
     
     private static final long serialVersionUID = 1L;
+    
     public  static final int INITIAL_SPEED = 10; // initial move speed
-    private int points;
-    private int cash;
-    private String username;
+    private int points; // points the player has
+    private int cash; // how much money they have
+    private String username; // their username
 
     /**
      * Creates a player

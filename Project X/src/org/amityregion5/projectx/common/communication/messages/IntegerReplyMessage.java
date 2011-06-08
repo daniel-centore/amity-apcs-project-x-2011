@@ -19,7 +19,7 @@
 package org.amityregion5.projectx.common.communication.messages;
 
 /**
- * Class documentation.
+ * Replies with an integer
  *
  * @author Mike DiBuduo
  */

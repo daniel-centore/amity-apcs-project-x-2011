@@ -35,6 +35,11 @@ public class AddWeaponMessage extends Message {
     private long uniqueID; // the id of the person whose weapon to add
     private String wepSpriteLoc;
 
+    /**
+     * 
+     * @param id Player's unique ID
+     * @param w Weapon to add
+     */
     public AddWeaponMessage(long id, Weapon w)
     {
         uniqueID = id;

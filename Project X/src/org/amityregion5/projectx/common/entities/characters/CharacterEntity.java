@@ -58,6 +58,10 @@ public abstract class CharacterEntity extends Entity {
         currWeapon = 0;
     }
 
+    /**
+     * Changes the weapon
+     * @param wheelRotation -1 goes back one, 1 goes forward one
+     */
     public void changeWeapon(int wheelRotation)
     {
         int tmp = currWeapon + wheelRotation;
@@ -71,6 +75,9 @@ public abstract class CharacterEntity extends Entity {
         currWeapon = tmp;
     }
     
+    /**
+     * @return The current weapon's id
+     */
     public int getWeapon()
     {
         return currWeapon;
@@ -107,6 +114,9 @@ public abstract class CharacterEntity extends Entity {
         this.currWeapon = newWeapon;
     }
 
+    /**
+     * @return Does the player have any weapons?
+     */
     public boolean hasWeapons()
     {
         return !weapons.isEmpty();

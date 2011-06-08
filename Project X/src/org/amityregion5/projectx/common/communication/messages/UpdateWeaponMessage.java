@@ -19,9 +19,9 @@
 package org.amityregion5.projectx.common.communication.messages;
 
 /**
- * Class documentation.
+ * Tells the clients that a player changed their weapon
  *
- * @author centoreda
+ * @author Daniel Centore
  */
 public class UpdateWeaponMessage extends Message {
     
@@ -30,6 +30,11 @@ public class UpdateWeaponMessage extends Message {
     private int weapon;
     private long playerID;
 
+    /**
+     * 
+     * @param wep Weapon to set it to
+     * @param playerID The player's uniqueID
+     */
     public UpdateWeaponMessage(int wep, long playerID)
     {
         weapon = wep;

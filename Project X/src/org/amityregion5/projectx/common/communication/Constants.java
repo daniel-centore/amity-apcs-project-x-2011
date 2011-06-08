@@ -26,18 +26,17 @@ package org.amityregion5.projectx.common.communication;
  * @author Michael Zuo
  */
 public class Constants {
-    
-    //TCP/IP Stuff
+
+    // TCP/IP Stuff
     public static final int PORT = 27182;
     public static final int RAW_PORT = 27183;
     public static final int TIMEOUT = 3000;
-    
-    //Multicast Stuff
+
+    // Multicast Stuff
     public static final int UDPORT = 4567;
     public static final String UDPGROUP = "230.0.0.1";
     public static final int MULTICAST_INTERVAL = 2000;
 
     public static final String FIRE_PREF = ">";
-    
-    
+
 }
