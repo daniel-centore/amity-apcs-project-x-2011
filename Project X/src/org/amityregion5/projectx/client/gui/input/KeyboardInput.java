@@ -33,7 +33,7 @@ import java.util.List;
  */
 public class KeyboardInput implements KeyListener {
 
-    public static final int REQUIRED_TIMEOUT = 70; //ms between keypresses
+    public static final int REQUIRED_TIMEOUT = 10; //ms between keypresses
     
     private long lastPress = 0;
     private volatile List<Integer> depressed = new ArrayList<Integer>(); // keys currently pressed down

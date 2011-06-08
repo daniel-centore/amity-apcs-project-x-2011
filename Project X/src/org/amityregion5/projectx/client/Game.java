@@ -142,11 +142,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
     public void keyPressed(KeyEvent e)
     {
         int keyCode = e.getKeyCode();
-        if (Keys.isKey(Keys.LEADERBOARD, keyCode))
-        {
-            RepaintHandler.switchLeaderBoard();
-            return;
-        }
+
         if (ChatDrawing.isChatting() && !(e.isActionKey() || e.getKeyCode() == KeyEvent.VK_SHIFT || e.getKeyCode() == KeyEvent.VK_ALT || e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_BACK_SPACE || e.getKeyCode() == KeyEvent.VK_CONTROL))
         {
             ChatDrawing.addLetter(e.getKeyChar());
@@ -203,6 +199,10 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             } else if (Keys.isKey(Keys.CHANGE_WEAPON_2, keyCode))
             {
                 communicationHandler.send(new ChangedWeaponMessage(1));
+            } else if (Keys.isKey(Keys.LEADERBOARD, keyCode))
+            {
+                RepaintHandler.switchLeaderBoard();
+                return;
             }
             if (me == null)
             {
@@ -356,7 +356,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         {
             CashMessage cm = (CashMessage) m;
             ((PlayerEntity) entityHandler.getEntity(cm.getID())).setCash(cm.getAmount());
-            //ChatDrawing.drawChat("You now have: $" + cm.getAmount());
+            // ChatDrawing.drawChat("You now have: $" + cm.getAmount());
         } else if (m instanceof PointMessage)
         {
             PointMessage pm = (PointMessage) m;
