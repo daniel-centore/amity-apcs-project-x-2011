@@ -105,10 +105,10 @@ public final class GameController {
 
         for (Client c : clients)
         {
+            c.send(new AnnounceMessage("You should begin preparing your defences!"));
             for (PlayerEntity p : players)
             {
-                c.send(new AddEntityMessage(p));
-                c.send(new AnnounceMessage("You should begin preparing your defences!"));
+                c.send(new AddEntityMessage(p));  
             }
         }
 

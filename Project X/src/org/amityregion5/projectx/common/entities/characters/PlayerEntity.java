@@ -26,7 +26,7 @@ package org.amityregion5.projectx.common.entities.characters;
  * @author Mike DiBuduo
  * @author Joe Stein
  */
-public class PlayerEntity extends CharacterEntity {
+public class PlayerEntity extends CharacterEntity implements Comparable {
     
     private static final long serialVersionUID = 1L;
     
@@ -111,6 +111,15 @@ public class PlayerEntity extends CharacterEntity {
     public String getUsername()
     {
         return username;
+    }
+
+    public int compareTo(Object o)
+    {
+        if (o instanceof PlayerEntity)
+        {
+            return this.getPoints() - ((PlayerEntity) o).getPoints();
+        }
+        throw new IllegalArgumentException("Must compare PlayerEntities!");
     }
 
 }

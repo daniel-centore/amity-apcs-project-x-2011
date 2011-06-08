@@ -273,7 +273,8 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         if (deg == Integer.MIN_VALUE)
         {
             speed = 0;
-            deg = me.getDirectionMoving();
+            if (me != null)
+                deg = me.getDirectionMoving();
         }
         ClientMovingMessage c = new ClientMovingMessage(speed, deg);
         getCommunicationHandler().send(c);

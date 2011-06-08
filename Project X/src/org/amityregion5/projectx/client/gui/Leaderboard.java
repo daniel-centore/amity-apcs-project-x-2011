@@ -22,13 +22,12 @@ import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import java.util.Arrays;
+import java.util.Collections;
 import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 
 /**
@@ -76,6 +75,7 @@ public class Leaderboard {
         g2.setFont(g2.getFont().deriveFont(16.0f).deriveFont(Font.PLAIN));
         draw += g2.getFontMetrics().getHeight();
 
+        Collections.sort(players);
         // draw players
         int vh = g2.getFontMetrics().getHeight() + 5;
         for (PlayerEntity p : players)
