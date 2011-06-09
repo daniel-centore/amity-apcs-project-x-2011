@@ -51,4 +51,15 @@ public class Uzi extends Gun {
     {
         return "Uzi";
     }
+
+   public void upgrade()
+   {
+      setDamage(getDamage() + DAMAGE_UPGRADE);
+      setMaxAmmo(getMaxAmmo() + AMMO_UPGRADE * 5);
+   }
+
+   public int getUpgradeCost()
+   {
+      throw new UnsupportedOperationException("Not supported yet.");
+   }
 }

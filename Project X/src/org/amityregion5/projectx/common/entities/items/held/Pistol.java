@@ -21,31 +21,41 @@ package org.amityregion5.projectx.common.entities.items.held;
 
 import org.amityregion5.projectx.common.tools.Sound;
 
-public class Pistol extends Gun {
+public class Pistol extends Gun
+{
 
-    private static final long serialVersionUID = 1L;
-    
-    public Pistol()
-    {
-        super(600, -1, -1, 4, -1, -1, 7);
-    }
+   private static final long serialVersionUID = 1L;
 
-    @Override
-    public Sound getSound()
-    {
-        return Sound.PISTOL_SHOT;
-    }
-    
-    @Override
-    public String getDefaultImage()
-    {
-        return "sprites/Pistol";
-    }
+   public Pistol()
+   {
+      super(600, -1, -1, 4, -1, -1, 7);
+   }
 
-    @Override
-    public String getName()
-    {
-        return "Magnum";
-    }
+   @Override
+   public Sound getSound()
+   {
+      return Sound.PISTOL_SHOT;
+   }
 
+   @Override
+   public String getDefaultImage()
+   {
+      return "sprites/Pistol";
+   }
+
+   @Override
+   public String getName()
+   {
+      return "Magnum";
+   }
+
+   public void upgrade()
+   {
+      setDamage(getDamage() + DAMAGE_UPGRADE);
+   }
+
+   public int getUpgradeCost()
+   {
+      throw new UnsupportedOperationException("Not supported yet.");
+   }
 }

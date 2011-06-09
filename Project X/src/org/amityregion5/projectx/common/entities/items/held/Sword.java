@@ -65,4 +65,15 @@ public class Sword extends MeleeWeapon implements DamageDealing
         return -1;
     }
 
+   public void upgrade()
+   {
+      //no upgrades yet
+   }
+
+   public int getUpgradeCost()
+   {
+      return 0;
+      //none yet
+   }
+
 }

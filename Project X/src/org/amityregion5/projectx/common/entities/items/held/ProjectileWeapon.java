@@ -64,6 +64,11 @@ public abstract class ProjectileWeapon extends Weapon {
         return maxAmmo;
     }
 
+    public void setMaxAmmo(int x)
+    {
+        maxAmmo = x;
+    }
+
     public int getRoundsPerMag()
     {
         return roundsPerMag;
@@ -95,6 +100,11 @@ public abstract class ProjectileWeapon extends Weapon {
     public int getDamage()
     {
         return damage;
+    }
+
+    public void setDamage(int damage)
+    {
+        this.damage = damage;
     }
 
     public boolean fire()

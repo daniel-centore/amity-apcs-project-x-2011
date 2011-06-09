@@ -21,6 +21,7 @@
 package org.amityregion5.projectx.common.entities.items.held;
 
 import org.amityregion5.projectx.common.entities.items.DamageDealing;
+import org.amityregion5.projectx.common.entities.items.Upgradeable;
 import org.amityregion5.projectx.common.tools.Sound;
 
 /**
@@ -30,12 +31,14 @@ import org.amityregion5.projectx.common.tools.Sound;
  * @author Joe Stein
  * @author Cam Simpson
  */
-public abstract class Weapon extends HeldItem implements DamageDealing {
+public abstract class Weapon extends HeldItem implements DamageDealing, Upgradeable{
 
     private static final long serialVersionUID = 1L;
 
     private int range; // Range (in pixels)
     private int attackRate;
+    protected final int DAMAGE_UPGRADE = 1;
+    protected final int AMMO_UPGRADE = 25;
 
     public Weapon(int range, int rate)
     {
@@ -55,6 +58,10 @@ public abstract class Weapon extends HeldItem implements DamageDealing {
     public int getAttackRate()
     {
         return attackRate;
+    }
+    public void setAttackRate(int x)
+    {
+        attackRate = x;
     }
 
     public abstract Sound getSound();

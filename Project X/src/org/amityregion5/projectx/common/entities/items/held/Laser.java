@@ -26,9 +26,11 @@ import org.amityregion5.projectx.common.tools.Sound;
  *
  * @author Michael Zuo
  */
-public class Laser extends Gun {
+public class Laser extends Gun{
 
     private static final long serialVersionUID = 1L;
+
+    private final int UPGRADE_COST = 100;
 
     public Laser()
     {
@@ -52,4 +54,15 @@ public class Laser extends Gun {
     {
         return "Laser";
     }
+
+   public void upgrade()
+   {
+      setDamage(getDamage() + DAMAGE_UPGRADE);
+      setMaxAmmo(getMaxAmmo() + AMMO_UPGRADE * 5);
+   }
+
+   public int getUpgradeCost()
+   {
+      return UPGRADE_COST;
+   }
 }
