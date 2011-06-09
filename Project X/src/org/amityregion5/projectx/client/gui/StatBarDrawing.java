@@ -99,7 +99,7 @@ public class StatBarDrawing {
         }
 
         // draw wave number
-        g2.drawString(waveStr,WIDTH,g2.getFontMetrics().getHeight());
+        g2.drawString(waveStr,WIDTH - 75,g2.getFontMetrics().getHeight());
 
         return result;
     }
