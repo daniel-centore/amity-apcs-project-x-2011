@@ -32,7 +32,7 @@ public class Laser extends Gun {
 
     public Laser()
     {
-        super(900, -1, -1, 20, -1, -1, 2);
+        super(900, -1, -1, 20, -1, -1, 1);
     }
 
     @Override
