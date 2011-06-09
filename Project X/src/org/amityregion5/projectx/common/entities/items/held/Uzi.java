@@ -31,7 +31,7 @@ public class Uzi extends Gun {
 
     public Uzi()
     {
-        super(300, -1, -1, 10, -1, -1, 4);
+        super(400, -1, -1, 10, -1, -1, 4);
     }
 
     @Override

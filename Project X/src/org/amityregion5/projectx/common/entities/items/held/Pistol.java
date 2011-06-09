@@ -27,7 +27,7 @@ public class Pistol extends Gun {
     
     public Pistol()
     {
-        super(600, -1, -1, 2, -1, -1, 5);
+        super(600, -1, -1, 2, -1, -1, 7);
     }
 
     @Override
