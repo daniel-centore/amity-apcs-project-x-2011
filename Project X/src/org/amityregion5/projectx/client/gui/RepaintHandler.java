@@ -30,6 +30,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 import org.amityregion5.projectx.client.Game;
+import org.amityregion5.projectx.client.sound.SoundManager;
 import org.amityregion5.projectx.common.entities.Damageable;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.characters.CharacterEntity;
@@ -37,6 +38,7 @@ import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.common.entities.items.field.Area;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
 import org.amityregion5.projectx.common.maps.AbstractMap;
+import org.amityregion5.projectx.common.tools.Sound;
 
 /**
  * Handles repainting
