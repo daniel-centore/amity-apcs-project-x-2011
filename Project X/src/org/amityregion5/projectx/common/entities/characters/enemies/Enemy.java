@@ -39,7 +39,7 @@ public abstract class Enemy extends CharacterEntity implements Damageable {
     private final int maxHealth;
     private boolean hasHit = false;
 
-    public static final int DEFAULT_SPEED = 5; //arbitrary speed
+    public static final double DEFAULT_SPEED = 1; //arbitrary speed
 
     /**
      * Creates an enemy with specified health.
