@@ -43,6 +43,7 @@ public class EnemyManager {
     private ArrayList<Point> spawnArea;
     private GameController controller;
     private final int NUM_WAVES = 666; // Completely arbitrary
+    private final int START_WAVE = 0; // for testing
 
     public EnemyManager(GameController c, ArrayList<Point> area)
     {
@@ -77,8 +78,7 @@ public class EnemyManager {
      */
     public void startSpawning()
     {
-        new Thread()
-        {
+        new Thread() {
             public void run()
             {
                 try
@@ -98,7 +98,8 @@ public class EnemyManager {
                 wave = new EnemyWave(1, enemies);
                 for (int i = 0; i < NUM_WAVES; i++)
                 {
-                    gen.addWave(wave);
+                    if (i >= START_WAVE)
+                        gen.addWave(wave);
                     wave = wave.nextWave();
                 }
                 gen.start();

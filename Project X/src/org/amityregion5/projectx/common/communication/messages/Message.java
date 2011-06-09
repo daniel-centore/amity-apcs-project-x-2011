@@ -32,4 +32,15 @@ public abstract class Message implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
+    public Message()
+    {
+        try
+        {
+            throw new Exception();
+        } catch (Exception e)
+        {
+            System.out.println(e.getStackTrace()[1]);
+        }
+    }
+    
 }

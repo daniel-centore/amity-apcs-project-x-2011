@@ -40,7 +40,6 @@ import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.characters.CharacterEntity;
 import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
-import org.amityregion5.projectx.common.entities.items.field.Area;
 import org.amityregion5.projectx.common.entities.items.held.Laser;
 import org.amityregion5.projectx.common.entities.items.held.Pistol;
 import org.amityregion5.projectx.common.entities.items.held.Uzi;
