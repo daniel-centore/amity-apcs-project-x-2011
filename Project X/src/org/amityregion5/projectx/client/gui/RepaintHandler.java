@@ -107,9 +107,18 @@ public class RepaintHandler extends Thread {
         {
             for (Entity e : game.getEntityHandler().getEntities()) // draw temporary entities
             {
+                
                 if (e == null)
                     break;
                 AffineTransform at = e.getAffineTransform();
+                if (e instanceof CharacterEntity)
+                {
+                    CharacterEntity ce = (CharacterEntity) e;
+                    if (ce.hasWeapons())
+                    {
+                        drawWeapon(ce,g);
+                    }
+                }
                 g.drawImage(e.getImage(), at, null);
                 //g.drawImage(e.getImage(), (int) e.getX(), (int) e.getY(), null);
                 g.setColor(Color.WHITE);
@@ -120,12 +129,7 @@ public class RepaintHandler extends Thread {
                     drawFiring((PlayerEntity) e, g);
                 }
 
-                if (e instanceof CharacterEntity)
-                {
-                    CharacterEntity ce = (CharacterEntity) e;
-                    if (ce.hasWeapons())
-                        drawWeapon(ce, g);
-                }
+                
             }
 
             for (Entity e : game.getEntityHandler().getEntities())
@@ -195,9 +199,8 @@ public class RepaintHandler extends Thread {
         // draw the weapon
         BufferedImage wepImg = pe.getCurrWeapon().getImage();
         AffineTransform at = new AffineTransform();
-        at.translate(pe.getCenterX(), pe.getCenterY());
-        at.rotate(Math.toRadians(pe.getDirectionFacing()));
-        at.translate(0, -1 * wepImg.getHeight() / 2);
+        at.translate(pe.getX(), pe.getY());
+        at.rotate(Math.toRadians(pe.getDirectionFacing()),pe.getWidth()/2,pe.getHeight()/2);
         g.drawImage(wepImg, at, null);
     }
 

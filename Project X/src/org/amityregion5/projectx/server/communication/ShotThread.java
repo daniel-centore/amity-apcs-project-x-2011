@@ -20,6 +20,7 @@ package org.amityregion5.projectx.server.communication;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.amityregion5.projectx.common.communication.Constants;
 import org.amityregion5.projectx.common.communication.messages.sound.SoundControlMessage;
 
 import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
@@ -54,6 +55,11 @@ public class ShotThread extends Thread {
     @Override
     public void run()
     {
+        StringBuilder soundstr = new StringBuilder("#");
+        soundstr.append(player.getCurrWeapon().getSound().toString());
+        soundstr.append(",");
+        soundstr.append(SoundControlMessage.Type.ONCE.toString());
+        
         while (keepRunning)
         {
             // stop shooting if we're not supposed to shoot
@@ -61,15 +67,20 @@ public class ShotThread extends Thread {
             {
                 while (!keepShooting)
                 {
+                    soundstr.delete(0, soundstr.length());
                     try
-                    {
+                    { 
                         wait();
                     } catch (Exception e)
                     {
                         e.printStackTrace();
                         keepRunning = false;
                     }
+                    soundstr.append(player.getCurrWeapon().getSound().toString());
+                    soundstr.append(",");
+                    soundstr.append(SoundControlMessage.Type.ONCE.toString());
                 }
+                
             }
             try
             {
@@ -98,26 +109,13 @@ public class ShotThread extends Thread {
      */
     public void setShooting(boolean shooting)
     {
-        //SoundControlMessage.Type t;
         synchronized (this)
         {
             if (shooting)
             {
-                //t = SoundControlMessage.Type.START;
-                // TODO SOUND send start fire loop message if continuous sound
                 this.notify();
-            }/* else
-            {
-               // TODO SOUND send stop fire loop message if continuous sound
-                t = SoundControlMessage.Type.STOP;
-            } */
+            }
         }
-        // send a sound control message to the shooter
-        /*
-         server.getClients().get(player.getUsername()).send(
-                new SoundControlMessage(player.getCurrWeapon().getSound(),
-                    player.getCurrWeapon().getAttackRate(), t , 100));
-         */
         
         keepShooting = shooting;
     }

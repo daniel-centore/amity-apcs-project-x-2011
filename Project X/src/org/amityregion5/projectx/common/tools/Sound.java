@@ -45,7 +45,7 @@ public enum Sound {
         continuous = cont;
     }
 
-    public boolean getContinuous()
+    public boolean isContinuous()
     {
         return continuous;
     }

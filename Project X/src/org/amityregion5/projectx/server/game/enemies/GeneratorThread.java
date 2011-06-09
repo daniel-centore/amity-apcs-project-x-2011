@@ -27,6 +27,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.amityregion5.projectx.common.communication.messages.WaveMessage;
 import org.amityregion5.projectx.common.entities.characters.enemies.ArmoredEnemy;
 
 import org.amityregion5.projectx.common.entities.characters.enemies.DefaultEnemy;
@@ -47,7 +48,6 @@ public class GeneratorThread extends Thread {
     private ArrayList<Point> enemySpawns;
     private EnemyManager manager;
     private boolean spawn;
-    private int timeBetweenWaves;
     private int waveNumber;
 
     public GeneratorThread(GameController c, ArrayList<Point> spawns, EnemyManager m)
@@ -125,13 +125,14 @@ public class GeneratorThread extends Thread {
     public void run()
     {
         spawn = true;
+        int waveCount = 0;
         while (spawn)
         {
-            int waveCount = 1;
             if (waves.peek() != null)
             {
                 sendWave(waves.poll());
                 waveNumber++;
+                controller.getServer().relayMessage(new WaveMessage(waveNumber));
                 try
                 {
                     Thread.sleep(EnemyManager.waveDelayTime(waveCount++));

@@ -38,6 +38,7 @@ import org.amityregion5.projectx.client.gui.GameWindow;
 import org.amityregion5.projectx.client.gui.PopupMenuHandler;
 import org.amityregion5.projectx.client.gui.RepaintHandler;
 import org.amityregion5.projectx.client.gui.ServerChooserWindow;
+import org.amityregion5.projectx.client.gui.StatBarDrawing;
 import org.amityregion5.projectx.client.gui.input.InputHandler;
 import org.amityregion5.projectx.client.gui.input.Keys;
 import org.amityregion5.projectx.client.handlers.EntityHandler;
@@ -383,6 +384,9 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             int wep = ((UpdateWeaponMessage) m).getWeapon();
 
             ((CharacterEntity) entityHandler.getEntity(((UpdateWeaponMessage) m).getPlayerID())).setCurrWeapon(wep);
+        } else if (m instanceof WaveMessage)
+        {
+            StatBarDrawing.setWaveNumber(((WaveMessage) m).getNumber());
         } else
         {
             System.err.println("Unknown message type encountered. " + "Please make sure you have the latest game version!");

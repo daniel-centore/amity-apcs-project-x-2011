@@ -43,6 +43,8 @@ public class StatBarDrawing {
     private static final int SPACE = 5;
     public static final int WIDTH = 600;
     public static final int HEIGHT = 50;
+    private static int waveNumber = 0;
+    private static String waveStr = "Wave " + String.valueOf(waveNumber);
 
     public static BufferedImage getStatBar(PlayerEntity p)
     {
@@ -76,9 +78,12 @@ public class StatBarDrawing {
         g2.drawString(b.toString(), left, HEIGHT - SPACE * 2);
 
         try {
+            // draw weapon info
             g2.setFont(g2.getFont().deriveFont(Font.BOLD, 16.0f));
             g2.drawString(p.getCurrWeapon().getName(),140,g2.getFontMetrics().getHeight());
             g2.setFont(g2.getFont().deriveFont(Font.PLAIN));
+            
+            // draw ammo
             b = new StringBuilder("Ammo: ");
             if (p.getCurrWeapon().getAmmo() < 0)
             {
@@ -92,9 +97,17 @@ public class StatBarDrawing {
         {
             g2.drawString("none",140,g2.getFontMetrics().getHeight());
         }
-        
+
+        // draw wave number
+        g2.drawString(waveStr,WIDTH,g2.getFontMetrics().getHeight());
 
         return result;
+    }
+
+    public static void setWaveNumber(int n)
+    {
+        waveNumber = n;
+        waveStr = "Wave " + String.valueOf(waveNumber);
     }
 
     public static void main(String[] args)
@@ -105,6 +118,7 @@ public class StatBarDrawing {
         p.addWeapon(new Pistol());
         p.setPoints(20974);
         p.setCash(500);
+        StatBarDrawing.setWaveNumber(2);
         final JPanel panel = new JPanel() {
             private static final long serialVersionUID = 1L;
 
