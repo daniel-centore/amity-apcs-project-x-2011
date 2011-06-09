@@ -38,9 +38,11 @@ public class Keys {
     public static int[] LEFT    = { KeyEvent.VK_H, KeyEvent.VK_LEFT, KeyEvent.VK_A };
     public static int[] RIGHT   = { KeyEvent.VK_L, KeyEvent.VK_RIGHT, KeyEvent.VK_D };
     
-    public static int[] CHAT    = { KeyEvent.VK_T, KeyEvent.VK_SEMICOLON };
+    public static int[] CHAT    = { KeyEvent.VK_T, KeyEvent.VK_QUOTE };
     public static int[] GRID    = { KeyEvent.VK_G };
     public static int[] FIRE    = { KeyEvent.VK_SPACE };
+
+    public static int[] UPGRADE_WEAPON = { KeyEvent.VK_V };
     
     public static int[] BLOCK  = { KeyEvent.VK_F1 };
     public static int[] FENCE  = { KeyEvent.VK_F2 };
@@ -55,11 +57,20 @@ public class Keys {
     {
         String csv = PreferenceManager.getKeys();
         String[] keyses = csv.split(";");
-        UP      = parseKeyList(keyses[0]);
-        LEFT    = parseKeyList(keyses[1]);
-        DOWN    = parseKeyList(keyses[2]);
-        RIGHT   = parseKeyList(keyses[3]);
-        CHAT    = parseKeyList(keyses[4]);
+        UP              = parseKeyList(keyses[ 0]);
+        LEFT            = parseKeyList(keyses[ 1]);
+        DOWN            = parseKeyList(keyses[ 2]);
+        RIGHT           = parseKeyList(keyses[ 3]);
+        CHAT            = parseKeyList(keyses[ 4]);
+        GRID            = parseKeyList(keyses[ 5]);
+        FIRE            = parseKeyList(keyses[ 6]);
+        UPGRADE_WEAPON  = parseKeyList(keyses[ 7]);
+        BLOCK           = parseKeyList(keyses[ 8]);
+        FENCE           = parseKeyList(keyses[ 9]);
+        WALL            = parseKeyList(keyses[10]);
+        LEADERBOARD     = parseKeyList(keyses[11]);
+        CHANGE_WEAPON_1 = parseKeyList(keyses[12]);
+        CHANGE_WEAPON_2 = parseKeyList(keyses[13]);
     }
 
     private static int[] parseKeyList(String keys) // helper

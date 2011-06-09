@@ -24,24 +24,6 @@ package org.amityregion5.projectx.common.entities.items;
  * @author Mike DiBuduo
  */
 public interface Upgradeable {
-
-    public static final int AMMO_UPGRADE = 0;
-    public static final int CLIP_UPGRADE = 1;
-    public static final int FIRE_RATE_UPGRADE = 2;
-    public static final int RANGE_UPGRADE = 3;
-    public static final int DAMAGE_UPGRADE = 4;
-    public static final int HEALTH_UPGRADE = 5; // For main wall and supporting fences
-
-    public void upgradeMaxAmmo(int x);// x is index of an ArrayList(in this case 0) where the upgrade value will be stored
-
-    public void upgradeClip(int x);
-
-    public void upgradeFireRate(int x);
-
-    public void upgradeRange(int x);
-
-    public void upgradeDamage(int x);
-
-    public void upgradeHealth(int x);
-
+    public int getUpgradeCost();
+    public void upgrade();
 }
