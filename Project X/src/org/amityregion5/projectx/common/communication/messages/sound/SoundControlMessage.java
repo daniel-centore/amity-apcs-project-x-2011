@@ -32,9 +32,7 @@ public class SoundControlMessage extends Message {
     private static final long serialVersionUID = 1L;
     
     private Sound sound;
-    private int rate;
     private Type type;
-    private int vol = 100;
 
     public static enum Type {
         START,
@@ -48,13 +46,6 @@ public class SoundControlMessage extends Message {
         type = t;
     }
 
-    public SoundControlMessage(Sound s, int r, Type t, int vol)
-    {
-        this(s, t);
-        rate = r;
-        this.vol = vol;
-    }
-
     public Sound getSound()
     {
         return sound;
@@ -63,15 +54,5 @@ public class SoundControlMessage extends Message {
     public Type getType()
     {
         return type;
-    }
-
-    public int getRate()
-    {
-        return rate;
-    }
-
-    public int getVol()
-    {
-        return vol;
     }
 }

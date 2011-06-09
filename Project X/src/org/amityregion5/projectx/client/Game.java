@@ -366,7 +366,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                 SoundManager.playOnce(s);
                 break;
             case START:
-                SoundManager.loopSound(s, scm.getRate(), scm.getVol());
+                SoundManager.playLoop(s);
                 break;
             case STOP:
                 SoundManager.stopSound(s);

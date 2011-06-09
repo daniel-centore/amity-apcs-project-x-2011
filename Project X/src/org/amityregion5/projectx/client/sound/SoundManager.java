@@ -67,6 +67,11 @@ public class SoundManager extends Thread {
         }.start();
     }
 
+    public static void stopSound(Sound s)
+    {
+        s.getPlayer().close();
+    }
+
     /**
      * Plays a sound once
      * @param s Sound to play
@@ -106,15 +111,4 @@ public class SoundManager extends Thread {
         Sound.BG_1.reset();
     }
 
-    public static void loopSound(Sound s, int rate, int vol)
-    {
-        // TODO Auto-generated method stub
-        
-    }
-
-    public static void stopSound(Sound s)
-    {
-        // TODO Auto-generated method stub
-        
-    }
 }

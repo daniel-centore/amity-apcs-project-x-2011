@@ -37,7 +37,7 @@ public class Uzi extends Gun {
     @Override
     public Sound getSound()
     {
-        return Sound.NULL_SOUND;
+        return Sound.PISTOL_SHOT;
     }
     
     @Override

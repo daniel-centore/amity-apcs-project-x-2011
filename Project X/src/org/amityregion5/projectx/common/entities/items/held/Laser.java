@@ -38,7 +38,7 @@ public class Laser extends Gun {
     @Override
     public Sound getSound()
     {
-        return Sound.NULL_SOUND;
+        return Sound.LASER;
     }
     
     @Override
