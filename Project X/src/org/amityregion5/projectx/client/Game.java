@@ -18,7 +18,6 @@
  */
 package org.amityregion5.projectx.client;
 
-import org.amityregion5.projectx.common.communication.messages.sound.SoundControlMessage;
 import java.awt.Point;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -29,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.JOptionPane;
 
 import org.amityregion5.projectx.client.communication.CommunicationHandler;
@@ -46,14 +46,15 @@ import org.amityregion5.projectx.common.communication.Constants;
 import org.amityregion5.projectx.common.communication.MessageListener;
 import org.amityregion5.projectx.common.communication.RawListener;
 import org.amityregion5.projectx.common.communication.messages.*;
+import org.amityregion5.projectx.common.communication.messages.sound.SoundControlMessage;
 import org.amityregion5.projectx.common.communication.messages.sound.SoundControlMessage.Type;
 import org.amityregion5.projectx.common.entities.Damageable;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.EntityConstants;
+import org.amityregion5.projectx.common.entities.characters.CharacterEntity;
 import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 import org.amityregion5.projectx.common.tools.ImageHandler;
-import org.amityregion5.projectx.common.entities.characters.CharacterEntity;
 import org.amityregion5.projectx.common.tools.Sound;
 
 /**
@@ -200,6 +201,10 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             } else if (Keys.isKey(Keys.CHANGE_WEAPON_2, keyCode))
             {
                 communicationHandler.send(new ChangedWeaponMessage(1));
+            } else if (Keys.isKey(Keys.UPGRADE_WEAPON, keyCode))
+            {
+                communicationHandler.send(new RequestUpgradeMessage(me.getCurrWeapon().getUniqueID()));
+                return;
             } else if (Keys.isKey(Keys.LEADERBOARD, keyCode))
             {
                 RepaintHandler.switchLeaderBoard();

@@ -33,7 +33,7 @@ public class RequestUpgradeMessage extends Message
      * Create a new RequestUpgradeMessage.
      * @param id the unique id of the entity
      */
-    public RequestUpgradeMessage(int id)
+    public RequestUpgradeMessage(long id)
     {
         this.id = id;
     }
