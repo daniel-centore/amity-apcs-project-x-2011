@@ -50,7 +50,7 @@ public class EnemyManager {
         spawnArea = area;
 
         EnemyGroup group = createEnemyGroup(new DefaultEnemy(1, 0, 0), 5); // Arbitrary first wave with 5 enemies w/10 health
-        EnemyGroup bomberGroup = createEnemyGroup(new SuicideBomber(100, 1, 0, 0), 3);
+        EnemyGroup bomberGroup = createEnemyGroup(new SuicideBomber(1, 0, 0), 3);
         EnemyGroup armorGroup = createEnemyGroup(new ArmoredEnemy(2, 1, 0, 0), 3);
         ArrayList<EnemyGroup> enemies = new ArrayList<EnemyGroup>();
         enemies.add(group);
@@ -89,7 +89,7 @@ public class EnemyManager {
                     e.printStackTrace();
                 }
                 EnemyGroup group = createEnemyGroup(new DefaultEnemy(10, 0, 0), 5);
-                EnemyGroup bomberGroup = createEnemyGroup(new SuicideBomber(100, 5, 0, 0), 3);
+                EnemyGroup bomberGroup = createEnemyGroup(new SuicideBomber(5, 0, 0), 3);
                 EnemyGroup armorGroup = createEnemyGroup(new ArmoredEnemy(2, 10, 0, 0), 3);
                 ArrayList<EnemyGroup> enemies = new ArrayList<EnemyGroup>();
                 enemies.add(group);

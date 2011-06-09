@@ -35,11 +35,11 @@ public class SuicideBomber extends Enemy {
     public static final double MULTIPLIER = 1.5; // how many times faster than enemy default
 
 
-    public SuicideBomber(int damage, int max, int x, int y)
+    public SuicideBomber(int max, int x, int y)
     {
         super(max, x, y);
         setValue(2);
-        addWeapon(new Bomb(damage));
+        addWeapon(new Bomb());
         setMoveSpeed(Enemy.DEFAULT_SPEED * MULTIPLIER);
     }
     

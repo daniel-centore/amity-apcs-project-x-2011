@@ -17,10 +17,11 @@ public class Bomb extends MeleeWeapon implements DamageDealing
     private static final long serialVersionUID = 1L;
 
     private static int SWORD_RATE = 42; // FIXME: arbitrary.
+    private static int DAMAGE = 100;
 
-    public Bomb(int damage)
+    public Bomb()
     {
-        super(SWORD_RATE, damage);
+        super(SWORD_RATE, DAMAGE);
     }
 
     @Override
