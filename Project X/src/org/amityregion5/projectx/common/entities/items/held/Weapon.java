@@ -26,19 +26,16 @@ import org.amityregion5.projectx.common.tools.Sound;
 
 /**
  * A HeldItem used to effect effects on a target.
- * The Weapon itself does not necessarily do damage.
  *
  * @author Joe Stein
  * @author Cam Simpson
  */
-public abstract class Weapon extends HeldItem implements DamageDealing, Upgradeable{
+public abstract class Weapon extends HeldItem implements DamageDealing {
 
     private static final long serialVersionUID = 1L;
 
     private int range; // Range (in pixels)
     private int attackRate;
-    protected final int DAMAGE_UPGRADE = 1;
-    protected final int AMMO_UPGRADE = 25;
 
     public Weapon(int range, int rate)
     {
@@ -75,20 +72,6 @@ public abstract class Weapon extends HeldItem implements DamageDealing, Upgradea
         if (dist > range)
             return 0; // out of range!
 
-        // AN, accuracy: "random missing"
-//        if (accuracy < 1) // 1 is perfect accuracy
-//        {
-//            double subrange = range / 2;
-//            double accurate = subrange;
-//            while (subrange > 1)
-//                accurate += Math.random() * (subrange /= 2);
-//            accurate *= accuracy / 2 + Math.random() * accuracy;
-//
-//            if (dist > accurate) {
-//                return 0; // missed
-//            }
-//        }
-
         double modifier = (4 - dist / range) / 4; // linear, down to 75% at full range.
 
         return (int) (getDamage() * modifier + 1);
@@ -97,4 +80,14 @@ public abstract class Weapon extends HeldItem implements DamageDealing, Upgradea
     public abstract boolean fire();
     public abstract String getName();
 
+    // contains upgrade stuff despite not implementing Upgradeable
+    // would prefer not to put it in everything, though.
+    protected final int DAMAGE_UPGRADE = 1;
+    protected final int AMMO_UPGRADE = 25;
+
+    protected int upgradeLevel = 1;
+
+    public int getUpgradeLevel() {
+        return upgradeLevel;
+    }
 }

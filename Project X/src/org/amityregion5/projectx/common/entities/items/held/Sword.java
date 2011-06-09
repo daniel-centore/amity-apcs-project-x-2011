@@ -19,7 +19,7 @@
  */
 package org.amityregion5.projectx.common.entities.items.held;
 
-import org.amityregion5.projectx.common.entities.items.DamageDealing;
+import org.amityregion5.projectx.common.entities.items.Upgradeable;
 import org.amityregion5.projectx.common.tools.Sound;
 
 /**
@@ -30,7 +30,7 @@ import org.amityregion5.projectx.common.tools.Sound;
  *
  * Not used. And it doesn't have a sprite ATM.
  */
-public class Sword extends MeleeWeapon implements DamageDealing
+public class Sword extends MeleeWeapon implements Upgradeable
 {
     private static final long serialVersionUID = 1L;
 
@@ -67,7 +67,7 @@ public class Sword extends MeleeWeapon implements DamageDealing
 
    public void upgrade()
    {
-      //no upgrades yet
+       upgradeLevel++;
    }
 
    public int getUpgradeCost()

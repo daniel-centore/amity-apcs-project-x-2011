@@ -19,7 +19,7 @@
  */
 package org.amityregion5.projectx.common.entities.characters.enemies;
 
-import org.amityregion5.projectx.common.entities.items.held.Zombie_Hands;
+import org.amityregion5.projectx.common.entities.items.held.ZombieHands;
 
 public class DefaultEnemy extends Enemy {
 
@@ -29,7 +29,7 @@ public class DefaultEnemy extends Enemy {
     {
         super(max, x, y);
         
-        addWeapon(new Zombie_Hands(1));
+        addWeapon(new ZombieHands(1));
     }
 
 }

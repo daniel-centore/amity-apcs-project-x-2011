@@ -5,7 +5,7 @@
 
 package org.amityregion5.projectx.common.entities.characters.enemies;
 
-import org.amityregion5.projectx.common.entities.items.held.Zombie_Hands;
+import org.amityregion5.projectx.common.entities.items.held.ZombieHands;
 
 /**
  *
@@ -19,7 +19,7 @@ public class BossEnemy extends Enemy{
     {
         super(max, x, y);
         setValue(10);
-        addWeapon(new Zombie_Hands(damage));
+        addWeapon(new ZombieHands(damage));
     }
 
     @Override

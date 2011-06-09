@@ -5,7 +5,7 @@
 
 package org.amityregion5.projectx.common.entities.characters.enemies;
 
-import org.amityregion5.projectx.common.entities.items.held.Zombie_Hands;
+import org.amityregion5.projectx.common.entities.items.held.ZombieHands;
 
 /**
  * Slower enemy with damage-reducing armor
@@ -26,7 +26,7 @@ public class ArmoredEnemy extends Enemy {
         setMoveSpeed(Enemy.DEFAULT_SPEED * MULTIPLIER);
         setValue(2);
         
-        addWeapon(new Zombie_Hands(1));
+        addWeapon(new ZombieHands(1));
     }
 
     public int getArmor()

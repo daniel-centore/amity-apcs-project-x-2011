@@ -26,7 +26,7 @@ import org.amityregion5.projectx.common.entities.items.DamageDealing;
  *
  * @author Mike DiBuduo
  */
-public abstract class MeleeWeapon extends Weapon implements DamageDealing {
+public abstract class MeleeWeapon extends Weapon {
 
     private static final long serialVersionUID = 1L;
     

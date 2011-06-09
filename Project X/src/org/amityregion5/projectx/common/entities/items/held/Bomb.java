@@ -47,15 +47,4 @@ public class Bomb extends MeleeWeapon implements DamageDealing
     {
         return -1;
     }
-
-   public void upgrade()
-   {
-      //no upgrades
-   }
-
-   public int getUpgradeCost()
-   {
-      return 0;
-      //none
-   }
 }

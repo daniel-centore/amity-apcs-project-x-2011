@@ -19,10 +19,10 @@
  */
 package org.amityregion5.projectx.common.entities.items.held;
 
+import org.amityregion5.projectx.common.entities.items.Upgradeable;
 import org.amityregion5.projectx.common.tools.Sound;
 
-public class Pistol extends Gun
-{
+public class Pistol extends Gun implements Upgradeable {
 
    private static final long serialVersionUID = 1L;
 
@@ -51,6 +51,7 @@ public class Pistol extends Gun
 
    public void upgrade()
    {
+       upgradeLevel++;
       setDamage(getDamage() + DAMAGE_UPGRADE);
    }
 

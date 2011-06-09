@@ -21,7 +21,7 @@ package org.amityregion5.projectx.common.entities.characters.enemies;
 
 import org.amityregion5.projectx.common.entities.Damageable;
 import org.amityregion5.projectx.common.entities.characters.CharacterEntity;
-import org.amityregion5.projectx.common.entities.items.held.Zombie_Hands;
+import org.amityregion5.projectx.common.entities.items.held.ZombieHands;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
 
 /**

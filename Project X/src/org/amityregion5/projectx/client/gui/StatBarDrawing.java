@@ -26,10 +26,14 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
 import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
+import org.amityregion5.projectx.common.entities.items.Upgradeable;
 import org.amityregion5.projectx.common.entities.items.held.Pistol;
+import org.amityregion5.projectx.common.entities.items.held.Weapon;
 
 /**
  * Class documentation.
@@ -80,7 +84,11 @@ public class StatBarDrawing {
         try {
             // draw weapon info
             g2.setFont(g2.getFont().deriveFont(Font.BOLD, 16.0f));
-            g2.drawString(p.getCurrWeapon().getName(),140,g2.getFontMetrics().getHeight());
+            Weapon wep = p.getCurrWeapon();
+            String name = wep.getName();
+            if (wep instanceof Upgradeable)
+                name += " Lv" + wep.getUpgradeLevel();
+            g2.drawString(name,140,g2.getFontMetrics().getHeight());
             g2.setFont(g2.getFont().deriveFont(Font.PLAIN));
             
             // draw ammo

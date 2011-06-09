@@ -24,6 +24,7 @@ package org.amityregion5.projectx.common.entities.items;
  * @author Mike DiBuduo
  */
 public interface Upgradeable {
+    public int getUpgradeLevel();
     public int getUpgradeCost();
     public void upgrade();
 }

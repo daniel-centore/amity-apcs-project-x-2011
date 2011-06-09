@@ -18,6 +18,7 @@
  */
 package org.amityregion5.projectx.common.entities.items.held;
 
+import org.amityregion5.projectx.common.entities.items.Upgradeable;
 import org.amityregion5.projectx.common.tools.Sound;
 
 /**
@@ -26,7 +27,7 @@ import org.amityregion5.projectx.common.tools.Sound;
  *
  * @author Michael Zuo
  */
-public class Laser extends Gun{
+public class Laser extends Gun implements Upgradeable {
 
     private static final long serialVersionUID = 1L;
 
@@ -57,6 +58,7 @@ public class Laser extends Gun{
 
    public void upgrade()
    {
+       upgradeLevel++;
       setDamage(getDamage() + DAMAGE_UPGRADE);
       setMaxAmmo(getMaxAmmo() + AMMO_UPGRADE * 5);
    }
