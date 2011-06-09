@@ -45,7 +45,7 @@ public class ArmoredEnemy extends Enemy {
     @Override
     public String getDefaultImage()
     {
-        return "sprites/Enemy"; // Need real graphic!!
+        return "sprites/Enemy_Big"; // Need real graphic!!
     }
 
 }

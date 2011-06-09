@@ -115,6 +115,6 @@ public class EnemyManager {
     {
         double time = 60;
         time += wn * Math.log(2) / Math.log(wn + 1);
-        return (int) (1000 * time);
+        return (int) (500 * time);
     }
 }
