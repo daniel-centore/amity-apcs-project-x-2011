@@ -85,11 +85,11 @@ public class RawCommunicationHandler extends Thread {
             Logger.getLogger(RawCommunicationHandler.class.getName()).log(Level.SEVERE, null, ex);
             keepRunning = false;
         }
+        String mes;
         while (keepRunning)
         {
             // String to read. Current format is:
             // uniqueId,x-coord,y-coord,direction
-            String mes;
             try
             {
                 mes = bis.readLine();
@@ -121,7 +121,7 @@ public class RawCommunicationHandler extends Thread {
     /**
      * Sends a raw direction update
      * @param dir Direction to face
-     * @throws IOException If it don't write good!
+     * @throws IOException if it don't write properly
      */
     public synchronized void send(int dir) throws IOException
     {
