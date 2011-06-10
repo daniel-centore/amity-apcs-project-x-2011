@@ -72,7 +72,7 @@ public class RawClient extends Thread {
         {
             if (c.getIP().equals(sock.getInetAddress().getHostAddress()) && c.getUsername().equals(user))
             {
-                // FIXME: Do this more correctly
+                // FIXME: Do this more correctly (Dan)
                 while (c.getPlayer() == null)
                 {
                     try
@@ -104,7 +104,7 @@ public class RawClient extends Thread {
                 this.handle(dir);
             } catch (IOException ex)
             {
-                server.relayMessage(new RemoveEntityMessage(player));
+                server.relayMessage(new RemoveEntityMessage(player.getUniqueID()));
                 kill();
             }
         }

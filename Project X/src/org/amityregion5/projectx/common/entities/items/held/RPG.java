@@ -18,6 +18,7 @@
  */
 package org.amityregion5.projectx.common.entities.items.held;
 
+import java.awt.image.BufferedImage;
 import org.amityregion5.projectx.common.entities.items.DamageDealing;
 import org.amityregion5.projectx.common.entities.items.Upgradeable;
 import org.amityregion5.projectx.common.tools.Sound;
@@ -48,14 +49,14 @@ public class RPG extends Gun implements Upgradeable, DamageDealing
    @Override
    public String getName()
    {
-      return "RPG";
+      return "RPG-7";
    }
 
-   @Override
-   public String getDefaultImage()
+   public BufferedImage getDefaultImage()
    {
+       //none yet TODO rpg sprite
       return null;
-      //none yet TODO image sprite
+      
    }
 
    public int getUpgradeCost()

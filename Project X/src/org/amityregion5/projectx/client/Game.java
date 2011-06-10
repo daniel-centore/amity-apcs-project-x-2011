@@ -82,6 +82,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
     private int lastMouseY;
     private String username; // current username
     private boolean gameOver = false;
+    private boolean dead = false; // used for graceful exiting
 
     /**
      * Creates a game
@@ -346,7 +347,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         } else if (m instanceof RemoveEntityMessage)
         {
             RemoveEntityMessage rem = (RemoveEntityMessage) m;
-            entityHandler.removeEntity(rem.getPlayer());
+            entityHandler.removeEntity(rem.getID());
             GameWindow.fireRepaintRequired();
         } else if (m instanceof AddWeaponMessage)
         {
@@ -359,7 +360,6 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             } catch (Exception e)
             {
                 e.printStackTrace();
-                // FIXME: temporary kludge
                 // what's the usual error?
             }
         } else if (m instanceof StatusUpdateMessage)
@@ -369,7 +369,6 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             {
                 gameOver = true;
                 JOptionPane.showMessageDialog(null, "The enemies have taken over!", "Game Over", JOptionPane.OK_OPTION);
-                InputHandler.removeListener(this);
                 rch.kill();
                 RepaintHandler.endGame();
                 GameWindow.fireRepaintRequired();
@@ -411,6 +410,14 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         } else if (m instanceof WaveMessage)
         {
             StatBarDrawing.setWaveNumber(((WaveMessage) m).getNumber());
+        } else if (m instanceof DisconnectRequestMessage)
+        {
+            JOptionPane.showMessageDialog(null,
+                    ((DisconnectRequestMessage) m).getReason(),
+                    "Disconnected", JOptionPane.OK_OPTION);
+            dead = true;
+            this.destroy();
+            new ServerChooserWindow();
         } else
         {
             System.err.println("Unknown message type encountered. " + "Please make sure you have the latest game version!");
@@ -419,9 +426,12 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
 
     public void tellSocketClosed()
     {
-        JOptionPane.showMessageDialog(null, "Server has closed. You have been disconnected", "Disconnected", JOptionPane.OK_OPTION);
-        this.destroy();
-        new ServerChooserWindow();
+        if (!dead)
+        {
+            JOptionPane.showMessageDialog(null, "Server has closed. You have been disconnected", "Disconnected", JOptionPane.OK_OPTION);
+            this.destroy();
+            new ServerChooserWindow();
+        }
     }
 
     /**

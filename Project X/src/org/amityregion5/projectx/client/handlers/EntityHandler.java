@@ -54,12 +54,22 @@ public class EntityHandler {
 
     /**
      * Removes an entity
-     * @param e Entity to remove
-     * @return The entity we removed (not that you don't already have it)
+     * @param e entity to remove
+     * @return the removed entity
      */
     public synchronized Entity removeEntity(Entity e)
     {
         return entities.remove(e.getUniqueID());
+    }
+
+    /**
+     * Removes an entity.
+     * @param id the unique id of the entity to remove
+     * @return the removed entity
+     */
+    public synchronized Entity removeEntity(long id)
+    {
+        return entities.remove(id);
     }
 
     /**

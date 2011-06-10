@@ -17,17 +17,12 @@ public class BigZombieHands extends MeleeWeapon implements DamageDealing {
 
     private static final long serialVersionUID = 1L;
     private static int SWORD_RATE = 42; // FIXME: arbitrary.
+    private static final BufferedImage image = ImageHandler.loadImage("E_Hands");
 
     public BigZombieHands(int damage)
     {
         super(SWORD_RATE, damage);
     }
-//    @Override
-//    public String getDefaultImage()
-//    {
-//        return "sprites/E_Hands";
-//    }
-    private static final BufferedImage image = ImageHandler.loadImage("E_Hands");
 
     @Override
     public BufferedImage getDefaultImage()
@@ -44,7 +39,7 @@ public class BigZombieHands extends MeleeWeapon implements DamageDealing {
     @Override
     public String getName()
     {
-        return "BigHands";
+        return "Big Hands";
     }
 
     @Override

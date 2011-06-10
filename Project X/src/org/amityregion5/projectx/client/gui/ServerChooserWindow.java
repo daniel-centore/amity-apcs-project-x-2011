@@ -35,6 +35,7 @@ import org.amityregion5.projectx.client.preferences.PreferenceManager;
 import org.amityregion5.projectx.common.communication.DatagramListener;
 import org.amityregion5.projectx.common.communication.messages.ActivePlayersMessage;
 import org.amityregion5.projectx.common.communication.messages.BooleanReplyMessage;
+import org.amityregion5.projectx.common.communication.messages.DisconnectRequestMessage;
 import org.amityregion5.projectx.common.communication.messages.IntroduceMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
 
@@ -178,7 +179,7 @@ public class ServerChooserWindow extends JFrame implements DatagramListener, Pre
             if (reply instanceof BooleanReplyMessage)
             {
 
-                JOptionPane.showMessageDialog(null, "Username already in use", "Error", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Username already in use", "Error", JOptionPane.INFORMATION_MESSAGE);
                 int choice = JOptionPane.showConfirmDialog(this, "Do you want to change your username?", "Do you want to change?", JOptionPane.YES_NO_OPTION);
                 if (choice == JOptionPane.YES_OPTION)
                 {
@@ -194,6 +195,11 @@ public class ServerChooserWindow extends JFrame implements DatagramListener, Pre
                 ServerChooserWindow.this.dispose();
                 joined = true;
                 new LobbyWindow(ch, apm.getPlayers(), username);
+            } else if (reply instanceof DisconnectRequestMessage)
+            {
+                JOptionPane.showMessageDialog(null, ((DisconnectRequestMessage) reply).getReason(),
+                        "Disconnected", JOptionPane.ERROR_MESSAGE);
+                joined = true; // get us out of the loop
             }
         }
     }// GEN-LAST:event_joinBtnActionPerformed

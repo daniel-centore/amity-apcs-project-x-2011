@@ -19,26 +19,21 @@
 package org.amityregion5.projectx.common.communication.messages;
 
 /**
- * Tells the client to remove an entity
- * TODO: this should be sending the uniqueID to remove, not the entity
+ * A message containing a request to disconnect.
+ * Sent from the server to the client.
  *
- * @author Mike DiBuduo
+ * @author Joe Stein
  */
-public class RemoveEntityMessage extends Message
-{
-    private static final long serialVersionUID = 1L;
-    
-    private long id;
-    
-    public RemoveEntityMessage(long id)
+public class DisconnectRequestMessage extends Message {
+    private String reason;
+
+    public DisconnectRequestMessage(String reason)
     {
-        this.id = id;
+        this.reason = reason;
     }
 
-    public long getID()
+    public String getReason()
     {
-        return id;
+        return reason;
     }
-    
-    
 }

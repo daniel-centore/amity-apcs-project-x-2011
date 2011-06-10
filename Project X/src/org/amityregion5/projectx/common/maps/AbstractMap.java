@@ -26,7 +26,6 @@ import java.util.List;
 
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.items.field.Area;
-import org.amityregion5.projectx.common.entities.items.field.Wall;
 
 /**
  * An abstract map.

@@ -131,7 +131,8 @@ public class Client extends Thread {
             shotThread.setShooting(false);
             server.removeClient(username); // take it off the server's list
             server.relayMessage(new AnnounceMessage(username + " has disconnected."));
-            server.relayMessage(new RemoveEntityMessage(player));
+            if (player != null)
+                server.relayMessage(new RemoveEntityMessage(player.getUniqueID()));
         }
     }
 
@@ -316,6 +317,26 @@ public class Client extends Thread {
         {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    /**
+     * Politely kills the connection.
+     * @param reason the reason for disconnection
+     * @param blocking whether this message is sent as a reply to a blocking message
+     */
+
+    public void disconnect(String reason, boolean blocking)
+    {
+        Message m = new DisconnectRequestMessage(reason);
+        if (blocking)
+        {
+            send(new BlockingMessage(m));
+        } else
+        {
+            send(m);
+        }
+        
+        kill();
     }
 
     /**

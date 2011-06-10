@@ -80,7 +80,6 @@ public class SoundManager extends Thread {
     {
         if(!PLAY)
             return;
-        System.out.println(s.toString());
         new Thread() {
 
             @Override

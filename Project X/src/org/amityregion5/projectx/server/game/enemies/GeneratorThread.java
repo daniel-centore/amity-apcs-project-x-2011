@@ -91,7 +91,7 @@ public class GeneratorThread extends Thread {
                 }
                 else
                 {
-                    en = new DefaultEnemy(e.getHp(), (int) spawn.getX(), (int) spawn.getY()); // TODO: arbitrary location
+                    en = new DefaultEnemy(e.getHp(), (int) spawn.getX(), (int) spawn.getY());
                 }
                 // puts the enemy at spawn
                 en.setLocation(spawn);

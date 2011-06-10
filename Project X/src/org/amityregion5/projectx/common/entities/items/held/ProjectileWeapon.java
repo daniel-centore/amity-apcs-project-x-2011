@@ -40,7 +40,16 @@ public abstract class ProjectileWeapon extends Weapon {
     private int damage;
     private Point weaponTip;
 
-    // FIXME: Please comment this! MIKE D!
+    /**
+     * Creates a projectile weapon with the given characteristics.
+     * @param range the range of the weapon, in linear pixels
+     * @param startAmmo the ammo this weapon starts with
+     * @param _maxAmmo the maximum amount of ammo this weapon can have
+     * @param rate the attack rate of this weapon, in attacks per second
+     * @param rpm the rounds per magazine
+     * @param mags the number of magazines
+     * @param damage the amount of damage this weapon deals
+     */
     public ProjectileWeapon(int range, int startAmmo, int _maxAmmo, double rate, int rpm, int mags, int damage)
     {
         super(range, rate);

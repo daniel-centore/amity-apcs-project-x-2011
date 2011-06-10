@@ -69,8 +69,6 @@ public final class GameController {
     private volatile List<Entity> entities; // List of current Entities
     private EntityMoverThread entityMoverThread; // will be in charge of moving entities
     private Server server; // Our server
-
-    // TODO: Send the map to the client, which will then use it!
     private AbstractMap map; // Our map
     private final EnemyManager enemyManager;
 
@@ -87,6 +85,9 @@ public final class GameController {
         clients = server.getClients().values();
         entities = new CopyOnWriteArrayList<Entity>();
 
+        // TODO send clients the map for this game!
+        // Will fix in post-release version.
+        
         Random r = new Random();
         for (Client c : clients)
         {
@@ -275,7 +276,7 @@ public final class GameController {
                 if (d.killed())
                 {
                     toRemove.add(e);
-                    server.relayMessage(new RemoveEntityMessage(e));
+                    server.relayMessage(new RemoveEntityMessage(e.getUniqueID()));
                 }
             }
         }
@@ -293,12 +294,12 @@ public final class GameController {
 
     /**
      * Removes an entity from the array and notifies the clients to remove it as well
-     * @param e Entity to remove
+     * @param e entity to remove
      */
     public void removeEntity(Entity e)
     {
         entities.remove(e);
-        getServer().relayMessage(new RemoveEntityMessage(e));
+        getServer().relayMessage(new RemoveEntityMessage(e.getUniqueID()));
     }
 
     public static GameController getInstance()

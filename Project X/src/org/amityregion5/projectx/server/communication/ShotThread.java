@@ -87,9 +87,6 @@ public class ShotThread extends Thread {
                 if (player.fire())
                 {
                     server.playerFired(player);
-                    // server.relayMessage(new SoundControlMessage(player.getCurrWeapon().getSound(), SoundControlMessage.Type.ONCE));
-                    // TODO SOUND fire if sound is not continuous
-                    //server.getClients().get(player.getUsername()).s;
                 }
                 // sleeps in order to get the attack rate right
                 Thread.sleep((int) (1000 / player.getCurrWeapon().getAttackRate()));

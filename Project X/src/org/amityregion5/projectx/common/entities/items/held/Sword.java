@@ -26,11 +26,11 @@ import org.amityregion5.projectx.common.tools.Sound;
 
 /**
  * Basic melee weapon.
+ * NOTE: Not used. And it doesn't have a sprite ATM.
  *
  * @author Mike DiBuduo
  * @author Joe Stein
  *
- * Not used. And it doesn't have a sprite ATM.
  */
 public class Sword extends MeleeWeapon implements Upgradeable {
 

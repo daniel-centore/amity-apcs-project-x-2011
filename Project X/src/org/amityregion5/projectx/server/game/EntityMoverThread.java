@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.amityregion5.projectx.common.communication.messages.sound.SoundControlMessage;
 
 import org.amityregion5.projectx.common.entities.Damageable;
 import org.amityregion5.projectx.common.entities.Entity;
@@ -33,6 +34,7 @@ import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
 import org.amityregion5.projectx.common.entities.characters.enemies.SuicideBomber;
 import org.amityregion5.projectx.common.entities.items.field.Block;
 import org.amityregion5.projectx.common.maps.AbstractMap;
+import org.amityregion5.projectx.common.tools.Sound;
 import org.amityregion5.projectx.server.communication.RawServer;
 import org.amityregion5.projectx.server.tools.CollisionDetection;
 
@@ -131,8 +133,9 @@ public class EntityMoverThread extends Thread {
                                         q.requestUpdate();
                                     toRemove.add(e);
                                     
-                                    // FIXME explosiosn!!
-                                    // gameController.getServer().relayMessage(new PlaySoundMessage(Sound.EXPLOSION));
+                                    gameController.getServer().relayMessage(
+                                       new SoundControlMessage(Sound.EXPLOSION,
+                                           SoundControlMessage.Type.ONCE));
                                 } else
                                 {
                                     Damageable dam = (Damageable) q;
@@ -155,8 +158,9 @@ public class EntityMoverThread extends Thread {
                             SuicideBomber sb = (SuicideBomber) en;
                             map.getArea().damage(sb.getCurrWeapon().getDamage()); // attack the area specifically
                             toRemove.add(sb);
-                            // FIXME explosions!!
-                            // gameController.getServer().relayMessage(new PlaySoundMessage(Sound.EXPLOSION));
+                            gameController.getServer().relayMessage(
+                                       new SoundControlMessage(Sound.EXPLOSION,
+                                           SoundControlMessage.Type.ONCE));
                         } else
                         {
                             int relY = (int) map.getPlayArea().getCenterY() - e.getCenterY();

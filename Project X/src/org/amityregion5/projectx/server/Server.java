@@ -94,15 +94,6 @@ public class Server {
             System.exit(1);
         }
     }
-    
-//    /**
-//     * Restarts the server afresh
-//     */
-//    public void restartServer()
-//    {
-//        waiting = 0;
-//        gameController.kill();
-//    }
 
     /**
      * Sets this server's controller.
@@ -122,11 +113,10 @@ public class Server {
      */
     public synchronized void addClient(String username, Client c)
     {
-        // waiting++; //handled in Client so we wait for Lobby initialization
 
-        if (clients.size() == MAX_PLAYERS) // TODO: handle this more politely
+        if (clients.size() == MAX_PLAYERS)
         {
-            c.kill();
+            c.disconnect("This game is full.",true);
         }
 
         if (controller != null)
@@ -408,7 +398,7 @@ public class Server {
                         if (clients.isEmpty()) // if nobody is playing, lets have a new game
                             Server.this.setListening(true);
                         else
-                            newc.kill();
+                            newc.disconnect("The game has already started.",true);
                     }
 
                     newc.start();

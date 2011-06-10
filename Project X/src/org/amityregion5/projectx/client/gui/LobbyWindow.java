@@ -36,6 +36,7 @@ import org.amityregion5.projectx.common.communication.MessageListener;
 import org.amityregion5.projectx.common.communication.messages.ActivePlayersMessage;
 import org.amityregion5.projectx.common.communication.messages.AnnounceMessage;
 import org.amityregion5.projectx.common.communication.messages.ChatMessage;
+import org.amityregion5.projectx.common.communication.messages.DisconnectRequestMessage;
 import org.amityregion5.projectx.common.communication.messages.GoodbyeMessage;
 import org.amityregion5.projectx.common.communication.messages.IntroduceMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
@@ -345,6 +346,23 @@ public class LobbyWindow extends JFrame implements MessageListener {
                     chatLogArea.append("[SERVER] " + am.getText() + "\n");
                     // automatically scroll down
                     chatLogArea.setCaretPosition(chatLogArea.getDocument().getLength());
+                }
+            });
+        } else if (m instanceof DisconnectRequestMessage)
+        {
+            JOptionPane.showMessageDialog(this,
+                    ((DisconnectRequestMessage) m).getReason(), "Disconnected",
+                    JOptionPane.WARNING_MESSAGE);
+            SwingUtilities.invokeLater(new Runnable() {
+
+                public void run()
+                {
+                    playerListModel.removeAllElements();
+                    playerList.setEnabled(false);
+                    chatField.setEnabled(false);
+                    sendBtn.setEnabled(false);
+                    statusLabel.setText("Disconnected.");
+                    chatLogArea.setEnabled(false);
                 }
             });
         }
