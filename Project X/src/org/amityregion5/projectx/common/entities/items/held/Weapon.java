@@ -35,9 +35,9 @@ public abstract class Weapon extends HeldItem implements DamageDealing {
     private static final long serialVersionUID = 1L;
 
     private int range; // Range (in pixels)
-    private int attackRate;
+    private double attackRate;
 
-    public Weapon(int range, int rate)
+    public Weapon(int range, double rate)
     {
         this.range = range;
         this.attackRate = rate;
@@ -52,7 +52,7 @@ public abstract class Weapon extends HeldItem implements DamageDealing {
      * Gets attack rate, in attacks per second.
      * @return attack rate in attacks per second
      */
-    public int getAttackRate()
+    public double getAttackRate()
     {
         return attackRate;
     }

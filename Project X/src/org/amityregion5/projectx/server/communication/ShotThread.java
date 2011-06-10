@@ -92,7 +92,7 @@ public class ShotThread extends Thread {
                     //server.getClients().get(player.getUsername()).s;
                 }
                 // sleeps in order to get the attack rate right
-                Thread.sleep(1000 / player.getCurrWeapon().getAttackRate());
+                Thread.sleep((int) (1000 / player.getCurrWeapon().getAttackRate()));
             } catch (InterruptedException ex)
             {
                 Logger.getLogger(ShotThread.class.getName()).log(Level.SEVERE, null, ex);

@@ -38,7 +38,7 @@ public abstract class ProjectileWeapon extends Weapon {
     private int damage;
 
     // FIXME: Please comment this! MIKE D!
-    public ProjectileWeapon(int range, int startAmmo, int _maxAmmo, int rate, int rpm, int mags, int damage)
+    public ProjectileWeapon(int range, int startAmmo, int _maxAmmo, double rate, int rpm, int mags, int damage)
     {
         super(range, rate);
         ammo = startAmmo;
@@ -114,6 +114,11 @@ public abstract class ProjectileWeapon extends Weapon {
             return true;
         }
         return false;
+    }
+
+    public boolean isSplash()
+   {
+       return false;
     }
 
 }
