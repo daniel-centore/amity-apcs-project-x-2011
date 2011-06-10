@@ -19,6 +19,8 @@
  */
 package org.amityregion5.projectx.common.entities.items.held;
 
+import java.awt.Point;
+
 /**
  * An item which releases ammo when used.
  * Generates Projectiles.
@@ -36,6 +38,7 @@ public abstract class ProjectileWeapon extends Weapon {
     private int roundsPerMag;
     private int mags;
     private int damage;
+    private Point weaponTip;
 
     // FIXME: Please comment this! MIKE D!
     public ProjectileWeapon(int range, int startAmmo, int _maxAmmo, double rate, int rpm, int mags, int damage)
@@ -114,6 +117,16 @@ public abstract class ProjectileWeapon extends Weapon {
             return true;
         }
         return false;
+    }
+
+    public void setWeaponTip(Point p)
+    {
+        weaponTip = p;
+    }
+
+    public Point getWeaponTip()
+    {
+        return weaponTip;
     }
 
     public boolean isSplash()
