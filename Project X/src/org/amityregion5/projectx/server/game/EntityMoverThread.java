@@ -33,7 +33,6 @@ import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
 import org.amityregion5.projectx.common.entities.characters.enemies.SuicideBomber;
 import org.amityregion5.projectx.common.entities.items.field.Block;
 import org.amityregion5.projectx.common.maps.AbstractMap;
-import org.amityregion5.projectx.common.tools.Sound;
 import org.amityregion5.projectx.server.communication.RawServer;
 import org.amityregion5.projectx.server.tools.CollisionDetection;
 
@@ -171,7 +170,7 @@ public class EntityMoverThread extends Thread {
                             {
                                 // game over!
                                 alive = false;
-                                gameController.getServer().kill();
+                                gameController.getServer().endGame();
                                 gameController.kill();
                                 keepRunning = false;
                                 kill();

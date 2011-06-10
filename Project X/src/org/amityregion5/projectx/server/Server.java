@@ -192,7 +192,6 @@ public class Server {
             client.send(new AnnounceMessage("Game Over!"));
             client.send(new StatusUpdateMessage(
                     StatusUpdateMessage.Type.END_GAME));
-            client.kill();
         }
         multicaster = new Multicaster(name);
         multicaster.setDaemon(true);

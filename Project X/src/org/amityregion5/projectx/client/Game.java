@@ -35,6 +35,7 @@ import org.amityregion5.projectx.client.communication.CommunicationHandler;
 import org.amityregion5.projectx.client.communication.RawCommunicationHandler;
 import org.amityregion5.projectx.client.gui.ChatDrawing;
 import org.amityregion5.projectx.client.gui.GameWindow;
+import org.amityregion5.projectx.client.gui.LobbyWindow;
 import org.amityregion5.projectx.client.gui.PopupMenuHandler;
 import org.amityregion5.projectx.client.gui.RepaintHandler;
 import org.amityregion5.projectx.client.gui.ServerChooserWindow;
@@ -80,6 +81,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
     private int lastMouseX; // last mouse coordinates, so we can update direction as moving
     private int lastMouseY;
     private String username; // current username
+    private boolean gameOver = false;
 
     /**
      * Creates a game
@@ -115,6 +117,8 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
 
     public void mouseMoved(int x, int y)
     {
+        if (gameOver) return;
+        
         lastMouseX = x;
         lastMouseY = y;
 
@@ -133,18 +137,28 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
 
     public void mousePressed(int x, int y, int button)
     {
-        if (button == MouseEvent.BUTTON1)
-            getCommunicationHandler().send(new FiringMessage(true));
+        if (gameOver)
+        {
+            new LobbyWindow(getCommunicationHandler(),null,me.getUsername());
+            GameWindow.closeWindow();
+            // TODO return to lobby if mouse clicked and game is over
+        } else if (button == MouseEvent.BUTTON1) {
+                getCommunicationHandler().send(new FiringMessage(true));
+        }
     }
 
     public void mouseReleased(int x, int y, int button)
     {
+        if (gameOver) return;
+        
         if (button == MouseEvent.BUTTON1)
             getCommunicationHandler().send(new FiringMessage(false));
     }
 
     public void keyPressed(KeyEvent e)
     {
+        if (gameOver) return; // disable key input after game ends
+        
         int keyCode = e.getKeyCode();
 
         if (ChatDrawing.isChatting() && !(e.isActionKey() || e.getKeyCode() == KeyEvent.VK_SHIFT || e.getKeyCode() == KeyEvent.VK_ALT || e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_BACK_SPACE || e.getKeyCode() == KeyEvent.VK_CONTROL))
@@ -267,6 +281,8 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
 
     public void keyReleased(int keyCode)
     {
+        if (gameOver) return; // disable key input after game is over
+        
         int speed = PlayerEntity.INITIAL_SPEED;
 
         while (depressedKeys.contains(keyCode))
@@ -351,9 +367,12 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             StatusUpdateMessage sum = (StatusUpdateMessage) m;
             if (sum.getType() == StatusUpdateMessage.Type.END_GAME)
             {
+                gameOver = true;
                 JOptionPane.showMessageDialog(null, "The enemies have taken over!", "Game Over", JOptionPane.OK_OPTION);
                 InputHandler.removeListener(this);
                 rch.kill();
+                RepaintHandler.endGame();
+                GameWindow.fireRepaintRequired();
             }
         } else if (m instanceof CashMessage)
         {
