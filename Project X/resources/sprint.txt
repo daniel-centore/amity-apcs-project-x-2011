@@ -1,0 +1,8 @@
+SPRINT:
+
+1. Enemies move at proper speeds
+2. At least 5 distinct weapons
+3. upgrades for weapons
+4. Time between waves implemented properly
+5. Enemy spawn staggering implemented properly
+6. Clear Out ALL TODOs and FIXMEs
