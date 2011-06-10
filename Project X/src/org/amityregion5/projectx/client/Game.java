@@ -54,6 +54,7 @@ import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.EntityConstants;
 import org.amityregion5.projectx.common.entities.characters.CharacterEntity;
 import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
+import org.amityregion5.projectx.common.entities.items.Upgradeable;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 import org.amityregion5.projectx.common.tools.ImageHandler;
 import org.amityregion5.projectx.common.tools.Sound;
@@ -379,6 +380,10 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                 break;
             }
 
+        } else if (m instanceof WeaponUpgradedMessage)
+        {
+            if (me.getCurrWeapon().equals(((WeaponUpgradedMessage) m).getID()))
+                ((Upgradeable) me.getCurrWeapon()).upgrade();
         } else if (m instanceof UpdateWeaponMessage)
         {
             int wep = ((UpdateWeaponMessage) m).getWeapon();

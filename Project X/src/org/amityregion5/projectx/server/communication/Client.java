@@ -32,9 +32,11 @@ import org.amityregion5.projectx.common.communication.messages.*;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.EntityConstants;
 import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
+import org.amityregion5.projectx.common.entities.items.Upgradeable;
 import org.amityregion5.projectx.common.entities.items.field.Block;
 import org.amityregion5.projectx.common.entities.items.field.Fence;
 import org.amityregion5.projectx.common.entities.items.field.Wall;
+import org.amityregion5.projectx.common.entities.items.held.Weapon;
 import org.amityregion5.projectx.server.Server;
 import org.amityregion5.projectx.server.game.GameController;
 import org.amityregion5.projectx.server.tools.CollisionDetection;
@@ -264,6 +266,17 @@ public class Client extends Thread {
                 player.spendCash(price);
                 server.relayMessage(new CashMessage(player.getCash(), player.getUniqueID()));
                 GameController.getInstance().addEntity(e);
+            }
+        } else if (m instanceof RequestUpgradeMessage) {
+            RequestUpgradeMessage rum = (RequestUpgradeMessage) m;
+            Weapon wep = player.getCurrWeapon();
+            // always should, bar pathological circumstances!
+            if (wep.getUniqueID() == rum.getID())
+            {
+                if (wep instanceof Upgradeable) {
+                    ((Upgradeable) wep).upgrade();
+                    server.relayMessage(new WeaponUpgradedMessage(rum.getID()));
+                }
             }
         } else if (m instanceof ChangedWeaponMessage)
         {
