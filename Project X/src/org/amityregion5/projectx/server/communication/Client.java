@@ -275,10 +275,15 @@ public class Client extends Thread {
             if (wep.getUniqueID() == rum.getID())
             {
                 if (wep instanceof Upgradeable) {
-                    ((Upgradeable) wep).upgrade();
-                    server.relayMessage(new WeaponUpgradedMessage(rum.getID()));
+                    Upgradeable upg = (Upgradeable) wep;
+                    // XXX getUpgradeCost() needs implementation!
+                    if (true || player.getCash() > upg.getUpgradeCost()) {
+                        upg.upgrade();
+                        server.relayMessage(new WeaponUpgradedMessage(rum.getID()));
+                    }
                 }
             }
+            //perhaps else do blocks?
         } else if (m instanceof ChangedWeaponMessage)
         {
             ChangedWeaponMessage cwm = (ChangedWeaponMessage) m;
