@@ -19,6 +19,7 @@
  */
 package org.amityregion5.projectx.common.entities.items.held;
 
+import java.awt.Point;
 import org.amityregion5.projectx.common.tools.Sound;
 
 /**
@@ -30,10 +31,21 @@ import org.amityregion5.projectx.common.tools.Sound;
 public abstract class Gun extends ProjectileWeapon
 {
     private static final long serialVersionUID = 1L;
+    private Point gunPoint;
 
     public Gun(int range, int ammo, int maxAmmo, int fireRate, int roundsPerMag, int mags, int damage)
     {
         super(range, ammo, maxAmmo, fireRate, roundsPerMag, mags, damage);
+    }
+
+    public void setGunPoint(Point p)
+    {
+        gunPoint = p;
+    }
+
+    public Point getGunPoint()
+    {
+        return gunPoint;
     }
 
 

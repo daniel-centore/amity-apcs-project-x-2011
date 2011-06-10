@@ -24,6 +24,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.geom.AffineTransform;
@@ -36,6 +37,7 @@ import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.characters.CharacterEntity;
 import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.common.entities.items.field.Area;
+import org.amityregion5.projectx.common.entities.items.held.Gun;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 import org.amityregion5.projectx.common.tools.Sound;
@@ -176,20 +178,26 @@ public class RepaintHandler extends Thread {
         if (pe.hasWeapons())
         {
             Weapon wep = pe.getCurrWeapon();
-
-            int x2 = (int) (Math.cos(Math.toRadians(pe.getDirectionFacing())) * wep.getRange()) + pe.getCenterX();
-            int y2 = (int) (Math.sin(Math.toRadians(pe.getDirectionFacing())) * wep.getRange()) + pe.getCenterY();
-
-            if (pe.getFired())
+            if(wep instanceof Gun)
             {
-                Stroke old = g.getStroke();
-                Color oldColor = g.getColor();
-                g.setStroke(new BasicStroke(6));
-                g.setColor(Color.YELLOW);
-                g.drawLine(pe.getCenterX(), pe.getCenterY(), x2, y2);
-                g.setColor(oldColor);
-                g.setStroke(old);
-                pe.setFired(false);
+                Gun gun = (Gun)wep;
+                int x2 = (int) (Math.cos(Math.toRadians(pe.getDirectionFacing())) * wep.getRange()) + pe.getCenterX();
+                int y2 = (int) (Math.sin(Math.toRadians(pe.getDirectionFacing())) * wep.getRange()) + pe.getCenterY();
+                //int x2 = (int) (Math.cos(Math.toRadians(pe.getDirectionFacing())) * wep.getRange() + gun.getGunPoint().getX());
+                //int y2 = (int) (Math.sin(Math.toRadians(pe.getDirectionFacing())) * wep.getRange() + gun.getGunPoint().getY());
+
+                if (pe.getFired())
+                {
+                    Stroke old = g.getStroke();
+                    Color oldColor = g.getColor();
+                    g.setStroke(new BasicStroke(6));
+                    g.setColor(Color.YELLOW);
+                    g.drawLine(pe.getCenterX(), pe.getCenterY(), x2, y2);
+                    //g.drawLine((int)gun.getGunPoint().getX(), (int)gun.getGunPoint().getY(), x2, y2);
+                    g.setColor(oldColor);
+                    g.setStroke(old);
+                    pe.setFired(false);
+                }
             }
         }
     }
@@ -197,10 +205,18 @@ public class RepaintHandler extends Thread {
     private static void drawWeapon(CharacterEntity pe, Graphics2D g)
     {
         // draw the weapon
-        BufferedImage wepImg = pe.getCurrWeapon().getImage();
+        Weapon wep = pe.getCurrWeapon();
+        BufferedImage wepImg = wep.getImage();
         AffineTransform at = new AffineTransform();
         at.translate(pe.getX(), pe.getY());
         at.rotate(Math.toRadians(pe.getDirectionFacing()),pe.getWidth()/2,pe.getHeight()/2);
+        if(wep instanceof Gun)
+        {
+            Gun gun = (Gun)wep;
+            int x = (int)(pe.getX() + wepImg.getWidth()*Math.cos(Math.toRadians(pe.getDirectionFacing())));
+            int y = (int)(pe.getY() + wepImg.getWidth()*Math.sin(Math.toRadians(pe.getDirectionFacing())));
+            gun.setGunPoint(new Point(x,y));
+        }
         g.drawImage(wepImg, at, null);
     }
 
