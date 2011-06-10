@@ -19,7 +19,9 @@
  */
 package org.amityregion5.projectx.common.entities.items.field;
 
+import java.awt.image.BufferedImage;
 import org.amityregion5.projectx.common.entities.Damageable;
+import org.amityregion5.projectx.common.tools.ImageHandler;
 
 /**
  * Lesser wall-style protection.
@@ -29,7 +31,6 @@ import org.amityregion5.projectx.common.entities.Damageable;
 public class Fence extends Block implements Damageable {
 
     private static final long serialVersionUID = 1L;
-
     public static final int DEFAULT_HEALTH = 1000;
     public static final int PRICE = 20;
 
@@ -42,10 +43,16 @@ public class Fence extends Block implements Damageable {
     {
         this(x, y, DEFAULT_HEALTH);
     }
+//    @Override
+//    public String getDefaultImage()
+//    {
+//        return "sprites/Fence_Straight";
+//    }
+    private static final BufferedImage image = ImageHandler.loadImage("Fence_Straight");
 
     @Override
-    public String getDefaultImage()
+    public BufferedImage getDefaultImage()
     {
-        return "sprites/Fence_Straight";
+        return image;
     }
 }

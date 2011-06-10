@@ -19,7 +19,9 @@
  */
 package org.amityregion5.projectx.common.entities.items.held;
 
+import java.awt.image.BufferedImage;
 import org.amityregion5.projectx.common.entities.items.Upgradeable;
+import org.amityregion5.projectx.common.tools.ImageHandler;
 import org.amityregion5.projectx.common.tools.Sound;
 
 /**
@@ -30,21 +32,26 @@ import org.amityregion5.projectx.common.tools.Sound;
  *
  * Not used. And it doesn't have a sprite ATM.
  */
-public class Sword extends MeleeWeapon implements Upgradeable
-{
-    private static final long serialVersionUID = 1L;
+public class Sword extends MeleeWeapon implements Upgradeable {
 
+    private static final long serialVersionUID = 1L;
     private static int SWORD_RATE = 42; // FIXME: arbitrary.
 
     public Sword(int damage)
     {
         super(SWORD_RATE, damage);
     }
+//    @Override
+//    public String getDefaultImage()
+//    {
+//        return "sprites/Pistol_1";
+//    }
+    private static final BufferedImage image = ImageHandler.loadImage("Pistol_1");
 
     @Override
-    public String getDefaultImage()
+    public BufferedImage getDefaultImage()
     {
-        return "sprites/Pistol_1";
+        return image;
     }
 
     @Override
@@ -65,15 +72,14 @@ public class Sword extends MeleeWeapon implements Upgradeable
         return -1;
     }
 
-   public void upgrade()
-   {
-       upgradeLevel++;
-   }
+    public void upgrade()
+    {
+        upgradeLevel++;
+    }
 
-   public int getUpgradeCost()
-   {
-      return 0;
-      //none yet
-   }
-
+    public int getUpgradeCost()
+    {
+        return 0;
+        //none yet
+    }
 }

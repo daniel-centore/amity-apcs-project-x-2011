@@ -67,7 +67,7 @@ public class TestingMap extends AbstractMap
 //        entities.add(wall = new Wall(a));
 
         try {
-            image = ImageHandler.loadImage("maps/TestMap");
+            image = ImageHandler.loadMap("TestMap");
         } catch (RuntimeException ex) {
             Logger.getLogger(TestingMap.class.getName()).log(Level.SEVERE, null, ex);
         }

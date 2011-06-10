@@ -44,7 +44,8 @@ public class EntityHandler {
         if (entities.containsKey(e.getUniqueID()))
             return;
 
-        e.selectImage(e.getDefaultImage());
+//        e.selectImage(e.getDefaultImage());
+        e.updateImage();
 
         entities.put(e.getUniqueID(), e);
 

@@ -19,6 +19,8 @@
  */
 package org.amityregion5.projectx.common.entities.characters;
 
+import java.awt.image.BufferedImage;
+import org.amityregion5.projectx.common.tools.ImageHandler;
 
 /**
  * Character controlled by a Client which fights Enemies. Capable of using multiple weapons.
@@ -27,10 +29,9 @@ package org.amityregion5.projectx.common.entities.characters;
  * @author Joe Stein
  */
 public class PlayerEntity extends CharacterEntity implements Comparable<PlayerEntity> {
-    
+
     private static final long serialVersionUID = 1L;
-    
-    public  static final int INITIAL_SPEED = 10; // initial move speed
+    public static final int INITIAL_SPEED = 10; // initial move speed
     private int points; // points the player has
     private int cash; // how much money they have
     private String username; // their username
@@ -53,14 +54,20 @@ public class PlayerEntity extends CharacterEntity implements Comparable<PlayerEn
      */
     public PlayerEntity(int x, int y, String username)
     {
-        this(x,y);
+        this(x, y);
         this.username = username;
     }
+//    @Override
+//    public String getDefaultImage()
+//    {
+//        return "sprites/Player";
+//    }
+    private static final BufferedImage image = ImageHandler.loadImage("Player");
 
     @Override
-    public String getDefaultImage()
+    public BufferedImage getDefaultImage()
     {
-        return "sprites/Player";
+        return image;
     }
 
     /**
@@ -133,7 +140,7 @@ public class PlayerEntity extends CharacterEntity implements Comparable<PlayerEn
     {
         cash = amount;
     }
-    
+
     public void setUsername(String name)
     {
         username = name;
@@ -149,5 +156,4 @@ public class PlayerEntity extends CharacterEntity implements Comparable<PlayerEn
     {
         return (arg0.getPoints() - this.getPoints());
     }
-
 }

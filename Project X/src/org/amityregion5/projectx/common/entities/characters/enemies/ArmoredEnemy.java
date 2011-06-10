@@ -5,7 +5,9 @@
 
 package org.amityregion5.projectx.common.entities.characters.enemies;
 
+import java.awt.image.BufferedImage;
 import org.amityregion5.projectx.common.entities.items.held.ZombieHands;
+import org.amityregion5.projectx.common.tools.ImageHandler;
 
 /**
  * Slower enemy with damage-reducing armor
@@ -40,10 +42,18 @@ public class ArmoredEnemy extends Enemy {
         return super.damage(amt - armor);
     }
 
+//    @Override
+//    public String getDefaultImage()
+//    {
+//        return "sprites/Enemy_Big"; // Need real graphic!!
+//    }
+
+    private static final BufferedImage image = ImageHandler.loadImage("Enemy_Big");
+
     @Override
-    public String getDefaultImage()
+    public BufferedImage getDefaultImage()
     {
-        return "sprites/Enemy_Big"; // Need real graphic!!
+        return image;
     }
 
 }

@@ -18,7 +18,9 @@
  */
 package org.amityregion5.projectx.common.entities.items.held;
 
+import java.awt.image.BufferedImage;
 import org.amityregion5.projectx.common.entities.items.Upgradeable;
+import org.amityregion5.projectx.common.tools.ImageHandler;
 import org.amityregion5.projectx.common.tools.Sound;
 
 /**
@@ -30,7 +32,6 @@ import org.amityregion5.projectx.common.tools.Sound;
 public class Laser extends Gun implements Upgradeable {
 
     private static final long serialVersionUID = 1L;
-
     private final int UPGRADE_COST = 100;
 
     public Laser()
@@ -43,11 +44,17 @@ public class Laser extends Gun implements Upgradeable {
     {
         return Sound.LASER;
     }
-    
+//    @Override
+//    public String getDefaultImage()
+//    {
+//        return "sprites/laser";
+//    }
+    private static final BufferedImage image = ImageHandler.loadImage("laser");
+
     @Override
-    public String getDefaultImage()
+    public BufferedImage getDefaultImage()
     {
-        return "sprites/laser";
+        return image;
     }
 
     @Override
@@ -56,15 +63,15 @@ public class Laser extends Gun implements Upgradeable {
         return "Laser";
     }
 
-   public void upgrade()
-   {
-       upgradeLevel++;
-      setDamage(getDamage() + DAMAGE_UPGRADE);
-      setMaxAmmo(getMaxAmmo() + AMMO_UPGRADE * 5);
-   }
+    public void upgrade()
+    {
+        upgradeLevel++;
+        setDamage(getDamage() + DAMAGE_UPGRADE);
+        setMaxAmmo(getMaxAmmo() + AMMO_UPGRADE * 5);
+    }
 
-   public int getUpgradeCost()
-   {
-      return UPGRADE_COST;
-   }
+    public int getUpgradeCost()
+    {
+        return UPGRADE_COST;
+    }
 }

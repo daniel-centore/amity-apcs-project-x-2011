@@ -334,7 +334,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         } else if (m instanceof AddWeaponMessage)
         {
             AddWeaponMessage awm = (AddWeaponMessage) m;
-            awm.getWeapon().setImage(ImageHandler.loadImage(awm.getWeapon().getDefaultImage()));
+//            awm.getWeapon().setImage(ImageHandler.loadImage(awm.getWeapon().getDefaultImage()));
             try
             {
                 ((CharacterEntity) entityHandler.getEntity(awm.getID())).addWeapon(awm.getWeapon());

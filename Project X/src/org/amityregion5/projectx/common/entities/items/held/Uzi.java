@@ -18,7 +18,9 @@
  */
 package org.amityregion5.projectx.common.entities.items.held;
 
+import java.awt.image.BufferedImage;
 import org.amityregion5.projectx.common.entities.items.Upgradeable;
+import org.amityregion5.projectx.common.tools.ImageHandler;
 import org.amityregion5.projectx.common.tools.Sound;
 
 /**
@@ -40,11 +42,17 @@ public class Uzi extends Gun implements Upgradeable {
     {
         return Sound.PISTOL_SHOT;
     }
-    
+//    @Override
+//    public String getDefaultImage()
+//    {
+//        return "sprites/Uzi";
+//    }
+    private static final BufferedImage image = ImageHandler.loadImage("Uzi");
+
     @Override
-    public String getDefaultImage()
+    public BufferedImage getDefaultImage()
     {
-        return "sprites/Uzi";
+        return image;
     }
 
     @Override
@@ -53,15 +61,15 @@ public class Uzi extends Gun implements Upgradeable {
         return "Uzi";
     }
 
-   public void upgrade()
-   {
-       upgradeLevel++;
-      setDamage(getDamage() + DAMAGE_UPGRADE);
-      setMaxAmmo(getMaxAmmo() + AMMO_UPGRADE * 5);
-   }
+    public void upgrade()
+    {
+        upgradeLevel++;
+        setDamage(getDamage() + DAMAGE_UPGRADE);
+        setMaxAmmo(getMaxAmmo() + AMMO_UPGRADE * 5);
+    }
 
-   public int getUpgradeCost()
-   {
-      throw new UnsupportedOperationException("Not supported yet.");
-   }
+    public int getUpgradeCost()
+    {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

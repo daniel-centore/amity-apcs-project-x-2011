@@ -33,7 +33,7 @@ public class AddWeaponMessage extends Message {
     
     private Weapon weapon;
     private long uniqueID; // the id of the person whose weapon to add
-    private String wepSpriteLoc;
+//    private String wepSpriteLoc;
 
     /**
      * 
@@ -44,7 +44,7 @@ public class AddWeaponMessage extends Message {
     {
         uniqueID = id;
         weapon = w;
-        wepSpriteLoc = w.getDefaultImage();
+//        wepSpriteLoc = w.getDefaultImage();
     }
 
     public Weapon getWeapon()
@@ -57,9 +57,9 @@ public class AddWeaponMessage extends Message {
         return uniqueID;
     }
 
-    public String getSpriteLoc()
-    {
-        return wepSpriteLoc;
-    }
+//    public String getSpriteLoc()
+//    {
+//        return wepSpriteLoc;
+//    }
 
 }

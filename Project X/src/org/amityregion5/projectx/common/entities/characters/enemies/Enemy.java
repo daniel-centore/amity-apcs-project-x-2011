@@ -19,10 +19,12 @@
  */
 package org.amityregion5.projectx.common.entities.characters.enemies;
 
+import java.awt.image.BufferedImage;
 import org.amityregion5.projectx.common.entities.Damageable;
 import org.amityregion5.projectx.common.entities.characters.CharacterEntity;
 import org.amityregion5.projectx.common.entities.items.held.ZombieHands;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
+import org.amityregion5.projectx.common.tools.ImageHandler;
 
 /**
  * Character that attacks player
@@ -33,12 +35,10 @@ import org.amityregion5.projectx.common.entities.items.held.Weapon;
 public abstract class Enemy extends CharacterEntity implements Damageable {
 
     private static final long serialVersionUID = 1L;
-
     private int value;
     private int hp; // hitpoints
     private final int maxHealth;
     private boolean hasHit = false;
-
     public static final double DEFAULT_SPEED = 1; //arbitrary speed
 
     /**
@@ -53,7 +53,7 @@ public abstract class Enemy extends CharacterEntity implements Damageable {
         hp = max;
         maxHealth = max;
         setMoveSpeed(DEFAULT_SPEED);
-        
+
         setCurrWeapon(0);
     }
 
@@ -84,7 +84,6 @@ public abstract class Enemy extends CharacterEntity implements Damageable {
         this.hp = hp;
     }
 
-
     /**
      * Checks to see if a character's health is below 0.
      */
@@ -100,10 +99,11 @@ public abstract class Enemy extends CharacterEntity implements Damageable {
      */
     public int damage(int damage)
     {
-        if (damage < 0)
+        if(damage < 0)
             return 0;
 
-        if (hp < damage) {
+        if(hp < damage)
+        {
             int pr = hp;
             hp = 0;
             return pr;
@@ -122,22 +122,27 @@ public abstract class Enemy extends CharacterEntity implements Damageable {
     public void heal(int health)
     {
         hp += health;
-        if (hp > maxHealth)
+        if(hp > maxHealth)
             hp = maxHealth;
     }
+//    @Override
+//    public String getDefaultImage()
+//    {
+//        return "sprites/Enemy";
+//    }
+    private static final BufferedImage image = ImageHandler.loadImage("Enemy");
 
     @Override
-    public String getDefaultImage()
+    public BufferedImage getDefaultImage()
     {
-        return "sprites/Enemy";
+        return image;
     }
 
-    
     public int getMaxHp()
     {
         return maxHealth;
     }
-    
+
     /**
      * Convenience method for setMoveSpeed(0)
      */
@@ -158,5 +163,4 @@ public abstract class Enemy extends CharacterEntity implements Damageable {
     {
         return value;
     }
-    
 }

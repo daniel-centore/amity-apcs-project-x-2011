@@ -18,7 +18,9 @@
  */
 package org.amityregion5.projectx.common.entities.items.field;
 
+import java.awt.image.BufferedImage;
 import org.amityregion5.projectx.common.entities.Damageable;
+import org.amityregion5.projectx.common.tools.ImageHandler;
 
 /**
  * Area in the center of the game
@@ -28,9 +30,7 @@ import org.amityregion5.projectx.common.entities.Damageable;
 public class Area extends FieldItem implements Damageable {
 
     private static final long serialVersionUID = 1L;
-    
     public static final int MAXIMUM_HEALTH = 1000;
-    
     private int hp;
 
     public Area(int x, int y)
@@ -38,11 +38,17 @@ public class Area extends FieldItem implements Damageable {
         super(x, y);
         hp = MAXIMUM_HEALTH;
     }
+//    @Override
+//    public String getDefaultImage()
+//    {
+//        return "sprites/Area";
+//    }
+    private static final BufferedImage image = ImageHandler.loadImage("Area");
 
     @Override
-    public String getDefaultImage()
+    public BufferedImage getDefaultImage()
     {
-        return "sprites/Area";
+        return image;
     }
 
     /**
@@ -72,7 +78,7 @@ public class Area extends FieldItem implements Damageable {
     public void heal(int health)
     {
         hp += health;
-        if (hp > MAXIMUM_HEALTH)
+        if(hp > MAXIMUM_HEALTH)
             hp = MAXIMUM_HEALTH;
     }
 
@@ -91,5 +97,4 @@ public class Area extends FieldItem implements Damageable {
     {
         this.hp = hp;
     }
-
 }

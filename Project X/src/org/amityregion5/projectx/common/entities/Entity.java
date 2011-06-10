@@ -44,8 +44,8 @@ public abstract class Entity implements Serializable {
     private final long uniqueID; // necessary to check identity content changes.
     private Point2D.Double location; // the entity's location
 
-    protected transient BufferedImage image; // default image representing the entity
-    protected transient BufferedImage currentImage; // current image (ie including rotation)
+//    protected transient BufferedImage image; // default image representing the entity
+//    protected transient BufferedImage currentImage; // current image (ie including rotation)
 
     private int directionFacing; // Constants in EntityConstants
     private int directionMoving; // The direction we are moving in
@@ -65,11 +65,12 @@ public abstract class Entity implements Serializable {
         uniqueID = nextUniqueID++;
         hitBox = null;
         location = new Point2D.Double(0, 0);
-        image = null;
+//        image = null;
         directionFacing = 0;
         directionMoving = 0;
         moveSpeed = 0;
-        selectImage(getDefaultImage());
+        this.updateImage();
+//        selectImage(getDefaultImage());
     }
 
     /**
@@ -89,20 +90,6 @@ public abstract class Entity implements Serializable {
     public int getHp()
     {
         return Byte.MIN_VALUE;
-    }
-
-    /**
-     * Creates a new entity with the important information set.
-     * 
-     * @param image Image to represent it.
-     * @param location Location to occupy.
-     */
-    public Entity(BufferedImage image, Point2D.Double location)
-    {
-        this();
-
-        this.image = image;
-        this.location = location;
     }
 
     /**
@@ -152,19 +139,10 @@ public abstract class Entity implements Serializable {
      */
     public BufferedImage getImage()
     {
-        return currentImage;
+        return getDefaultImage();
     }
 
-    /**
-     * Sets the image of the entity.
-     * 
-     * @param image Image to set it to
-     */
-    public void setImage(BufferedImage image)
-    {
-        this.image = image;
-        updateImage();
-    }
+    public abstract BufferedImage getDefaultImage();
 
     /**
      * @return Current facing direction
@@ -250,7 +228,7 @@ public abstract class Entity implements Serializable {
      */
     public int getWidth()
     {
-        return currentImage.getWidth();
+        return getDefaultImage().getWidth();
     }
 
     /**
@@ -258,29 +236,12 @@ public abstract class Entity implements Serializable {
      */
     public int getHeight()
     {
-        return currentImage.getHeight();
+        return getDefaultImage().getHeight();
     }
 
-    /**
-     * Sets the image of this entity to that from a particular source.
-     * 
-     * @param src A String representing the source (ie "Player" for "./resources/Player.png")
-     */
-    public void selectImage(String src)
+    public void updateImage() // updates image including rotation, etc
     {
-        image = ImageHandler.loadImage(src);
-        updateImage();
-    }
-
-    protected void updateImage() // updates image including rotation, etc
-    {
-        if (image == null)
-            return;
-        currentImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2 = (Graphics2D) currentImage.getGraphics();
-        g2.drawImage(image, 0, 0, null);
-
-        setHitBox(image.getWidth(), image.getHeight());
+        setHitBox(getDefaultImage().getWidth(), getDefaultImage().getHeight());
 
         //g2.drawImage(image, getAffineTransform(), null);
     }
@@ -312,11 +273,6 @@ public abstract class Entity implements Serializable {
     {
         return (int) (getY() + (getHeight() / 2));
     }
-
-    /**
-     * @return Returns a String representation of the default image
-     */
-    public abstract String getDefaultImage();
 
     /**
      * @return The unique ID of this entity

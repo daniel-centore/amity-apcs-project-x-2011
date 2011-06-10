@@ -2,16 +2,17 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.amityregion5.projectx.common.entities.characters.enemies;
 
+import java.awt.image.BufferedImage;
 import org.amityregion5.projectx.common.entities.items.held.ZombieHands;
+import org.amityregion5.projectx.common.tools.ImageHandler;
 
 /**
  *
  * @author Mike DiBuduo
  */
-public class BossEnemy extends Enemy{
+public class BossEnemy extends Enemy {
 
     private static final long serialVersionUID = 1L;
 
@@ -21,11 +22,16 @@ public class BossEnemy extends Enemy{
         setValue(10);
         addWeapon(new ZombieHands(damage));
     }
+//    @Override
+//    public String getDefaultImage()
+//    {
+//        return "sprites/Enemy_Big";
+//    }
+    private static final BufferedImage image = ImageHandler.loadImage("Enemy_Big");
 
     @Override
-    public String getDefaultImage()
+    public BufferedImage getDefaultImage()
     {
-        return "sprites/Enemy_Big";
+        return image;
     }
-
 }

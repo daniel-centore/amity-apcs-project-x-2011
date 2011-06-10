@@ -136,7 +136,8 @@ public abstract class CharacterEntity extends Entity {
     {
         for (Weapon wep : weapons)
         {
-            wep.selectImage(wep.getDefaultImage());
+            wep.updateImage();
+//            wep.selectImage(wep.getDefaultImage());
         }
     }
 

@@ -19,44 +19,52 @@
  */
 package org.amityregion5.projectx.common.entities.items.held;
 
+import java.awt.image.BufferedImage;
 import org.amityregion5.projectx.common.entities.items.Upgradeable;
+import org.amityregion5.projectx.common.tools.ImageHandler;
 import org.amityregion5.projectx.common.tools.Sound;
 
 public class Pistol extends Gun implements Upgradeable {
 
-   private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-   public Pistol()
-   {
-      super(600, -1, -1, 4, -1, -1, 7);
-   }
+    public Pistol()
+    {
+        super(600, -1, -1, 4, -1, -1, 7);
+    }
 
-   @Override
-   public Sound getSound()
-   {
-      return Sound.PISTOL_SHOT;
-   }
+    @Override
+    public Sound getSound()
+    {
+        return Sound.PISTOL_SHOT;
+    }
+//   @Override
+//   public String getDefaultImage()
+//   {
+//      return "sprites/Pistol";
+//   }
+    private static final BufferedImage image = ImageHandler.loadImage("Pistol");
 
-   @Override
-   public String getDefaultImage()
-   {
-      return "sprites/Pistol";
-   }
+    @Override
+    public BufferedImage getDefaultImage()
+    {
+        return image;
+    }
 
-   @Override
-   public String getName()
-   {
-      return "Magnum";
-   }
+    @Override
+    public String getName()
+    {
+        return "Magnum";
+    }
 
-   public void upgrade()
-   {
-       upgradeLevel++;
-      setDamage(getDamage() + DAMAGE_UPGRADE);
-   }
+    public void upgrade()
+    {
+        upgradeLevel++;
+        setDamage(getDamage() + DAMAGE_UPGRADE);
+    }
 
-   public int getUpgradeCost()
-   {
-      throw new UnsupportedOperationException("Not supported yet.");
-   }
+    public int getUpgradeCost()
+    {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

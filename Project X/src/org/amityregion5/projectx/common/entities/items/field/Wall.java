@@ -19,7 +19,9 @@
  */
 package org.amityregion5.projectx.common.entities.items.field;
 
+import java.awt.image.BufferedImage;
 import org.amityregion5.projectx.common.entities.Entity;
+import org.amityregion5.projectx.common.tools.ImageHandler;
 
 /**
  * Straight wall
@@ -48,9 +50,17 @@ public class Wall extends Block {
         this((int) e.getX(), (int) e.getY());
     }
     
+//    @Override
+//    public String getDefaultImage()
+//    {
+//        return "sprites/Wall_Straight";
+//    }
+
+        private static final BufferedImage image = ImageHandler.loadImage("Wall_Straight");
+
     @Override
-    public String getDefaultImage()
+    public BufferedImage getDefaultImage()
     {
-        return "sprites/Wall_Straight";
+        return image;
     }
 }

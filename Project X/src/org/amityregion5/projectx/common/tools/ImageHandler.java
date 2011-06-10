@@ -41,7 +41,18 @@ public class ImageHandler {
      */
     public static BufferedImage loadImage(String str)
     {
-        return loadFile("resources/" + str + ".png");
+        return loadFile("resources/sprites/" + str + ".png");
+    }
+
+        /**
+     * Loads an image from a source specified by a string.
+     *
+     * @param str A String representing the image source.
+     * @return An image, or null if none could be found or read.
+     */
+    public static BufferedImage loadMap(String str)
+    {
+        return loadFile("resources/maps/" + str + ".png");
     }
 
     /**

@@ -19,8 +19,10 @@
  **/
 package org.amityregion5.projectx.common.entities.items.field;
 
+import java.awt.image.BufferedImage;
 import org.amityregion5.projectx.common.entities.Buyable;
 import org.amityregion5.projectx.common.entities.Damageable;
+import org.amityregion5.projectx.common.tools.ImageHandler;
 
 /**
  * The basic Block. Used to protect prevent direct attack or movement. Has health which is drained by attacks.
@@ -31,7 +33,6 @@ import org.amityregion5.projectx.common.entities.Damageable;
 public class Block extends FieldItem implements Damageable, Buyable {
 
     private static final long serialVersionUID = 1L;
-    
     public static final int DEFAULT_HEALTH = 100;
     private int hp;
     private final int maxHealth;
@@ -83,11 +84,17 @@ public class Block extends FieldItem implements Damageable, Buyable {
     {
         return hp <= 0;
     }
+//    @Override
+//    public String getDefaultImage()
+//    {
+//        return "sprites/Block";
+//    }
+    private static final BufferedImage image = ImageHandler.loadImage("Block");
 
     @Override
-    public String getDefaultImage()
+    public BufferedImage getDefaultImage()
     {
-        return "sprites/Block";
+        return image;
     }
 
     public int getMaxHp()
@@ -95,7 +102,8 @@ public class Block extends FieldItem implements Damageable, Buyable {
         return maxHealth;
     }
 
-    public int getCost() {
+    public int getCost()
+    {
         return PRICE;
     }
 }

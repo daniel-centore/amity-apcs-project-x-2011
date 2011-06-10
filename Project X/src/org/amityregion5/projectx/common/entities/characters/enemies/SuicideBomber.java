@@ -17,11 +17,12 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
-
 package org.amityregion5.projectx.common.entities.characters.enemies;
 
+import java.awt.image.BufferedImage;
 import org.amityregion5.projectx.common.entities.items.held.Bomb;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
+import org.amityregion5.projectx.common.tools.ImageHandler;
 
 /**
  * Fast enemy that explodes upon reaching base
@@ -31,9 +32,7 @@ import org.amityregion5.projectx.common.entities.items.held.Weapon;
 public class SuicideBomber extends Enemy {
 
     private static final long serialVersionUID = 1L;
-    
     public static final double MULTIPLIER = 1.5; // how many times faster than enemy default
-
 
     public SuicideBomber(int max, int x, int y)
     {
@@ -42,11 +41,16 @@ public class SuicideBomber extends Enemy {
         addWeapon(new Bomb());
         setMoveSpeed(Enemy.DEFAULT_SPEED * MULTIPLIER);
     }
-    
-    @Override
-    public String getDefaultImage()
-    {
-        return "sprites/Suicide_Bomber";
-    }
+//    @Override
+//    public String getDefaultImage()
+//    {
+//        return "sprites/Suicide_Bomber";
+//    }
+    private static final BufferedImage image = ImageHandler.loadImage("Suicide_Bomber");
 
+    @Override
+    public BufferedImage getDefaultImage()
+    {
+        return image;
+    }
 }
