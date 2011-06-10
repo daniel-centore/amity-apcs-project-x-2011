@@ -32,7 +32,7 @@ public class StatusUpdateMessage extends TextualMessage {
 
     public enum Type
     {
-        WAITING, STARTING, END_GAME;
+        WAITING, STARTING, END_GAME, CLOSING;
     }
 
     /**

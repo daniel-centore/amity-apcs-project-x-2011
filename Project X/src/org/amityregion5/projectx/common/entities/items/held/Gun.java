@@ -20,7 +20,6 @@
 package org.amityregion5.projectx.common.entities.items.held;
 
 import java.awt.Point;
-import org.amityregion5.projectx.common.tools.Sound;
 
 /**
  * A ProjectileWeapon that fires Bullets into field.

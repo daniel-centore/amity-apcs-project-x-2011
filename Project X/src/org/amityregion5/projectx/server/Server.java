@@ -175,9 +175,31 @@ public class Server {
         {
             client.send(new AnnounceMessage("Server shutting down now!"));
             client.send(new StatusUpdateMessage(
+                    StatusUpdateMessage.Type.CLOSING));
+            client.kill();
+        }
+    }
+
+    /**
+     * Resets the game. Currently used after game end.
+     * Tells clients that the game has ended, starts accepting clients,
+     * start multicasting again, and kills the game controller.
+     */
+    public synchronized void endGame()
+    {
+        for (Client client : clients.values())
+        {
+            client.send(new AnnounceMessage("Game Over!"));
+            client.send(new StatusUpdateMessage(
                     StatusUpdateMessage.Type.END_GAME));
             client.kill();
         }
+        multicaster = new Multicaster(name);
+        multicaster.setDaemon(true);
+        multicaster.start();
+        setListening(true);
+        gameController.kill();
+        gameController = null;
     }
 
     /**
@@ -192,8 +214,9 @@ public class Server {
     }
 
     /**
-     * Tells the server whether or not to listen for client Note: setting to true does not actually start the listening thread
+     * Tells the server whether or not to listen for client
      * Also turns multicasting on or off according to listening.
+     * Note: setting to true does not actually start the listening thread
      *
      * @param listening True if it should; false otherwise
      */

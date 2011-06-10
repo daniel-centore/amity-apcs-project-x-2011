@@ -18,7 +18,6 @@
  */
 package org.amityregion5.projectx.server.game;
 
-import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
@@ -170,12 +169,13 @@ public class EntityMoverThread extends Thread {
                             map.getArea().damage(en.getCurrWeapon().getDamage());
                             if (map.getArea().killed() && alive)
                             {
+                                // game over!
                                 alive = false;
                                 gameController.getServer().kill();
                                 gameController.kill();
                                 keepRunning = false;
                                 kill();
-                                System.out.println("Ended game");
+                                System.out.println("Game over");
                             }
                         }
                     }

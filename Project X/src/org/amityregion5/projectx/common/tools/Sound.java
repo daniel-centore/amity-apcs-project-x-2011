@@ -18,6 +18,7 @@
  */
 package org.amityregion5.projectx.common.tools;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import javazoom.jl.decoder.JavaLayerException;
@@ -32,15 +33,21 @@ public enum Sound {
     NULL_SOUND(null,false),
     BG_1("resources/sounds/17_Death_Grip.mp3",true),
     LASER("resources/sounds/laser_shot.mp3",true),
-    EXPLOSION("resources/sounds/65_Pistol_Shot.mp3",false);  //TODO: add path!
+    EXPLOSION("resources/sounds/65_Pistol_Shot.mp3",false);
     
     private Player player;
-    private String file;
+    private File file;
     private boolean continuous;
 
     private Sound(String file, boolean cont)
     {
-        this.file = file;
+        if (file == null)
+        {
+            this.file = null;
+        } else
+        {
+            this.file = new File(file);
+        }
         player = null;
         continuous = cont;
     }

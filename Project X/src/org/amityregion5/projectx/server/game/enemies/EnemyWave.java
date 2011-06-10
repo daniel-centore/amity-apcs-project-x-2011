@@ -86,7 +86,7 @@ public class EnemyWave {
             {
                 newEnemy = new DefaultEnemy((int) (oldEnemy.getMaxHp() * waveEnemyHealth(waveNumber)), 0, 0);
             }
-            EnemyGroup newGroup = new EnemyGroup(newEnemy, (int) (group.getNumEnemies() * waveNumEnemies(waveNumber)));
+            EnemyGroup newGroup = new EnemyGroup(newEnemy, (int) (waveNumEnemies(waveNumber)));
             newEnemies.add(newGroup);
         }
         EnemyWave nextWave = new EnemyWave(waveNumber + 1, newEnemies);
@@ -102,7 +102,7 @@ public class EnemyWave {
 
     public static double waveNumEnemies(int wn)
     {
-        return (wn * wn + 34 * wn + 289) / 324; // quadratically-increasing number
+        return ((wn-1)*(wn-1) + 5 * (wn-1) + 10); // quadratically-increasing number
     }
 
     public static double waveEnemyHealth(int wn)

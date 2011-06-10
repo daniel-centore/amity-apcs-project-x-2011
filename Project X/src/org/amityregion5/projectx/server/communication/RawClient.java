@@ -101,7 +101,6 @@ public class RawClient extends Thread {
             try
             {
                 int dir = in.readInt();
-
                 this.handle(dir);
             } catch (IOException ex)
             {

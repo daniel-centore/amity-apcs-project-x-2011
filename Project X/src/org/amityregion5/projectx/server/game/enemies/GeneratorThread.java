@@ -37,7 +37,7 @@ import org.amityregion5.projectx.common.maps.AbstractMap;
 import org.amityregion5.projectx.server.game.GameController;
 
 /**
- * Class documentation.
+ * The thread that generates (and sends out) enemies.
  *
  * @author Michael Wenke
  */

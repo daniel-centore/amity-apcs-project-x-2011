@@ -352,12 +352,12 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             {
                 JOptionPane.showMessageDialog(null, "The enemies have taken over!", "Game Over", JOptionPane.OK_OPTION);
                 InputHandler.removeListener(this);
+                rch.kill();
             }
         } else if (m instanceof CashMessage)
         {
             CashMessage cm = (CashMessage) m;
             ((PlayerEntity) entityHandler.getEntity(cm.getID())).setCash(cm.getAmount());
-            // ChatDrawing.drawChat("You now have: $" + cm.getAmount());
         } else if (m instanceof PointMessage)
         {
             PointMessage pm = (PointMessage) m;
