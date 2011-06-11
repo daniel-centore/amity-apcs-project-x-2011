@@ -7,9 +7,7 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
 /**
- * Collection which makes an ArrayList concurrent. Has the potential to skip elements.
- * Basically it only guarantees that most of the elements will be returned, and that
- * no {@link ConcurrentModificationException} will be thrown.
+ * Collection which makes an ArrayList concurrent.
  * 
  * @author Daniel Centore
  * @param E The type of data to store
@@ -29,7 +27,10 @@ public class ConcurrentArrayList<E> extends AbstractCollection<E> {
     @Override
     public synchronized boolean add(E arg0)
     {
-        backend.add(arg0);
+        synchronized (backend)
+        {
+            backend.add(arg0);
+        }
         return true;
     }
 
@@ -64,15 +65,26 @@ public class ConcurrentArrayList<E> extends AbstractCollection<E> {
     }
 
     @Override
-    public synchronized boolean remove(Object arg0)
+    public boolean remove(Object arg0)
     {
-        backend.remove(arg0);
+        synchronized (backend)
+        {
+            Iterator<E> itr = iterator();
+            while (itr.hasNext())
+            {
+                if (itr.next() == arg0)
+                {
+                    itr.remove();
+                    return true;
+                }
+            }
+        }
 
-        return true;
+        return false;
     }
 
     @Override
-    public synchronized boolean removeAll(Collection<?> c)
+    public boolean removeAll(Collection<?> c)
     {
         for (Object o : c)
             remove(o);
@@ -138,7 +150,11 @@ public class ConcurrentArrayList<E> extends AbstractCollection<E> {
         @Override
         public void remove()
         {
-            throw new UnsupportedOperationException("Not yet (but possibly will be!) supported");
+            synchronized (backend)
+            {
+                backend.remove(currIndex);
+            }
+            currIndex--;
         }
     }
 
