@@ -22,16 +22,17 @@ package org.amityregion5.projectx;
 import java.util.AbstractCollection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.amityregion5.projectx.common.entities.Entity;
 
 public class ConcurrentHashMapWrapper extends AbstractCollection<Entity> {
     
-    private HashMap<Long, Entity> map;
+    private ConcurrentHashMap<Long, Entity> map;
     
     public ConcurrentHashMapWrapper()
     {
-        map = new HashMap<Long, Entity>();
+        map = new ConcurrentHashMap<Long, Entity>();
     }
     
     @Override
