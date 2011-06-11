@@ -102,6 +102,6 @@ public class EnemyWave {
 
     public static double waveNumEnemies(int wn)
     {
-        return (wn*wn + 34*wn + 289) / 324;
+        return (wn*wn + 12*wn + 36) / 49;
     }
 }

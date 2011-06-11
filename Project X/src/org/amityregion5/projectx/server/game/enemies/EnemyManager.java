@@ -43,7 +43,7 @@ public class EnemyManager {
     private ArrayList<Point> spawnArea;
     private GameController controller;
     private final int NUM_WAVES = 666; // Completely arbitrary
-    private final int START_WAVE = 0; // for testing
+    private final int START_WAVE = 1; // for testing
 
     public EnemyManager(GameController c, ArrayList<Point> area)
     {
