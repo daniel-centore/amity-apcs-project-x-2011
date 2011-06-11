@@ -3,7 +3,6 @@ package org.amityregion5.projectx;
 import java.util.AbstractCollection;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
 /**
@@ -25,7 +24,7 @@ public class ConcurrentArrayList<E> extends AbstractCollection<E> {
     }
 
     @Override
-    public synchronized boolean add(E arg0)
+    public boolean add(E arg0)
     {
         synchronized (backend)
         {
@@ -67,16 +66,13 @@ public class ConcurrentArrayList<E> extends AbstractCollection<E> {
     @Override
     public boolean remove(Object arg0)
     {
-        synchronized (backend)
+        Iterator<E> itr = iterator();
+        while (itr.hasNext())
         {
-            Iterator<E> itr = iterator();
-            while (itr.hasNext())
+            if (itr.next() == arg0)
             {
-                if (itr.next() == arg0)
-                {
-                    itr.remove();
-                    return true;
-                }
+                itr.remove();
+                return true;
             }
         }
 
