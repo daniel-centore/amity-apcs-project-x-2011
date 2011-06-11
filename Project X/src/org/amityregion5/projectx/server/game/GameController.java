@@ -25,8 +25,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.amityregion5.projectx.CentoreCollection;
 import org.amityregion5.projectx.client.gui.GameWindow;
 import org.amityregion5.projectx.common.communication.messages.AddEntityMessage;
 import org.amityregion5.projectx.common.communication.messages.AddMeMessage;
@@ -66,7 +66,7 @@ public final class GameController {
 
     private List<PlayerEntity> players; // List of current Players (do we even need this..?)
     private Collection<Client> clients; // List of current Clients
-    private volatile List<Entity> entities; // List of current Entities
+    private volatile Collection<Entity> entities; // List of current Entities
     private EntityMoverThread entityMoverThread; // will be in charge of moving entities
     private Server server; // Our server
     private AbstractMap map; // Our map
@@ -83,7 +83,7 @@ public final class GameController {
         this.server = server;
         players = new ArrayList<PlayerEntity>();
         clients = server.getClients().values();
-        entities = new CopyOnWriteArrayList<Entity>();
+        entities = new CentoreCollection<Entity>();
 
         // TODO send clients the map for this game!
         // Will fix in post-release version.
@@ -143,7 +143,7 @@ public final class GameController {
     /**
      * @return A list of current entities
      */
-    public List<Entity> getEntities()
+    public Collection<Entity> getEntities()
     {
         return entities;
     }

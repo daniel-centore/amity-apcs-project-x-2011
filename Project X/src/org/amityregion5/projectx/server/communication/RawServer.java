@@ -102,4 +102,9 @@ public class RawServer extends Thread {
         }
     }
 
+    public void send(char start, String s)
+    {
+        send(start + s);
+    }
+
 }

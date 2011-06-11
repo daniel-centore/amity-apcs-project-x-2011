@@ -39,12 +39,14 @@ public class EntityHandler {
      * Adds an entity (NOTE: We should NOT create entities client-side!)
      * @param e Entity to add
      */
-    public synchronized void addEntity(Entity e)
+    public synchronized void addEntity(final Entity e)
     {
         if (entities.containsKey(e.getUniqueID()))
+        {
+            // TODO: unkludge
             return;
+        }
 
-//        e.selectImage(e.getDefaultImage());
         e.updateImage();
 
         entities.put(e.getUniqueID(), e);

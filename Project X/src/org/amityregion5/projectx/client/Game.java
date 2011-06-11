@@ -469,7 +469,8 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
     @Override
     public void handle(String str)
     {
-        if (str.startsWith(Constants.FIRE_PREF))
+        char start = str.toCharArray()[0];
+        if (start == Constants.FIRE_PREF)
         {
             PlayerEntity p = (PlayerEntity) entityHandler.getEntity(Long.valueOf(str.substring(1)));
             if (!p.getFired())
@@ -479,18 +480,6 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             }
             GameWindow.fireRepaintRequired();
             return;
-        }
-        if (str.startsWith(Constants.SOUND_PREF))   //@deprecated
-        {
-            String[] ln = str.substring(1).split(",");
-            Sound sound = Sound.valueOf(ln[0]);
-            Type cmd = SoundControlMessage.Type.valueOf(ln[1]);
-            switch (cmd)
-            {
-                case ONCE:
-                    SoundManager.playOnce(sound);
-                    break;
-            }
         }
         String[] entStrs = str.split(";");
         for (int i = 0; i < entStrs.length; i++)

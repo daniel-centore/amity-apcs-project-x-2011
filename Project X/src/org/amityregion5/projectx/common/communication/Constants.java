@@ -37,7 +37,7 @@ public class Constants {
     public static final String UDPGROUP = "230.0.0.1";
     public static final int MULTICAST_INTERVAL = 2000;
 
-    public static final String FIRE_PREF = ">";
-    public static String SOUND_PREF = "#";
+    public static final char FIRE_PREF = '>';
+    public static final char SOUND_PREF = '#';
 
 }

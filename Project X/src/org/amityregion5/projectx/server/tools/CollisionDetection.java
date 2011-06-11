@@ -20,7 +20,7 @@
 package org.amityregion5.projectx.server.tools;
 
 import java.awt.image.BufferedImage;
-import java.util.List;
+import java.util.Collection;
 
 import org.amityregion5.projectx.common.entities.Entity;
 
@@ -40,7 +40,7 @@ public class CollisionDetection
      * @param ents List of entities
      * @return Whether or not it has a collision
      */
-    public static boolean hasCollision(Entity a, List<Entity> ents)
+    public static boolean hasCollision(Entity a, Collection<Entity> ents)
     {
         for (Entity e : ents)
         {
