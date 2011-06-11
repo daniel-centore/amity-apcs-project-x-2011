@@ -19,7 +19,8 @@
 package org.amityregion5.projectx.client.handlers;
 
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.amityregion5.projectx.client.gui.GameWindow;
 import org.amityregion5.projectx.common.entities.Entity;
@@ -33,7 +34,7 @@ import org.amityregion5.projectx.common.entities.Entity;
  */
 public class EntityHandler {
 
-    private volatile HashMap<Long, Entity> entities = new HashMap<Long, Entity>(); // the set of current entities
+    private volatile Map<Long, Entity> entities = new ConcurrentHashMap<Long, Entity>(); // the set of current entities
 
     /**
      * Adds an entity (NOTE: We should NOT create entities client-side!)
