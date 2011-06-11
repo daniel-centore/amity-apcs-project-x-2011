@@ -19,15 +19,12 @@ public class BossEnemy extends Enemy {
     public BossEnemy(int damage, int max, int x, int y)
     {
         super(max, x, y);
-        setValue(10);
+        setValue(100);
         addWeapon(new ZombieHands(damage));
     }
-//    @Override
-//    public String getDefaultImage()
-//    {
-//        return "sprites/Enemy_Big";
-//    }
-    private static final BufferedImage image = ImageHandler.loadImage("Enemy_Big");
+
+    // TODO: need better boss image
+    private static final BufferedImage image = ImageHandler.loadImage("Enemy_Boss");
 
     @Override
     public BufferedImage getDefaultImage()

@@ -37,15 +37,11 @@ public class SuicideBomber extends Enemy {
     public SuicideBomber(int max, int x, int y)
     {
         super(max, x, y);
-        setValue(2);
+        setValue(10);
         addWeapon(new Bomb());
         setMoveSpeed(Enemy.DEFAULT_SPEED * MULTIPLIER);
     }
-//    @Override
-//    public String getDefaultImage()
-//    {
-//        return "sprites/Suicide_Bomber";
-//    }
+
     private static final BufferedImage image = ImageHandler.loadImage("Suicide_Bomber");
 
     @Override

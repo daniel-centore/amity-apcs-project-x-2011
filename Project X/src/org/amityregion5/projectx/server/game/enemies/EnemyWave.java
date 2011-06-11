@@ -20,8 +20,9 @@
 package org.amityregion5.projectx.server.game.enemies;
 
 import java.util.ArrayList;
-import org.amityregion5.projectx.common.entities.characters.enemies.ArmoredEnemy;
 
+import org.amityregion5.projectx.common.entities.characters.enemies.ArmoredEnemy;
+import org.amityregion5.projectx.common.entities.characters.enemies.BossEnemy;
 import org.amityregion5.projectx.common.entities.characters.enemies.DefaultEnemy;
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
 import org.amityregion5.projectx.common.entities.characters.enemies.SuicideBomber;
@@ -36,11 +37,41 @@ public class EnemyWave {
     private ArrayList<EnemyGroup> enemies;
     private long spawnTime;
 
+    /**
+     * Creates this wave. Use difficulty, etc. to generate the wave.
+     */
     public EnemyWave(int n, ArrayList<EnemyGroup> en)
     {
         waveNumber = n;
-        enemies = en;
-        spawnTime = 1000; // Random spawn time
+        enemies = new ArrayList<EnemyGroup>(en.size());
+        for (EnemyGroup group : en)
+        {
+            Enemy oldEnemy = group.getEnemy();
+            Enemy newEnemy;
+            int number = -1;
+            if (oldEnemy instanceof BossEnemy)
+            {
+                newEnemy = new BossEnemy(n, oldEnemy.getMaxHp(), 0, 0);
+                number = 1;
+            }
+            else if (oldEnemy instanceof SuicideBomber)
+            {
+                newEnemy = new SuicideBomber(oldEnemy.getMaxHp(), 0, 0);
+            }
+            else if (oldEnemy instanceof ArmoredEnemy)
+            {
+                newEnemy = new ArmoredEnemy(((ArmoredEnemy) oldEnemy).getArmor(), oldEnemy.getMaxHp(), 0, 0);
+            }
+            else
+            {
+                newEnemy = new DefaultEnemy(oldEnemy.getMaxHp(), 0, 0);
+            }
+            if (number < 0)
+                number = (int) (waveNumEnemies(waveNumber));
+            EnemyGroup newGroup = new EnemyGroup(newEnemy, number);
+            enemies.add(newGroup);
+        }
+        spawnTime = (int) (1000 * waveSpawnTime(n));
     }
 
     public long getSpawnTime()
@@ -63,37 +94,6 @@ public class EnemyWave {
         return enemies;
     }
 
-    /**
-     * Create the next wave. Will use difficulty, etc. to generate the wave.
-     * 
-     * @return the next wave to be sent
-     */
-    public EnemyWave nextWave()
-    {
-        ArrayList<EnemyGroup> newEnemies = new ArrayList<EnemyGroup>();
-        for (int i = 0; i < enemies.size(); i++)
-        {
-            EnemyGroup group = enemies.get(i);
-            Enemy oldEnemy = group.getEnemy();
-            Enemy newEnemy;
-            if (oldEnemy instanceof SuicideBomber)
-            {
-                newEnemy = new SuicideBomber(oldEnemy.getMaxHp(), 0, 0);
-            } else if (oldEnemy instanceof ArmoredEnemy)
-            {
-                newEnemy = new ArmoredEnemy(((ArmoredEnemy) oldEnemy).getArmor(), oldEnemy.getMaxHp(), 0, 0);
-            } else
-            {
-                newEnemy = new DefaultEnemy(oldEnemy.getMaxHp(), 0, 0);
-            }
-            EnemyGroup newGroup = new EnemyGroup(newEnemy, (int) (waveNumEnemies(waveNumber)));
-            newEnemies.add(newGroup);
-        }
-        EnemyWave nextWave = new EnemyWave(waveNumber + 1, newEnemies);
-        nextWave.setSpawnTime((int) (spawnTime * waveSpawnTime(waveNumber)));
-        return nextWave;
-
-    }
 
     public static double waveSpawnTime(int wn)
     {
@@ -102,6 +102,6 @@ public class EnemyWave {
 
     public static double waveNumEnemies(int wn)
     {
-        return ((wn-1)*(wn-1) + 5 * (wn-1) + 10); // quadratically-increasing number
+        return (wn*wn + 34*wn + 289) / 324;
     }
 }

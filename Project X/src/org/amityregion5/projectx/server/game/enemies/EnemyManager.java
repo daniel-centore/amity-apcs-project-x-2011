@@ -21,8 +21,9 @@ package org.amityregion5.projectx.server.game.enemies;
 
 import java.awt.Point;
 import java.util.ArrayList;
-import org.amityregion5.projectx.common.entities.characters.enemies.ArmoredEnemy;
 
+import org.amityregion5.projectx.common.entities.characters.enemies.ArmoredEnemy;
+import org.amityregion5.projectx.common.entities.characters.enemies.BossEnemy;
 import org.amityregion5.projectx.common.entities.characters.enemies.DefaultEnemy;
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
 import org.amityregion5.projectx.common.entities.characters.enemies.SuicideBomber;
@@ -39,7 +40,6 @@ public class EnemyManager {
     public static final int INITIAL_SPAWN_TIMEOUT = 4500; // how many ms before we start spawining
 
     private GeneratorThread gen;
-    private EnemyWave wave; // Current wave
     private ArrayList<Point> spawnArea;
     private GameController controller;
     private final int NUM_WAVES = 666; // Completely arbitrary
@@ -50,26 +50,12 @@ public class EnemyManager {
         controller = c;
         spawnArea = area;
 
-        EnemyGroup group = createEnemyGroup(new DefaultEnemy(1, 0, 0), 5); // Arbitrary first wave with 5 enemies w/10 health
-        EnemyGroup bomberGroup = createEnemyGroup(new SuicideBomber(1, 0, 0), 3);
-        EnemyGroup armorGroup = createEnemyGroup(new ArmoredEnemy(2, 1, 0, 0), 3);
-        ArrayList<EnemyGroup> enemies = new ArrayList<EnemyGroup>();
-        enemies.add(group);
-        enemies.add(bomberGroup);
-        enemies.add(armorGroup);
-        wave = new EnemyWave(1, enemies);
         gen = new GeneratorThread(controller, spawnArea, this);
-        gen.addWave(wave);
     }
 
     public EnemyGroup createEnemyGroup(Enemy en, int num)
     {
         return new EnemyGroup(en, num);
-    }
-
-    public void setWave(EnemyWave w)
-    {
-        wave = w;
     }
 
     /**
@@ -89,19 +75,15 @@ public class EnemyManager {
                 {
                     e.printStackTrace();
                 }
-                EnemyGroup group = createEnemyGroup(new DefaultEnemy(10, 0, 0), 5);
-                EnemyGroup bomberGroup = createEnemyGroup(new SuicideBomber(5, 0, 0), 3);
-                EnemyGroup armorGroup = createEnemyGroup(new ArmoredEnemy(2, 10, 0, 0), 3);
                 ArrayList<EnemyGroup> enemies = new ArrayList<EnemyGroup>();
-                enemies.add(group);
-                enemies.add(bomberGroup);
-                enemies.add(armorGroup);
-                wave = new EnemyWave(1, enemies);
-                for (int i = 0; i < NUM_WAVES; i++)
+                enemies.add(createEnemyGroup(new ArmoredEnemy(2, 10, 0, 0), 3));
+                enemies.add(createEnemyGroup(new SuicideBomber(5, 0, 0), 2));
+                enemies.add(createEnemyGroup(new DefaultEnemy(10, 0, 0), 5));
+                enemies.add(createEnemyGroup(new BossEnemy(10, 100, 0, 0), 1));
+                for (int i = 1; i <= NUM_WAVES; i++)
                 {
                     if (i >= START_WAVE)
-                        gen.addWave(wave);
-                    wave = wave.nextWave();
+                        gen.addWave(new EnemyWave(i, enemies));
                 }
                 gen.start();
             }
@@ -115,7 +97,7 @@ public class EnemyManager {
 
     public static int waveDelayTime(int wn)
     {
-        double time = 10;
+        double time = 30;
         time += 10 * wn * Math.log(2) / Math.log(wn + 1);
         return (int) (1000 * time);
     }

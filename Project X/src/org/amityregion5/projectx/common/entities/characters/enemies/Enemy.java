@@ -49,7 +49,7 @@ public abstract class Enemy extends CharacterEntity implements Damageable {
     public Enemy(int max, int x, int y)
     {
         super(x, y);
-        value = 1;
+        value = 5;
         hp = max;
         maxHealth = max;
         setMoveSpeed(DEFAULT_SPEED);

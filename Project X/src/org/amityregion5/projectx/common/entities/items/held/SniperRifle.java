@@ -30,6 +30,7 @@ import org.amityregion5.projectx.common.tools.Sound;
  */
 public class SniperRifle extends Gun implements DamageDealing, Upgradeable
 {
+    public static final long serialVersionUID = 1L;
 
     private final int UPGRADE_COST = 150;
 

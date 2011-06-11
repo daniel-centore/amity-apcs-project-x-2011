@@ -30,50 +30,51 @@ import org.amityregion5.projectx.common.tools.Sound;
  */
 public class RPG extends Gun implements Upgradeable, DamageDealing
 {
+    public static final long serialVersionUID = 1L;
 
-   private final int UPGRADE_COST = 250;
-   private final int AMMO_UPGRADE = 5;
+    private final int UPGRADE_COST = 250;
+    private final int AMMO_UPGRADE = 5;
 
-   public RPG()
-   {
-      super(600, -1, -1, .25, -1, -1, 10);
-   }
+    public RPG()
+    {
+        super(600, -1, -1, .25, -1, -1, 10);
+    }
 
-   @Override
-   public Sound getSound()
-   {
-      return null;
-      //none yet
-   }
+    @Override
+        public Sound getSound()
+        {
+            return null;
+            //none yet
+        }
 
-   @Override
-   public String getName()
-   {
-      return "RPG-7";
-   }
+    @Override
+        public String getName()
+        {
+            return "RPG-7";
+        }
 
-   public BufferedImage getDefaultImage()
-   {
-       //none yet TODO rpg sprite
-      return null;
-      
-   }
+    public BufferedImage getDefaultImage()
+    {
+        //none yet TODO rpg sprite
+        return null;
 
-   public int getUpgradeCost()
-   {
-      return UPGRADE_COST;
-   }
+    }
 
-   public void upgrade()
-   {
-      upgradeLevel++;
-      setDamage(getDamage() + DAMAGE_UPGRADE);
-      setMaxAmmo(getMaxAmmo() + AMMO_UPGRADE);
-   }
+    public int getUpgradeCost()
+    {
+        return UPGRADE_COST;
+    }
 
-   @Override
-   public boolean isSplash()
-   {
-      return true;
-   }
+    public void upgrade()
+    {
+        upgradeLevel++;
+        setDamage(getDamage() + DAMAGE_UPGRADE);
+        setMaxAmmo(getMaxAmmo() + AMMO_UPGRADE);
+    }
+
+    @Override
+        public boolean isSplash()
+        {
+            return true;
+        }
 }

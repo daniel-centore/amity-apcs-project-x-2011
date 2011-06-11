@@ -26,7 +26,7 @@ public class ArmoredEnemy extends Enemy {
         armor = ar;
 
         setMoveSpeed(Enemy.DEFAULT_SPEED * MULTIPLIER);
-        setValue(2);
+        setValue(10);
         
         addWeapon(new ZombieHands(1));
     }
