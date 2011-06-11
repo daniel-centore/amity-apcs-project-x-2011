@@ -277,9 +277,11 @@ public class Client extends Thread {
                 if (wep instanceof Upgradeable) {
                     Upgradeable upg = (Upgradeable) wep;
                     // XXX getUpgradeCost() needs implementation!
-                    if (true || player.getCash() > upg.getUpgradeCost()) {
+                    if (player.getCash() >= upg.getUpgradeCost()) {
                         upg.upgrade();
+                        player.spendCash(upg.getUpgradeCost());
                         server.relayMessage(new WeaponUpgradedMessage(rum.getID()));
+                        server.relayMessage(new CashMessage(player.getCash(), player.getUniqueID()));
                     }
                 }
             }

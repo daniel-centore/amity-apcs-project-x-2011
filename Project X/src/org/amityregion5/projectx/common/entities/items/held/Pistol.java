@@ -27,6 +27,8 @@ import org.amityregion5.projectx.common.tools.Sound;
 public class Pistol extends Gun implements Upgradeable {
 
     private static final long serialVersionUID = 1L;
+    
+    private final int UPGRADE_COST = 50;
 
     public Pistol()
     {
@@ -65,6 +67,6 @@ public class Pistol extends Gun implements Upgradeable {
 
     public int getUpgradeCost()
     {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return UPGRADE_COST;
     }
 }

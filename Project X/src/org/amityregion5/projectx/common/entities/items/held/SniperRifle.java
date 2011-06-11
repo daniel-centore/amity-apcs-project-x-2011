@@ -28,43 +28,45 @@ import org.amityregion5.projectx.common.tools.Sound;
  *
  * @author Mike DiBuduo
  */
-public class SniperRifle extends Gun implements DamageDealing, Upgradeable{
+public class SniperRifle extends Gun implements DamageDealing, Upgradeable
+{
 
-   private final int UPGRADE_COST = 150;
-   
-   
-   public SniperRifle(int range, int ammo, int maxAmmo, double fireRate, int roundsPerMag, int mags, int damage)
-   {
-      super(1000, -1, -1, 1, -1, -1, 20);
-   }
-   @Override
-   public Sound getSound()
-   {
-      // TODO sniper rifle sound
-      return null;
-   }
+    private final int UPGRADE_COST = 150;
 
-   @Override
-   public String getName()
-   {
-      return "M40";
-   }
+    public SniperRifle(int range, int ammo, int maxAmmo, double fireRate, int roundsPerMag, int mags, int damage)
+    {
+        super(1000, -1, -1, 1, -1, -1, 20);
+    }
 
-   public BufferedImage getDefaultImage()
-   {
-      //none
-      return null;
-      // TODO sniper rifle sprite
-   }
+    @Override
+    public Sound getSound()
+    {
+        // TODO sniper rifle sound
+        return null;
+    }
 
-   public int getUpgradeCost()
-   {
-      return UPGRADE_COST;
-   }
+    @Override
+    public String getName()
+    {
+        return "M40";
+    }
 
-   public void upgrade()
-   {
-      throw new UnsupportedOperationException("Not supported yet.");
-   }
+    public BufferedImage getDefaultImage()
+    {
+        //none
+        return null;
+        // TODO sniper rifle sprite
+    }
 
+    public int getUpgradeCost()
+    {
+        return UPGRADE_COST;
+    }
+
+    public void upgrade()
+    {
+        upgradeLevel++;
+        setDamage(getDamage() + DAMAGE_UPGRADE);
+        setMaxAmmo(getMaxAmmo() + AMMO_UPGRADE * 5);
+    }
 }
