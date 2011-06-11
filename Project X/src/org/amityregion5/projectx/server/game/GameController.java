@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.amityregion5.projectx.CentoreCollection;
 import org.amityregion5.projectx.client.gui.GameWindow;
@@ -83,7 +84,7 @@ public final class GameController {
         this.server = server;
         players = new ArrayList<PlayerEntity>();
         clients = server.getClients().values();
-        entities = new CentoreCollection<Entity>();
+        entities = new CopyOnWriteArrayList<Entity>();
 
         // TODO send clients the map for this game!
         // Will fix in post-release version.

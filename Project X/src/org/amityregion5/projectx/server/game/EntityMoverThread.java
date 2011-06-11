@@ -67,122 +67,113 @@ public class EntityMoverThread extends Thread {
             final List<Entity> toRemove = new ArrayList<Entity>();
             for (final Entity e : gameController.getEntities())
             {
-                new Thread()
+                double r = e.getMoveSpeed();
+                double offsetX = 0;
+                double offsetY = 0;
+                if (r > 0)
                 {
-                    public void run()
+                    double theta = e.getDirectionMoving();
+
+                    offsetX = r * Math.cos(Math.toRadians(theta));
+                    offsetY = r * Math.sin(Math.toRadians(theta));
+                    double newX = offsetX + e.getX();
+                    double newY = offsetY + e.getY();
+
+                    boolean collision = false;
+                    for (Entity q : gameController.getEntities())
                     {
-                        double r = e.getMoveSpeed();
-                        double offsetX = 0;
-                        double offsetY = 0;
-                        if (r > 0)
+                        if (q instanceof Block && q != e)
+                            if (CollisionDetection.hasCollision(e, (int) offsetX, (int) offsetY, q))
+                            {
+                                collision = true;
+                                break;
+                            }
+                    }
+
+                    if (e instanceof PlayerEntity)
+                    {
+                        Rectangle thb = e.getHitBox();
+                        thb.setLocation((int) newX, (int) newY);
+
+                        // AN, player base
+                        if (map.getPlayArea().contains(thb))
                         {
-                            double theta = e.getDirectionMoving();
-
-                            offsetX = r * Math.cos(Math.toRadians(theta));
-                            offsetY = r * Math.sin(Math.toRadians(theta));
-                            double newX = offsetX + e.getX();
-                            double newY = offsetY + e.getY();
-
-                            boolean collision = false;
-                            for (Entity q : gameController.getEntities())
-                            {
-                                if (q instanceof Block && q != e)
-                                    if (CollisionDetection.hasCollision(e, (int) offsetX, (int) offsetY, q))
-                                    {
-                                        collision = true;
-                                        break;
-                                    }
-                            }
-
-                            if (e instanceof PlayerEntity)
-                            {
-                                Rectangle thb = e.getHitBox();
-                                thb.setLocation((int) newX, (int) newY);
-
-                                // AN, player base
-                                if (map.getPlayArea().contains(thb))
-                                {
-                                    e.setX(newX);
-                                    e.setY(newY);
-                                }
-                            } else if (!collision)
-                            {
-                                e.setX(newX);
-                                e.setY(newY);
-                            }
+                            e.setX(newX);
+                            e.setY(newY);
                         }
+                    } else if (!collision)
+                    {
+                        e.setX(newX);
+                        e.setY(newY);
+                    }
+                }
 
-                        if (e instanceof Enemy)
+                if (e instanceof Enemy)
+                {
+                    Enemy en = (Enemy) e;
+
+                    for (Entity q : gameController.getEntities())
+                    {
+                        if (q instanceof Block && q != e)
                         {
-                            Enemy en = (Enemy) e;
-
-                            for (Entity q : gameController.getEntities())
+                            if (CollisionDetection.hasCollision(e, (int) offsetX, (int) offsetY, q))
                             {
-                                if (q instanceof Block && q != e)
+                                if (e instanceof SuicideBomber)
                                 {
-                                    if (CollisionDetection.hasCollision(e, (int) offsetX, (int) offsetY, q))
-                                    {
-                                        if (e instanceof SuicideBomber)
-                                        {
-                                            ((Block) q).damage(((SuicideBomber) e).getCurrWeapon().getDamage());
-                                            if (((Damageable) q).killed())
-                                                toRemove.add(q);
-                                            else
-                                                q.requestUpdate();
-                                            toRemove.add(e);
-                                            
-                                            gameController.getServer().relayMessage(
-                                               new SoundControlMessage(Sound.EXPLOSION,
-                                                   SoundControlMessage.Type.ONCE));
-                                        } else
-                                        {
-                                            Damageable dam = (Damageable) q;
+                                    ((Block) q).damage(((SuicideBomber) e).getCurrWeapon().getDamage());
+                                    if (((Damageable) q).killed())
+                                        toRemove.add(q);
+                                    else
+                                        q.requestUpdate();
+                                    toRemove.add(e);
 
-                                            dam.damage(en.getCurrWeapon().getDamage());
-
-                                            if (dam.killed())
-                                                toRemove.add(q);
-                                            else
-                                                q.requestUpdate();
-                                        }
-                                    }
-                                }
-                            }
-
-                            if (CollisionDetection.hasCollision(en, 0, 0, map.getArea()))
-                            {
-                                if (en instanceof SuicideBomber)
-                                {
-                                    SuicideBomber sb = (SuicideBomber) en;
-                                    map.getArea().damage(sb.getCurrWeapon().getDamage()); // attack the area specifically
-                                    toRemove.add(sb);
-                                    gameController.getServer().relayMessage(
-                                               new SoundControlMessage(Sound.EXPLOSION,
-                                                   SoundControlMessage.Type.ONCE));
+                                    gameController.getServer().relayMessage(new SoundControlMessage(Sound.EXPLOSION, SoundControlMessage.Type.ONCE));
                                 } else
                                 {
-                                    int relY = (int) map.getPlayArea().getCenterY() - e.getCenterY();
-                                    int relX = (int) map.getPlayArea().getCenterX() - e.getCenterX();
-                                    int dir = (int) Math.toDegrees(Math.atan2(relY, relX));
-                                    e.setDirectionMoving(dir);
-                                    e.setDirectionFacing(dir);
-                                    en.stop();
-                                    map.getArea().damage(en.getCurrWeapon().getDamage());
-                                    if (map.getArea().killed() && alive)
-                                    {
-                                        // game over!
-                                        alive = false;
-                                        gameController.getServer().endGame();
-                                        gameController.kill();
-                                        keepRunning = false;
-                                        kill();
-                                        System.out.println("Game over");
-                                    }
+                                    Damageable dam = (Damageable) q;
+
+                                    dam.damage(en.getCurrWeapon().getDamage());
+
+                                    if (dam.killed())
+                                        toRemove.add(q);
+                                    else
+                                        q.requestUpdate();
                                 }
                             }
                         }
                     }
-                }.start();
+
+                    if (CollisionDetection.hasCollision(en, 0, 0, map.getArea()))
+                    {
+                        if (en instanceof SuicideBomber)
+                        {
+                            SuicideBomber sb = (SuicideBomber) en;
+                            map.getArea().damage(sb.getCurrWeapon().getDamage()); // attack the area specifically
+                            toRemove.add(sb);
+                            gameController.getServer().relayMessage(new SoundControlMessage(Sound.EXPLOSION, SoundControlMessage.Type.ONCE));
+                        } else
+                        {
+//                            System.out.println("COLLISION WITH: "+en);
+                            int relY = (int) map.getPlayArea().getCenterY() - e.getCenterY();
+                            int relX = (int) map.getPlayArea().getCenterX() - e.getCenterX();
+                            int dir = (int) Math.toDegrees(Math.atan2(relY, relX));
+                            e.setDirectionMoving(dir);
+                            e.setDirectionFacing(dir);
+                            en.stop();
+                            map.getArea().damage(en.getCurrWeapon().getDamage());
+                            if (map.getArea().killed() && alive)
+                            {
+                                // game over!
+                                alive = false;
+                                gameController.getServer().endGame();
+                                gameController.kill();
+                                keepRunning = false;
+                                kill();
+                                System.out.println("Game over");
+                            }
+                        }
+                    }
+                }
             }
 
             for (Entity ent : toRemove)
