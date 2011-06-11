@@ -55,10 +55,6 @@ public class ShotThread extends Thread {
     @Override
     public void run()
     {
-        StringBuilder soundstr = new StringBuilder("#");
-        soundstr.append(player.getCurrWeapon().getSound().toString());
-        soundstr.append(",");
-        soundstr.append(SoundControlMessage.Type.ONCE.toString());
         
         while (keepRunning)
         {
@@ -67,7 +63,6 @@ public class ShotThread extends Thread {
             {
                 while (!keepShooting)
                 {
-                    soundstr.delete(0, soundstr.length());
                     try
                     { 
                         wait();
@@ -76,9 +71,6 @@ public class ShotThread extends Thread {
                         e.printStackTrace();
                         keepRunning = false;
                     }
-                    soundstr.append(player.getCurrWeapon().getSound().toString());
-                    soundstr.append(",");
-                    soundstr.append(SoundControlMessage.Type.ONCE.toString());
                 }
                 
             }

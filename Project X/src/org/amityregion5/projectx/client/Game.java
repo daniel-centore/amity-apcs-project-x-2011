@@ -140,6 +140,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
     {
         if (gameOver)
         {
+            this.destroy();
             new LobbyWindow(getCommunicationHandler(),null,me.getUsername());
             GameWindow.closeWindow();
             // TODO return to lobby if mouse clicked and game is over
@@ -544,9 +545,17 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
     private void destroy()
     {
         dUpThread.kill();
-        communicationHandler.kill();
         rch.kill();
         GameWindow.closeWindow();
+    }
+
+    /**
+     * (Rudely) kills the game.
+     */
+    private void kill()
+    {
+        destroy();
+        communicationHandler.kill();
     }
 
     /**
