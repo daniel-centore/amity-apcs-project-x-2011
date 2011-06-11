@@ -33,6 +33,7 @@ import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.EntityConstants;
 import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.common.entities.items.Upgradeable;
+import org.amityregion5.projectx.common.entities.items.field.Area;
 import org.amityregion5.projectx.common.entities.items.field.Block;
 import org.amityregion5.projectx.common.entities.items.field.Fence;
 import org.amityregion5.projectx.common.entities.items.field.Wall;
@@ -276,7 +277,6 @@ public class Client extends Thread {
             {
                 if (wep instanceof Upgradeable) {
                     Upgradeable upg = (Upgradeable) wep;
-                    // XXX getUpgradeCost() needs implementation!
                     if (player.getCash() >= upg.getUpgradeCost()) {
                         upg.upgrade();
                         player.spendCash(upg.getUpgradeCost());
@@ -286,6 +286,19 @@ public class Client extends Thread {
                 }
             }
             //perhaps else do blocks?
+        } else if (m instanceof RequestHealMessage) {
+            Area area = server.getGameController().getMap().getArea();
+            int need = area.getMaxHp() - area.getHp();
+            int have = player.getCash();
+            if (need > have) {
+                area.heal(player.getCash());
+                player.setCash(0);
+            }
+            else {
+                area.setHp(area.getMaxHp());
+                player.spendCash(need);
+            }
+            server.relayMessage(new CashMessage(player.getCash(), player.getUniqueID()));
         } else if (m instanceof ChangedWeaponMessage)
         {
             ChangedWeaponMessage cwm = (ChangedWeaponMessage) m;

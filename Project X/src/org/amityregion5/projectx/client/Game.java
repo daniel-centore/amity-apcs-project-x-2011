@@ -213,6 +213,9 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             } else if (Keys.isKey(Keys.FIRE, keyCode))
             {
                 getCommunicationHandler().send(new FiringMessage(true));
+            } else if (Keys.isKey(Keys.HEAL, keyCode))
+            {
+                communicationHandler.send(new RequestHealMessage());
             } else if (Keys.isKey(Keys.CHANGE_WEAPON_1, keyCode))
             {
                 communicationHandler.send(new ChangedWeaponMessage(-1));

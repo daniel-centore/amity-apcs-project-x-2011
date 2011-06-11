@@ -79,7 +79,7 @@ public class EnemyManager {
                 enemies.add(createEnemyGroup(new ArmoredEnemy(2, 10, 0, 0), 3));
                 enemies.add(createEnemyGroup(new SuicideBomber(5, 0, 0), 2));
                 enemies.add(createEnemyGroup(new DefaultEnemy(10, 0, 0), 5));
-                enemies.add(createEnemyGroup(new BossEnemy(10, 100, 0, 0), 1));
+                //enemies.add(createEnemyGroup(new BossEnemy(10, 100, 0, 0), 1));
                 for (int i = 1; i <= NUM_WAVES; i++)
                 {
                     if (i >= START_WAVE)
