@@ -16,7 +16,7 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
-package org.amityregion5.projectx.server.game;
+package org.amityregion5.projectx.common.entities;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
@@ -24,18 +24,12 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.amityregion5.projectx.common.communication.messages.sound.SoundControlMessage;
-import org.amityregion5.projectx.common.entities.Damageable;
-import org.amityregion5.projectx.common.entities.Entity;
-import org.amityregion5.projectx.common.entities.EntityConstants;
 import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
 import org.amityregion5.projectx.common.entities.characters.enemies.SuicideBomber;
 import org.amityregion5.projectx.common.entities.items.field.Block;
 import org.amityregion5.projectx.common.maps.AbstractMap;
-import org.amityregion5.projectx.common.tools.Sound;
-import org.amityregion5.projectx.server.communication.RawServer;
-import org.amityregion5.projectx.server.tools.CollisionDetection;
+import org.amityregion5.projectx.common.tools.CollisionDetection;
 
 /**
  * A thread that will move all Entities by need.
@@ -44,18 +38,17 @@ import org.amityregion5.projectx.server.tools.CollisionDetection;
  * @author Mike DiBuduo
  * @author Daniel Centore
  */
-public class EntityMoverThread extends Thread {
+public class EntityControllerThread extends Thread {
+
     private boolean keepRunning = true; // keep moving entities
-    private GameController gameController; // used for getting entities
-    private RawServer rawServer; // used for communications e.g. loc updates
     private AbstractMap map; // used for collision detection
     private boolean alive = true; // used to make sure game over isn't sent 2x
+    private EntityList entities;
 
-    public EntityMoverThread(GameController gc, RawServer rs, AbstractMap m)
+    public EntityControllerThread(AbstractMap m)
     {
-        gameController = gc;
-        rawServer = rs;
         map = m;
+        entities = new EntityList();
     }
 
     @Override
@@ -64,7 +57,7 @@ public class EntityMoverThread extends Thread {
         while (keepRunning)
         {
             final List<Entity> toRemove = new ArrayList<Entity>();
-            for (final Entity e : gameController.getEntities())
+            for (final Entity e : entities)
             {
                 double r = e.getMoveSpeed();
                 double offsetX = 0;
@@ -79,7 +72,7 @@ public class EntityMoverThread extends Thread {
                     double newY = offsetY + e.getY();
 
                     boolean collision = false;
-                    for (Entity q : gameController.getEntities())
+                    for (Entity q : entities)
                     {
                         if (q instanceof Block && q != e)
                             if (CollisionDetection.hasCollision(e, (int) offsetX, (int) offsetY, q))
@@ -111,7 +104,7 @@ public class EntityMoverThread extends Thread {
                 {
                     Enemy en = (Enemy) e;
 
-                    for (Entity q : gameController.getEntities())
+                    for (Entity q : entities)
                     {
                         if (q instanceof Block && q != e)
                         {
@@ -126,7 +119,7 @@ public class EntityMoverThread extends Thread {
                                         q.requestUpdate();
                                     toRemove.add(e);
 
-                                    gameController.getServer().relayMessage(new SoundControlMessage(Sound.EXPLOSION, SoundControlMessage.Type.ONCE));
+                                    // TODO: explosion sound
                                 } else
                                 {
                                     Damageable dam = (Damageable) q;
@@ -149,7 +142,8 @@ public class EntityMoverThread extends Thread {
                             SuicideBomber sb = (SuicideBomber) en;
                             map.getArea().damage(sb.getCurrWeapon().getDamage()); // attack the area specifically
                             toRemove.add(sb);
-                            gameController.getServer().relayMessage(new SoundControlMessage(Sound.EXPLOSION, SoundControlMessage.Type.ONCE));
+
+                            // TODO: explosion sound
                         } else
                         {
                             // System.out.println("COLLISION WITH: "+en);
@@ -163,12 +157,14 @@ public class EntityMoverThread extends Thread {
                             if (map.getArea().killed() && alive)
                             {
                                 // game over!
-                                alive = false;
-                                gameController.getServer().endGame();
-                                gameController.kill();
-                                keepRunning = false;
-                                kill();
-                                System.out.println("Game over");
+                                // TODO: fix game ending (make it server side somehow)
+                                
+                                // alive = false;
+                                // gameController.getServer().endGame();
+                                // gameController.kill();
+                                // keepRunning = false;
+                                // kill();
+                                // System.out.println("Game over");
                             }
                         }
                     }
@@ -176,18 +172,36 @@ public class EntityMoverThread extends Thread {
             }
 
             for (Entity ent : toRemove)
-                gameController.removeEntity(ent);
+                entities.requestRemove(ent);
 
-            rawServer.sendAggregateEntityUpdateMessage();
+            // rawServer.sendAggregateEntityUpdateMessage();
             try
             {
                 Thread.sleep(EntityConstants.MOVE_UPDATE_TIME);
             } catch (InterruptedException ex)
             {
-                Logger.getLogger(EntityMoverThread.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(EntityControllerThread.class.getName()).log(Level.SEVERE, null, ex);
                 keepRunning = false;
             }
         }
+    }
+
+    public void addEntity(Entity e)
+    {
+        entities.add(e);
+    }
+
+    /**
+     * @return A list of current entities
+     */
+    public EntityList getEntities()
+    {
+        return entities;
+    }
+
+    public void removeEntity(Entity e)
+    {
+        entities.requestRemove(e);
     }
 
     /**

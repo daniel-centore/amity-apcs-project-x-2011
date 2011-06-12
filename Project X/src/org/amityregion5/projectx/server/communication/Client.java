@@ -39,9 +39,9 @@ import org.amityregion5.projectx.common.entities.items.field.Block;
 import org.amityregion5.projectx.common.entities.items.field.Fence;
 import org.amityregion5.projectx.common.entities.items.field.Wall;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
+import org.amityregion5.projectx.common.tools.CollisionDetection;
 import org.amityregion5.projectx.server.Server;
 import org.amityregion5.projectx.server.game.GameController;
-import org.amityregion5.projectx.server.tools.CollisionDetection;
 
 /**
  * Represents a client in the game

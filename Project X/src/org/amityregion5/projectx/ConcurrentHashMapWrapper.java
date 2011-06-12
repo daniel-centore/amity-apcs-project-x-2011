@@ -25,7 +25,7 @@ import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.amityregion5.projectx.common.entities.Entity;
-import org.amityregion5.projectx.server.game.EntityList;
+import org.amityregion5.projectx.common.entities.EntityList;
 
 /**
  * Basically just wraps a {@link ConcurrentHashMap} so we don't have

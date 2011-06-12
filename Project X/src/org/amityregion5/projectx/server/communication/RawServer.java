@@ -28,6 +28,7 @@ import java.util.logging.Logger;
 
 import org.amityregion5.projectx.common.communication.Constants;
 import org.amityregion5.projectx.common.entities.Entity;
+import org.amityregion5.projectx.common.entities.EntityConstants;
 import org.amityregion5.projectx.server.Server;
 import org.amityregion5.projectx.server.game.GameController;
 
@@ -111,8 +112,8 @@ public class RawServer extends Thread {
     {
         send(start + s);
     }
-    
-    public void sendAggregateEntityUpdateMessage()
+
+    private void sendAggregateEntityUpdateMessage()
     {
         Iterator<Entity> itr = gameController.getEntities().getRemovalIterator();
 
@@ -138,7 +139,7 @@ public class RawServer extends Thread {
         buf.append("-1,");
         buf.append(gameController.getMap().getArea().getHp());
         buf.append(";");
-        
+
         for (Entity e : gameController.getEntities())
         {
             if (e.updateCheck())
@@ -170,6 +171,25 @@ public class RawServer extends Thread {
     public void setGameController(GameController gameController)
     {
         this.gameController = gameController;
+        
+        new Thread()
+        {
+            public void run()
+            {
+                while (true)
+                {
+                    sendAggregateEntityUpdateMessage();
+                    
+                    try
+                    {
+                        Thread.sleep(EntityConstants.MOVE_UPDATE_TIME);
+                    } catch (InterruptedException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }.start();
     }
 
     public GameController getGameController()

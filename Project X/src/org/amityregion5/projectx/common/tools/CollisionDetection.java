@@ -17,7 +17,7 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
-package org.amityregion5.projectx.server.tools;
+package org.amityregion5.projectx.common.tools;
 
 import java.awt.image.BufferedImage;
 import java.util.Collection;

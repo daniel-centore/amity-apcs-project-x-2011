@@ -36,6 +36,8 @@ import org.amityregion5.projectx.common.communication.messages.CashMessage;
 import org.amityregion5.projectx.common.communication.messages.PointMessage;
 import org.amityregion5.projectx.common.entities.Damageable;
 import org.amityregion5.projectx.common.entities.Entity;
+import org.amityregion5.projectx.common.entities.EntityControllerThread;
+import org.amityregion5.projectx.common.entities.EntityList;
 import org.amityregion5.projectx.common.entities.characters.CharacterEntity;
 import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
@@ -65,8 +67,7 @@ public final class GameController {
 
     private List<PlayerEntity> players; // List of current Players (do we even need this..?)
     private Collection<Client> clients; // List of current Clients
-    private volatile EntityList entities; // List of current Entities
-    private EntityMoverThread entityMoverThread; // will be in charge of moving entities
+    private EntityControllerThread entityMoverThread; // will be in charge of moving entities
     private Server server; // Our server
     private AbstractMap map; // Our map
     private final EnemyManager enemyManager;
@@ -82,10 +83,11 @@ public final class GameController {
         this.server = server;
         players = new ArrayList<PlayerEntity>();
         clients = server.getClients().values();
-        entities = new EntityList();
 
         // TODO send clients the map for this game!
         // Will fix in post-release version.
+
+        entityMoverThread = new EntityControllerThread(map);
 
         Random r = new Random();
         for (Client c : clients)
@@ -97,7 +99,9 @@ public final class GameController {
 
             players.add(p);
 
-            entities.add(p);
+            // entities.add(p);
+            entityMoverThread.addEntity(p);
+
             c.setPlayer(p);
             c.send(new AddMeMessage(p));
         }
@@ -121,8 +125,7 @@ public final class GameController {
         }
 
         server.getRawServer().setGameController(this);
-        
-        entityMoverThread = new EntityMoverThread(this, server.getRawServer(), map);
+
         entityMoverThread.start();
         enemyManager = new EnemyManager(this, getEnemySpawns());
         enemyManager.startSpawning();
@@ -136,7 +139,8 @@ public final class GameController {
      */
     public void addEntity(Entity e)
     {
-        entities.add(e);
+        // entities.add(e);
+        entityMoverThread.addEntity(e);
 
         server.relayMessage(new AddEntityMessage(e));
     }
@@ -146,7 +150,8 @@ public final class GameController {
      */
     public EntityList getEntities()
     {
-        return entities;
+        return entityMoverThread.getEntities();
+        // return entities;
     }
 
     /**
@@ -227,7 +232,7 @@ public final class GameController {
 
         if (wep instanceof Laser)
         {
-            for (Entity e : entities)
+            for (Entity e : getEntities())
             {
                 if (e instanceof Enemy && line.intersects(e.getHitBox()))
                     toDamage.add((Enemy) e);
@@ -236,7 +241,7 @@ public final class GameController {
         {
             double closest = Double.MAX_VALUE;
             Enemy closestEn = null;
-            for (Entity e : entities)
+            for (Entity e : getEntities())
             {
                 if (e instanceof Enemy && line.intersects(e.getHitBox()))
                 {
@@ -300,8 +305,9 @@ public final class GameController {
      */
     public void removeEntity(Entity e)
     {
+        entityMoverThread.removeEntity(e);
         // entities.remove(e);
-        entities.requestRemove(e);
+        // entities.requestRemove(e);
         // getServer().relayMessage(new RemoveEntityMessage(e.getUniqueID()));
     }
 
