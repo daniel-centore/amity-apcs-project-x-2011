@@ -69,5 +69,36 @@ public class ConcurrentHashMapWrapper extends AbstractCollection<Entity> {
     {
         return map.size();
     }
+    
+    /**
+     * Removes an entity
+     * @param e entity to remove
+     * @return the removed entity
+     */
+    public synchronized Entity removeEntity(Entity e)
+    {
+        return map.remove(e.getUniqueID());
+    }
+
+    /**
+     * Removes an entity.
+     * @param id the unique id of the entity to remove
+     * @return the removed entity
+     */
+    public synchronized Entity removeEntity(long id)
+    {
+        return map.remove(id);
+    }
+
+    /**
+     * Gets an entity from this EntityHandler's list.
+     * 
+     * @param uniqueId the unique id of the entity to get
+     * @return the entity, or null if unique id was not matched
+     */
+    public Entity getEntity(long uniqueId)
+    {
+        return map.get(uniqueId);
+    }
 
 }

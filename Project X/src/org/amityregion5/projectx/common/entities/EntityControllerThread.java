@@ -158,7 +158,7 @@ public class EntityControllerThread extends Thread {
                             {
                                 // game over!
                                 // TODO: fix game ending (make it server side somehow)
-                                
+
                                 // alive = false;
                                 // gameController.getServer().endGame();
                                 // gameController.kill();
@@ -202,6 +202,22 @@ public class EntityControllerThread extends Thread {
     public void removeEntity(Entity e)
     {
         entities.requestRemove(e);
+    }
+
+    public void reallyRemoveEntity(Long l)
+    {
+        entities.reallyRemoveEntity(l);
+    }
+
+    /**
+     * Gets an entity from this EntityHandler's list.
+     * 
+     * @param uniqueId the unique id of the entity to get
+     * @return the entity, or null if unique id was not matched
+     */
+    public Entity getEntity(long uniqueId)
+    {
+        return entities.getEntity(uniqueId);
     }
 
     /**

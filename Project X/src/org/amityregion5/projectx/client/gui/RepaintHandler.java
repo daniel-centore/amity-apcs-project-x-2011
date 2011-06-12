@@ -110,9 +110,9 @@ public class RepaintHandler extends Thread {
             g.drawImage(e.getImage(), (int) e.getX(), (int) e.getY(), null);
         }
 
-        synchronized (game.getEntityHandler())
+//        synchronized (game.getEntityHandler())
         {
-            for (Entity e : game.getEntityHandler().getEntities()) // draw temporary entities
+            for (Entity e : game.getEntities()) // draw temporary entities
             {
                 
                 if (e == null)
@@ -139,7 +139,7 @@ public class RepaintHandler extends Thread {
                 
             }
 
-            for (Entity e : game.getEntityHandler().getEntities())
+            for (Entity e : game.getEntities())
             {
                 drawHealthbar(e, g);
             }

@@ -42,22 +42,39 @@ import org.amityregion5.projectx.client.gui.ServerChooserWindow;
 import org.amityregion5.projectx.client.gui.StatBarDrawing;
 import org.amityregion5.projectx.client.gui.input.InputHandler;
 import org.amityregion5.projectx.client.gui.input.Keys;
-import org.amityregion5.projectx.client.handlers.EntityHandler;
 import org.amityregion5.projectx.client.sound.SoundManager;
 import org.amityregion5.projectx.common.communication.Constants;
 import org.amityregion5.projectx.common.communication.MessageListener;
 import org.amityregion5.projectx.common.communication.RawListener;
-import org.amityregion5.projectx.common.communication.messages.*;
+import org.amityregion5.projectx.common.communication.messages.AddEntityMessage;
+import org.amityregion5.projectx.common.communication.messages.AddMeMessage;
+import org.amityregion5.projectx.common.communication.messages.AddWeaponMessage;
+import org.amityregion5.projectx.common.communication.messages.AnnounceMessage;
+import org.amityregion5.projectx.common.communication.messages.CashMessage;
+import org.amityregion5.projectx.common.communication.messages.ChangedWeaponMessage;
+import org.amityregion5.projectx.common.communication.messages.ChatMessage;
+import org.amityregion5.projectx.common.communication.messages.ClientMovingMessage;
+import org.amityregion5.projectx.common.communication.messages.DisconnectRequestMessage;
+import org.amityregion5.projectx.common.communication.messages.FiringMessage;
+import org.amityregion5.projectx.common.communication.messages.Message;
+import org.amityregion5.projectx.common.communication.messages.PointMessage;
+import org.amityregion5.projectx.common.communication.messages.RemoveEntityMessage;
+import org.amityregion5.projectx.common.communication.messages.RequestEntityAddMessage;
+import org.amityregion5.projectx.common.communication.messages.RequestHealMessage;
+import org.amityregion5.projectx.common.communication.messages.RequestUpgradeMessage;
+import org.amityregion5.projectx.common.communication.messages.StatusUpdateMessage;
+import org.amityregion5.projectx.common.communication.messages.UpdateWeaponMessage;
+import org.amityregion5.projectx.common.communication.messages.WaveMessage;
+import org.amityregion5.projectx.common.communication.messages.WeaponUpgradedMessage;
 import org.amityregion5.projectx.common.communication.messages.sound.SoundControlMessage;
-import org.amityregion5.projectx.common.communication.messages.sound.SoundControlMessage.Type;
 import org.amityregion5.projectx.common.entities.Damageable;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.EntityConstants;
+import org.amityregion5.projectx.common.entities.EntityControllerThread;
 import org.amityregion5.projectx.common.entities.characters.CharacterEntity;
 import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.common.entities.items.Upgradeable;
 import org.amityregion5.projectx.common.maps.AbstractMap;
-import org.amityregion5.projectx.common.tools.ImageHandler;
 import org.amityregion5.projectx.common.tools.Sound;
 
 /**
@@ -75,7 +92,8 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
     private RawCommunicationHandler rch; // current raw communications handler
     private AbstractMap map; // current AbstractMap
     private PlayerEntity me; // current Player (null at initialization!)
-    private EntityHandler entityHandler; // current EntityHandler
+    // private EntityHandler entityHandler; // current EntityHandler
+    private EntityControllerThread controllerThread;
     private List<Integer> depressedKeys = new ArrayList<Integer>();
     private DirectionalUpdateThread dUpThread;
     private int lastMouseX; // last mouse coordinates, so we can update direction as moving
@@ -93,7 +111,8 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
     public Game(CommunicationHandler ch, AbstractMap m, String username)
     {
         this.username = username;
-        entityHandler = new EntityHandler();
+        // entityHandler = new EntityHandler();
+        controllerThread = new EntityControllerThread(m);
         communicationHandler = ch;
         me = null;
         map = m;
@@ -259,13 +278,13 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         }
     }
 
-    /**
-     * @return The Entity Model
-     */
-    public EntityHandler getEntityHandler()
-    {
-        return entityHandler;
-    }
+    // /**
+    // * @return The Entity Model
+    // */
+    // public EntityHandler getEntityHandler()
+    // {
+    // return entityHandler;
+    // }
 
     private int calcMeDeg() // calculates the direction the entity should be moving
     {
@@ -345,7 +364,9 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             AddMeMessage amm = (AddMeMessage) m;
             me = (PlayerEntity) amm.getEntity();
             me.updateWeaponImages();
-            entityHandler.addEntity(me);
+            // entityHandler.addEntity(me);
+            controllerThread.addEntity(me);
+
             dUpThread.start(); // start directional update thread
         } else if (m instanceof AddEntityMessage)
         {
@@ -354,11 +375,14 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             if (e instanceof CharacterEntity)
                 ((CharacterEntity) e).updateWeaponImages();
 
-            entityHandler.addEntity(e);
+            // entityHandler.addEntity(e);
+            controllerThread.addEntity(e);
         } else if (m instanceof RemoveEntityMessage)
         {
             RemoveEntityMessage rem = (RemoveEntityMessage) m;
-            entityHandler.removeEntity(rem.getID());
+            // entityHandler.removeEntity(rem.getID());
+            controllerThread.reallyRemoveEntity(rem.getID());
+
             GameWindow.fireRepaintRequired();
         } else if (m instanceof AddWeaponMessage)
         {
@@ -366,7 +390,8 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             // awm.getWeapon().setImage(ImageHandler.loadImage(awm.getWeapon().getDefaultImage()));
             try
             {
-                ((CharacterEntity) entityHandler.getEntity(awm.getID())).addWeapon(awm.getWeapon());
+                // ((CharacterEntity) entityHandler.getEntity(awm.getID())).addWeapon(awm.getWeapon());
+                ((CharacterEntity) controllerThread.getEntity(awm.getID())).addWeapon(awm.getWeapon());
                 me.updateWeaponImages();
             } catch (Exception e)
             {
@@ -387,11 +412,13 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         } else if (m instanceof CashMessage)
         {
             CashMessage cm = (CashMessage) m;
-            ((PlayerEntity) entityHandler.getEntity(cm.getID())).setCash(cm.getAmount());
+            // ((PlayerEntity) entityHandler.getEntity(cm.getID())).setCash(cm.getAmount());
+            ((PlayerEntity) controllerThread.getEntity(cm.getID())).setCash(cm.getAmount());
         } else if (m instanceof PointMessage)
         {
             PointMessage pm = (PointMessage) m;
-            ((PlayerEntity) entityHandler.getEntity(pm.getID())).setPoints(pm.getAmount());
+            // ((PlayerEntity) entityHandler.getEntity(pm.getID())).setPoints(pm.getAmount());
+            ((PlayerEntity) controllerThread.getEntity(pm.getID())).setPoints(pm.getAmount());
         } else if (m instanceof SoundControlMessage)
         {
             SoundControlMessage scm = (SoundControlMessage) m;
@@ -417,7 +444,8 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         {
             int wep = ((UpdateWeaponMessage) m).getWeapon();
 
-            ((CharacterEntity) entityHandler.getEntity(((UpdateWeaponMessage) m).getPlayerID())).setCurrWeapon(wep);
+            // ((CharacterEntity) entityHandler.getEntity(((UpdateWeaponMessage) m).getPlayerID())).setCurrWeapon(wep);
+            ((CharacterEntity) controllerThread.getEntity(((UpdateWeaponMessage) m).getPlayerID())).setCurrWeapon(wep);
         } else if (m instanceof WaveMessage)
         {
             StatBarDrawing.setWaveNumber(((WaveMessage) m).getNumber());
@@ -466,7 +494,8 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
      */
     public Iterable<Entity> getEntities()
     {
-        return entityHandler.getEntities();
+        // return entityHandler.getEntities();
+        return controllerThread.getEntities();
     }
 
     public void initWindow()
@@ -479,7 +508,8 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
     {
         if (prefix == Constants.FIRE_PREF)
         {
-            PlayerEntity p = (PlayerEntity) entityHandler.getEntity(Long.valueOf(str));
+            // PlayerEntity p = (PlayerEntity) entityHandler.getEntity(Long.valueOf(str));
+            PlayerEntity p = (PlayerEntity) controllerThread.getEntity(Long.valueOf(str));
             if (!p.getFired())
             {
                 SoundManager.playOnce(p.getCurrWeapon().getSound());
@@ -494,8 +524,8 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             String[] s = str.split(",");
 
             for (String k : s)
-                entityHandler.removeEntity(Long.valueOf(k));
-            // System.out.println("DIED: "+str);
+                controllerThread.reallyRemoveEntity(Long.valueOf(k));
+            // entityHandler.removeEntity(Long.valueOf(k));
         }
 
         if (prefix != Constants.MOVE_PREF)
@@ -513,10 +543,11 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                 map.getArea().setHp(Integer.valueOf(entVals[1]));
             } else
             {
-                Entity e = entityHandler.getEntity(id);
+                // Entity e = entityHandler.getEntity(id);
+                Entity e = controllerThread.getEntity(id);
                 if (e == null)
                 {
-                    System.out.println("NULL ENTITY ID: ["+id+"]!");
+                    System.out.println("NULL ENTITY ID: [" + id + "]!");
                     break;
                 }
 
@@ -587,7 +618,8 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
     public ArrayList<PlayerEntity> getPlayers()
     {
         ArrayList<PlayerEntity> toReturn = new ArrayList<PlayerEntity>();
-        for (Entity e : entityHandler.getEntities())
+        // for (Entity e : entityHandler.getEntities())
+        for (Entity e : controllerThread.getEntities())
         {
             if (e instanceof PlayerEntity)
             {

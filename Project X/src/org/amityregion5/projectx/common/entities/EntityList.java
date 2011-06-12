@@ -46,6 +46,19 @@ public class EntityList extends ConcurrentHashMapWrapper {
         throw new UnsupportedOperationException("Instead, you should \"RequestRemove\" so that we notify our clients first");
     }
     
+    @Override
+    public synchronized Entity removeEntity(Entity e)
+    {
+        throw new UnsupportedOperationException("Instead, you should \"RequestRemove\" so that we notify our clients first");
+    }
+
+    @Override
+    public synchronized Entity removeEntity(long id)
+    {
+        throw new UnsupportedOperationException("Instead, you should \"RequestRemove\" so that we notify our clients first");
+    }
+
+    
     /**
      * Requests that we remove this entity next update cycle
      * @param o Entity to remove
@@ -56,14 +69,28 @@ public class EntityList extends ConcurrentHashMapWrapper {
         return toRemove.add(o);
     }
     
+    /**
+     * Actually removes an entity from the list
+     * @param o Oject to remove
+     */
     public void reallyRemove(Object o)
     {
         super.remove(o);
     }
     
+    public void reallyRemoveEntity(Long l)
+    {
+        super.removeEntity(l);
+    }
+    
+    /**
+     * @return An iterator for going over entities that are scheduled to be removed
+     */
     public Iterator<Entity> getRemovalIterator()
     {
         return toRemove.iterator();
     }
+    
+    
 
 }
