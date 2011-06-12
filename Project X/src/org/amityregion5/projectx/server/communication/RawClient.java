@@ -24,6 +24,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.amityregion5.projectx.common.communication.Constants;
 
 import org.amityregion5.projectx.common.communication.messages.RemoveEntityMessage;
 import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
@@ -104,7 +105,7 @@ public class RawClient extends Thread {
                 this.handle(dir);
             } catch (IOException ex)
             {
-                server.relayMessage(new RemoveEntityMessage(player.getUniqueID()));
+                server.sendRaw(Constants.DIED_PREF + String.valueOf(player.getUniqueID()));
                 kill();
             }
         }

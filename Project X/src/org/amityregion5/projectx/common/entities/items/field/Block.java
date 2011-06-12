@@ -40,11 +40,11 @@ public class Block extends FieldItem implements Damageable, Buyable {
     private int stage = 0;
     public static final BufferedImage[] STAGES = new BufferedImage[]
     {
+        ImageHandler.loadImage("BlockMask_0"),
         ImageHandler.loadImage("BlockMask_1"),
         ImageHandler.loadImage("BlockMask_2"),
         ImageHandler.loadImage("BlockMask_3"),
         ImageHandler.loadImage("BlockMask_4"),
-        ImageHandler.loadImage("BlockMask_5"),
     };
     private static final BufferedImage image = ImageHandler.loadImage("Block");
 
@@ -69,7 +69,7 @@ public class Block extends FieldItem implements Damageable, Buyable {
     public void setHp(int hp)
     {
         this.hp = hp;
-        stage = 5 - (int) (((double) hp / maxHealth) * 5);
+        stage = 4 - (int) (((double) hp / maxHealth) * 4);
     }
 
     public int damage(int damage)
