@@ -61,7 +61,7 @@ public class CollisionDetection
      */
     public static boolean hasCollision(Entity a, int xOffset, int yOffset, Entity b)
     {
-        return (hasRectangleCollision(a, xOffset, yOffset, b) && hasPixelCollision(a, xOffset, yOffset, b));
+        return hasRectangleCollision(a, xOffset, yOffset, b);
     }
 
     /**
