@@ -24,6 +24,8 @@ package org.amityregion5.projectx.common.communication.messages;
  * @author Joe Stein
  */
 public class AmmoUpdateMessage extends Message {
+    private static final long serialVersionUID = 1L;
+
     private long id;
     private int wepId;
     private int ammo;

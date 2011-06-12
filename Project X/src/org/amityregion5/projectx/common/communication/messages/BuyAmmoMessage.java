@@ -24,5 +24,5 @@ package org.amityregion5.projectx.common.communication.messages;
  * @author Joe Stein
  */
 public class BuyAmmoMessage extends Message {
-
+    public static final long serialVersionUID = 1L;
 }
