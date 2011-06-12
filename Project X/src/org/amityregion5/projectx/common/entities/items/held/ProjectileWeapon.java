@@ -35,8 +35,6 @@ public abstract class ProjectileWeapon extends Weapon {
 
     private int ammo; // current total rounds
     private int maxAmmo; // max total rounds
-    private int roundsPerMag; // max rounds per mag
-    private int currentRounds; // current rounds in mag
     private int damage;
     private Point weaponTip;
 
@@ -46,16 +44,13 @@ public abstract class ProjectileWeapon extends Weapon {
      * @param startAmmo the ammo this weapon starts with
      * @param _maxAmmo the maximum amount of ammo this weapon can have
      * @param rate the attack rate of this weapon, in attacks per second
-     * @param rpm the rounds per magazine
-     * @param mags the number of magazines
      * @param damage the amount of damage this weapon deals
      */
-    public ProjectileWeapon(int range, int startAmmo, int _maxAmmo, double rate, int rpm, int damage)
+    public ProjectileWeapon(int range, int startAmmo, int _maxAmmo, double rate, int damage)
     {
         super(range, rate);
         ammo = startAmmo;
         maxAmmo = _maxAmmo;
-        roundsPerMag = rpm;
         this.damage = damage;
     }
 
@@ -80,31 +75,9 @@ public abstract class ProjectileWeapon extends Weapon {
         maxAmmo = x;
     }
 
-    public int getRoundsPerMag()
-    {
-        return roundsPerMag;
-    }
-
-    /**
-     * Reloads the weapon, rolling over unused ammunition from the last
-     * magazine.
-     */
-    public void reload()
-    {
-        if (currentRounds == roundsPerMag)
-            return;
-        ammo -= roundsPerMag - currentRounds; // subtract difference from ammo
-        currentRounds = roundsPerMag; // fix up the magazine
-    }
-
     public boolean hasAmmo()
     {
         return ammo != 0;
-    }
-
-    public boolean hasAmmoInMag()
-    {
-        return currentRounds != 0;
     }
 
     public int getDamage()

@@ -38,7 +38,7 @@ public class Uzi extends Gun implements Upgradeable {
 
     public Uzi()
     {
-        super(400, -1, -1, 10, -1, 3);
+        super(400, -1, -1, 10, 3);
     }
 
     @Override
@@ -46,11 +46,7 @@ public class Uzi extends Gun implements Upgradeable {
     {
         return Sound.PISTOL_SHOT;
     }
-//    @Override
-//    public String getDefaultImage()
-//    {
-//        return "sprites/Uzi";
-//    }
+
     private static final BufferedImage image = ImageHandler.loadImage("Uzi");
 
     @Override

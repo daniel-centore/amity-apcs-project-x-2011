@@ -37,7 +37,7 @@ public class Laser extends Gun implements Upgradeable {
 
     public Laser()
     {
-        super(900, -1, -1, 20, -1, 1);
+        super(900, -1, -1, 20, 1);
     }
 
     @Override
@@ -45,11 +45,7 @@ public class Laser extends Gun implements Upgradeable {
     {
         return Sound.LASER;
     }
-//    @Override
-//    public String getDefaultImage()
-//    {
-//        return "sprites/laser";
-//    }
+
     private static final BufferedImage image = ImageHandler.loadImage("laser");
 
     @Override

@@ -40,7 +40,7 @@ public class RPG extends Gun implements Upgradeable, DamageDealing
 
     public RPG()
     {
-        super(600, -1, -1, .25, -1, 10);
+        super(600, -1, -1, .25, 30);
     }
 
     @Override

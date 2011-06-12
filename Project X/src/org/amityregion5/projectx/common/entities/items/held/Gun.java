@@ -29,9 +29,9 @@ public abstract class Gun extends ProjectileWeapon
 {
     private static final long serialVersionUID = 1L;
 
-    public Gun(int range, int ammo, int maxAmmo, double fireRate, int roundsPerMag, int damage)
+    public Gun(int range, int ammo, int maxAmmo, double fireRate, int damage)
     {
-        super(range, ammo, maxAmmo, fireRate, roundsPerMag,damage);
+        super(range, ammo, maxAmmo, fireRate, damage);
     }
 
 
