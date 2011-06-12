@@ -104,7 +104,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         rch.registerRawListener(new MovementHandler(this));
         rch.registerRawListener(this);
         rch.start();
-        
+
         ch.registerListener(this);
         InputHandler.registerListener(this);
         RepaintHandler.setGame(this);
@@ -488,51 +488,65 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             GameWindow.fireRepaintRequired();
             return;
         }
-        
+
         if (prefix == Constants.DIED_PREF)
         {
             String[] s = str.split(",");
-            
+
             for (String k : s)
                 entityHandler.removeEntity(Long.valueOf(k));
-//            System.out.println("DIED: "+str);
+            // System.out.println("DIED: "+str);
         }
-        
+
         if (prefix != Constants.MOVE_PREF)
             return;
-        
+
+        // System.out.println(str);
         String[] entStrs = str.split(";");
         for (int i = 0; i < entStrs.length; i++)
         {
             String[] entVals = entStrs[i].split(",");
             long id = Long.valueOf(entVals[0]);
-            if (id == -1)
+
+            if (id == -1) // the base
             {
-                // affects the base
                 map.getArea().setHp(Integer.valueOf(entVals[1]));
             } else
             {
-                Entity e = entityHandler.getEntity(Long.valueOf(entVals[0]));
-                if (e != null)
+                Entity e = entityHandler.getEntity(id);
+                if (e == null)
                 {
-                    e.setX(Double.valueOf(entVals[1]));
-                    e.setY(Double.valueOf(entVals[2]));
-                    int hp = Integer.valueOf(entVals[4]);
-                    if (hp > Byte.MIN_VALUE)
-                    {
-                        ((Damageable) e).setHp(hp);
-                    }
-
-                    if (e == me)
-                    {
-                        int x1 = me.getCenterX();
-                        int y1 = me.getCenterY();
-                        int angle = (int) Math.toDegrees(Math.atan2(lastMouseY - y1, lastMouseX - x1));
-
-                        me.setDirectionFacing(angle);
-                    } else
-                        e.setDirectionFacing(Integer.valueOf(entVals[3]));
+                    System.out.println("NULL ENTITY ID: ["+id+"]!");
+                    break;
                 }
+
+                int x = Integer.valueOf(entVals[1]);
+                int y = Integer.valueOf(entVals[2]);
+                int facing = Integer.valueOf(entVals[3]);
+                int moving = Integer.valueOf(entVals[4]);
+                int hp = Integer.valueOf(entVals[5]);
+                double speed = Double.valueOf(entVals[6]);
+
+                e.setX(x);
+                e.setY(y);
+
+                if (hp > Byte.MIN_VALUE)
+                {
+                    ((Damageable) e).setHp(hp);
+                }
+
+                if (e == me)
+                {
+                    int x1 = me.getCenterX();
+                    int y1 = me.getCenterY();
+                    int angle = (int) Math.toDegrees(Math.atan2(lastMouseY - y1, lastMouseX - x1));
+
+                    me.setDirectionFacing(angle);
+                } else
+                    e.setDirectionFacing(facing);
+
+                e.setDirectionMoving(moving);
+                e.setMoveSpeed(speed);
             }
         }
 

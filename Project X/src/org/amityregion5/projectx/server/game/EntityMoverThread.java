@@ -197,7 +197,7 @@ public class EntityMoverThread extends Thread {
     private void sendAggregateUpdateMessage()
     {
         Iterator<Entity> itr = gameController.getEntities().getRemovalIterator();
-        
+
         StringBuilder died = new StringBuilder();
         died.append(Constants.DIED_PREF);
         while (itr.hasNext())
@@ -208,18 +208,19 @@ public class EntityMoverThread extends Thread {
             itr.remove();
             gameController.getEntities().reallyRemove(e);
         }
-        
+
         if (died.length() > 0)
         {
             died.deleteCharAt(died.length() - 1);
             rawServer.send(died.toString());
         }
-        
+
         StringBuilder buf = new StringBuilder();
         buf.append(Constants.MOVE_PREF);
         buf.append("-1,");
         buf.append(gameController.getMap().getArea().getHp());
         buf.append(";");
+        
         for (Entity e : gameController.getEntities())
         {
             if (e.updateCheck())
@@ -232,12 +233,11 @@ public class EntityMoverThread extends Thread {
                 buf.append(",");
                 buf.append(e.getDirectionFacing());
                 buf.append(",");
+                buf.append(e.getDirectionMoving());
+                buf.append(",");
                 buf.append(e.getHp());
-                if (e instanceof CharacterEntity && ((CharacterEntity) e).hasWeapons())
-                {
-                    buf.append(",");
-                    buf.append(((CharacterEntity) e).getCurrWeapon());
-                }
+                buf.append(",");
+                buf.append(e.getMoveSpeed());
                 buf.append(";");
             }
         }
