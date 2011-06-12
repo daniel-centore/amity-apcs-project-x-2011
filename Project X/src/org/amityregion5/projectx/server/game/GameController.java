@@ -62,7 +62,7 @@ import org.amityregion5.projectx.server.game.enemies.EnemyManager;
  */
 public final class GameController {
 
-    public static final int DEFAULT_CASH = 500000;
+    public static final int DEFAULT_CASH = 50;
 
     private static GameController instance;
 

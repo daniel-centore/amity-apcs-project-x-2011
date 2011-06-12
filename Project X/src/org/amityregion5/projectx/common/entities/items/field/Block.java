@@ -40,7 +40,6 @@ public class Block extends FieldItem implements Damageable, Buyable {
     private int stage = 0;
     public static final BufferedImage[] STAGES = new BufferedImage[]
     {
-        null,
         ImageHandler.loadImage("BlockMask_1"),
         ImageHandler.loadImage("BlockMask_2"),
         ImageHandler.loadImage("BlockMask_3"),
