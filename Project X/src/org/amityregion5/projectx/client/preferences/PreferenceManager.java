@@ -105,7 +105,7 @@ public class PreferenceManager {
 
     public static String getKeys()
     {
-        return prefs.get(KEY_CSV, "w,a,s,d,t");
+        return prefs.get(KEY_CSV, "w,s,a,d,t,g");
     }
 
     public static boolean checkSplashScreen()

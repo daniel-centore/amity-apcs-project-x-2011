@@ -105,6 +105,15 @@ public abstract class CharacterEntity extends Entity {
     }
 
     /**
+     * Gets the index of the current character's Weapon.
+     * @return the index of the weapon
+     */
+    public int getCurrWepIndex()
+    {
+        return currWeapon;
+    }
+
+    /**
      * Changes the character's current weapon.
      *
      * @param newWeapon The identifier of the weapon to switch to.

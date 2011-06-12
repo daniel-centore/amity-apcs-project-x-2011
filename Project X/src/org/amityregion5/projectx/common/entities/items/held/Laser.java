@@ -37,7 +37,7 @@ public class Laser extends Gun implements Upgradeable {
 
     public Laser()
     {
-        super(900, -1, -1, 20, 1);
+        super(900, -1, -1, 20, 120, 1);
     }
 
     @Override

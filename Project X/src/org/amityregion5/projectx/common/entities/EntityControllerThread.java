@@ -165,14 +165,6 @@ public class EntityControllerThread extends Thread {
                                     if (map.getArea().killed() && alive)
                                     {
                                         // game over!
-                                        // TODO: fix game ending (make it server side somehow)
-
-                                        // alive = false;
-                                        // gameController.getServer().endGame();
-                                        // gameController.kill();
-                                        // keepRunning = false;
-                                        // kill();
-                                        // System.out.println("Game over");
                                     }
                                 }
                             }
@@ -181,11 +173,6 @@ public class EntityControllerThread extends Thread {
                 }.start();
                 
             }
-
-            // for (Entity ent : toRemove)
-            // entities.requestRemove(ent);
-
-            // rawServer.sendAggregateEntityUpdateMessage();
             try
             {
                 Thread.sleep(EntityConstants.MOVE_UPDATE_TIME);

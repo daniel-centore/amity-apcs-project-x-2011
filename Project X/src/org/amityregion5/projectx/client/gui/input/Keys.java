@@ -19,7 +19,6 @@
 package org.amityregion5.projectx.client.gui.input;
 
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.amityregion5.projectx.client.preferences.PreferenceManager;
@@ -56,6 +55,7 @@ public class Keys {
     public static int[] CHANGE_WEAPON_2 = { KeyEvent.VK_PERIOD };
     
     public static int[] RELOAD = { KeyEvent.VK_R };
+    public static int[] BUY_AMMO = { KeyEvent.VK_C };
 
     public static void refreshKeyPrefs()
     {

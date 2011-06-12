@@ -33,6 +33,7 @@ import javax.swing.JPanel;
 import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.common.entities.items.Upgradeable;
 import org.amityregion5.projectx.common.entities.items.held.Pistol;
+import org.amityregion5.projectx.common.entities.items.held.ProjectileWeapon;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
 
 /**
@@ -92,15 +93,29 @@ public class StatBarDrawing {
             g2.setFont(g2.getFont().deriveFont(Font.PLAIN));
             
             // draw ammo
+
+            ProjectileWeapon pw = (ProjectileWeapon) p.getCurrWeapon();
+
             b = new StringBuilder("Ammo: ");
-            if (p.getCurrWeapon().getAmmo() < 0)
+            if (pw.getMaxAmmo() < 0)
             {
                 b.append("inf");
             } else
             {
-                b.append(p.getCurrWeapon().getAmmo());
+                b.append(pw.getAmmoInMag());
+
+                // show total ammo
+                Font oldFont = g2.getFont();
+                g2.setFont(oldFont.deriveFont(oldFont.getSize2D() - 4));
+                g2.drawString(String.valueOf(pw.getAmmo()), 230, HEIGHT - SPACE * 2);
+                g2.setFont(oldFont);
             }
+            if (pw.getAmmoInMag() == 0)
+                g2.setColor(Color.RED);
             g2.drawString(b.toString(),140,HEIGHT - SPACE * 2);
+            
+            g2.setColor(Color.BLACK);
+
         } catch (Exception ioobe)
         {
             g2.drawString("none",140,g2.getFontMetrics().getHeight());

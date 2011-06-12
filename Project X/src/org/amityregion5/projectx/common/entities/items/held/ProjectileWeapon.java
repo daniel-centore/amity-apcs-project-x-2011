@@ -32,11 +32,14 @@ import java.awt.Point;
 public abstract class ProjectileWeapon extends Weapon {
 
     private static final long serialVersionUID = 1L;
-
-    private int ammo; // current total rounds
+    private int ammo; // rounds that are NOT in current mag
     private int maxAmmo; // max total rounds
     private int damage;
+    private int roundsPerMag; // rounds per magazine
+    private int currentRounds; // rounds that are in current mag
     private Point weaponTip;
+
+    private static final int MAG_COST = 50;
 
     /**
      * Creates a projectile weapon with the given characteristics.
@@ -46,11 +49,13 @@ public abstract class ProjectileWeapon extends Weapon {
      * @param rate the attack rate of this weapon, in attacks per second
      * @param damage the amount of damage this weapon deals
      */
-    public ProjectileWeapon(int range, int startAmmo, int _maxAmmo, double rate, int damage)
+    public ProjectileWeapon(int range, int startAmmo, int _maxAmmo, double rate, int rpm, int damage)
     {
         super(range, rate);
-        ammo = startAmmo;
+        ammo = startAmmo - rpm;
         maxAmmo = _maxAmmo;
+        roundsPerMag = rpm;
+        currentRounds = rpm;
         this.damage = damage;
     }
 
@@ -59,7 +64,12 @@ public abstract class ProjectileWeapon extends Weapon {
     {
         return ammo;
     }
-    
+
+    public int getMagCost()
+    {
+        return MAG_COST;
+    }
+
     public void addAmmo(int rounds)
     {
         ammo = (rounds + ammo > maxAmmo ? maxAmmo : rounds + ammo);
@@ -73,6 +83,45 @@ public abstract class ProjectileWeapon extends Weapon {
     public void setMaxAmmo(int x)
     {
         maxAmmo = x;
+    }
+
+    @Override
+    public void setAmmo(int ammo)
+    {
+        this.ammo = ammo;
+    }
+
+    public int getRoundsPerMag()
+    {
+        return roundsPerMag;
+    }
+
+    public int getAmmoInMag()
+    {
+        return currentRounds;
+    }
+
+    /**
+     * Reloads the weapon, rolling over unused ammunition from the last
+     * magazine.
+     */
+    
+    public void reload()
+    {
+        if(currentRounds == roundsPerMag)
+            return;
+
+        if(ammo - (roundsPerMag - currentRounds) < 0) // less than a mag left
+        {
+            // put all the ammo into the current mag
+            currentRounds += ammo;
+            ammo = 0;
+        }
+        else
+        {
+            ammo -= roundsPerMag - currentRounds; // subtract difference from ammo
+            currentRounds = roundsPerMag; // load up the magazine
+        }
     }
 
     public boolean hasAmmo()
@@ -92,9 +141,12 @@ public abstract class ProjectileWeapon extends Weapon {
 
     public boolean fire()
     {
-        if (ammo != 0)
+        if (maxAmmo == -1)
         {
-            ammo--;
+            return true;
+        } else if(currentRounds >= 1)
+        {
+            currentRounds--;
             return true;
         }
         return false;
@@ -111,8 +163,7 @@ public abstract class ProjectileWeapon extends Weapon {
     }
 
     public boolean isSplash()
-   {
-       return false;
+    {
+        return false;
     }
-
 }

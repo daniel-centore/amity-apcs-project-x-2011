@@ -94,6 +94,11 @@ public class EnemyManager {
         gen.kill();
     }
 
+    /**
+     * Gets the delay time until the next wave in milliseconds.
+     * @param wn the wave number that the game is currently on
+     * @return the delay time in milliseconds
+     */
     public static int waveDelayTime(int wn)
     {
         double time = 10;

@@ -132,7 +132,7 @@ public class GeneratorThread extends Thread {
             {
                 sendWave(waves.poll());
                 waveNumber++;
-                controller.getServer().relayMessage(new WaveMessage(waveNumber));
+                controller.getServer().relayMessage(new WaveMessage(waveNumber,EnemyManager.waveDelayTime(waveCount + 1)));
                 try
                 {
                     Thread.sleep(EnemyManager.waveDelayTime(waveCount++));

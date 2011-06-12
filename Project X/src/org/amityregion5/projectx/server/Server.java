@@ -90,7 +90,7 @@ public class Server {
             System.out.println("-----------------------------------------");
         } catch (IOException e)
         {
-            System.err.println("A server is already running ont his computer!");
+            System.err.println("A server is already running on this computer!");
             System.exit(1);
         }
     }

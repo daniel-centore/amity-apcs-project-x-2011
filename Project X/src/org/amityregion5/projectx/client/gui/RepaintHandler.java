@@ -22,6 +22,7 @@ package org.amityregion5.projectx.client.gui;
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
@@ -31,19 +32,16 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 import org.amityregion5.projectx.client.Game;
-import org.amityregion5.projectx.client.sound.SoundManager;
 import org.amityregion5.projectx.common.entities.Damageable;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.characters.CharacterEntity;
 import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.common.entities.items.field.Area;
 import org.amityregion5.projectx.common.entities.items.held.Gun;
-import org.amityregion5.projectx.common.entities.items.held.Pistol;
 import org.amityregion5.projectx.common.entities.items.held.GunConstants;
 import org.amityregion5.projectx.common.entities.items.held.Uzi;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
 import org.amityregion5.projectx.common.maps.AbstractMap;
-import org.amityregion5.projectx.common.tools.Sound;
 
 /**
  * Handles repainting
@@ -61,6 +59,8 @@ public class RepaintHandler extends Thread {
     private static boolean showingLb = false;
     private static Game game; // game we are based from
     private static Image img;
+    private static final Color COUNTDOWN_COLOR = Color.WHITE;
+
 
     /**
      * Sets the game we are using
@@ -149,6 +149,11 @@ public class RepaintHandler extends Thread {
                 drawLeaderboard(g,img.getWidth(null),img.getHeight(null));
             }
 
+            //if (game.getCountdown() >= 0)
+            {
+                //drawCountdown(game.getCountdown(),g,img.getWidth(null));
+            }
+
         }
 
         return img;
@@ -176,6 +181,19 @@ public class RepaintHandler extends Thread {
         g.fillRect(x, y, a.getWidth(), HEALTHBAR_HEIGHT);
         g.setColor(Color.GREEN);
         g.fillRect(x, y, (int) (a.getWidth() * percent), HEALTHBAR_HEIGHT);
+    }
+
+    private static void drawCountdown(int c, Graphics2D g, int width)
+    {
+        Color col = g.getColor();
+        Font of = g.getFont();
+        g.setColor(COUNTDOWN_COLOR);
+        g.setFont(of.deriveFont(Font.BOLD, 24));
+        g.drawString(String.valueOf(c), width
+                - g.getFontMetrics().stringWidth(String.valueOf(c)),
+                g.getFontMetrics().getHeight() + 5);
+        g.setFont(of);
+        g.setColor(col);
     }
 
     private static void drawFiring(PlayerEntity pe, Graphics2D g)

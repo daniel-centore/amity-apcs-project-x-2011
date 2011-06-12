@@ -20,6 +20,7 @@
 package org.amityregion5.projectx.common.entities.characters;
 
 import java.awt.image.BufferedImage;
+import org.amityregion5.projectx.common.entities.items.held.ProjectileWeapon;
 import org.amityregion5.projectx.common.tools.ImageHandler;
 
 /**

@@ -38,6 +38,7 @@ import org.amityregion5.projectx.common.entities.items.field.Area;
 import org.amityregion5.projectx.common.entities.items.field.Block;
 import org.amityregion5.projectx.common.entities.items.field.Fence;
 import org.amityregion5.projectx.common.entities.items.field.Wall;
+import org.amityregion5.projectx.common.entities.items.held.ProjectileWeapon;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
 import org.amityregion5.projectx.common.tools.CollisionDetection;
 import org.amityregion5.projectx.server.Server;
@@ -238,6 +239,7 @@ public class Client extends Thread {
                         shotThread.setShooting(true);
                     } else
                     {
+                        shotThread.setShooting(true);
                         shotThread.start();
                     }
                     // server.relayMessage(new FiredMessage(player.getUniqueID()));
@@ -321,6 +323,26 @@ public class Client extends Thread {
             player.changeWeapon(cwm.getAmt());
 
             server.relayMessage(new UpdateWeaponMessage(player.getWeapon(), player.getUniqueID()));
+        } else if (m instanceof ReloadMessage)
+        {
+            ((ProjectileWeapon) player.getCurrWeapon()).reload();
+        } else if (m instanceof BuyAmmoMessage)
+        {
+            ProjectileWeapon pw = (ProjectileWeapon) player.getCurrWeapon();
+            if (pw.getMaxAmmo() < 0)
+            {
+                // this weapon has infinite ammo!
+                return;
+            } else if (player.getCash() >= pw.getMagCost() && pw.getAmmo() < pw.getMaxAmmo())
+            {
+                player.spendCash(pw.getMagCost());
+                pw.addAmmo(pw.getRoundsPerMag());
+                server.relayMessage(new AmmoUpdateMessage(player.getUniqueID(),
+                        player.getCurrWepIndex(),
+                        pw.getAmmo()));
+                server.relayMessage(new CashMessage(player.getCash(), player.getUniqueID()));
+            }
+            
         }
     }
 

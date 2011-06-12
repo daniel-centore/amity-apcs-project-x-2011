@@ -23,6 +23,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
@@ -33,6 +34,7 @@ import javax.swing.JFrame;
 import org.amityregion5.projectx.client.Game;
 import org.amityregion5.projectx.client.gui.input.KeyboardInput;
 import org.amityregion5.projectx.client.gui.input.MouseInput;
+import org.amityregion5.projectx.common.entities.items.held.ProjectileWeapon;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 
 /**
@@ -52,6 +54,9 @@ public class GameWindow extends JFrame {
     private static Image buffer; // the image the panel should draw
     private int xOffset; // how much screen is offset horizontally
     private int yOffset; // how much screen is offset vertically
+    private int lastWidth; // the last width of the window to reduce memory usage
+    private int lastHeight; // the last height... ^^
+    private Image img;
 
     /**
      * Creates a GameWindow
@@ -88,9 +93,16 @@ public class GameWindow extends JFrame {
                 int w = this.getWidth();
                 int h = this.getHeight();
 
+                if (w != lastWidth || h != lastHeight || img == null)
+                {
+                    lastHeight = h;
+                    lastWidth = w;
+                    img = createImage(w,h);
+                }
+                
+                
                 int[] scale = scaleImage(buffer, w, h);
 
-                Image img = createImage(w, h); // TODO: make this reuse an image
                 img.getGraphics().drawImage(buffer, (xOffset = scale[2]), (yOffset = scale[3]), scale[0], scale[1], null);
 
                 // draw chat
@@ -105,7 +117,29 @@ public class GameWindow extends JFrame {
                 {
                     img.getGraphics().drawImage(StatBarDrawing.getStatBar(game.getMe()),xOffset,
                         img.getHeight(null) - StatBarDrawing.HEIGHT - yOffset,null);
+                    // draw ammo
+                    if (game.getMe().hasWeapons() && game.getMe().getCurrWeapon() != null)
+                    {
+                        Point p = this.getMousePosition();
+                        if (p != null)
+                        {
+                            int am = ((ProjectileWeapon) game.getMe()
+                               .getCurrWeapon()).getAmmoInMag();
+                            if (am > -1)
+                            {
+                                img.getGraphics().drawString(
+                                   String.valueOf(am), (int) p.getX() - 5,
+                                   (int) p.getY() - 5);
+                            } else
+                            {
+                                img.getGraphics().drawString(
+                                   "inf", (int) p.getX() - 5,
+                                   (int) p.getY() - 5);
+                            }
+                        }
+                    }
                 }
+                
 
                 g.drawImage(img, 0, 0, null);
             }

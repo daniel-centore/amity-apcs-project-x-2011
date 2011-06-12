@@ -20,11 +20,8 @@ package org.amityregion5.projectx.server.communication;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.amityregion5.projectx.common.communication.Constants;
-import org.amityregion5.projectx.common.communication.messages.sound.SoundControlMessage;
 
 import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
-import org.amityregion5.projectx.common.tools.Sound;
 import org.amityregion5.projectx.server.Server;
 
 /**
@@ -55,7 +52,6 @@ public class ShotThread extends Thread {
     @Override
     public void run()
     {
-        
         while (keepRunning)
         {
             // stop shooting if we're not supposed to shoot

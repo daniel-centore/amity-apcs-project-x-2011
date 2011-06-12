@@ -38,7 +38,7 @@ public class Pistol extends Gun implements Upgradeable {
 
     public Pistol()
     {
-        super(600, -1, -1, 4, 7);
+        super(600, -1, -1, 4, 6, 7);
     }
 
     @Override

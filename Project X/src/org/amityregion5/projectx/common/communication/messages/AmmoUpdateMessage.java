@@ -2,8 +2,7 @@
  * Copyright (c) 2011 Amity AP CS A Students of 2010-2011.
  *
  * ex: set filetype=java expandtab tabstop=4 shiftwidth=4 :
- *
- * This program is free software: you can redistribute it and/or
+ * * This program is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of
  * the License, or (at your option) any later version.
@@ -17,23 +16,43 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
-package org.amityregion5.projectx.common.entities.items.held;
+package org.amityregion5.projectx.common.communication.messages;
 
 /**
- * A ProjectileWeapon that fires Bullets into field.
+ * Indicates an update (usu. addition) in ammo.
  *
- * @author Mike DiBuduo
  * @author Joe Stein
  */
-public abstract class Gun extends ProjectileWeapon
-{
-    private static final long serialVersionUID = 1L;
+public class AmmoUpdateMessage extends Message {
+    private long id;
+    private int wepId;
+    private int ammo;
 
-    public Gun(int range, int ammo, int maxAmmo, double fireRate, int rpm, int damage)
+    /**
+     * Creates a new ammo update message.
+     * @param uniqueID the unique id of the PLAYER (not the weapon!)
+     * @param ammo the amount of ammo the weapon now has
+     */
+    public AmmoUpdateMessage(long uniqueID, int wep, int ammo)
     {
-        super(range, ammo, maxAmmo, fireRate, rpm, damage);
+        id = uniqueID;
+        wepId = wep;
+        this.ammo = ammo;
     }
 
+    public long getID()
+    {
+        return id;
+    }
 
+    public int getWepID()
+    {
+        return wepId;
+    }
+
+    public int getAmmo()
+    {
+        return ammo;
+    }
 
 }

@@ -38,7 +38,7 @@ public class Uzi extends Gun implements Upgradeable {
 
     public Uzi()
     {
-        super(400, -1, -1, 10, 3);
+        super(400, 500, 500, 10, 50, 3);
     }
 
     @Override

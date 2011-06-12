@@ -27,14 +27,21 @@ public class WaveMessage extends Message {
     private static final long serialVersionUID = 1L;
 
     private int number;
+    private int ms;
     
-    public WaveMessage(int num)
+    public WaveMessage(int num, int millis)
     {
         number = num;
+        this.ms = millis;
     }
 
     public int getNumber()
     {
         return number;
+    }
+
+    public int getDelayMillis()
+    {
+        return ms;
     }
 }

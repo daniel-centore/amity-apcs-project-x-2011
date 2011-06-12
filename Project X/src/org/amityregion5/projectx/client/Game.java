@@ -49,7 +49,9 @@ import org.amityregion5.projectx.common.communication.RawListener;
 import org.amityregion5.projectx.common.communication.messages.AddEntityMessage;
 import org.amityregion5.projectx.common.communication.messages.AddMeMessage;
 import org.amityregion5.projectx.common.communication.messages.AddWeaponMessage;
+import org.amityregion5.projectx.common.communication.messages.AmmoUpdateMessage;
 import org.amityregion5.projectx.common.communication.messages.AnnounceMessage;
+import org.amityregion5.projectx.common.communication.messages.BuyAmmoMessage;
 import org.amityregion5.projectx.common.communication.messages.CashMessage;
 import org.amityregion5.projectx.common.communication.messages.ChangedWeaponMessage;
 import org.amityregion5.projectx.common.communication.messages.ChatMessage;
@@ -58,6 +60,7 @@ import org.amityregion5.projectx.common.communication.messages.DisconnectRequest
 import org.amityregion5.projectx.common.communication.messages.FiringMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.common.communication.messages.PointMessage;
+import org.amityregion5.projectx.common.communication.messages.ReloadMessage;
 import org.amityregion5.projectx.common.communication.messages.RemoveEntityMessage;
 import org.amityregion5.projectx.common.communication.messages.RequestEntityAddMessage;
 import org.amityregion5.projectx.common.communication.messages.RequestHealMessage;
@@ -74,6 +77,7 @@ import org.amityregion5.projectx.common.entities.EntityControllerThread;
 import org.amityregion5.projectx.common.entities.characters.CharacterEntity;
 import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.common.entities.items.Upgradeable;
+import org.amityregion5.projectx.common.entities.items.held.ProjectileWeapon;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 import org.amityregion5.projectx.common.tools.Sound;
 
@@ -101,6 +105,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
     private String username; // current username
     private boolean gameOver = false;
     private boolean dead = false; // used for graceful exiting
+    private int countdown; // used for wave countdowns
 
     /**
      * Creates a game
@@ -261,7 +266,12 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                 return;
             } else if (Keys.isKey(Keys.RELOAD, keyCode))
             {
-                
+                // TODO reload code
+                ((ProjectileWeapon) me.getCurrWeapon()).reload();
+                communicationHandler.send(new ReloadMessage());
+            } else if (Keys.isKey(Keys.BUY_AMMO, keyCode))
+            {
+                communicationHandler.send(new BuyAmmoMessage());
             }
             if (me == null)
             {
@@ -456,13 +466,24 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         } else if (m instanceof WaveMessage)
         {
             StatBarDrawing.setWaveNumber(((WaveMessage) m).getNumber());
+            //this.startCountdown(((WaveMessage) m).getDelayMillis() / 1000);
         } else if (m instanceof DisconnectRequestMessage)
         {
             JOptionPane.showMessageDialog(null, ((DisconnectRequestMessage) m).getReason(), "Disconnected", JOptionPane.OK_OPTION);
             dead = true;
             this.destroy();
             new ServerChooserWindow();
-        } else
+        } else if (m instanceof AmmoUpdateMessage)
+        {
+            AmmoUpdateMessage aum = (AmmoUpdateMessage) m;
+            ((PlayerEntity) controllerThread.getEntity(aum.getID()))
+                    .getWeapon(aum.getWepID()).setAmmo(aum.getAmmo());
+            System.out.println("setting " + aum.getID() + "'s wepid " + aum.getWepID() +
+                    " to have " + aum.getAmmo() + " ammo");
+            System.out.println("me unique is " + me.getUniqueID());
+            System.out.println("my weapon is " + me.getCurrWepIndex());
+        }
+        else
         {
             System.err.println("Unknown message type encountered. " + "Please make sure you have the latest game version!");
         }
@@ -517,6 +538,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         {
             // PlayerEntity p = (PlayerEntity) entityHandler.getEntity(Long.valueOf(str));
             PlayerEntity p = (PlayerEntity) controllerThread.getEntity(Long.valueOf(str));
+            ((ProjectileWeapon) p.getCurrWeapon()).fire();
             if (!p.getFired())
             {
                 SoundManager.playOnce(p.getCurrWeapon().getSound());
@@ -550,7 +572,6 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                 map.getArea().setHp(Integer.valueOf(entVals[1]));
             } else
             {
-                // Entity e = entityHandler.getEntity(id);
                 Entity e = controllerThread.getEntity(id);
                 if (e == null)
                 {
@@ -636,6 +657,18 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         return toReturn;
     }
 
+    private void startCountdown(int i)
+    {
+        System.out.println("countdown " + i);
+        countdown = i;
+        new Countdown(i).start();
+    }
+
+    public int getCountdown()
+    {
+        return countdown;
+    }
+
     private class DirectionalUpdateThread extends Thread {
 
         private boolean keepRunning = true;
@@ -685,5 +718,30 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
     public CommunicationHandler getCommunicationHandler()
     {
         return communicationHandler;
+    }
+
+    private class Countdown extends Thread {
+        private int from;
+
+        public Countdown(int i)
+        {
+            from = i;
+        }
+
+        @Override
+        public void run()
+        {
+            for (countdown = from; countdown >= 0; countdown--)
+            {
+                try
+                {
+                    Thread.sleep(1000);
+                }
+                catch(InterruptedException ex)
+                {
+                    Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
     }
 }
