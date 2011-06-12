@@ -31,7 +31,7 @@ import org.amityregion5.projectx.common.tools.Sound;
  */
 public class SoundManager extends Thread {
 
-    public static boolean PLAY = true;
+    public static boolean PLAY = false;
     public static boolean BACKGROUND = false;
 
     /**
