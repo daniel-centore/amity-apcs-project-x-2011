@@ -29,9 +29,9 @@ import org.amityregion5.projectx.ConcurrentHashMapWrapper;
  * @author Daniel Centore
  */
 public class EntityList extends ConcurrentHashMapWrapper {
-    
+
     private ConcurrentHashMapWrapper toRemove; // what should we remove next update cycle?
-    
+
     /**
      * Creates an {@link EntityList}
      */
@@ -39,13 +39,13 @@ public class EntityList extends ConcurrentHashMapWrapper {
     {
         toRemove = new ConcurrentHashMapWrapper();
     }
-    
+
     @Override
     public boolean remove(Object o)
     {
         throw new UnsupportedOperationException("Instead, you should \"RequestRemove\" so that we notify our clients first");
     }
-    
+
     @Override
     public synchronized Entity removeEntity(Entity e)
     {
@@ -58,7 +58,6 @@ public class EntityList extends ConcurrentHashMapWrapper {
         throw new UnsupportedOperationException("Instead, you should \"RequestRemove\" so that we notify our clients first");
     }
 
-    
     /**
      * Requests that we remove this entity next update cycle
      * @param o Entity to remove
@@ -68,21 +67,23 @@ public class EntityList extends ConcurrentHashMapWrapper {
     {
         return toRemove.add(o);
     }
-    
+
     /**
      * Actually removes an entity from the list
      * @param o Oject to remove
      */
     public void reallyRemove(Object o)
     {
+        toRemove.remove(o);
         super.remove(o);
     }
-    
+
     public void reallyRemoveEntity(Long l)
     {
+        toRemove.remove(getEntity(l));
         super.removeEntity(l);
     }
-    
+
     /**
      * @return An iterator for going over entities that are scheduled to be removed
      */
@@ -90,7 +91,5 @@ public class EntityList extends ConcurrentHashMapWrapper {
     {
         return toRemove.iterator();
     }
-    
-    
 
 }
