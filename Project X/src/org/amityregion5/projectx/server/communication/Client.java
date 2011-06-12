@@ -278,8 +278,9 @@ public class Client extends Thread {
                     if (e instanceof Block && f instanceof Block) {
                         if (((Block) e).getHp() <= ((Block) f).getHp())
                             return;
+                        gc.removeEntity(f);
                     }
-                    gc.removeEntity(f);
+                    else return;
                 }
             }
 
