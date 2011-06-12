@@ -20,18 +20,14 @@ package org.amityregion5.projectx.server.game;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.amityregion5.projectx.common.communication.Constants;
 import org.amityregion5.projectx.common.communication.messages.sound.SoundControlMessage;
-
 import org.amityregion5.projectx.common.entities.Damageable;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.EntityConstants;
-import org.amityregion5.projectx.common.entities.characters.CharacterEntity;
 import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
 import org.amityregion5.projectx.common.entities.characters.enemies.SuicideBomber;
@@ -182,7 +178,7 @@ public class EntityMoverThread extends Thread {
             for (Entity ent : toRemove)
                 gameController.removeEntity(ent);
 
-            sendAggregateUpdateMessage();
+            rawServer.sendAggregateEntityUpdateMessage();
             try
             {
                 Thread.sleep(EntityConstants.MOVE_UPDATE_TIME);
@@ -191,61 +187,6 @@ public class EntityMoverThread extends Thread {
                 Logger.getLogger(EntityMoverThread.class.getName()).log(Level.SEVERE, null, ex);
                 keepRunning = false;
             }
-        }
-    }
-
-    private void sendAggregateUpdateMessage()
-    {
-        Iterator<Entity> itr = gameController.getEntities().getRemovalIterator();
-
-        StringBuilder died = new StringBuilder();
-        died.append(Constants.DIED_PREF);
-        while (itr.hasNext())
-        {
-            Entity e = itr.next();
-            died.append(e.getUniqueID());
-            died.append(",");
-            itr.remove();
-            gameController.getEntities().reallyRemove(e);
-        }
-
-        if (died.length() > 0)
-        {
-            died.deleteCharAt(died.length() - 1);
-            rawServer.send(died.toString());
-        }
-
-        StringBuilder buf = new StringBuilder();
-        buf.append(Constants.MOVE_PREF);
-        buf.append("-1,");
-        buf.append(gameController.getMap().getArea().getHp());
-        buf.append(";");
-        
-        for (Entity e : gameController.getEntities())
-        {
-            if (e.updateCheck())
-            {
-                buf.append(e.getUniqueID());
-                buf.append(",");
-                buf.append(Math.round(e.getX()));
-                buf.append(",");
-                buf.append(Math.round(e.getY()));
-                buf.append(",");
-                buf.append(e.getDirectionFacing());
-                buf.append(",");
-                buf.append(e.getDirectionMoving());
-                buf.append(",");
-                buf.append(e.getHp());
-                buf.append(",");
-                buf.append(e.getMoveSpeed());
-                buf.append(";");
-            }
-        }
-
-        if (buf.length() > 0)
-        {
-            buf.deleteCharAt(buf.length() - 1);
-            rawServer.send(buf.toString());
         }
     }
 

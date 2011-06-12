@@ -120,6 +120,8 @@ public final class GameController {
             server.relayMessage(new CashMessage(p.getCash(), p.getUniqueID()));
         }
 
+        server.getRawServer().setGameController(this);
+        
         entityMoverThread = new EntityMoverThread(this, server.getRawServer(), map);
         entityMoverThread.start();
         enemyManager = new EnemyManager(this, getEnemySpawns());
