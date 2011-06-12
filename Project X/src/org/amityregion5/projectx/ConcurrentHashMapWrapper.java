@@ -20,16 +20,26 @@
 package org.amityregion5.projectx;
 
 import java.util.AbstractCollection;
-import java.util.HashMap;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.amityregion5.projectx.common.entities.Entity;
 
+/**
+ * Basically just wraps a {@link ConcurrentHashMap} so we don't have
+ * to rewrite large amounts of code designed to use a {@link Collection}.
+ * 
+ * @author Daniel Centore
+ *
+ */
 public class ConcurrentHashMapWrapper extends AbstractCollection<Entity> {
     
-    private ConcurrentHashMap<Long, Entity> map;
+    private ConcurrentHashMap<Long, Entity> map; // the map of items
     
+    /**
+     * Creates a {@link ConcurrentHashMapWrapper}
+     */
     public ConcurrentHashMapWrapper()
     {
         map = new ConcurrentHashMap<Long, Entity>();
