@@ -27,6 +27,8 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.amityregion5.projectx.common.communication.Constants;
 import org.amityregion5.projectx.common.communication.MessageListener;
@@ -42,7 +44,6 @@ import org.amityregion5.projectx.common.communication.messages.Message;
 public class CommunicationHandler extends Thread {
 
     private static CommunicationHandler instance = null; // the latest instance
-    
     private String serverIP; // IP to work with
     private Socket socket = null; // socket we create
     private boolean keepReading = true; // should we be reading from the server?
@@ -50,9 +51,9 @@ public class CommunicationHandler extends Thread {
     private volatile List<ReplyWaiting> replies = new ArrayList<ReplyWaiting>(); // list of places to check for replies
     private ObjectOutputStream outObjects; // what we write to
     private ObjectInputStream inObjects; // what we read from
-    
-    // TODO: remove all the "instance" kludges so we can restart the game more easily.
+    private static final long TIMEOUT_TIME = 5000;
 
+    // TODO: remove all the "instance" kludges so we can restart the game more easily.
     /**
      * Creates and initializes communications with a server
      * 
@@ -61,7 +62,7 @@ public class CommunicationHandler extends Thread {
      */
     public CommunicationHandler(String serverIP) throws IOException, SocketTimeoutException
     {
-        if (instance != null) // can happen if we leave after bad username
+        if(instance != null) // can happen if we leave after bad username
             instance.kill();
 
         instance = this;
@@ -82,17 +83,19 @@ public class CommunicationHandler extends Thread {
         {
             inObjects = new ObjectInputStream(socket.getInputStream());
 
-            while (keepReading)
+            while(keepReading)
             {
                 Message m = (Message) inObjects.readObject();
                 handle(m);
             }
 
-        } catch (IOException e1)
+        }
+        catch(IOException e1)
         {
             // let it die, and let the listeners' tellSocketClosed() method
             // handle what to do on death
-        } catch (ClassNotFoundException e)
+        }
+        catch(ClassNotFoundException e)
         {
             e.printStackTrace();
         }
@@ -101,7 +104,8 @@ public class CommunicationHandler extends Thread {
         {
             die();
             socket.close();
-        } catch (IOException e)
+        }
+        catch(IOException e)
         {
             e.printStackTrace();
         }
@@ -114,16 +118,16 @@ public class CommunicationHandler extends Thread {
      */
     private void handle(Message m)
     {
-        if (m instanceof BlockingMessage)
+        if(m instanceof BlockingMessage)
         {
             BlockingMessage q = (BlockingMessage) m;
 
-            for (ReplyWaiting bm : replies)
+            for(ReplyWaiting bm : replies)
             {
-                if (bm.message == q.getMessageNumber())
+                if(bm.message == q.getMessageNumber())
                 {
                     bm.setReply(q.getMessage());
-                    synchronized (bm.thread)
+                    synchronized(bm.thread)
                     {
                         bm.thread.notify();
                     }
@@ -134,9 +138,9 @@ public class CommunicationHandler extends Thread {
             throw new RuntimeException("Got BlockingMessage that didn't need reply?");
         }
 
-        synchronized (this)
+        synchronized(this)
         {
-            for (int i = 0; i < listeners.size(); i++)
+            for(int i = 0;i < listeners.size();i++)
                 listeners.get(i).handle(m);
         }
     }
@@ -151,12 +155,13 @@ public class CommunicationHandler extends Thread {
             inObjects.close();
             outObjects.close();
             socket.close();
-        } catch (IOException e)
+        }
+        catch(IOException e)
         {
 //            e.printStackTrace();
-        } catch (NullPointerException e)
+        }
+        catch(NullPointerException e)
         {
-
         }
     }
 
@@ -165,7 +170,7 @@ public class CommunicationHandler extends Thread {
      */
     private synchronized void die()
     {
-        for (MessageListener mh : listeners)
+        for(MessageListener mh : listeners)
         {
             mh.tellSocketClosed();
         }
@@ -201,9 +206,9 @@ public class CommunicationHandler extends Thread {
         try
         {
             outObjects.writeObject(m);
-
             outObjects.flush();
-        } catch (IOException e)
+        }
+        catch(IOException e)
         {
             // This happens sometimes. I forget when though.
             e.printStackTrace();
@@ -211,7 +216,18 @@ public class CommunicationHandler extends Thread {
     }
 
     /**
-     * Gets a reply from the Server
+     * Sends a message to the server. The difference here is that
+     * this method throws an IOException, while send(Message m) doesn't.
+     * @param m the Message to send
+     */
+    public void sendVolatile(Message m) throws IOException
+    {
+        outObjects.writeObject(m);
+        outObjects.flush();
+    }
+
+    /**
+     * Gets a reply from the Server.
      * 
      * @param m Message to send
      * @return The reply from the server
@@ -220,23 +236,36 @@ public class CommunicationHandler extends Thread {
     {
         BlockingMessage bm = new BlockingMessage(m);
 
-        ReplyWaiting wait;
+        final ReplyWaiting wait;
         replies.add(wait = new ReplyWaiting(Thread.currentThread(), bm.getMessageNumber()));
-
-        send(bm);
-
-        synchronized (Thread.currentThread())
+        try
         {
-            while (true)
+            sendVolatile(bm);
+        }
+        catch(IOException ex)
+        {
+            Logger.getLogger(CommunicationHandler.class.getName()).log(Level.SEVERE, null, ex);
+            wait.setReply(new Message(){});
+            synchronized(wait.thread)
+            {
+                wait.thread.notify();
+            }
+        }
+
+
+        synchronized(Thread.currentThread())
+        {
+            while(true)
             {
                 try
                 {
                     Thread.currentThread().wait();
-                } catch (InterruptedException e)
+                }
+                catch(InterruptedException e)
                 {
                 }
 
-                if (wait.getReply() != null)
+                if(wait.getReply() != null)
                     return wait.getReply();
             }
         }
@@ -275,7 +304,7 @@ public class CommunicationHandler extends Thread {
      */
     private class ReplyWaiting {
 
-        private Thread thread; // The thread that is (im)patiently waiting for us
+        private final Thread thread; // The thread that is (im)patiently waiting for us
         private int message; // The number reply we will get
         private Message reply; // The reply (gets filled in eventually)
 

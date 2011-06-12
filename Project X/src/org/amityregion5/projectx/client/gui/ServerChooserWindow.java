@@ -178,7 +178,6 @@ public class ServerChooserWindow extends JFrame implements DatagramListener, Pre
             // ActivePlayerUpdate message serves as an affirmative here.
             if (reply instanceof BooleanReplyMessage)
             {
-
                 JOptionPane.showMessageDialog(null, "Username already in use", "Error", JOptionPane.INFORMATION_MESSAGE);
                 int choice = JOptionPane.showConfirmDialog(this, "Do you want to change your username?", "Do you want to change?", JOptionPane.YES_NO_OPTION);
                 if (choice == JOptionPane.YES_OPTION)
@@ -200,6 +199,12 @@ public class ServerChooserWindow extends JFrame implements DatagramListener, Pre
                 JOptionPane.showMessageDialog(null, ((DisconnectRequestMessage) reply).getReason(),
                         "Disconnected", JOptionPane.ERROR_MESSAGE);
                 joined = true; // get us out of the loop
+            } else if (reply instanceof Message)
+            {
+                // generic message means error
+                JOptionPane.showMessageDialog(null, "I/O error. Check logs for details.",
+                        "Disconnected", JOptionPane.ERROR_MESSAGE);
+                joined = true;
             }
         }
     }// GEN-LAST:event_joinBtnActionPerformed
