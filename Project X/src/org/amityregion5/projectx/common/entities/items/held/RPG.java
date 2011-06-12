@@ -24,8 +24,11 @@ import org.amityregion5.projectx.common.entities.items.Upgradeable;
 import org.amityregion5.projectx.common.tools.Sound;
 
 /**
- * Class documentation.
- *
+ * Rocket-propelled grenade weapon. Currently not used.
+ * We are planning to add this weapon to gameplay when we implement
+ * splash damage.
+ * 
+ * @author Joe Stein
  * @author Mike DiBuduo
  */
 public class RPG extends Gun implements Upgradeable, DamageDealing
@@ -37,7 +40,7 @@ public class RPG extends Gun implements Upgradeable, DamageDealing
 
     public RPG()
     {
-        super(600, -1, -1, .25, -1, -1, 10);
+        super(600, -1, -1, .25, -1, 10);
     }
 
     @Override

@@ -259,6 +259,9 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             {
                 RepaintHandler.switchLeaderBoard();
                 return;
+            } else if (Keys.isKey(Keys.RELOAD, keyCode))
+            {
+                
             }
             if (me == null)
             {

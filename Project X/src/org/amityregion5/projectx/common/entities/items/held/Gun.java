@@ -19,8 +19,6 @@
  */
 package org.amityregion5.projectx.common.entities.items.held;
 
-import java.awt.Point;
-
 /**
  * A ProjectileWeapon that fires Bullets into field.
  *
@@ -31,9 +29,9 @@ public abstract class Gun extends ProjectileWeapon
 {
     private static final long serialVersionUID = 1L;
 
-    public Gun(int range, int ammo, int maxAmmo, double fireRate, int roundsPerMag, int mags, int damage)
+    public Gun(int range, int ammo, int maxAmmo, double fireRate, int roundsPerMag, int damage)
     {
-        super(range, ammo, maxAmmo, fireRate, roundsPerMag, mags, damage);
+        super(range, ammo, maxAmmo, fireRate, roundsPerMag,damage);
     }
 
 

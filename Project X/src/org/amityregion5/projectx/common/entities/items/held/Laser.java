@@ -28,6 +28,7 @@ import org.amityregion5.projectx.common.tools.Sound;
  * Really, really fast.
  *
  * @author Michael Zuo
+ * @author Joe Stein
  */
 public class Laser extends Gun implements Upgradeable {
 
@@ -36,7 +37,7 @@ public class Laser extends Gun implements Upgradeable {
 
     public Laser()
     {
-        super(900, -1, -1, 20, -1, -1, 1);
+        super(900, -1, -1, 20, -1, 1);
     }
 
     @Override

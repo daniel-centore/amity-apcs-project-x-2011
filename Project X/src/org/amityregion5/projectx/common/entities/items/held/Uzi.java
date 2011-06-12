@@ -19,7 +19,6 @@
 package org.amityregion5.projectx.common.entities.items.held;
 
 
-import java.awt.Point;
 
 import java.awt.image.BufferedImage;
 
@@ -39,7 +38,7 @@ public class Uzi extends Gun implements Upgradeable {
 
     public Uzi()
     {
-        super(400, -1, -1, 10, -1, -1, 3);
+        super(400, -1, -1, 10, -1, 3);
     }
 
     @Override

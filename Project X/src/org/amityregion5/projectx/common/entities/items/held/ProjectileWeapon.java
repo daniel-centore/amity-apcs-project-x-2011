@@ -33,10 +33,10 @@ public abstract class ProjectileWeapon extends Weapon {
 
     private static final long serialVersionUID = 1L;
 
-    private int ammo;
-    private int maxAmmo;
-    private int roundsPerMag;
-    private int mags;
+    private int ammo; // current total rounds
+    private int maxAmmo; // max total rounds
+    private int roundsPerMag; // max rounds per mag
+    private int currentRounds; // current rounds in mag
     private int damage;
     private Point weaponTip;
 
@@ -50,21 +50,21 @@ public abstract class ProjectileWeapon extends Weapon {
      * @param mags the number of magazines
      * @param damage the amount of damage this weapon deals
      */
-    public ProjectileWeapon(int range, int startAmmo, int _maxAmmo, double rate, int rpm, int mags, int damage)
+    public ProjectileWeapon(int range, int startAmmo, int _maxAmmo, double rate, int rpm, int damage)
     {
         super(range, rate);
         ammo = startAmmo;
         maxAmmo = _maxAmmo;
         roundsPerMag = rpm;
-        this.mags = mags;
         this.damage = damage;
     }
 
+    @Override
     public int getAmmo()
     {
         return ammo;
     }
-
+    
     public void addAmmo(int rounds)
     {
         ammo = (rounds + ammo > maxAmmo ? maxAmmo : rounds + ammo);
@@ -85,27 +85,26 @@ public abstract class ProjectileWeapon extends Weapon {
         return roundsPerMag;
     }
 
-    public int getMags()
-    {
-        return mags;
-    }
-
-    public void setMags(int mags)
-    {
-        this.mags = mags;
-    }
-
+    /**
+     * Reloads the weapon, rolling over unused ammunition from the last
+     * magazine.
+     */
     public void reload()
     {
-        if (ammo == maxAmmo || mags == 0)
+        if (currentRounds == roundsPerMag)
             return;
-        ammo = roundsPerMag - ammo;
-        mags--;
+        ammo -= roundsPerMag - currentRounds; // subtract difference from ammo
+        currentRounds = roundsPerMag; // fix up the magazine
     }
 
     public boolean hasAmmo()
     {
         return ammo != 0;
+    }
+
+    public boolean hasAmmoInMag()
+    {
+        return currentRounds != 0;
     }
 
     public int getDamage()

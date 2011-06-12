@@ -26,6 +26,7 @@ import org.amityregion5.projectx.common.tools.Sound;
 /**
  * Class documentation.
  *
+ * @author Joe Stein
  * @author Mike DiBuduo
  */
 public class SniperRifle extends Gun implements DamageDealing, Upgradeable
@@ -36,7 +37,7 @@ public class SniperRifle extends Gun implements DamageDealing, Upgradeable
 
     public SniperRifle(int range, int ammo, int maxAmmo, double fireRate, int roundsPerMag, int mags, int damage)
     {
-        super(1000, -1, -1, 1, -1, -1, 20);
+        super(1000, -1, -1, 1, -1, 20);
     }
 
     @Override

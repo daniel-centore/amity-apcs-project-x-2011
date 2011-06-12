@@ -21,7 +21,6 @@
 package org.amityregion5.projectx.common.entities.items.held;
 
 import org.amityregion5.projectx.common.entities.items.DamageDealing;
-import org.amityregion5.projectx.common.entities.items.Upgradeable;
 import org.amityregion5.projectx.common.tools.Sound;
 
 /**
@@ -63,7 +62,28 @@ public abstract class Weapon extends HeldItem implements DamageDealing {
 
     public abstract Sound getSound();
     public abstract boolean hasAmmo();
-    public abstract int getAmmo();
+
+    /**
+     * Returns the ammount of ammo this weapon has.
+     * Returns -1 (infinite) by default. This should be overridden
+     * by projectile weapons.
+     * @return the ammount of ammo this weapon has left
+     */
+    public int getAmmo()
+    {
+        return -1;
+    }
+
+    /**
+     * Sets the amount of ammo this weapon has.
+     * Does nothing by default. This should be overridden by projectile
+     * weapons.
+     * @param ammo the amount of ammo this gun will have
+     */
+    public void setAmmo(int ammo)
+    {
+        // ignore
+    }
 
     public abstract int getDamage();
 

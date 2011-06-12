@@ -24,15 +24,21 @@ import org.amityregion5.projectx.common.entities.items.Upgradeable;
 import org.amityregion5.projectx.common.tools.ImageHandler;
 import org.amityregion5.projectx.common.tools.Sound;
 
+/**
+ * The "stock" gun.
+ * @author Joe Stein
+ */
+
 public class Pistol extends Gun implements Upgradeable {
 
     private static final long serialVersionUID = 1L;
     
     private final int UPGRADE_COST = 50;
+    private static final BufferedImage image = ImageHandler.loadImage("Pistol");
 
     public Pistol()
     {
-        super(600, -1, -1, 4, -1, -1, 7);
+        super(600, -1, -1, 4, -1, 7);
     }
 
     @Override
@@ -40,12 +46,6 @@ public class Pistol extends Gun implements Upgradeable {
     {
         return Sound.PISTOL_SHOT;
     }
-//   @Override
-//   public String getDefaultImage()
-//   {
-//      return "sprites/Pistol";
-//   }
-    private static final BufferedImage image = ImageHandler.loadImage("Pistol");
 
     @Override
     public BufferedImage getDefaultImage()
