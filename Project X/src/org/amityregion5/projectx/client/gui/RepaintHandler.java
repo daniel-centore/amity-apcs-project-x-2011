@@ -38,6 +38,7 @@ import org.amityregion5.projectx.common.entities.characters.CharacterEntity;
 import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.common.entities.items.field.Area;
 import org.amityregion5.projectx.common.entities.items.held.Gun;
+import org.amityregion5.projectx.common.entities.items.held.Pistol;
 import org.amityregion5.projectx.common.entities.items.held.GunConstants;
 import org.amityregion5.projectx.common.entities.items.held.Uzi;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
@@ -185,16 +186,18 @@ public class RepaintHandler extends Thread {
                 Gun gun = (Gun)wep;
                 int x2;
                 int y2;
+                /**
                 if(gun instanceof Uzi)
                 {
                     x2 = (int) (Math.cos(Math.toRadians(pe.getDirectionFacing())) * wep.getRange() + gun.getWeaponTip().getX());
                     y2 = (int) (Math.sin(Math.toRadians(pe.getDirectionFacing())) * wep.getRange() + gun.getWeaponTip().getY());
                 }
-                else
-                {
+                **/
+                //else
+                //{
                     x2 = (int) (Math.cos(Math.toRadians(pe.getDirectionFacing())) * wep.getRange()) + pe.getCenterX();
                     y2 = (int) (Math.sin(Math.toRadians(pe.getDirectionFacing())) * wep.getRange()) + pe.getCenterY();
-                }
+                //}
 
                 if (pe.getFired())
                 {
@@ -202,8 +205,8 @@ public class RepaintHandler extends Thread {
                     Color oldColor = g.getColor();
                     g.setStroke(new BasicStroke(6));
                     g.setColor(Color.YELLOW);
-                    //g.drawLine(pe.getCenterX(), pe.getCenterY(), x2, y2);
-                    g.drawLine((int)gun.getWeaponTip().getX(), (int)gun.getWeaponTip().getY(), x2, y2);
+                    g.drawLine(pe.getCenterX(), pe.getCenterY(), x2, y2);
+                    //g.drawLine((int)gun.getWeaponTip().getX(), (int)gun.getWeaponTip().getY(), x2, y2);
                     g.setColor(oldColor);
                     g.setStroke(old);
                     pe.setFired(false);
