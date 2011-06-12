@@ -27,6 +27,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.amityregion5.projectx.common.communication.Constants;
 
 import org.amityregion5.projectx.common.communication.messages.*;
 import org.amityregion5.projectx.common.entities.Damageable;
@@ -135,7 +136,7 @@ public class Client extends Thread {
             server.removeClient(username); // take it off the server's list
             server.relayMessage(new AnnounceMessage(username + " has disconnected."));
             if (player != null)
-                server.relayMessage(new RemoveEntityMessage(player.getUniqueID()));
+                server.sendRaw(Constants.DIED_PREF + String.valueOf(player.getUniqueID()));
         }
     }
 

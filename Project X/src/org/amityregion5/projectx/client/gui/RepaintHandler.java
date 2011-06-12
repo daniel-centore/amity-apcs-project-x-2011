@@ -37,6 +37,7 @@ import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.characters.CharacterEntity;
 import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.common.entities.items.field.Area;
+import org.amityregion5.projectx.common.entities.items.field.Block;
 import org.amityregion5.projectx.common.entities.items.held.Gun;
 import org.amityregion5.projectx.common.entities.items.held.GunConstants;
 import org.amityregion5.projectx.common.entities.items.held.Uzi;
@@ -135,14 +136,22 @@ public class RepaintHandler extends Thread {
                 {
                     drawFiring((PlayerEntity) e, g);
                 }
-
-                
             }
 
             for (Entity e : game.getEntities())
             {
                 drawHealthbar(e, g);
             }
+
+            // draw area health bar. only needs to be done once!
+            Area a = game.getMap().getArea();
+            double percent = (double) a.getHp() / a.getMaxHp();
+            int x = (int) a.getX();
+            int y = (int) a.getY() - 10;
+            g.setColor(Color.RED);
+            g.fillRect(x, y, a.getWidth(), HEALTHBAR_HEIGHT);
+            g.setColor(Color.GREEN);
+            g.fillRect(x, y, (int) (a.getWidth() * percent), HEALTHBAR_HEIGHT);
 
             if (showingLb) // draw the leaderboard if it's supposed to be showing
             {
@@ -166,21 +175,20 @@ public class RepaintHandler extends Thread {
             // Enemy en = (Enemy) e;
             Damageable d = (Damageable) e;
             double percent = (double) d.getHp() / d.getMaxHp();
-            int x = (int) e.getX();
-            int y = (int) e.getY() - HEALTHBAR_HEIGHT;
-            g.setColor(Color.RED);
-            g.fillRect(x, y, e.getWidth(), HEALTHBAR_HEIGHT);
-            g.setColor(Color.GREEN);
-            g.fillRect(x, y, (int) (e.getWidth() * percent), HEALTHBAR_HEIGHT);
+            if (e instanceof Block)
+            {
+                g.drawImage(Block.STAGES[((Block) e).getStage()], (int) e.getX(),
+                        (int) e.getY(), null);
+            } else
+            {
+                int x = (int) e.getX();
+                int y = (int) e.getY() - HEALTHBAR_HEIGHT;
+                g.setColor(Color.RED);
+                g.fillRect(x, y, e.getWidth(), HEALTHBAR_HEIGHT);
+                g.setColor(Color.GREEN);
+                g.fillRect(x, y, (int) (e.getWidth() * percent), HEALTHBAR_HEIGHT);
+            }
         }
-        Area a = game.getMap().getArea();
-        double percent = (double) a.getHp() / a.getMaxHp();
-        int x = (int) a.getX();
-        int y = (int) a.getY() - 10;
-        g.setColor(Color.RED);
-        g.fillRect(x, y, a.getWidth(), HEALTHBAR_HEIGHT);
-        g.setColor(Color.GREEN);
-        g.fillRect(x, y, (int) (a.getWidth() * percent), HEALTHBAR_HEIGHT);
     }
 
     private static void drawCountdown(int c, Graphics2D g, int width)
