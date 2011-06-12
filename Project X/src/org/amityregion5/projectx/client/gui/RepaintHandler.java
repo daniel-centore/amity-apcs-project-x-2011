@@ -60,6 +60,7 @@ public class RepaintHandler extends Thread {
     private static boolean showingGrid = false;
     private static boolean showingLb = false;
     private static Game game; // game we are based from
+    private static Image img;
 
     /**
      * Sets the game we are using
@@ -78,11 +79,12 @@ public class RepaintHandler extends Thread {
      */
     public static Image getMapFlatImage()
     {
-        Image img = GameWindow.createImage();
         if (img == null)
-        {
+            img = GameWindow.createImage();
+        
+        if (img == null)
             return null; // save us from NPE later in this code!
-        }
+
         Graphics2D g = (Graphics2D) img.getGraphics();
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);

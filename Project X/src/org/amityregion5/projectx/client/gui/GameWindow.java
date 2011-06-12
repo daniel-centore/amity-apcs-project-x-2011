@@ -83,17 +83,14 @@ public class GameWindow extends JFrame {
             // called when we run RepaintHandler.fireUpdateRequired()
             public void paintComponent(Graphics g)
             {
-                if(buffer == null)
-                {
-                    return;
-                }
+                buffer = RepaintHandler.getMapFlatImage();
 
                 int w = this.getWidth();
                 int h = this.getHeight();
 
                 int[] scale = scaleImage(buffer, w, h);
 
-                Image img = createImage(w, h);
+                Image img = createImage(w, h); // TODO: make this reuse an image
                 img.getGraphics().drawImage(buffer, (xOffset = scale[2]), (yOffset = scale[3]), scale[0], scale[1], null);
 
                 // draw chat
@@ -194,8 +191,6 @@ public class GameWindow extends JFrame {
      */
     public static void fireRepaintRequired()
     {
-        buffer = RepaintHandler.getMapFlatImage();
-
         if(panel == null)
         {
             System.err.println("Null panel");
