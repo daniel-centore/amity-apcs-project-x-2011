@@ -325,6 +325,7 @@ public class Client extends Thread {
             server.relayMessage(new UpdateWeaponMessage(player.getWeapon(), player.getUniqueID()));
         } else if (m instanceof ReloadMessage)
         {
+            shotThread.setShooting(false); // can't reload while we're shooting can we?
             ((ProjectileWeapon) player.getCurrWeapon()).reload();
         } else if (m instanceof BuyAmmoMessage)
         {

@@ -64,17 +64,17 @@ public class StatBarDrawing {
 
         // draw border
         g2.setStroke(new BasicStroke(B_WIDTH));
-        g2.drawRect(B_MARG,B_MARG, WIDTH - B_MARG * 2, HEIGHT - B_MARG * 2);
+        g2.drawRect(B_MARG, B_MARG, WIDTH - B_MARG * 2, HEIGHT - B_MARG * 2);
 
         int left = SPACE + 5;
         // draw cash
         StringBuilder b = new StringBuilder();
         b.append("Cash: $");
         b.append(p.getCash());
-        
+
         g2.setFont(g2.getFont().deriveFont(14.0f));
         g2.drawString(b.toString(), left, g2.getFontMetrics().getHeight() + SPACE);
-        
+
         // draw points
         b = new StringBuilder();
         b.append("Points: ");
@@ -82,47 +82,52 @@ public class StatBarDrawing {
 
         g2.drawString(b.toString(), left, HEIGHT - SPACE * 2);
 
-        try {
+        try
+        {
             // draw weapon info
             g2.setFont(g2.getFont().deriveFont(Font.BOLD, 16.0f));
             Weapon wep = p.getCurrWeapon();
             String name = wep.getName();
-            if (wep instanceof Upgradeable)
+            if(wep instanceof Upgradeable)
                 name += " Lv" + wep.getUpgradeLevel();
-            g2.drawString(name,140,g2.getFontMetrics().getHeight());
+            g2.drawString(name, 140, g2.getFontMetrics().getHeight());
             g2.setFont(g2.getFont().deriveFont(Font.PLAIN));
-            
+
             // draw ammo
 
             ProjectileWeapon pw = (ProjectileWeapon) p.getCurrWeapon();
 
             b = new StringBuilder("Ammo: ");
-            if (pw.getMaxAmmo() < 0)
-            {
-                b.append("inf");
-            } else
-            {
-                b.append(pw.getAmmoInMag());
+            b.append(pw.getAmmoInMag());
 
-                // show total ammo
-                Font oldFont = g2.getFont();
-                g2.setFont(oldFont.deriveFont(oldFont.getSize2D() - 4));
-                g2.drawString(String.valueOf(pw.getAmmo()), 230, HEIGHT - SPACE * 2);
-                g2.setFont(oldFont);
+            // show total ammo
+            Font oldFont = g2.getFont();
+            g2.setFont(oldFont.deriveFont(oldFont.getSize2D() - 4));
+            if(pw.getMaxAmmo() == -1)
+            {
+                g2.drawString("inf", 235, HEIGHT - SPACE * 2);
             }
-            if (pw.getAmmoInMag() == 0)
+            else
+            {
+                g2.drawString(String.valueOf(pw.getAmmo()), 235, HEIGHT - SPACE * 2);
+            }
+
+            g2.setFont(oldFont);
+
+            if(pw.getAmmoInMag() == 0)
                 g2.setColor(Color.RED);
-            g2.drawString(b.toString(),140,HEIGHT - SPACE * 2);
-            
+            g2.drawString(b.toString(), 140, HEIGHT - SPACE * 2);
+
             g2.setColor(Color.BLACK);
 
-        } catch (Exception ioobe)
+        }
+        catch(Exception ioobe)
         {
-            g2.drawString("none",140,g2.getFontMetrics().getHeight());
+            g2.drawString("none", 140, g2.getFontMetrics().getHeight());
         }
 
         // draw wave number
-        g2.drawString(waveStr,WIDTH - 75,g2.getFontMetrics().getHeight());
+        g2.drawString(waveStr, WIDTH - 75, g2.getFontMetrics().getHeight());
 
         return result;
     }
@@ -136,13 +141,14 @@ public class StatBarDrawing {
     public static void main(String[] args)
     {
         JFrame frame = new JFrame();
-        frame.setSize(700,200);
-        final PlayerEntity p = new PlayerEntity(0,0,"bob");
+        frame.setSize(700, 200);
+        final PlayerEntity p = new PlayerEntity(0, 0, "bob");
         p.addWeapon(new Pistol());
         p.setPoints(20974);
         p.setCash(500);
         StatBarDrawing.setWaveNumber(2);
         final JPanel panel = new JPanel() {
+
             private static final long serialVersionUID = 1L;
 
             @Override

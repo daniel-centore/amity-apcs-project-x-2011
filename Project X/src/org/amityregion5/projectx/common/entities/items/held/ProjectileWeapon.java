@@ -108,9 +108,13 @@ public abstract class ProjectileWeapon extends Weapon {
     
     public void reload()
     {
-        if(currentRounds == roundsPerMag)
+        if (currentRounds == roundsPerMag)
             return;
-
+        if (maxAmmo == -1)
+        {
+            currentRounds = roundsPerMag;
+            return;
+        }
         if(ammo - (roundsPerMag - currentRounds) < 0) // less than a mag left
         {
             // put all the ammo into the current mag
@@ -141,10 +145,7 @@ public abstract class ProjectileWeapon extends Weapon {
 
     public boolean fire()
     {
-        if (maxAmmo == -1)
-        {
-            return true;
-        } else if(currentRounds >= 1)
+        if(currentRounds >= 1)
         {
             currentRounds--;
             return true;
