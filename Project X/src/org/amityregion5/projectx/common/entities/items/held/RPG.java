@@ -40,6 +40,7 @@ public class RPG extends Gun implements Upgradeable, DamageDealing
 
     public RPG()
     {
+        // TODO: balance against the other weapons.
         super(600, -1, -1, .25, 1, 30);
     }
 

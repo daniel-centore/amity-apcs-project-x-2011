@@ -19,8 +19,10 @@
 package org.amityregion5.projectx.common.entities.items.held;
 
 import java.awt.image.BufferedImage;
+
 import org.amityregion5.projectx.common.entities.items.DamageDealing;
 import org.amityregion5.projectx.common.entities.items.Upgradeable;
+import org.amityregion5.projectx.common.tools.ImageHandler;
 import org.amityregion5.projectx.common.tools.Sound;
 
 /**
@@ -34,10 +36,11 @@ public class SniperRifle extends Gun implements DamageDealing, Upgradeable
     public static final long serialVersionUID = 1L;
 
     private final int UPGRADE_COST = 150;
+    private static final BufferedImage image = ImageHandler.loadImage("Sniper");
 
-    public SniperRifle(int range, int ammo, int maxAmmo, double fireRate, int roundsPerMag, int mags, int damage)
+    public SniperRifle()
     {
-        super(1000, -1, -1, 1, 1, 20);
+        super(1000, 100, 100, 1, 1, 30);
     }
 
     @Override
@@ -55,9 +58,7 @@ public class SniperRifle extends Gun implements DamageDealing, Upgradeable
 
     public BufferedImage getDefaultImage()
     {
-        //none
-        return null;
-        // TODO sniper rifle sprite
+        return image;
     }
 
     public int getUpgradeCost()
@@ -68,7 +69,8 @@ public class SniperRifle extends Gun implements DamageDealing, Upgradeable
     public void upgrade()
     {
         upgradeLevel++;
-        setDamage(getDamage() + DAMAGE_UPGRADE);
+
+        setAttackRate(getAttackRate() + 1);
         setMaxAmmo(getMaxAmmo() + AMMO_UPGRADE * 5);
     }
 }

@@ -55,7 +55,7 @@ public abstract class Weapon extends HeldItem implements DamageDealing {
     {
         return attackRate;
     }
-    public void setAttackRate(int x)
+    public void setAttackRate(double x)
     {
         attackRate = x;
     }

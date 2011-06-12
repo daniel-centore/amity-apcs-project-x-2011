@@ -38,7 +38,7 @@ public class Pistol extends Gun implements Upgradeable {
 
     public Pistol()
     {
-        super(600, -1, -1, 4, 8, 7);
+        super(600, -1, -1, 4, 8, 10);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class Pistol extends Gun implements Upgradeable {
     public void upgrade()
     {
         upgradeLevel++;
-        setDamage(getDamage() + DAMAGE_UPGRADE);
+        setDamage(getDamage() + 2);
     }
 
     public int getUpgradeCost()

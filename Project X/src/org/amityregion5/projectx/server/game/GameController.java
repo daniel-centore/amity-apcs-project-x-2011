@@ -43,6 +43,7 @@ import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
 import org.amityregion5.projectx.common.entities.items.held.Laser;
 import org.amityregion5.projectx.common.entities.items.held.Pistol;
+import org.amityregion5.projectx.common.entities.items.held.SniperRifle;
 import org.amityregion5.projectx.common.entities.items.held.Uzi;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
 import org.amityregion5.projectx.common.maps.AbstractMap;
@@ -61,7 +62,7 @@ import org.amityregion5.projectx.server.game.enemies.EnemyManager;
  */
 public final class GameController {
 
-    public static final int DEFAULT_CASH = 50;
+    public static final int DEFAULT_CASH = 500000;
 
     private static GameController instance;
 
@@ -118,8 +119,9 @@ public final class GameController {
         for (PlayerEntity p : players)
         {
             addWeapon(p, new Pistol());
-            addWeapon(p, new Laser());
+            addWeapon(p, new SniperRifle());
             addWeapon(p, new Uzi());
+            addWeapon(p, new Laser());
             p.setCash(DEFAULT_CASH);
             server.relayMessage(new CashMessage(p.getCash(), p.getUniqueID()));
         }

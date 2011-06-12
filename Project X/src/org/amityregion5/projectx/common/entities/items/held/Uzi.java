@@ -34,11 +34,11 @@ import org.amityregion5.projectx.common.tools.Sound;
 public class Uzi extends Gun implements Upgradeable {
 
     private static final long serialVersionUID = 1L;
-    private final int UPGRADE_COST = 100;
+    private final int UPGRADE_COST = 150;
 
     public Uzi()
     {
-        super(400, 500, 500, 10, 50, 3);
+        super(400, 500, 500, 10, 50, 5);
     }
 
     @Override
@@ -64,7 +64,8 @@ public class Uzi extends Gun implements Upgradeable {
     public void upgrade()
     {
         upgradeLevel++;
-        setDamage(getDamage() + DAMAGE_UPGRADE);
+        setAttackRate(getAttackRate() + 1);
+        setDamage(getDamage() + 1);
         setMaxAmmo(getMaxAmmo() + AMMO_UPGRADE * 5);
     }
 

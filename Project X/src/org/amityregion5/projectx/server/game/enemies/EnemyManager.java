@@ -75,9 +75,9 @@ public class EnemyManager {
                     e.printStackTrace();
                 }
                 ArrayList<EnemyGroup> enemies = new ArrayList<EnemyGroup>();
-                enemies.add(createEnemyGroup(new ArmoredEnemy(2, 10, 0, 0), 3));
-                enemies.add(createEnemyGroup(new SuicideBomber(5, 0, 0), 2));
-                enemies.add(createEnemyGroup(new DefaultEnemy(10, 0, 0), 5));
+                enemies.add(createEnemyGroup(new ArmoredEnemy(5, 20, 0, 0), 5));
+                enemies.add(createEnemyGroup(new SuicideBomber(5, 0, 0), 3));
+                enemies.add(createEnemyGroup(new DefaultEnemy(10, 0, 0), 8));
                 //enemies.add(createEnemyGroup(new BossEnemy(10, 100, 0, 0), 1));
                 for (int i = 1; i <= NUM_WAVES; i++)
                 {
