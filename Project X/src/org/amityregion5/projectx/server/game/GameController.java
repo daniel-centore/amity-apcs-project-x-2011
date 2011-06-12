@@ -23,11 +23,10 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.ConcurrentHashMap;
 
-import org.amityregion5.projectx.ConcurrentHashMapWrapper;
 import org.amityregion5.projectx.client.gui.GameWindow;
 import org.amityregion5.projectx.common.communication.messages.AddEntityMessage;
 import org.amityregion5.projectx.common.communication.messages.AddMeMessage;
@@ -35,7 +34,6 @@ import org.amityregion5.projectx.common.communication.messages.AddWeaponMessage;
 import org.amityregion5.projectx.common.communication.messages.AnnounceMessage;
 import org.amityregion5.projectx.common.communication.messages.CashMessage;
 import org.amityregion5.projectx.common.communication.messages.PointMessage;
-import org.amityregion5.projectx.common.communication.messages.RemoveEntityMessage;
 import org.amityregion5.projectx.common.entities.Damageable;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.characters.CharacterEntity;
@@ -61,13 +59,13 @@ import org.amityregion5.projectx.server.game.enemies.EnemyManager;
  */
 public final class GameController {
 
-    public static final int DEFAULT_CASH = 20;
+    public static final int DEFAULT_CASH = 50;
 
     private static GameController instance;
 
     private List<PlayerEntity> players; // List of current Players (do we even need this..?)
     private Collection<Client> clients; // List of current Clients
-    private volatile Collection<Entity> entities; // List of current Entities
+    private volatile EntityList entities; // List of current Entities
     private EntityMoverThread entityMoverThread; // will be in charge of moving entities
     private Server server; // Our server
     private AbstractMap map; // Our map
@@ -84,11 +82,11 @@ public final class GameController {
         this.server = server;
         players = new ArrayList<PlayerEntity>();
         clients = server.getClients().values();
-        entities = new ConcurrentHashMapWrapper();
-        
+        entities = new EntityList();
+
         // TODO send clients the map for this game!
         // Will fix in post-release version.
-        
+
         Random r = new Random();
         for (Client c : clients)
         {
@@ -109,7 +107,7 @@ public final class GameController {
             c.send(new AnnounceMessage("You should begin preparing your defences!"));
             for (PlayerEntity p : players)
             {
-                c.send(new AddEntityMessage(p));  
+                c.send(new AddEntityMessage(p));
             }
         }
 
@@ -144,7 +142,7 @@ public final class GameController {
     /**
      * @return A list of current entities
      */
-    public Collection<Entity> getEntities()
+    public EntityList getEntities()
     {
         return entities;
     }
@@ -221,7 +219,6 @@ public final class GameController {
 
         Line2D.Double line = new Line2D.Double(player.getCenterX(), player.getCenterY(), x2, y2);
 
-        List<Entity> toRemove = new ArrayList<Entity>();
         // should be Damageable, too, but java is kind of stupid
         // need to enforce by ourselves
         ArrayList<Enemy> toDamage = new ArrayList<Enemy>();
@@ -253,8 +250,12 @@ public final class GameController {
             toDamage.add(closestEn);
         }
 
-        for (Enemy e : toDamage)
+        Iterator<Enemy> itr = toDamage.iterator();
+        // for (Enemy e : toDamage)
+        while (itr.hasNext())
         {
+            Enemy e = itr.next();
+
             if (e != null)
             {
                 Damageable d = (Damageable) e;
@@ -276,13 +277,11 @@ public final class GameController {
                 e.requestUpdate();
                 if (d.killed())
                 {
-                    toRemove.add(e);
-                    server.relayMessage(new RemoveEntityMessage(e.getUniqueID()));
+                    removeEntity(e);
                 }
             }
         }
 
-        entities.removeAll(toRemove);
     }
 
     /**
@@ -299,8 +298,9 @@ public final class GameController {
      */
     public void removeEntity(Entity e)
     {
-        entities.remove(e);
-        getServer().relayMessage(new RemoveEntityMessage(e.getUniqueID()));
+        // entities.remove(e);
+        entities.requestRemove(e);
+        // getServer().relayMessage(new RemoveEntityMessage(e.getUniqueID()));
     }
 
     public static GameController getInstance()

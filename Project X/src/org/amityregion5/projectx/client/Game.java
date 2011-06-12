@@ -101,8 +101,10 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         dUpThread = new DirectionalUpdateThread();
         // do not start the dUpThread until me != null
 
+        rch.registerRawListener(new MovementHandler(this));
         rch.registerRawListener(this);
         rch.start();
+        
         ch.registerListener(this);
         InputHandler.registerListener(this);
         RepaintHandler.setGame(this);
@@ -118,8 +120,9 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
 
     public void mouseMoved(int x, int y)
     {
-        if (gameOver) return;
-        
+        if (gameOver)
+            return;
+
         lastMouseX = x;
         lastMouseY = y;
 
@@ -141,26 +144,29 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         if (gameOver)
         {
             this.destroy();
-            new LobbyWindow(getCommunicationHandler(),null,me.getUsername());
+            new LobbyWindow(getCommunicationHandler(), null, me.getUsername());
             GameWindow.closeWindow();
             // TODO return to lobby if mouse clicked and game is over
-        } else if (button == MouseEvent.BUTTON1) {
-                getCommunicationHandler().send(new FiringMessage(true));
+        } else if (button == MouseEvent.BUTTON1)
+        {
+            getCommunicationHandler().send(new FiringMessage(true));
         }
     }
 
     public void mouseReleased(int x, int y, int button)
     {
-        if (gameOver) return;
-        
+        if (gameOver)
+            return;
+
         if (button == MouseEvent.BUTTON1)
             getCommunicationHandler().send(new FiringMessage(false));
     }
 
     public void keyPressed(KeyEvent e)
     {
-        if (gameOver) return; // disable key input after game ends
-        
+        if (gameOver)
+            return; // disable key input after game ends
+
         int keyCode = e.getKeyCode();
 
         if (ChatDrawing.isChatting() && !(e.isActionKey() || e.getKeyCode() == KeyEvent.VK_SHIFT || e.getKeyCode() == KeyEvent.VK_ALT || e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_BACK_SPACE || e.getKeyCode() == KeyEvent.VK_CONTROL))
@@ -286,8 +292,9 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
 
     public void keyReleased(int keyCode)
     {
-        if (gameOver) return; // disable key input after game is over
-        
+        if (gameOver)
+            return; // disable key input after game is over
+
         int speed = PlayerEntity.INITIAL_SPEED;
 
         while (depressedKeys.contains(keyCode))
@@ -356,7 +363,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         } else if (m instanceof AddWeaponMessage)
         {
             AddWeaponMessage awm = (AddWeaponMessage) m;
-//            awm.getWeapon().setImage(ImageHandler.loadImage(awm.getWeapon().getDefaultImage()));
+            // awm.getWeapon().setImage(ImageHandler.loadImage(awm.getWeapon().getDefaultImage()));
             try
             {
                 ((CharacterEntity) entityHandler.getEntity(awm.getID())).addWeapon(awm.getWeapon());
@@ -416,9 +423,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             StatBarDrawing.setWaveNumber(((WaveMessage) m).getNumber());
         } else if (m instanceof DisconnectRequestMessage)
         {
-            JOptionPane.showMessageDialog(null,
-                    ((DisconnectRequestMessage) m).getReason(),
-                    "Disconnected", JOptionPane.OK_OPTION);
+            JOptionPane.showMessageDialog(null, ((DisconnectRequestMessage) m).getReason(), "Disconnected", JOptionPane.OK_OPTION);
             dead = true;
             this.destroy();
             new ServerChooserWindow();
@@ -470,12 +475,11 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
     }
 
     @Override
-    public void handle(String str)
+    public void handle(char prefix, String str)
     {
-        char start = str.toCharArray()[0];
-        if (start == Constants.FIRE_PREF)
+        if (prefix == Constants.FIRE_PREF)
         {
-            PlayerEntity p = (PlayerEntity) entityHandler.getEntity(Long.valueOf(str.substring(1)));
+            PlayerEntity p = (PlayerEntity) entityHandler.getEntity(Long.valueOf(str));
             if (!p.getFired())
             {
                 SoundManager.playOnce(p.getCurrWeapon().getSound());
@@ -484,6 +488,19 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             GameWindow.fireRepaintRequired();
             return;
         }
+        
+        if (prefix == Constants.DIED_PREF)
+        {
+            String[] s = str.split(",");
+            
+            for (String k : s)
+                entityHandler.removeEntity(Long.valueOf(k));
+//            System.out.println("DIED: "+str);
+        }
+        
+        if (prefix != Constants.MOVE_PREF)
+            return;
+        
         String[] entStrs = str.split(";");
         for (int i = 0; i < entStrs.length; i++)
         {

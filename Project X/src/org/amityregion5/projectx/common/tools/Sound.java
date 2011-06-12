@@ -61,8 +61,12 @@ public enum Sound {
     {
         if (file == null)
             return;
+        
         try
         {
+            if (player != null)
+                player.close();
+            
             player = new Player(new FileInputStream(file));
         }
         catch(FileNotFoundException e)

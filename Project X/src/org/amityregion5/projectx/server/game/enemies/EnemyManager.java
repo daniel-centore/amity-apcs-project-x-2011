@@ -37,7 +37,7 @@ import org.amityregion5.projectx.server.game.GameController;
  */
 public class EnemyManager {
 
-    public static final int INITIAL_SPAWN_TIMEOUT = 4500; // how many ms before we start spawining
+    public static final int INITIAL_SPAWN_TIMEOUT = 10000; // how many ms before we start spawining
 
     private GeneratorThread gen;
     private ArrayList<Point> spawnArea;

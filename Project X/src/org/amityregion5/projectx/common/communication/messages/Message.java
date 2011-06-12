@@ -39,7 +39,7 @@ public abstract class Message implements Serializable {
             throw new Exception();
         } catch (Exception e)
         {
-            //System.out.println(e.getStackTrace()[1]);
+//            System.out.println(e.getStackTrace()[1]);
         }
     }
     

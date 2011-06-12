@@ -2,7 +2,8 @@
  * Copyright (c) 2011 Amity AP CS A Students of 2010-2011.
  *
  * ex: set filetype=java expandtab tabstop=4 shiftwidth=4 :
- * * This program is free software: you can redistribute it and/or
+ *
+ * This program is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of
  * the License, or (at your option) any later version.
@@ -16,20 +17,27 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
-package org.amityregion5.projectx.common.communication;
+package org.amityregion5.projectx.client;
 
-/**
- * An interface that can handle byte array messages.
- *
- * @author Joe Stein
- * @author Daniel Centore
- */
-public interface RawListener {
+import org.amityregion5.projectx.common.communication.Constants;
+import org.amityregion5.projectx.common.communication.RawListener;
+
+public class MovementHandler implements RawListener {
     
-    /**
-     * Handles a String that we received from the server
-     * @param prefix The prefix from {@link Constants}
-     * @param str String to process
-     */
-    public void handle(char prefix, String str);
+    private Game game;
+    
+    public MovementHandler(Game game)
+    {
+        this.game = game;
+    }
+
+    @Override
+    public void handle(char prefix, String str)
+    {
+        if (prefix != Constants.MOVE_PREF)
+            return;
+        
+        
+    }
+
 }

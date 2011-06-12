@@ -20,9 +20,9 @@ package org.amityregion5.projectx.common.communication.messages;
 
 /**
  * Tells the client to remove an entity
- * TODO: this should be sending the uniqueID to remove, not the entity
  *
  * @author Mike DiBuduo
+ * @author Daniel Centore
  */
 public class RemoveEntityMessage extends Message
 {
@@ -32,7 +32,9 @@ public class RemoveEntityMessage extends Message
     
     public RemoveEntityMessage(long id)
     {
-        this.id = id;
+        // TODO: remove references to this
+        throw new RuntimeException("NOT SUPPORTED ANYMORE");
+//        this.id = id;
     }
 
     public long getID()

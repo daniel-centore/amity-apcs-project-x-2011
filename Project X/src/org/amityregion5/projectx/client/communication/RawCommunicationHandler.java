@@ -63,7 +63,7 @@ public class RawCommunicationHandler extends Thread {
         {
             Logger.getLogger(RawCommunicationHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         try
         {
             dos.writeUTF(username);
@@ -85,7 +85,7 @@ public class RawCommunicationHandler extends Thread {
             Logger.getLogger(RawCommunicationHandler.class.getName()).log(Level.SEVERE, null, ex);
             keepRunning = false;
         }
-//        final String mes;
+        // final String mes;
         while (keepRunning)
         {
             // String to read. Current format is:
@@ -96,17 +96,12 @@ public class RawCommunicationHandler extends Thread {
                 if (mes == null)
                 {
                     kill();
-                } else {
+                } else if (mes.length() > 0)
+                {
                     for (final RawListener rl : rawListeners)
                     {
-                        new Thread()
-                        {
-                            public void run()
-                            {
-                                rl.handle(mes);
-                            }
-                        }.start();
-
+                        char prefix = mes.toCharArray()[0];
+                        rl.handle(prefix, mes.substring(1));
                     }
                 }
             } catch (IOException ex)
@@ -124,7 +119,7 @@ public class RawCommunicationHandler extends Thread {
     {
         keepRunning = false;
     }
-    
+
     /**
      * Sends a raw direction update
      * @param dir Direction to face
@@ -153,5 +148,5 @@ public class RawCommunicationHandler extends Thread {
     {
         rawListeners.remove(rl);
     }
-    
+
 }

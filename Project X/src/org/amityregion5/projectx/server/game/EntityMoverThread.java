@@ -20,9 +20,12 @@ package org.amityregion5.projectx.server.game;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.amityregion5.projectx.common.communication.Constants;
 import org.amityregion5.projectx.common.communication.messages.sound.SoundControlMessage;
 
 import org.amityregion5.projectx.common.entities.Damageable;
@@ -153,7 +156,7 @@ public class EntityMoverThread extends Thread {
                             gameController.getServer().relayMessage(new SoundControlMessage(Sound.EXPLOSION, SoundControlMessage.Type.ONCE));
                         } else
                         {
-//                            System.out.println("COLLISION WITH: "+en);
+                            // System.out.println("COLLISION WITH: "+en);
                             int relY = (int) map.getPlayArea().getCenterY() - e.getCenterY();
                             int relX = (int) map.getPlayArea().getCenterX() - e.getCenterX();
                             int dir = (int) Math.toDegrees(Math.atan2(relY, relX));
@@ -193,8 +196,27 @@ public class EntityMoverThread extends Thread {
 
     private void sendAggregateUpdateMessage()
     {
+        Iterator<Entity> itr = gameController.getEntities().getRemovalIterator();
+        
+        StringBuilder died = new StringBuilder();
+        died.append(Constants.DIED_PREF);
+        while (itr.hasNext())
+        {
+            Entity e = itr.next();
+            died.append(e.getUniqueID());
+            died.append(",");
+            itr.remove();
+            gameController.getEntities().reallyRemove(e);
+        }
+        
+        if (died.length() > 0)
+        {
+            died.deleteCharAt(died.length() - 1);
+            rawServer.send(died.toString());
+        }
+        
         StringBuilder buf = new StringBuilder();
-
+        buf.append(Constants.MOVE_PREF);
         buf.append("-1,");
         buf.append(gameController.getMap().getArea().getHp());
         buf.append(";");

@@ -25,10 +25,15 @@ import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.amityregion5.projectx.common.entities.Entity;
+import org.amityregion5.projectx.server.game.EntityList;
 
 /**
  * Basically just wraps a {@link ConcurrentHashMap} so we don't have
  * to rewrite large amounts of code designed to use a {@link Collection}.
+ * 
+ * It is specific to storing entities, but it should -NOT- be specific to
+ * storing them in any particular way. For example, we use {@link EntityList}
+ * for some custom uses.
  * 
  * @author Daniel Centore
  *
