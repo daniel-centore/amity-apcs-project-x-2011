@@ -23,7 +23,6 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 import org.amityregion5.projectx.common.entities.characters.enemies.ArmoredEnemy;
-import org.amityregion5.projectx.common.entities.characters.enemies.BossEnemy;
 import org.amityregion5.projectx.common.entities.characters.enemies.DefaultEnemy;
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
 import org.amityregion5.projectx.common.entities.characters.enemies.SuicideBomber;

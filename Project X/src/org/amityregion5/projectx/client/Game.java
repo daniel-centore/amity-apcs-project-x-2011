@@ -128,8 +128,12 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         InputHandler.registerListener(this);
         RepaintHandler.setGame(this);
 
-        // if (SoundManager.BACKGROUND)
-        // SoundManager.playLoop(Sound.BG_1);
+        // TODO:start the thread client side, but server-side we
+        // should send a timestamp with when it was sent (make sure it if
+        // localization independant) so that based on that we can figure out 
+        // the entity's real new location (without the jump-back lag)
+        
+         controllerThread.start();
     }
 
     public void mouseDragged(int x, int y)
