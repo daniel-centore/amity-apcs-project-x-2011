@@ -31,7 +31,7 @@ package org.amityregion5.projectx.common.communication.messages;
  */
 public abstract class TextualMessage extends Message {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 119L;
 
     private String text; // the text this message contains
 

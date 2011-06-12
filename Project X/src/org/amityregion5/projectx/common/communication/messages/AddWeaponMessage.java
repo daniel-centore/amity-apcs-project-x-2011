@@ -29,7 +29,7 @@ import org.amityregion5.projectx.common.entities.items.held.Weapon;
  */
 public class AddWeaponMessage extends Message {
     
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 547L;
     
     private Weapon weapon;
     private long uniqueID; // the id of the person whose weapon to add

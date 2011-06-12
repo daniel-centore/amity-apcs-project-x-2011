@@ -28,7 +28,7 @@ import org.amityregion5.projectx.common.entities.Entity;
  */
 public class AddEntityMessage extends Message {
     
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 353L;
     
     private Entity entity;
 

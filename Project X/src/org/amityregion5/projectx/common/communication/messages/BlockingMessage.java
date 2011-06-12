@@ -30,7 +30,7 @@ package org.amityregion5.projectx.common.communication.messages;
  */
 public class BlockingMessage extends Message {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 196L;
     private static int currentMessage = 0; // the message id we're on
 
     private int messageNumber; // this message's number

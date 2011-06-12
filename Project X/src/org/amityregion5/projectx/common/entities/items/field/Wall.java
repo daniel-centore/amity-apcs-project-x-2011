@@ -30,7 +30,7 @@ import org.amityregion5.projectx.common.tools.ImageHandler;
  */
 public class Wall extends Block {
     
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 547L;
     
     public static final int DEFAULT_HEALTH = 10000;
     public static final int PRICE = 200;

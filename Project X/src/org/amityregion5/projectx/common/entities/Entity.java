@@ -37,7 +37,7 @@ import org.amityregion5.projectx.common.tools.ImageHandler;
  */
 public abstract class Entity implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 547L;
 
     private static volatile transient long nextUniqueID = 0; // so each entity has a unique ID
 

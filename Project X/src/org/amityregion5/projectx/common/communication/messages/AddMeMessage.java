@@ -29,7 +29,7 @@ import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
  */
 public class AddMeMessage extends AddEntityMessage {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 431L;
     
     public AddMeMessage(PlayerEntity entity)
     {

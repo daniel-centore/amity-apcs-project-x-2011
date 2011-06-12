@@ -32,7 +32,7 @@ import org.amityregion5.projectx.common.tools.ImageHandler;
  */
 public class Block extends FieldItem implements Damageable, Buyable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 602L;
     public static final int DEFAULT_HEALTH = 100;
     private int hp;
     private final int maxHealth;

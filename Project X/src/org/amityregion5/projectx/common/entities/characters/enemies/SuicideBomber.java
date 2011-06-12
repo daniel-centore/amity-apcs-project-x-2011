@@ -31,7 +31,7 @@ import org.amityregion5.projectx.common.tools.ImageHandler;
  */
 public class SuicideBomber extends Enemy {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 562L;
     public static final double MULTIPLIER = 1.5; // how many times faster than enemy default
 
     public SuicideBomber(int max, int x, int y)

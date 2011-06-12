@@ -54,7 +54,7 @@ import org.amityregion5.projectx.common.maps.TestingMap;
  */
 public class LobbyWindow extends JFrame implements MessageListener {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 555L;
 
     private static LobbyWindow instance; // current instance
 

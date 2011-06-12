@@ -33,7 +33,7 @@ import javax.swing.JFrame;
  */
 public class SplashScreen extends JFrame {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 475L;
     
     /** Creates new form SplashScreen */
     public SplashScreen()

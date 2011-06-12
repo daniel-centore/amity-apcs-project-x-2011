@@ -26,7 +26,7 @@ package org.amityregion5.projectx.common.communication.messages;
  */
 public class FiringMessage extends Message {
     
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 499L;
 
     private boolean starting;
 

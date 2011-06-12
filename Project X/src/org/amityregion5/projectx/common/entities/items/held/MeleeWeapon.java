@@ -28,7 +28,7 @@ import org.amityregion5.projectx.common.entities.items.DamageDealing;
  */
 public abstract class MeleeWeapon extends Weapon {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 542L;
     
     // TODO: shouldn't the range be the size of the weapon?
     public static final int MELEE_RANGE = 5; // default to 5 pixels range

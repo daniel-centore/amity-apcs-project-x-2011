@@ -29,7 +29,7 @@ package org.amityregion5.projectx.common.communication.messages;
  */
 public class ChatMessage extends TextualMessage {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 145L;
 
     /**
      * The type of chat message this is

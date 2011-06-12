@@ -34,7 +34,7 @@ import org.amityregion5.projectx.common.tools.ImageHandler;
  */
 public abstract class Enemy extends CharacterEntity implements Damageable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 562L;
     private int value;
     private int hp; // hitpoints
     private final int maxHealth;

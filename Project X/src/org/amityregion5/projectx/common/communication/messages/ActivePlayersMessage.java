@@ -29,7 +29,7 @@ import java.util.List;
  */
 public class ActivePlayersMessage extends Message {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 145L;
 
     private List<String> players; // player list
 

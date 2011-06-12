@@ -31,7 +31,7 @@ import org.amityregion5.projectx.common.tools.ImageHandler;
  */
 public class PlayerEntity extends CharacterEntity implements Comparable<PlayerEntity> {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 594L;
     public static final int INITIAL_SPEED = 10; // initial move speed
     private int points; // points the player has
     private int cash; // how much money they have

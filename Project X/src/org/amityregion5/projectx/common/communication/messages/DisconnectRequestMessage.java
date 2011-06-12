@@ -25,7 +25,7 @@ package org.amityregion5.projectx.common.communication.messages;
  * @author Joe Stein
  */
 public class DisconnectRequestMessage extends Message {
-    public static final long serialVersionUID = 1L;
+    public static final long serialVersionUID = 562L;
 
     private String reason;
 

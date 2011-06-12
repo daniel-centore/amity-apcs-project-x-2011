@@ -29,7 +29,7 @@ import org.amityregion5.projectx.common.tools.Sound;
  */
 public class SoundControlMessage extends Message {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 532L;
     
     private Sound sound;
     private Type type;

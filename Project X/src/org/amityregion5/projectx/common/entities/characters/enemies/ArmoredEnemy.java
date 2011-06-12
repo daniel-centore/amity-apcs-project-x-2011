@@ -15,7 +15,7 @@ import org.amityregion5.projectx.common.tools.ImageHandler;
  */
 public class ArmoredEnemy extends Enemy {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 562L;
 
     private int armor;
     public static final double MULTIPLIER = .5; // How many times slower this is slowe than normal enemy

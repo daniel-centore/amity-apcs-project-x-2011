@@ -31,7 +31,7 @@ import org.amityregion5.projectx.common.tools.Sound;
  */
 public class ZombieHands extends MeleeWeapon implements DamageDealing {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 547L;
     private static int SWORD_RATE = 42; // FIXME: arbitrary.
 
     public ZombieHands(int damage)

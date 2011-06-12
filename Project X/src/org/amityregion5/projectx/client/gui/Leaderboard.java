@@ -98,7 +98,7 @@ public class Leaderboard {
     // p.add(new PlayerEntity(0, 0, "bill"));
     // p.get(1).setPoints(1000);
     // final JPanel panel = new JPanel() {
-    // private static final long serialVersionUID = 1L;
+    // private static final long serialVersionUID = 503L;
     //
     // @Override
     // public void paintComponent(Graphics g)

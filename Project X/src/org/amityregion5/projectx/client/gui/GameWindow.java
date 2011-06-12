@@ -46,7 +46,7 @@ import org.amityregion5.projectx.common.maps.AbstractMap;
  */
 public class GameWindow extends JFrame {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 594L;
     public static final int GAME_WIDTH = 1024; // the game size we will draw at before resizing
     public static final int GAME_HEIGHT = 768;
     private static GameWindow instance; // the instance of Gui
@@ -82,7 +82,7 @@ public class GameWindow extends JFrame {
 
         panel = new JComponent() {
 
-            private static final long serialVersionUID = 1L;
+            private static final long serialVersionUID = 594L;
 
             @Override
             // called when we run RepaintHandler.fireUpdateRequired()

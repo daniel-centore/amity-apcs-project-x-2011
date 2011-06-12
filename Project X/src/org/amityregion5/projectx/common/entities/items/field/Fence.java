@@ -30,7 +30,7 @@ import org.amityregion5.projectx.common.tools.ImageHandler;
  */
 public class Fence extends Block implements Damageable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 547L;
     public static final int DEFAULT_HEALTH = 1000;
     public static final int PRICE = 20;
 

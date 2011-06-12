@@ -48,7 +48,7 @@ import org.amityregion5.projectx.common.communication.messages.Message;
  */
 public class ServerChooserWindow extends JFrame implements DatagramListener, PrefListener {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 555L;
 
     private DefaultListModel dlm = new DefaultListModel(); // the list model for ips
     private String username;
@@ -110,7 +110,7 @@ public class ServerChooserWindow extends JFrame implements DatagramListener, Pre
 
         serverList.setFont(new java.awt.Font("SansSerif", 0, 15));
         serverList.setModel(new javax.swing.AbstractListModel() {
-            private static final long serialVersionUID = 1L;
+            private static final long serialVersionUID = 555L;
 
             String[] strings =
             { "Manual/Internet..." };

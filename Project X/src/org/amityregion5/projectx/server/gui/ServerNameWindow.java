@@ -35,7 +35,7 @@ import org.amityregion5.projectx.server.controllers.AggregateServerController;
 public class ServerNameWindow extends javax.swing.JFrame
 {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 353L;
 
     /** Creates new form ServerNameWindow */
     public ServerNameWindow()

@@ -30,7 +30,7 @@ import org.amityregion5.projectx.common.entities.items.DamageDealing;
  */
 public abstract class Trap extends FieldItem implements DamageDealing {
     
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 478L;
     
     private int damage;
     private boolean active;

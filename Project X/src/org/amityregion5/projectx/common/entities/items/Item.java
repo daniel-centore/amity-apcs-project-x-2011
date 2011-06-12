@@ -27,7 +27,7 @@ import org.amityregion5.projectx.common.entities.Entity;
  */
 public abstract class Item extends Entity {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 431L;
 
     public Item(int x, int y)
     {

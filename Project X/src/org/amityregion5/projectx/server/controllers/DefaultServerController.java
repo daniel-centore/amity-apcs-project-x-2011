@@ -25,7 +25,7 @@ package org.amityregion5.projectx.server.controllers;
  * @author Joe Stein
  */
 public class DefaultServerController implements ServerController{
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 347L;
 
     public void clientJoined(String username)
     {

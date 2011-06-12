@@ -29,7 +29,7 @@ import org.amityregion5.projectx.common.tools.ImageHandler;
  */
 public class Area extends FieldItem implements Damageable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 547L;
     public static final int MAXIMUM_HEALTH = 1000;
     private int hp;
 

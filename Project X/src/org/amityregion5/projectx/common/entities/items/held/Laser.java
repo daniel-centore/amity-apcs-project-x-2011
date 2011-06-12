@@ -32,7 +32,7 @@ import org.amityregion5.projectx.common.tools.Sound;
  */
 public class Laser extends Gun implements Upgradeable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 597L;
     private final int UPGRADE_COST = 200;
 
     public Laser()

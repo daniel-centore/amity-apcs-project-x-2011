@@ -16,7 +16,7 @@ package org.amityregion5.projectx;
  * @author Joe Stein
  */
 public class MainWindow extends javax.swing.JFrame {
-    public static final long serialVersionUID = 1L;
+    public static final long serialVersionUID = 522L;
 
     /** Creates new form MainWindow */
     public MainWindow() {

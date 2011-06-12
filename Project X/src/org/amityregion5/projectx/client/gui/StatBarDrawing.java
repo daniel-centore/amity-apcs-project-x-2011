@@ -149,7 +149,7 @@ public class StatBarDrawing {
         StatBarDrawing.setWaveNumber(2);
         final JPanel panel = new JPanel() {
 
-            private static final long serialVersionUID = 1L;
+            private static final long serialVersionUID = 595L;
 
             @Override
             public void paintComponent(Graphics g)

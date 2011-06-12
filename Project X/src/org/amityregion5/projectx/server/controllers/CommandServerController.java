@@ -30,7 +30,7 @@ import org.amityregion5.projectx.server.Server;
  * @author Joe Stein
  */
 public class CommandServerController extends Thread implements ServerController {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 356L;
 
     private Scanner scan;
     private Server server;

@@ -36,7 +36,7 @@ import org.amityregion5.projectx.client.preferences.PreferenceManager;
 public class UsernameWindow extends JDialog
 {
 
-   private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 353L;
    
    /**
     * Creates new form UsernameWindow

@@ -11,7 +11,7 @@ package org.amityregion5.projectx.common.entities;
  */
 public interface Buyable {
 
-    public static final long serialVersionUID = 1L;
+    public static final long serialVersionUID = 483L;
     /**
      * used to find the cost of the item that is being bought
      * @return the cost of the item

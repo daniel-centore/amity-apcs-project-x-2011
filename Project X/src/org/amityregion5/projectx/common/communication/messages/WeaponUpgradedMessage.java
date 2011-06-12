@@ -25,7 +25,7 @@ package org.amityregion5.projectx.common.communication.messages;
  */
 public class WeaponUpgradedMessage extends Message
 {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 555L;
 
     private long id;
 
