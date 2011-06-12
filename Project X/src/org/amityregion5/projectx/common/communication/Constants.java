@@ -38,8 +38,8 @@ public class Constants {
     public static final int MULTICAST_INTERVAL = 2000;
 
     // Prefixes. We prefix all raw data with a single char signifying its type
-    public static final char MOVE_PREF = 'Я'; // Tells us that entity movement info is coming
-    public static final char FIRE_PREF = 'Є'; // Tells us that someone has fired
-    public static final char DIED_PREF = 'Ю'; // Tells us that people have died
+    public static final char MOVE_PREF = '\u0081'; // Tells us that entity movement info is coming
+    public static final char FIRE_PREF = '\u0082'; // Tells us that someone has fired
+    public static final char DIED_PREF = '\u0083'; // Tells us that people have died
 
 }
