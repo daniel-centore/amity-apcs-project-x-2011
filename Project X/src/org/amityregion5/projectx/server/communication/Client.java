@@ -29,6 +29,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.amityregion5.projectx.common.communication.messages.*;
+import org.amityregion5.projectx.common.entities.Damageable;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.EntityConstants;
 import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
@@ -263,12 +264,25 @@ public class Client extends Thread {
             else
                 throw new RuntimeException("No entity price set up for: " + s);
 
-            if (!CollisionDetection.hasCollision(e, GameController.getInstance().getEntities()) && player.getCash() >= price)
+            if (player.getCash() < price)
+                return;
+
+            GameController gc = GameController.getInstance();
+
+            for (Entity f : gc.getEntities())
             {
-                player.spendCash(price);
-                server.relayMessage(new CashMessage(player.getCash(), player.getUniqueID()));
-                GameController.getInstance().addEntity(e);
+                if (CollisionDetection.hasRectangleCollision(e,0,0,f)) {
+                    if (e instanceof Block && f instanceof Block) {
+                        if (((Block) e).getHp() <= ((Block) f).getHp())
+                            return;
+                    }
+                    gc.removeEntity(f);
+                }
             }
+
+            player.spendCash(price);
+            server.relayMessage(new CashMessage(player.getCash(), player.getUniqueID()));
+            GameController.getInstance().addEntity(e);
         } else if (m instanceof RequestUpgradeMessage) {
             RequestUpgradeMessage rum = (RequestUpgradeMessage) m;
             Weapon wep = player.getCurrWeapon();
