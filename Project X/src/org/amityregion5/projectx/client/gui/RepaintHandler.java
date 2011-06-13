@@ -39,7 +39,6 @@ import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.common.entities.items.field.Area;
 import org.amityregion5.projectx.common.entities.items.field.Block;
 import org.amityregion5.projectx.common.entities.items.held.Gun;
-import org.amityregion5.projectx.common.entities.items.held.GunConstants;
 import org.amityregion5.projectx.common.entities.items.held.Uzi;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
 import org.amityregion5.projectx.common.maps.AbstractMap;
@@ -211,22 +210,27 @@ public class RepaintHandler extends Thread {
             Weapon wep = pe.getCurrWeapon();
             if(wep instanceof Gun)
             {
+
                 Gun gun = (Gun)wep;
                 int x2;
                 int y2;
-                /**
-                if(gun instanceof Uzi)
-                {
-                    x2 = (int) (Math.cos(Math.toRadians(pe.getDirectionFacing())) * wep.getRange() + gun.getWeaponTip().getX());
-                    y2 = (int) (Math.sin(Math.toRadians(pe.getDirectionFacing())) * wep.getRange() + gun.getWeaponTip().getY());
-                }
-                **/
-                //else
-                //{
+                int x;
+                int y;
+/**
+                x2 = (int) (Math.cos(Math.toRadians(pe.getDirectionFacing())) * wep.getRange() + gun.getWeaponTip().getX()+pe.getX());
+                y2 = (int) (Math.sin(Math.toRadians(pe.getDirectionFacing())) * wep.getRange() + gun.getWeaponTip().getY()+ pe.getY());
+                double radius = Point.distance(x2, y2, pe.getCenterX(), pe.getCenterY());
+                x = (int)(radius * Math.cos(pe.getDirectionFacing())+ pe.getX());
+                y = (int)(radius * Math.sin(pe.getDirectionFacing())+ pe.getY());
+                System.out.println("x " + x);
+                System.out.println("y " + y);
+                System.out.println("x2 " + x2);
+                System.out.println("y2 " + y2);
+    **/
+                
                     x2 = (int) (Math.cos(Math.toRadians(pe.getDirectionFacing())) * wep.getRange()) + pe.getCenterX();
                     y2 = (int) (Math.sin(Math.toRadians(pe.getDirectionFacing())) * wep.getRange()) + pe.getCenterY();
-                //}
-
+                
                 if (pe.getFired())
                 {
                     Stroke old = g.getStroke();
@@ -234,7 +238,7 @@ public class RepaintHandler extends Thread {
                     g.setStroke(new BasicStroke(6));
                     g.setColor(Color.YELLOW);
                     g.drawLine(pe.getCenterX(), pe.getCenterY(), x2, y2);
-                    //g.drawLine((int)gun.getWeaponTip().getX(), (int)gun.getWeaponTip().getY(), x2, y2);
+                    //g.drawLine(x, y, x2, y2);
                     g.setColor(oldColor);
                     g.setStroke(old);
                     pe.setFired(false);
@@ -251,12 +255,12 @@ public class RepaintHandler extends Thread {
         AffineTransform at = new AffineTransform();
         at.translate(pe.getX(), pe.getY());
         at.rotate(Math.toRadians(pe.getDirectionFacing()),pe.getWidth()/2,pe.getHeight()/2);
-        if(wep instanceof Uzi)
+        if(wep instanceof Gun)
         {
-            Uzi uzi = (Uzi)wep;
-            int x = (int)(pe.getX() + GunConstants.UZI_TIP.x*Math.cos(Math.toRadians(pe.getDirectionFacing())));
-            int y = (int)(pe.getY() + GunConstants.UZI_TIP.y*Math.sin(Math.toRadians(pe.getDirectionFacing())));
-            uzi.setWeaponTip(new Point(x,y));
+            Gun gun = (Gun)wep;
+            int x = (int)(pe.getX() + Gun.DEFAULT_GUN_POINT.x);
+            int y = (int)(pe.getY() + Gun.DEFAULT_GUN_POINT.y);
+            gun.setWeaponTip(new Point(x,y));
         }
         else if(wep instanceof Gun)
         {
