@@ -63,7 +63,16 @@ import org.amityregion5.projectx.server.game.enemies.EnemyManager;
  */
 public final class GameController {
 
-    public static final int DEFAULT_CASH = 50;
+    public static final boolean CENTORE = false;
+
+    public static final int DEFAULT_CASH;
+    static
+    {
+        if (CENTORE)
+            DEFAULT_CASH = 500000;
+        else
+            DEFAULT_CASH = 50;
+    }
 
     private static GameController instance;
 
@@ -83,7 +92,7 @@ public final class GameController {
     public GameController(Server server)
     {
         timeController = new TimeController();
-        
+
         map = new TestingMap();
         this.server = server;
         players = new ArrayList<PlayerEntity>();
