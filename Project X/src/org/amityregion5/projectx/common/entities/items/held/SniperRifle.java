@@ -72,12 +72,15 @@ public class SniperRifle extends Gun implements DamageDealing, Upgradeable
 
     public void upgrade()
     {
-        upgradeLevel++;
+        if (upgradeLevel < LVL_CAP)
+        {
+            upgradeLevel++;
 
-        if (upgradeLevel % 3 == 2)
-            setRPM(getRPM() + 1);
+            if (upgradeLevel % 3 == 2)
+                setRPM(getRPM() + 1);
 
-        setAttackRate(getAttackRate() + 1);
-        setMaxAmmo(getMaxAmmo() + AMMO_UPGRADE);
+            setAttackRate(getAttackRate() + 1);
+            setMaxAmmo(getMaxAmmo() + AMMO_UPGRADE);
+        }
     }
 }

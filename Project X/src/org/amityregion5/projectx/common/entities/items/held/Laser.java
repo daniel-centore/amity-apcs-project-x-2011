@@ -62,17 +62,20 @@ public class Laser extends Gun implements Upgradeable {
 
     public void upgrade()
     {
-        upgradeLevel++;
-        setDamage(getDamage() + 1);
-        if (getAttackRate() < 30) {
+        if (upgradeLevel < LVL_CAP)
+        {
+            upgradeLevel++;
             setDamage(getDamage() + 1);
-            setAttackRate(getAttackRate() + 1);
+            if (getAttackRate() < 30) {
+                setDamage(getDamage() + 1);
+                setAttackRate(getAttackRate() + 1);
+            }
+            else {
+                setDamage(getDamage() + 2);
+            }
+            setRPM(getRPM() + 100);
+            setMaxAmmo(getMaxAmmo() + 100);
         }
-        else {
-            setDamage(getDamage() + 2);
-        }
-        setRPM(getRPM() + 100);
-        setMaxAmmo(getMaxAmmo() + 100);
     }
 
     public int getUpgradeCost()

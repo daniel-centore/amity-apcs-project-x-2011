@@ -61,9 +61,12 @@ public class Pistol extends Gun implements Upgradeable {
 
     public void upgrade()
     {
-        upgradeLevel++;
-        setDamage(getDamage() + 2);
-        setRPM(getRPM() + 2);
+        if (upgradeLevel < LVL_CAP)
+        {
+            upgradeLevel++;
+            setDamage(getDamage() + 2);
+            setRPM(getRPM() + 2);
+        }
     }
 
     public int getUpgradeCost()

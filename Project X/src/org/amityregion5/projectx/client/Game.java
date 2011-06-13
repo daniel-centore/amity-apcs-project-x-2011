@@ -181,6 +181,10 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         } else if (button == MouseEvent.BUTTON1)
         {
             getCommunicationHandler().send(new FiringMessage(true));
+            if (((ProjectileWeapon) (me.getCurrWeapon())).getAmmoInMag() <= 1)
+            {
+                communicationHandler.send(new ReloadMessage());
+            }
         }
     }
 
@@ -483,6 +487,9 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             System.out.println("setting " + aum.getID() + "'s wepid " + aum.getWepID() + " to have " + aum.getAmmo() + " ammo");
             System.out.println("me unique is " + me.getUniqueID());
             System.out.println("my weapon is " + me.getCurrWepIndex());
+        } else if (m instanceof ReloadMessage)
+        {
+           ((ProjectileWeapon) me.getCurrWeapon()).reload();
         } else
         {
             System.err.println("Unknown message type encountered. " + "Please make sure you have the latest game version!");

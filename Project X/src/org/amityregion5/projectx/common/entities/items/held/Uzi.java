@@ -63,10 +63,13 @@ public class Uzi extends Gun implements Upgradeable {
 
     public void upgrade()
     {
-        upgradeLevel++;
-        setAttackRate(getAttackRate() + 1);
-        setDamage(getDamage() + 1);
-        setMaxAmmo(getMaxAmmo() + AMMO_UPGRADE * 5);
+        if (upgradeLevel < LVL_CAP)
+        {
+            upgradeLevel++;
+            setAttackRate(getAttackRate() + 1);
+            setDamage(getDamage() + 1);
+            setMaxAmmo(getMaxAmmo() + AMMO_UPGRADE * 5);
+        }
     }
 
     public int getUpgradeCost()
