@@ -64,18 +64,16 @@ public class EntityControllerThread extends Thread {
     {
         while (keepRunning)
         {
-            // final List<Entity> toRemove = new ArrayList<Entity>();
             for (final Entity e : entities)
             {
                 double r = e.getMoveSpeed();
-                double offsetX = 0;
-                double offsetY = 0;
-                if (r > 0)
+
+                if (r > 0 || e instanceof Enemy)
                 {
                     double theta = e.getDirectionMoving();
 
-                    offsetX = r * Math.cos(Math.toRadians(theta));
-                    offsetY = r * Math.sin(Math.toRadians(theta));
+                    double offsetX = r * Math.cos(Math.toRadians(theta));
+                    double offsetY = r * Math.sin(Math.toRadians(theta));
                     double newX = offsetX + e.getX();
                     double newY = offsetY + e.getY();
 
@@ -86,7 +84,11 @@ public class EntityControllerThread extends Thread {
                             if (CollisionDetection.hasCollision(e, (int) offsetX, (int) offsetY, q))
                             {
                                 collision = true;
-                                break;
+
+                                if (e instanceof Enemy)
+                                {
+                                    processEnemyCollision((Enemy) e, (Block) q);
+                                }
                             }
                     }
 
@@ -108,71 +110,33 @@ public class EntityControllerThread extends Thread {
                     }
                 }
 
-                if (e instanceof Enemy)
+                if (e instanceof Enemy && CollisionDetection.hasCollision(e, 0, 0, map.getArea()))
                 {
                     Enemy en = (Enemy) e;
-
-                    for (Entity q : entities)
+                    if (en instanceof SuicideBomber)
                     {
-                        if (q instanceof Block && q != e)
-                        {
-                            if (CollisionDetection.hasCollision(e, (int) offsetX, (int) offsetY, q))
-                            {
-                                if (e instanceof SuicideBomber)
-                                {
-                                    ((Block) q).damage(((SuicideBomber) e).getCurrWeapon().getDamage());
-                                    if (((Damageable) q).killed())
-                                        removeEntity(q);
-                                    else
-                                        q.requestUpdate();
+                        SuicideBomber sb = (SuicideBomber) en;
+                        map.getArea().damage(sb.getCurrWeapon().getDamage()); // attack the area specifically
+                        removeEntity(sb);
 
-                                    removeEntity(e);
-
-                                    // TODO: explosion sound
-                                } else
-                                {
-                                    Damageable dam = (Damageable) q;
-
-                                    dam.damage(en.getCurrWeapon().getDamage());
-
-                                    if (dam.killed())
-                                        removeEntity(q);
-                                    else
-                                        q.requestUpdate();
-                                }
-                            }
-                        }
-                    }
-
-                    if (CollisionDetection.hasCollision(en, 0, 0, map.getArea()))
+                        // TODO: explosion sound
+                    } else
                     {
-                        if (en instanceof SuicideBomber)
+                        int relY = (int) map.getPlayArea().getCenterY() - e.getCenterY();
+                        int relX = (int) map.getPlayArea().getCenterX() - e.getCenterX();
+                        int dir = (int) Math.toDegrees(Math.atan2(relY, relX));
+                        e.setDirectionMoving(dir);
+                        e.setDirectionFacing(dir);
+                        en.stop();
+                        map.getArea().damage(en.getCurrWeapon().getDamage());
+                        if (map.getArea().killed() && keepRunning && isOnServer)
                         {
-                            SuicideBomber sb = (SuicideBomber) en;
-                            map.getArea().damage(sb.getCurrWeapon().getDamage()); // attack the area specifically
-                            removeEntity(sb);
-
-                            // TODO: explosion sound
-                        } else
-                        {
-                            // System.out.println("COLLISION WITH: "+en);
-                            int relY = (int) map.getPlayArea().getCenterY() - e.getCenterY();
-                            int relX = (int) map.getPlayArea().getCenterX() - e.getCenterX();
-                            int dir = (int) Math.toDegrees(Math.atan2(relY, relX));
-                            e.setDirectionMoving(dir);
-                            e.setDirectionFacing(dir);
-                            en.stop();
-                            map.getArea().damage(en.getCurrWeapon().getDamage());
-                            if (map.getArea().killed() && keepRunning && isOnServer)
-                            {
-                                // game over!
-                                keepRunning = false;
-                                server.endGame();
-                            }
+                            // game over!
+                            keepRunning = false;
+                            server.endGame();
                         }
                     }
                 }
-
             }
             try
             {
@@ -182,6 +146,32 @@ public class EntityControllerThread extends Thread {
                 Logger.getLogger(EntityControllerThread.class.getName()).log(Level.SEVERE, null, ex);
                 keepRunning = false;
             }
+        }
+    }
+
+    private void processEnemyCollision(Enemy e, Block q) // helper
+    {
+        if (e instanceof SuicideBomber)
+        {
+            q.damage(((SuicideBomber) e).getCurrWeapon().getDamage());
+            if (q.killed())
+                removeEntity(q);
+            else
+                q.requestUpdate();
+
+            removeEntity(e);
+
+            // TODO: explosion sound
+        } else
+        {
+            Damageable dam = (Damageable) q;
+
+            dam.damage(e.getCurrWeapon().getDamage());
+
+            if (dam.killed())
+                removeEntity(q);
+            else
+                q.requestUpdate();
         }
     }
 
