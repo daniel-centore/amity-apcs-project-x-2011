@@ -28,6 +28,7 @@ import org.amityregion5.projectx.common.entities.characters.enemies.SuicideBombe
 import org.amityregion5.projectx.common.entities.items.field.Block;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 import org.amityregion5.projectx.common.tools.CollisionDetection;
+import org.amityregion5.projectx.server.Server;
 
 /**
  * A thread that will move all Entities by need.
@@ -38,15 +39,25 @@ import org.amityregion5.projectx.common.tools.CollisionDetection;
  */
 public class EntityControllerThread extends Thread {
 
-    private boolean keepRunning = true; // keep moving entities
+    private volatile boolean keepRunning = true; // keep moving entities
     private AbstractMap map; // used for collision detection
-    private boolean alive = true; // used to make sure game over isn't sent 2x
     private EntityList entities;
+    private boolean isOnServer; // are we running on the server
+    private Server server;
+    
 
-    public EntityControllerThread(AbstractMap m)
+    public EntityControllerThread(AbstractMap m, boolean server)
     {
+        this.isOnServer = server;
         map = m;
         entities = new EntityList();
+    }
+    
+    public EntityControllerThread(AbstractMap m, Server server)
+    {
+        this(m, true);
+        
+        this.server = server;
     }
 
     @Override
@@ -116,12 +127,11 @@ public class EntityControllerThread extends Thread {
                                         {
                                             ((Block) q).damage(((SuicideBomber) e).getCurrWeapon().getDamage());
                                             if (((Damageable) q).killed())
-                                                // toRemove.add(q);
-                                                entities.requestRemove(q);
+                                                removeEntity(q);
                                             else
                                                 q.requestUpdate();
-                                            // toRemove.add(e);
-                                            entities.requestRemove(e);
+                                            
+                                            removeEntity(e);
 
                                             // TODO: explosion sound
                                         } else
@@ -131,8 +141,7 @@ public class EntityControllerThread extends Thread {
                                             dam.damage(en.getCurrWeapon().getDamage());
 
                                             if (dam.killed())
-                                                // toRemove.add(q);
-                                                entities.requestRemove(q);
+                                                removeEntity(q);
                                             else
                                                 q.requestUpdate();
                                         }
@@ -146,8 +155,7 @@ public class EntityControllerThread extends Thread {
                                 {
                                     SuicideBomber sb = (SuicideBomber) en;
                                     map.getArea().damage(sb.getCurrWeapon().getDamage()); // attack the area specifically
-                                    // toRemove.add(sb);
-                                    entities.requestRemove(sb);
+                                    removeEntity(sb);
 
                                     // TODO: explosion sound
                                 } else
@@ -160,9 +168,11 @@ public class EntityControllerThread extends Thread {
                                     e.setDirectionFacing(dir);
                                     en.stop();
                                     map.getArea().damage(en.getCurrWeapon().getDamage());
-                                    if (map.getArea().killed() && alive)
+                                    if (map.getArea().killed() && keepRunning && isOnServer)
                                     {
                                         // game over!
+                                        keepRunning = false;
+                                        server.endGame();
                                     }
                                 }
                             }
@@ -197,6 +207,9 @@ public class EntityControllerThread extends Thread {
 
     public void removeEntity(Entity e)
     {
+        if (!isOnServer)
+            return;
+        
         entities.requestRemove(e);
     }
 

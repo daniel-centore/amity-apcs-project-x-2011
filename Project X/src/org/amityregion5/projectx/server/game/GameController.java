@@ -92,7 +92,7 @@ public final class GameController {
         // TODO send clients the map for this game!
         // Will fix in post-release version.
 
-        entityMoverThread = new EntityControllerThread(map);
+        entityMoverThread = new EntityControllerThread(map, server);
 
         Random r = new Random();
         for (Client c : clients)

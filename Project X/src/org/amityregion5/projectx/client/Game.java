@@ -121,7 +121,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         timeController = new TimeController();
         this.username = username;
         // entityHandler = new EntityHandler();
-        controllerThread = new EntityControllerThread(m);
+        controllerThread = new EntityControllerThread(m, false);
         communicationHandler = ch;
         me = null;
         map = m;
