@@ -19,25 +19,41 @@
  */
 package org.amityregion5.projectx.client;
 
-import org.amityregion5.projectx.common.communication.Constants;
-import org.amityregion5.projectx.common.communication.RawListener;
+import java.awt.Point;
+import java.awt.geom.Point2D;
 
-public class MovementHandler implements RawListener {
-    
-    private Game game;
-    
-    public MovementHandler(Game game)
-    {
-        this.game = game;
-    }
+import org.amityregion5.projectx.common.entities.EntityConstants;
+import org.amityregion5.projectx.common.tools.TimeController;
 
-    @Override
-    public void handle(char prefix, String str)
+/**
+ * Does some movement stuff
+ * 
+ * @author Daniel Centore
+ *
+ */
+public class MovementHandler {
+
+    /**
+     * Figures out where an entity probably is based on the
+     * time its last move instructions were sent
+     * @param location The place the entity was
+     * @param directionMoving The direction (360 degrees) it is moving
+     * @param speed The speed it is moving
+     * @param sent The time the instruction was sent at
+     * @param tc The {@link TimeController} we are using
+     * @return The position to put it at
+     */
+    public static Point calculatePosition(Point2D.Double location, int directionMoving, double speed, long sent, TimeController tc)
     {
-        if (prefix != Constants.MOVE_PREF)
-            return;
-        
-        
+        double oldX = location.x;
+        double oldY = location.y;
+
+        double hypotenuse = speed * (tc.getDifference(sent) / EntityConstants.MOVE_UPDATE_TIME);
+
+        double newX = Math.sin(Math.toRadians(directionMoving) * hypotenuse) + oldX;
+        double newY = Math.cos(Math.toRadians(directionMoving) * hypotenuse) + oldY;
+
+        return new Point((int) newX, (int) newY);
     }
 
 }

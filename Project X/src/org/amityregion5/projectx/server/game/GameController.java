@@ -48,6 +48,7 @@ import org.amityregion5.projectx.common.entities.items.held.Uzi;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 import org.amityregion5.projectx.common.maps.TestingMap;
+import org.amityregion5.projectx.common.tools.TimeController;
 import org.amityregion5.projectx.server.Server;
 import org.amityregion5.projectx.server.communication.Client;
 import org.amityregion5.projectx.server.game.enemies.EnemyManager;
@@ -62,7 +63,7 @@ import org.amityregion5.projectx.server.game.enemies.EnemyManager;
  */
 public final class GameController {
 
-    public static final int DEFAULT_CASH = 50;
+    public static final int DEFAULT_CASH = 50000;
 
     private static GameController instance;
 
@@ -72,6 +73,7 @@ public final class GameController {
     private Server server; // Our server
     private AbstractMap map; // Our map
     private final EnemyManager enemyManager;
+    private TimeController timeController;
 
     /**
      * Creates and initializes the game controlling
@@ -80,6 +82,8 @@ public final class GameController {
      */
     public GameController(Server server)
     {
+        timeController = new TimeController();
+        
         map = new TestingMap();
         this.server = server;
         players = new ArrayList<PlayerEntity>();
@@ -322,5 +326,10 @@ public final class GameController {
     {
         entityMoverThread.kill();
         enemyManager.kill();
+    }
+
+    public TimeController getTimeController()
+    {
+        return timeController;
     }
 }

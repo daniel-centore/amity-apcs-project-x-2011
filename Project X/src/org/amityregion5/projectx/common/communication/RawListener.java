@@ -31,5 +31,4 @@ public interface RawListener {
      * @param prefix The prefix from {@link Constants}
      * @param str String to process
      */
-    public void handle(char prefix, String str);
-}
+    public void handle(char prefix, String str); }

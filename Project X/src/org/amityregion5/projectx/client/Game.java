@@ -24,6 +24,7 @@ import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -80,6 +81,7 @@ import org.amityregion5.projectx.common.entities.items.Upgradeable;
 import org.amityregion5.projectx.common.entities.items.held.ProjectileWeapon;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 import org.amityregion5.projectx.common.tools.Sound;
+import org.amityregion5.projectx.common.tools.TimeController;
 
 /**
  * The umbrella logistics class for the client-side game.
@@ -106,6 +108,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
     private boolean gameOver = false;
     private boolean dead = false; // used for graceful exiting
     private int countdown; // used for wave countdowns
+    private TimeController timeController;
 
     /**
      * Creates a game
@@ -115,6 +118,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
      */
     public Game(CommunicationHandler ch, AbstractMap m, String username)
     {
+        timeController = new TimeController();
         this.username = username;
         // entityHandler = new EntityHandler();
         controllerThread = new EntityControllerThread(m);
@@ -125,7 +129,6 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         dUpThread = new DirectionalUpdateThread();
         // do not start the dUpThread until me != null
 
-        rch.registerRawListener(new MovementHandler(this));
         rch.registerRawListener(this);
         rch.start();
 
@@ -135,10 +138,10 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
 
         // TODO:start the thread client side, but server-side we
         // should send a timestamp with when it was sent (make sure it if
-        // localization independant) so that based on that we can figure out 
+        // localization independant) so that based on that we can figure out
         // the entity's real new location (without the jump-back lag)
-        
-         controllerThread.start();
+
+        controllerThread.start();
     }
 
     public void mouseDragged(int x, int y)
@@ -466,7 +469,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         } else if (m instanceof WaveMessage)
         {
             StatBarDrawing.setWaveNumber(((WaveMessage) m).getNumber());
-            //this.startCountdown(((WaveMessage) m).getDelayMillis() / 1000);
+            // this.startCountdown(((WaveMessage) m).getDelayMillis() / 1000);
         } else if (m instanceof DisconnectRequestMessage)
         {
             JOptionPane.showMessageDialog(null, ((DisconnectRequestMessage) m).getReason(), "Disconnected", JOptionPane.OK_OPTION);
@@ -476,14 +479,11 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         } else if (m instanceof AmmoUpdateMessage)
         {
             AmmoUpdateMessage aum = (AmmoUpdateMessage) m;
-            ((PlayerEntity) controllerThread.getEntity(aum.getID()))
-                    .getWeapon(aum.getWepID()).setAmmo(aum.getAmmo());
-            System.out.println("setting " + aum.getID() + "'s wepid " + aum.getWepID() +
-                    " to have " + aum.getAmmo() + " ammo");
+            ((PlayerEntity) controllerThread.getEntity(aum.getID())).getWeapon(aum.getWepID()).setAmmo(aum.getAmmo());
+            System.out.println("setting " + aum.getID() + "'s wepid " + aum.getWepID() + " to have " + aum.getAmmo() + " ammo");
             System.out.println("me unique is " + me.getUniqueID());
             System.out.println("my weapon is " + me.getCurrWepIndex());
-        }
-        else
+        } else
         {
             System.err.println("Unknown message type encountered. " + "Please make sure you have the latest game version!");
         }
@@ -562,7 +562,9 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
 
         // System.out.println(str);
         String[] entStrs = str.split(";");
-        for (int i = 0; i < entStrs.length; i++)
+        long time = Long.valueOf(entStrs[0]);
+        
+        for (int i = 1; i < entStrs.length; i++)
         {
             String[] entVals = entStrs[i].split(",");
             long id = Long.valueOf(entVals[0]);
@@ -586,8 +588,11 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                 int hp = Integer.valueOf(entVals[5]);
                 double speed = Double.valueOf(entVals[6]);
 
-                e.setX(x);
-                e.setY(y);
+                Point p = MovementHandler.calculatePosition(new Point2D.Double(x, y), moving, speed, time, timeController);
+//                e.setX(x);
+//                e.setY(y);
+                e.setX(p.x);
+                e.setY(p.y);
 
                 if (hp > Byte.MIN_VALUE)
                 {
@@ -736,8 +741,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                 try
                 {
                     Thread.sleep(1000);
-                }
-                catch(InterruptedException ex)
+                } catch (InterruptedException ex)
                 {
                     Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
                 }

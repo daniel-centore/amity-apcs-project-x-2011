@@ -136,6 +136,8 @@ public class RawServer extends Thread {
 
         StringBuilder buf = new StringBuilder();
         buf.append(Constants.MOVE_PREF);
+        buf.append(gameController.getTimeController().getTimeElapsed());
+        buf.append(";");
         buf.append("-1,");
         buf.append(gameController.getMap().getArea().getHp());
         buf.append(";");
