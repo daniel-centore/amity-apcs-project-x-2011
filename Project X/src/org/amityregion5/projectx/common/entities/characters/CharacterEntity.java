@@ -35,7 +35,7 @@ import org.amityregion5.projectx.common.entities.items.held.Weapon;
  */
 public abstract class CharacterEntity extends Entity {
 
-    private static final long serialVersionUID = 594L;
+    private static final long serialVersionUID = 605L;
     
     public static final long FIRE_TIME = 100; // how many ms to show the thing
     

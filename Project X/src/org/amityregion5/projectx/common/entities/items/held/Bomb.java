@@ -15,7 +15,7 @@ import org.amityregion5.projectx.common.tools.Sound;
  */
 public class Bomb extends MeleeWeapon implements DamageDealing {
 
-    private static final long serialVersionUID = 547L;
+    private static final long serialVersionUID = 605L;
     private static int SWORD_RATE = 42; // FIXME: arbitrary.
     private static int DAMAGE = 100;
 

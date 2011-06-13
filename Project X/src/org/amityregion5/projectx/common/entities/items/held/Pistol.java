@@ -31,7 +31,7 @@ import org.amityregion5.projectx.common.tools.Sound;
 
 public class Pistol extends Gun implements Upgradeable {
 
-    private static final long serialVersionUID = 597L;
+    private static final long serialVersionUID = 605L;
     
     private final int UPGRADE_COST = 50;
     private static final BufferedImage image = ImageHandler.loadImage("Pistol");

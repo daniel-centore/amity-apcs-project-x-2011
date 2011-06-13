@@ -32,12 +32,12 @@ import org.amityregion5.projectx.common.tools.Sound;
  */
 public class Laser extends Gun implements Upgradeable {
 
-    private static final long serialVersionUID = 597L;
+    private static final long serialVersionUID = 605L;
     private final int UPGRADE_COST = 200;
 
     public Laser()
     {
-        super(900, -1, -1, 20, 120, 1);
+        super(900, 1000, 1000, 10, 100, 2);
     }
 
     @Override
@@ -64,6 +64,15 @@ public class Laser extends Gun implements Upgradeable {
     {
         upgradeLevel++;
         setDamage(getDamage() + 1);
+        if (getAttackRate() < 30) {
+            setDamage(getDamage() + 1);
+            setAttackRate(getAttackRate() + 1);
+        }
+        else {
+            setDamage(getDamage() + 2);
+        }
+        setRPM(getRPM() + 100);
+        setMaxAmmo(getMaxAmmo() + 100);
     }
 
     public int getUpgradeCost()

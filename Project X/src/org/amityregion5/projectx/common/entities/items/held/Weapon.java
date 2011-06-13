@@ -31,7 +31,7 @@ import org.amityregion5.projectx.common.tools.Sound;
  */
 public abstract class Weapon extends HeldItem implements DamageDealing {
 
-    private static final long serialVersionUID = 597L;
+    private static final long serialVersionUID = 605L;
 
     private int range; // Range (in pixels)
     private double attackRate;

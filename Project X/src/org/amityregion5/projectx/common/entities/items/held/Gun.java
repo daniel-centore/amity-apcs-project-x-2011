@@ -27,7 +27,7 @@ package org.amityregion5.projectx.common.entities.items.held;
  */
 public abstract class Gun extends ProjectileWeapon
 {
-    private static final long serialVersionUID = 594L;
+    private static final long serialVersionUID = 605L;
 
     public Gun(int range, int ammo, int maxAmmo, double fireRate, int rpm, int damage)
     {

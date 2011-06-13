@@ -34,7 +34,7 @@ import org.amityregion5.projectx.common.tools.ImageHandler;
  */
 public abstract class Enemy extends CharacterEntity implements Damageable {
 
-    private static final long serialVersionUID = 562L;
+    private static final long serialVersionUID = 605L;
     private int value;
     private int hp; // hitpoints
     private final int maxHealth;
@@ -49,7 +49,7 @@ public abstract class Enemy extends CharacterEntity implements Damageable {
     public Enemy(int max, int x, int y)
     {
         super(x, y);
-        value = 5;
+        value = 10;
         hp = max;
         maxHealth = max;
         setMoveSpeed(DEFAULT_SPEED);

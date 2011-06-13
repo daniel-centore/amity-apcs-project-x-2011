@@ -31,7 +31,7 @@ import java.awt.Point;
  */
 public abstract class ProjectileWeapon extends Weapon {
 
-    private static final long serialVersionUID = 595L;
+    private static final long serialVersionUID = 605L;
     private int ammo; // rounds that are NOT in current mag
     private int maxAmmo; // max total rounds
     private int damage;
@@ -131,6 +131,16 @@ public abstract class ProjectileWeapon extends Weapon {
     public boolean hasAmmo()
     {
         return ammo != 0;
+    }
+
+    public int getRPM()
+    {
+        return roundsPerMag;
+    }
+
+    public void setRPM(int rpm)
+    {
+        roundsPerMag = rpm;
     }
 
     public int getDamage()

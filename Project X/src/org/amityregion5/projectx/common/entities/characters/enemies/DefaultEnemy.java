@@ -23,7 +23,7 @@ import org.amityregion5.projectx.common.entities.items.held.ZombieHands;
 
 public class DefaultEnemy extends Enemy {
 
-    private static final long serialVersionUID = 542L;
+    private static final long serialVersionUID = 605L;
 
     public DefaultEnemy(int max, int x, int y)
     {

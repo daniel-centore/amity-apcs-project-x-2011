@@ -33,7 +33,7 @@ import org.amityregion5.projectx.common.tools.Sound;
  */
 public class SniperRifle extends Gun implements DamageDealing, Upgradeable
 {
-    public static final long serialVersionUID = 597L;
+    public static final long serialVersionUID = 605L;
 
     private final int UPGRADE_COST = 150;
     private static final BufferedImage image = ImageHandler.loadImage("Sniper");
@@ -61,6 +61,10 @@ public class SniperRifle extends Gun implements DamageDealing, Upgradeable
         return image;
     }
 
+    public int getMagCost() {
+        return super.getMagCost() / 10;
+    }
+
     public int getUpgradeCost()
     {
         return UPGRADE_COST;
@@ -70,7 +74,10 @@ public class SniperRifle extends Gun implements DamageDealing, Upgradeable
     {
         upgradeLevel++;
 
+        if (upgradeLevel % 3 == 2)
+            setRPM(getRPM() + 1);
+
         setAttackRate(getAttackRate() + 1);
-        setMaxAmmo(getMaxAmmo() + AMMO_UPGRADE * 5);
+        setMaxAmmo(getMaxAmmo() + AMMO_UPGRADE);
     }
 }

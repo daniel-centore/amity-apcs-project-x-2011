@@ -14,7 +14,7 @@ import org.amityregion5.projectx.common.tools.ImageHandler;
  */
 public class BossEnemy extends Enemy {
 
-    private static final long serialVersionUID = 562L;
+    private static final long serialVersionUID = 605L;
 
     public BossEnemy(int damage, int max, int x, int y)
     {

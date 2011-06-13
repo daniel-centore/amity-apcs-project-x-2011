@@ -34,7 +34,7 @@ import org.amityregion5.projectx.common.tools.Sound;
  */
 public class Sword extends MeleeWeapon implements Upgradeable {
 
-    private static final long serialVersionUID = 555L;
+    private static final long serialVersionUID = 605L;
     private static int SWORD_RATE = 42; // FIXME: arbitrary.
 
     public Sword(int damage)

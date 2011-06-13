@@ -33,7 +33,7 @@ import org.amityregion5.projectx.common.tools.Sound;
  */
 public class RPG extends Gun implements Upgradeable, DamageDealing
 {
-    public static final long serialVersionUID = 597L;
+    public static final long serialVersionUID = 605L;
 
     private final int UPGRADE_COST = 250;
     private final int AMMO_UPGRADE = 5;
