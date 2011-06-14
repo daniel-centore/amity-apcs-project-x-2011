@@ -66,7 +66,6 @@ public class EntityControllerThread extends Thread {
         {
             for (final Entity e : entities)
             {
-                long ms = System.currentTimeMillis();
                 double r = e.getMoveSpeed();
 
                 if (r > 0 || e instanceof Enemy)
@@ -138,7 +137,6 @@ public class EntityControllerThread extends Thread {
                         }
                     }
                 }
-                System.out.println(System.currentTimeMillis() - ms);
             }
             try
             {
