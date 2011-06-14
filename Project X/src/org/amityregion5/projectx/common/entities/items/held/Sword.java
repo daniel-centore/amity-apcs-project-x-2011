@@ -35,17 +35,13 @@ import org.amityregion5.projectx.common.tools.Sound;
 public class Sword extends MeleeWeapon implements Upgradeable {
 
     private static final long serialVersionUID = 605L;
-    private static int SWORD_RATE = 42; // FIXME: arbitrary.
+    private static int SWORD_RATE = 42;
 
     public Sword(int damage)
     {
         super(SWORD_RATE, damage);
     }
-//    @Override
-//    public String getDefaultImage()
-//    {
-//        return "sprites/Pistol_1";
-//    }
+
     private static final BufferedImage image = ImageHandler.loadImage("Pistol_1");
 
     @Override

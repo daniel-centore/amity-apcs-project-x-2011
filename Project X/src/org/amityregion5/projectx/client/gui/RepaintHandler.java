@@ -325,7 +325,6 @@ public class RepaintHandler extends Thread {
      */
     public static void endGame()
     {
-        // TODO darken window behind leaderboard!!
         showingLb = true;
     }
 }

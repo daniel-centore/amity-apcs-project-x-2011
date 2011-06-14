@@ -32,17 +32,13 @@ import org.amityregion5.projectx.common.tools.Sound;
 public class ZombieHands extends MeleeWeapon implements DamageDealing {
 
     private static final long serialVersionUID = 605L;
-    private static int SWORD_RATE = 42; // FIXME: arbitrary.
+    private static int SWORD_RATE = 42;
 
     public ZombieHands(int damage)
     {
         super(SWORD_RATE, damage);
     }
-//    @Override
-//    public String getDefaultImage()
-//    {
-//        return "sprites/E_Hands";
-//    }
+
     private static final BufferedImage image = ImageHandler.loadImage("E_Hands");
 
     @Override

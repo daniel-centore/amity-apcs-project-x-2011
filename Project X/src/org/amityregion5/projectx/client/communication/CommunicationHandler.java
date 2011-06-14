@@ -54,7 +54,6 @@ public class CommunicationHandler extends Thread {
     private ObjectInputStream inObjects; // what we read from
     private static final long TIMEOUT_TIME = 5000;
 
-    // TODO: remove all the "instance" kludges so we can restart the game more easily.
     /**
      * Creates and initializes communications with a server
      * 

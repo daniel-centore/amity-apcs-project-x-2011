@@ -16,7 +16,7 @@ import org.amityregion5.projectx.common.tools.Sound;
 public class BigZombieHands extends MeleeWeapon implements DamageDealing {
 
     private static final long serialVersionUID = 605L;
-    private static int SWORD_RATE = 42; // FIXME: arbitrary.
+    private static int SWORD_RATE = 42;
     private static final BufferedImage image = ImageHandler.loadImage("E_Hands");
 
     public BigZombieHands(int damage)

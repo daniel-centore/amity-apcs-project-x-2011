@@ -118,8 +118,6 @@ public class EntityControllerThread extends Thread {
                         SuicideBomber sb = (SuicideBomber) en;
                         map.getArea().damage(sb.getCurrWeapon().getDamage()); // attack the area specifically
                         removeEntity(sb);
-
-                        // TODO: explosion sound
                     } else
                     {
                         int relY = (int) map.getPlayArea().getCenterY() - e.getCenterY();
@@ -160,8 +158,6 @@ public class EntityControllerThread extends Thread {
                 q.requestUpdate();
 
             removeEntity(e);
-
-            // TODO: explosion sound
         } else
         {
             Damageable dam = (Damageable) q;

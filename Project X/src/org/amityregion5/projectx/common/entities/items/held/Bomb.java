@@ -16,18 +16,15 @@ import org.amityregion5.projectx.common.tools.Sound;
 public class Bomb extends MeleeWeapon implements DamageDealing {
 
     private static final long serialVersionUID = 605L;
-    private static int SWORD_RATE = 42; // FIXME: arbitrary.
+    private static int SWORD_RATE = 42;
     private static int DAMAGE = 100;
 
     public Bomb()
     {
         super(SWORD_RATE, DAMAGE);
     }
-//    @Override
-//    public String getDefaultImage()
-//    {
-//        return "sprites/E_Hands";// TODO make bomb sprite
-//    }
+
+    // TODO: make bomb sprite
     private static final BufferedImage image = ImageHandler.loadImage("E_Hands");
 
     @Override

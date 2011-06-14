@@ -136,11 +136,6 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         InputHandler.registerListener(this);
         RepaintHandler.setGame(this);
 
-        // TODO:start the thread client side, but server-side we
-        // should send a timestamp with when it was sent (make sure it if
-        // localization independant) so that based on that we can figure out
-        // the entity's real new location (without the jump-back lag)
-
         controllerThread.start();
     }
 
@@ -177,7 +172,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             this.destroy();
             new LobbyWindow(getCommunicationHandler(), null, me.getUsername());
             GameWindow.closeWindow();
-            // TODO return to lobby if mouse clicked and game is over
+            
         } else if (button == MouseEvent.BUTTON1)
         {
             getCommunicationHandler().send(new FiringMessage(true));
