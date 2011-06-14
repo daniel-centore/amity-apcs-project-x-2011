@@ -216,20 +216,15 @@ public class RepaintHandler extends Thread {
                 int y2;
                 int x;
                 int y;
-/**
-                x2 = (int) (Math.cos(Math.toRadians(pe.getDirectionFacing())) * wep.getRange() + gun.getWeaponTip().getX()+pe.getX());
-                y2 = (int) (Math.sin(Math.toRadians(pe.getDirectionFacing())) * wep.getRange() + gun.getWeaponTip().getY()+ pe.getY());
-                double radius = Point.distance(x2, y2, pe.getCenterX(), pe.getCenterY());
-                x = (int)(radius * Math.cos(pe.getDirectionFacing())+ pe.getX());
-                y = (int)(radius * Math.sin(pe.getDirectionFacing())+ pe.getY());
-                System.out.println("x " + x);
-                System.out.println("y " + y);
-                System.out.println("x2 " + x2);
-                System.out.println("y2 " + y2);
-    **/
-                
-                    x2 = (int) (Math.cos(Math.toRadians(pe.getDirectionFacing())) * wep.getRange()) + pe.getCenterX();
-                    y2 = (int) (Math.sin(Math.toRadians(pe.getDirectionFacing())) * wep.getRange()) + pe.getCenterY();
+
+                x = (int) gun.getWeaponTip().getX();
+                y = (int) gun.getWeaponTip().getY();
+                x2 = (int) (Math.cos(Math.toRadians(pe.getDirectionFacing())) * wep.getRange() + x);
+                y2 = (int) (Math.sin(Math.toRadians(pe.getDirectionFacing())) * wep.getRange() + y);
+
+
+                    //x2 = (int) (Math.cos(Math.toRadians(pe.getDirectionFacing())) * wep.getRange()) + pe.getCenterX();
+                    //y2 = (int) (Math.sin(Math.toRadians(pe.getDirectionFacing())) * wep.getRange()) + pe.getCenterY();
                 
                 if (pe.getFired())
                 {
@@ -237,8 +232,8 @@ public class RepaintHandler extends Thread {
                     Color oldColor = g.getColor();
                     g.setStroke(new BasicStroke(6));
                     g.setColor(Color.YELLOW);
-                    g.drawLine(pe.getCenterX(), pe.getCenterY(), x2, y2);
-                    //g.drawLine(x, y, x2, y2);
+                    //g.drawLine(pe.getCenterX(), pe.getCenterY(), x2, y2);
+                    g.drawLine(x, y, x2, y2);
                     g.setColor(oldColor);
                     g.setStroke(old);
                     pe.setFired(false);
@@ -258,15 +253,14 @@ public class RepaintHandler extends Thread {
         if(wep instanceof Gun)
         {
             Gun gun = (Gun)wep;
-            int x = (int)(pe.getX() + Gun.DEFAULT_GUN_POINT.x);
-            int y = (int)(pe.getY() + Gun.DEFAULT_GUN_POINT.y);
+            double r = Point.distance(pe.getCenterX(), pe.getCenterY(), pe.getX() + Gun.DEFAULT_GUN_POINT.x, pe.getY() + Gun.DEFAULT_GUN_POINT.y);
+            int x = (int)(pe.getCenterX() + r * Math.cos(Math.toRadians(pe.getDirectionFacing())));
+            System.out.println("x " + x);
+            int y = (int)(pe.getCenterY() + r * Math.sin(Math.toRadians(pe.getDirectionFacing())));
+            System.out.println("y " + y);
             gun.setWeaponTip(new Point(x,y));
         }
-        else if(wep instanceof Gun)
-        {
-            ((Gun)wep).setWeaponTip(new Point(pe.getCenterX(), pe.getCenterY()));
-
-        }
+        
         g.drawImage(wepImg, at, null);
     }
 

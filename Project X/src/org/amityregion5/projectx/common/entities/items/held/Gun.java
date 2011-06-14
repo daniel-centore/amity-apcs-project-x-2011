@@ -31,12 +31,11 @@ public abstract class Gun extends ProjectileWeapon
 {
     private static final long serialVersionUID = 605L;
 
-    public static final Point DEFAULT_GUN_POINT = new Point(50,40);
+    public static final Point DEFAULT_GUN_POINT = new Point(40,20);
 
     public Gun(int range, int ammo, int maxAmmo, double fireRate, int rpm, int damage)
     {
         super(range, ammo, maxAmmo, fireRate, rpm, damage);
-        setWeaponTip(DEFAULT_GUN_POINT);
     }
 
 
