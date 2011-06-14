@@ -22,6 +22,7 @@ package org.amityregion5.projectx.client.gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.WindowAdapter;
@@ -127,7 +128,9 @@ public class GameWindow extends JFrame {
                                .getCurrWeapon()).getAmmoInMag();
                             if (am > -1)
                             {
-                                img.getGraphics().drawString(
+                                Graphics2D g2 = (Graphics2D) img.getGraphics();
+                                g2.setColor(Color.white);
+                                g2.drawString(
                                    String.valueOf(am), (int) p.getX() - 5,
                                    (int) p.getY() - 5);
                             } else
