@@ -125,17 +125,15 @@ public class GeneratorThread extends Thread {
     public void run()
     {
         spawn = true;
-        int waveCount = 0;
         while (spawn)
         {
             if (waves.peek() != null)
             {
                 sendWave(waves.poll());
-                waveNumber++;
-                controller.getServer().relayMessage(new WaveMessage(waveNumber,EnemyManager.waveDelayTime(waveCount + 1)));
+                controller.getServer().relayMessage(new WaveMessage(waveNumber,EnemyManager.waveDelayTime(waveNumber)));
                 try
                 {
-                    Thread.sleep(EnemyManager.waveDelayTime(waveCount++));
+                    Thread.sleep(EnemyManager.waveDelayTime(waveNumber++));
                 } catch (InterruptedException ex)
                 {
                     Logger.getLogger(GeneratorThread.class.getName()).log(Level.SEVERE, null, ex);

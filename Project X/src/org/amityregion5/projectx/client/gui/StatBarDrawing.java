@@ -146,7 +146,6 @@ public class StatBarDrawing {
         p.addWeapon(new Pistol());
         p.setPoints(20974);
         p.setCash(500);
-        StatBarDrawing.setWaveNumber(2);
         final JPanel panel = new JPanel() {
 
             private static final long serialVersionUID = 595L;
