@@ -29,7 +29,7 @@ import org.amityregion5.projectx.common.tools.TimeController;
  * Does some movement stuff
  * 
  * @author Daniel Centore
- *
+ * @deprecated Doesn't really work well.
  */
 public class MovementHandler {
 

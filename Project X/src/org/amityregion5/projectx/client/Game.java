@@ -595,11 +595,8 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                 int hp = Integer.valueOf(entVals[5]);
                 double speed = Double.valueOf(entVals[6]);
 
-                Point p = MovementHandler.calculatePosition(new Point2D.Double(x, y), moving, speed, time, timeController);
-//                e.setX(x);
-//                e.setY(y);
-                e.setX(p.x);
-                e.setY(p.y);
+                e.setX(x);
+                e.setY(y);
 
                 if (hp > Byte.MIN_VALUE)
                 {
