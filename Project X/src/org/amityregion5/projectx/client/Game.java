@@ -297,6 +297,8 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             {
                 return;
             }
+            me.setMoveSpeed(PlayerEntity.INITIAL_SPEED);
+            me.setDirectionMoving(deg);
             ClientMovingMessage c = new ClientMovingMessage(PlayerEntity.INITIAL_SPEED, deg);
             getCommunicationHandler().send(c);
         }
@@ -613,6 +615,9 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                 } else
                     e.setDirectionFacing(facing);
 
+                me.setMoveSpeed(speed);
+                me.setDirectionMoving(moving);
+                
                 e.setDirectionMoving(moving);
                 e.setMoveSpeed(speed);
             }
