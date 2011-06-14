@@ -204,7 +204,10 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
 
         int keyCode = e.getKeyCode();
 
-        if (ChatDrawing.isChatting() && !(e.isActionKey() || e.getKeyCode() == KeyEvent.VK_SHIFT || e.getKeyCode() == KeyEvent.VK_ALT || e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_BACK_SPACE || e.getKeyCode() == KeyEvent.VK_CONTROL))
+        if (ChatDrawing.isChatting() && !(e.isActionKey() || e.getKeyCode() == KeyEvent.VK_SHIFT || 
+                e.getKeyCode() == KeyEvent.VK_ALT || e.getKeyCode() == KeyEvent.VK_ENTER || 
+                e.getKeyCode() == KeyEvent.VK_BACK_SPACE || e.getKeyCode() == KeyEvent.VK_CONTROL || 
+                e.getKeyCode() == KeyEvent.VK_ESCAPE))
         {
             ChatDrawing.addLetter(e.getKeyChar());
         } else if (ChatDrawing.isChatting())
@@ -224,6 +227,9 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             } else if (keyCode == KeyEvent.VK_BACK_SPACE)
             {
                 ChatDrawing.backspace();
+            } else if (keyCode == KeyEvent.VK_ESCAPE)
+            {
+                ChatDrawing.clearChat();
             }
         } else
         // not chatting
