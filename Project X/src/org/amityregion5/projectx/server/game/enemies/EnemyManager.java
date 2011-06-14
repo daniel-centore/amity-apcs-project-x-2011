@@ -45,7 +45,7 @@ public class EnemyManager {
     private static final int START_WAVE; // for testing
     static 
     {
-        if (GameController.CENTORE)
+        if (GameController.EGOMANIAC_FRESHMAN)
             START_WAVE = 90;
         else
             START_WAVE = 1;
