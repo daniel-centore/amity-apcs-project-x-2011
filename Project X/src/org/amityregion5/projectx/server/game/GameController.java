@@ -63,12 +63,12 @@ import org.amityregion5.projectx.server.game.enemies.EnemyManager;
  */
 public final class GameController {
 
-    public static final boolean CENTORE = false;
+    public static final boolean EGOMANIAC_FRESHMAN = false;
 
     public static final int DEFAULT_CASH;
     static
     {
-        if (CENTORE)
+        if (EGOMANIAC_FRESHMAN)
             DEFAULT_CASH = 500000;
         else
             DEFAULT_CASH = 50;
