@@ -37,7 +37,7 @@ public class Laser extends Gun implements Upgradeable {
 
     public Laser()
     {
-        super(900, 1000, 1000, 10, 100, 2);
+        super(900, 1000, 1000, 20, 100, 2);
     }
 
     @Override
@@ -65,15 +65,7 @@ public class Laser extends Gun implements Upgradeable {
         if (upgradeLevel < LVL_CAP)
         {
             upgradeLevel++;
-            setDamage(getDamage() + 1);
-            if (getAttackRate() < 30) {
-                setDamage(getDamage() + 1);
-                setAttackRate(getAttackRate() + 1);
-            }
-            else {
-                setDamage(getDamage() + 2);
-            }
-            setRPM(getRPM() + 100);
+            setDamage(getDamage() + 2);
             setMaxAmmo(getMaxAmmo() + 100);
         }
     }

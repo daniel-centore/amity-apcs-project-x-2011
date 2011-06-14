@@ -34,6 +34,7 @@ import org.amityregion5.projectx.common.communication.Constants;
 import org.amityregion5.projectx.common.communication.MessageListener;
 import org.amityregion5.projectx.common.communication.messages.BlockingMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
+import org.amityregion5.projectx.common.communication.messages.NullMessage;
 
 /**
  * Handles messages from, and sends messages to, the server.
@@ -245,7 +246,7 @@ public class CommunicationHandler extends Thread {
         catch(IOException ex)
         {
             Logger.getLogger(CommunicationHandler.class.getName()).log(Level.SEVERE, null, ex);
-            wait.setReply(new Message(){});
+            wait.setReply(new NullMessage());
             synchronized(wait.thread)
             {
                 wait.thread.notify();
