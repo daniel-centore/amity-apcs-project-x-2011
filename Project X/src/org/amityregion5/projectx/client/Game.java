@@ -175,10 +175,6 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         } else if (button == MouseEvent.BUTTON1)
         {
             getCommunicationHandler().send(new FiringMessage(true));
-            if (((ProjectileWeapon) (me.getCurrWeapon())).getAmmoInMag() <= 1)
-            {
-                communicationHandler.send(new ReloadMessage());
-            }
         }
     }
 

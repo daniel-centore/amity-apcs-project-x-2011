@@ -328,19 +328,7 @@ public class Client extends Thread {
         } else if (m instanceof ReloadMessage)
         {
             shotThread.setShooting(false); // can't reload while we're shooting can we?
-            new Thread(){
-                @Override
-                public void run()
-                {
-                    try {
-                        Thread.sleep(500);
-                        ((ProjectileWeapon) player.getCurrWeapon()).reload();
-                        Client.this.send(new ReloadMessage());
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            }.start();
+            ((ProjectileWeapon) player.getCurrWeapon()).reload();
 
         } else if (m instanceof BuyAmmoMessage)
         {

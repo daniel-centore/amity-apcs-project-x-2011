@@ -20,6 +20,8 @@
 package org.amityregion5.projectx.common.entities.items.held;
 
 import java.awt.Point;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * An item which releases ammo when used.
@@ -29,152 +31,167 @@ import java.awt.Point;
  * @author Joe Stein
  * @author Michael Wenke
  */
-public abstract class ProjectileWeapon extends Weapon {
+public abstract class ProjectileWeapon extends Weapon
+{
 
-    private static final long serialVersionUID = 605L;
-    private int ammo; // rounds that are NOT in current mag
-    private int maxAmmo; // max total rounds
-    private int damage;
-    private int roundsPerMag; // rounds per magazine
-    private int currentRounds; // rounds that are in current mag
-    private Point weaponTip;
+   private static final long serialVersionUID = 605L;
+   private int ammo; // rounds that are NOT in current mag
+   private int maxAmmo; // max total rounds
+   private int damage;
+   private int roundsPerMag; // rounds per magazine
+   private int currentRounds; // rounds that are in current mag
+   private Point weaponTip;
+   private static final int MAG_COST = 50;
 
-    private static final int MAG_COST = 50;
+   /**
+    * Creates a projectile weapon with the given characteristics.
+    * @param range the range of the weapon, in linear pixels
+    * @param startAmmo the ammo this weapon starts with
+    * @param _maxAmmo the maximum amount of ammo this weapon can have
+    * @param rate the attack rate of this weapon, in attacks per second
+    * @param damage the amount of damage this weapon deals
+    */
+   public ProjectileWeapon(int range, int startAmmo, int _maxAmmo, double rate, int rpm, int damage)
+   {
+      super(range, rate);
+      ammo = startAmmo - rpm;
+      maxAmmo = _maxAmmo;
+      roundsPerMag = rpm;
+      currentRounds = rpm;
+      this.damage = damage;
+   }
 
-    /**
-     * Creates a projectile weapon with the given characteristics.
-     * @param range the range of the weapon, in linear pixels
-     * @param startAmmo the ammo this weapon starts with
-     * @param _maxAmmo the maximum amount of ammo this weapon can have
-     * @param rate the attack rate of this weapon, in attacks per second
-     * @param damage the amount of damage this weapon deals
-     */
-    public ProjectileWeapon(int range, int startAmmo, int _maxAmmo, double rate, int rpm, int damage)
-    {
-        super(range, rate);
-        ammo = startAmmo - rpm;
-        maxAmmo = _maxAmmo;
-        roundsPerMag = rpm;
-        currentRounds = rpm;
-        this.damage = damage;
-    }
+   @Override
+   public int getAmmo()
+   {
+      return ammo;
+   }
 
-    @Override
-    public int getAmmo()
-    {
-        return ammo;
-    }
+   public int getMagCost()
+   {
+      return MAG_COST;
+   }
 
-    public int getMagCost()
-    {
-        return MAG_COST;
-    }
+   public void addAmmo(int rounds)
+   {
+      ammo = (rounds + ammo > maxAmmo ? maxAmmo : rounds + ammo);
+   }
 
-    public void addAmmo(int rounds)
-    {
-        ammo = (rounds + ammo > maxAmmo ? maxAmmo : rounds + ammo);
-    }
+   public int getMaxAmmo()
+   {
+      return maxAmmo;
+   }
 
-    public int getMaxAmmo()
-    {
-        return maxAmmo;
-    }
+   public void setMaxAmmo(int x)
+   {
+      maxAmmo = x;
+   }
 
-    public void setMaxAmmo(int x)
-    {
-        maxAmmo = x;
-    }
+   @Override
+   public void setAmmo(int ammo)
+   {
+      this.ammo = ammo;
+   }
 
-    @Override
-    public void setAmmo(int ammo)
-    {
-        this.ammo = ammo;
-    }
+   public int getRoundsPerMag()
+   {
+      return roundsPerMag;
+   }
 
-    public int getRoundsPerMag()
-    {
-        return roundsPerMag;
-    }
+   public int getAmmoInMag()
+   {
+      return currentRounds;
+   }
 
-    public int getAmmoInMag()
-    {
-        return currentRounds;
-    }
+   /**
+    * Reloads the weapon, rolling over unused ammunition from the last
+    * magazine.
+    */
+   public void reload()
+   {
+      new Thread()
+      {
 
-    /**
-     * Reloads the weapon, rolling over unused ammunition from the last
-     * magazine.
-     */
-    
-    public void reload()
-    {
-        if (currentRounds == roundsPerMag)
-            return;
-        if (maxAmmo == -1)
-        {
-            currentRounds = roundsPerMag;
-            return;
-        }
-        if(ammo - (roundsPerMag - currentRounds) < 0) // less than a mag left
-        {
-            // put all the ammo into the current mag
-            currentRounds += ammo;
-            ammo = 0;
-        }
-        else
-        {
-            ammo -= roundsPerMag - currentRounds; // subtract difference from ammo
-            currentRounds = roundsPerMag; // load up the magazine
-        }
-    }
+         @Override
+         public void run()
+         {
+            try
+            {
+               Thread.sleep(500);
+               if (currentRounds == roundsPerMag)
+               {
+                  return;
+               }
+               if (maxAmmo == -1)
+               {
+                  currentRounds = roundsPerMag;
+                  return;
+               }
+               if (ammo - (roundsPerMag - currentRounds) < 0) // less than a mag left
+               {
+                  // put all the ammo into the current mag
+                  currentRounds += ammo;
+                  ammo = 0;
+               } else
+               {
+                  ammo -= roundsPerMag - currentRounds; // subtract difference from ammo
+                  currentRounds = roundsPerMag; // load up the magazine
+               }
+            } catch (InterruptedException ex)
+            {
+               Logger.getLogger(ProjectileWeapon.class.getName()).log(Level.SEVERE, null, ex);
+            }
+         }
+      }.start();
+   }
 
-    public boolean hasAmmo()
-    {
-        return ammo != 0;
-    }
+   public boolean hasAmmo()
+   {
+      return ammo != 0;
+   }
 
-    public int getRPM()
-    {
-        return roundsPerMag;
-    }
+   public int getRPM()
+   {
+      return roundsPerMag;
+   }
 
-    public void setRPM(int rpm)
-    {
-        roundsPerMag = rpm;
-    }
+   public void setRPM(int rpm)
+   {
+      roundsPerMag = rpm;
+   }
 
-    public int getDamage()
-    {
-        return damage;
-    }
+   public int getDamage()
+   {
+      return damage;
+   }
 
-    public void setDamage(int damage)
-    {
-        this.damage = damage;
-    }
+   public void setDamage(int damage)
+   {
+      this.damage = damage;
+   }
 
-    public boolean fire()
-    {
-        if(currentRounds >= 1)
-        {
-            currentRounds--;
-            return true;
-        }
-        return false;
-    }
+   public boolean fire()
+   {
+      if (currentRounds >= 1)
+      {
+         currentRounds--;
+         return true;
+      }
+      return false;
+   }
 
-    public void setWeaponTip(Point p)
-    {
-        weaponTip = p;
-    }
+   public void setWeaponTip(Point p)
+   {
+      weaponTip = p;
+   }
 
-    public Point getWeaponTip()
-    {
-        return weaponTip;
-    }
+   public Point getWeaponTip()
+   {
+      return weaponTip;
+   }
 
-    public boolean isSplash()
-    {
-        return false;
-    }
+   public boolean isSplash()
+   {
+      return false;
+   }
 }
