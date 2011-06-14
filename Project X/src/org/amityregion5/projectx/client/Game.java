@@ -62,7 +62,6 @@ import org.amityregion5.projectx.common.communication.messages.FiringMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.common.communication.messages.PointMessage;
 import org.amityregion5.projectx.common.communication.messages.ReloadMessage;
-import org.amityregion5.projectx.common.communication.messages.RemoveEntityMessage;
 import org.amityregion5.projectx.common.communication.messages.RequestEntityAddMessage;
 import org.amityregion5.projectx.common.communication.messages.RequestHealMessage;
 import org.amityregion5.projectx.common.communication.messages.RequestUpgradeMessage;
@@ -402,13 +401,6 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
 
             // entityHandler.addEntity(e);
             controllerThread.addEntity(e);
-        } else if (m instanceof RemoveEntityMessage)
-        {
-            RemoveEntityMessage rem = (RemoveEntityMessage) m;
-            // entityHandler.removeEntity(rem.getID());
-            controllerThread.reallyRemoveEntity(rem.getID());
-
-            GameWindow.fireRepaintRequired();
         } else if (m instanceof AddWeaponMessage)
         {
             AddWeaponMessage awm = (AddWeaponMessage) m;

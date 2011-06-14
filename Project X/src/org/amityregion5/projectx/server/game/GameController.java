@@ -321,9 +321,6 @@ public final class GameController {
     public void removeEntity(Entity e)
     {
         entityMoverThread.removeEntity(e);
-        // entities.remove(e);
-        // entities.requestRemove(e);
-        // getServer().relayMessage(new RemoveEntityMessage(e.getUniqueID()));
     }
 
     public static GameController getInstance()
