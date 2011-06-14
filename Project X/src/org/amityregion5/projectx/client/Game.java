@@ -279,8 +279,6 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                 return;
             } else if (Keys.isKey(Keys.RELOAD, keyCode))
             {
-                // TODO reload code
-                ((ProjectileWeapon) me.getCurrWeapon()).reload();
                 communicationHandler.send(new ReloadMessage());
             } else if (Keys.isKey(Keys.BUY_AMMO, keyCode))
             {
