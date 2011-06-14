@@ -37,6 +37,7 @@ import org.amityregion5.projectx.client.gui.input.KeyboardInput;
 import org.amityregion5.projectx.client.gui.input.MouseInput;
 import org.amityregion5.projectx.common.entities.items.held.ProjectileWeapon;
 import org.amityregion5.projectx.common.maps.AbstractMap;
+import org.amityregion5.projectx.common.tools.ImageHandler;
 
 /**
  * Handles the main game Gui
@@ -46,10 +47,10 @@ import org.amityregion5.projectx.common.maps.AbstractMap;
  * 
  */
 public class GameWindow extends JFrame {
-
+    private static final BufferedImage MAP_IMAGE = ImageHandler.loadImage("TestMap");
     private static final long serialVersionUID = 594L;
-    public static final int GAME_WIDTH = 1024; // the game size we will draw at before resizing
-    public static final int GAME_HEIGHT = 768;
+    public static final int GAME_WIDTH = MAP_IMAGE.getWidth(); // the game size we will draw at before resizing
+    public static final int GAME_HEIGHT = MAP_IMAGE.getHeight();
     private static GameWindow instance; // the instance of Gui
     private static JComponent panel; // the panel we will draw on
     private static Image buffer; // the image the panel should draw
