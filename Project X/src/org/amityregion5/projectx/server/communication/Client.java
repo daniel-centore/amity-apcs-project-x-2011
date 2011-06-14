@@ -30,7 +30,6 @@ import java.util.logging.Logger;
 import org.amityregion5.projectx.common.communication.Constants;
 
 import org.amityregion5.projectx.common.communication.messages.*;
-import org.amityregion5.projectx.common.entities.Damageable;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.EntityConstants;
 import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
@@ -202,6 +201,8 @@ public class Client extends Thread {
         } else if (m instanceof ReadyMessage)
         {
             ReadyMessage rm = (ReadyMessage) m;
+            rm.setUsername(username);
+            server.relayMessage(rm);
             if (rm.isAffirmative())
             {
                 waiting = false;

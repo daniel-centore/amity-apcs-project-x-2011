@@ -19,6 +19,11 @@
  */
 package org.amityregion5.projectx.client.gui;
 
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -26,7 +31,10 @@ import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.ListCellRenderer;
 import javax.swing.SwingUtilities;
 
 import org.amityregion5.projectx.client.Game;
@@ -52,12 +60,11 @@ import org.amityregion5.projectx.common.maps.TestingMap;
  * @author Joe Stein
  * @author Michael Wenke
  */
-public class LobbyWindow extends JFrame implements MessageListener {
+public class LobbyWindow extends JFrame implements MessageListener
+{
 
     private static final long serialVersionUID = 555L;
-
     private static LobbyWindow instance; // current instance
-
     private DefaultListModel playerListModel; // the model we change for players
     private CommunicationHandler ch; // the communication with the server
     private boolean ready; // are we ready to play?
@@ -88,6 +95,7 @@ public class LobbyWindow extends JFrame implements MessageListener {
         ch.registerListener(this);
         playerListModel = new DefaultListModel();
         initComponents();
+        playerList.setCellRenderer(new CustomCellRenderer());
         playerListModel.addElement(username);
         if (players != null)
         {
@@ -226,7 +234,8 @@ public class LobbyWindow extends JFrame implements MessageListener {
         {
             if (sendBtn.isEnabled())
             {
-                SwingUtilities.invokeLater(new Runnable() {
+                SwingUtilities.invokeLater(new Runnable()
+                {
 
                     public void run()
                     {
@@ -238,7 +247,8 @@ public class LobbyWindow extends JFrame implements MessageListener {
         {
             if (!sendBtn.isEnabled())
             {
-                SwingUtilities.invokeLater(new Runnable() {
+                SwingUtilities.invokeLater(new Runnable()
+                {
 
                     public void run()
                     {
@@ -248,7 +258,6 @@ public class LobbyWindow extends JFrame implements MessageListener {
             }
         }
     }// GEN-LAST:event_chatFieldKeyPressed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BackToServerChooserButton;
     private javax.swing.JTextField chatField;
@@ -272,14 +281,16 @@ public class LobbyWindow extends JFrame implements MessageListener {
 
             final String toShow;
             if (lastFrom.equals(cm.getFrom()))
+            {
                 toShow = cm.getText() + "\n";
-            else
+            } else
             {
                 toShow = "--" + cm.getFrom() + "--\n" + cm.getText() + "\n";
                 lastFrom = cm.getFrom();
             }
             // final String toShow = cm.getFrom() + ": " + cm.getText();
-            SwingUtilities.invokeLater(new Runnable() {
+            SwingUtilities.invokeLater(new Runnable()
+            {
 
                 public void run()
                 {
@@ -291,7 +302,8 @@ public class LobbyWindow extends JFrame implements MessageListener {
 
         } else if (m instanceof IntroduceMessage)
         {
-            SwingUtilities.invokeLater(new Runnable() {
+            SwingUtilities.invokeLater(new Runnable()
+            {
 
                 public void run()
                 {
@@ -300,19 +312,23 @@ public class LobbyWindow extends JFrame implements MessageListener {
             });
         } else if (m instanceof ActivePlayersMessage)
         {
-            SwingUtilities.invokeLater(new Runnable() {
+            SwingUtilities.invokeLater(new Runnable()
+            {
 
                 public void run()
                 {
                     List<String> usernames = ((ActivePlayersMessage) m).getPlayers();
 
                     for (String q : usernames)
-                        playerListModel.addElement(q);
+                    {
+                        playerListModel.addElement(new User(q));
+                    }
                 }
             });
         } else if (m instanceof GoodbyeMessage)
         {
-            SwingUtilities.invokeLater(new Runnable() {
+            SwingUtilities.invokeLater(new Runnable()
+            {
 
                 public void run()
                 {
@@ -329,7 +345,8 @@ public class LobbyWindow extends JFrame implements MessageListener {
                 ch.removeListener(this);
                 this.dispose();
             }
-            SwingUtilities.invokeLater(new Runnable() {
+            SwingUtilities.invokeLater(new Runnable()
+            {
 
                 public void run()
                 {
@@ -339,7 +356,8 @@ public class LobbyWindow extends JFrame implements MessageListener {
         } else if (m instanceof AnnounceMessage)
         {
             final AnnounceMessage am = (AnnounceMessage) m;
-            SwingUtilities.invokeLater(new Runnable() {
+            SwingUtilities.invokeLater(new Runnable()
+            {
 
                 public void run()
                 {
@@ -353,7 +371,8 @@ public class LobbyWindow extends JFrame implements MessageListener {
             JOptionPane.showMessageDialog(this,
                     ((DisconnectRequestMessage) m).getReason(), "Disconnected",
                     JOptionPane.WARNING_MESSAGE);
-            SwingUtilities.invokeLater(new Runnable() {
+            SwingUtilities.invokeLater(new Runnable()
+            {
 
                 public void run()
                 {
@@ -365,6 +384,61 @@ public class LobbyWindow extends JFrame implements MessageListener {
                     chatLogArea.setEnabled(false);
                 }
             });
+        } else if (m instanceof ReadyMessage)
+        {
+            SwingUtilities.invokeLater(new Runnable()
+            {
+                public void run()
+                {
+                    ReadyMessage rm = (ReadyMessage) m;
+                    User u = (User) playerListModel.get(playerListModel.indexOf(rm.getUsername()));
+                    u.setReady(rm.isAffirmative());
+                }
+            });
+        }
+    }
+
+    /**
+     * Used in the list model.
+     */
+    private class User
+    {
+        private String username;
+        private boolean ready;
+
+        public User(String u)
+        {
+            username = u;
+            ready = false;
+        }
+
+        public void setReady(boolean r)
+        {
+            ready = r;
+        }
+
+        public boolean isReady()
+        {
+            return ready;
+        }
+
+        @Override
+        public String toString()
+        {
+            return username;
+        }
+
+        @Override
+        public boolean equals(Object o)
+        {
+            if (o instanceof User && ((User) o).username.equals(this.username))
+            {
+                return true;
+            } else if (o instanceof String)
+            {
+                return this.username.equals((String) o);
+            }
+            return false;
         }
     }
 
@@ -374,7 +448,8 @@ public class LobbyWindow extends JFrame implements MessageListener {
     public void tellSocketClosed()
     {
         JOptionPane.showMessageDialog(this, "Server disconnected unexpectedly", "Connection closed", JOptionPane.WARNING_MESSAGE);
-        SwingUtilities.invokeLater(new Runnable() {
+        SwingUtilities.invokeLater(new Runnable()
+        {
 
             public void run()
             {
@@ -395,7 +470,8 @@ public class LobbyWindow extends JFrame implements MessageListener {
     {
         ChatMessage chm = new ChatMessage(chatField.getText(), ChatMessage.Type.PUBLIC, username);
         ch.send(chm);
-        SwingUtilities.invokeLater(new Runnable() {
+        SwingUtilities.invokeLater(new Runnable()
+        {
 
             public void run()
             {
@@ -408,12 +484,51 @@ public class LobbyWindow extends JFrame implements MessageListener {
     /**
      * Custom window adapter for notifying the server on leaving.
      */
-    private class CustomWindowAdapter extends WindowAdapter {
+    private class CustomWindowAdapter extends WindowAdapter
+    {
 
         @Override
         public void windowClosing(WindowEvent e)
         {
             ch.send(new GoodbyeMessage(username));
+        }
+    }
+
+    private class CustomCellRenderer implements ListCellRenderer
+    {
+
+        public Component getListCellRendererComponent(final JList list, final Object value, int index, final boolean isSelected, boolean cellHasFocus)
+        {
+            return new JPanel()
+            {
+
+                @Override
+                public void paintComponent(Graphics g)
+                {
+                    super.paintComponent(g);
+                    User user = (User) value;
+                    String username = user.toString();
+                    Font f = g.getFont();
+                    if (user.isReady())
+                    {
+                        f = f.deriveFont(Font.BOLD);
+                    }
+                    FontMetrics fm = g.getFontMetrics(f);
+                    g.setColor(isSelected ? list.getSelectionBackground() : list.getBackground());
+                    g.fillRect(0, 0, getWidth(), getHeight());
+                    g.setColor(isSelected ? list.getSelectionForeground() : list.getForeground());
+                    g.setFont(f);
+                    g.drawString(username, 0, fm.getAscent());
+                }
+
+                @Override
+                public Dimension getPreferredSize()
+                {
+                    Graphics g = getGraphics();
+                    FontMetrics fm = g.getFontMetrics(g.getFont());
+                    return new Dimension(fm.stringWidth((String) value), fm.getHeight());
+                }
+            };
         }
     }
 
