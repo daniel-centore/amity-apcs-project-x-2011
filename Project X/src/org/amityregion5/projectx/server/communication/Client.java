@@ -295,7 +295,7 @@ public class Client extends Thread {
             {
                 if (wep instanceof Upgradeable) {
                     Upgradeable upg = (Upgradeable) wep;
-                    if (player.getCash() >= upg.getUpgradeCost()) {
+                    if (player.getCash() >= upg.getUpgradeCost() && upg.getUpgradeLevel() < Weapon.LVL_CAP) {
                         upg.upgrade();
                         player.spendCash(upg.getUpgradeCost());
                         server.relayMessage(new WeaponUpgradedMessage(rum.getID()));

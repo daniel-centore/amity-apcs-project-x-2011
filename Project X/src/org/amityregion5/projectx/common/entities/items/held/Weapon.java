@@ -104,7 +104,7 @@ public abstract class Weapon extends HeldItem implements DamageDealing {
     // would prefer not to put it in everything, though.
     protected final int DAMAGE_UPGRADE = 1;
     protected final int AMMO_UPGRADE = 25;
-    protected final int LVL_CAP = 5;
+    public static final int LVL_CAP = 5;
 
     protected int upgradeLevel = 1;
 
