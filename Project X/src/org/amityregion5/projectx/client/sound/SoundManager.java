@@ -18,6 +18,17 @@
  */
 package org.amityregion5.projectx.client.sound;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseWheelEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.Player;
+import org.amityregion5.projectx.client.GameInputListener;
+
 /**
  * A class that handles playing sounds client-side.
  * 
@@ -26,5 +37,42 @@ package org.amityregion5.projectx.client.sound;
 public class SoundManager extends Thread {
 
     public static boolean BACKGROUND = false;
+    private static volatile Player player = null;
 
+    private static File SONG_1 = new File("resources/sounds/Song1");
+    private static File SONG_2 = new File("resources/sounds/Song2");
+    private static File SONG_3 = new File("resources/sounds/Song3");
+    private static File SONG_4 = new File("resources/sounds/Song4");
+
+    public static void play(int song)
+    {
+    }
+
+    private static void playMe(final File f)
+    {
+        if(player != null)
+            player.close();
+
+        new Thread() {
+
+            public void run()
+            {
+                try
+                {
+                    player = new Player(new FileInputStream(f));
+                    player.play();
+                }
+                catch(JavaLayerException ex)
+                {
+                    ex.printStackTrace();
+                }
+                catch(FileNotFoundException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+
+
+    }
 }
