@@ -22,7 +22,6 @@ package org.amityregion5.projectx.common.entities.items.held;
 import java.awt.image.BufferedImage;
 import org.amityregion5.projectx.common.entities.items.Upgradeable;
 import org.amityregion5.projectx.common.tools.ImageHandler;
-import org.amityregion5.projectx.common.tools.Sound;
 
 /**
  * Basic melee weapon.
@@ -48,12 +47,6 @@ public class Sword extends MeleeWeapon implements Upgradeable {
     public BufferedImage getDefaultImage()
     {
         return image;
-    }
-
-    @Override
-    public Sound getSound()
-    {
-        return Sound.NULL_SOUND;
     }
 
     @Override

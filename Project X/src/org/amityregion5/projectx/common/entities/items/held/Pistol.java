@@ -22,7 +22,6 @@ package org.amityregion5.projectx.common.entities.items.held;
 import java.awt.image.BufferedImage;
 import org.amityregion5.projectx.common.entities.items.Upgradeable;
 import org.amityregion5.projectx.common.tools.ImageHandler;
-import org.amityregion5.projectx.common.tools.Sound;
 
 /**
  * The "stock" gun.
@@ -39,12 +38,6 @@ public class Pistol extends Gun implements Upgradeable {
     public Pistol()
     {
         super(600, -1, -1, 4, 8, 10);
-    }
-
-    @Override
-    public Sound getSound()
-    {
-        return Sound.PISTOL_SHOT;
     }
 
     @Override

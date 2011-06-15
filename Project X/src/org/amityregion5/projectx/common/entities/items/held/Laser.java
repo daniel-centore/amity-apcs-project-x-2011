@@ -21,7 +21,6 @@ package org.amityregion5.projectx.common.entities.items.held;
 import java.awt.image.BufferedImage;
 import org.amityregion5.projectx.common.entities.items.Upgradeable;
 import org.amityregion5.projectx.common.tools.ImageHandler;
-import org.amityregion5.projectx.common.tools.Sound;
 
 /**
  * Shoots through stuff. Ridiculously long range. Perfect accuracy.
@@ -38,12 +37,6 @@ public class Laser extends Gun implements Upgradeable {
     public Laser()
     {
         super(900, 1000, 1000, 20, 100, 2);
-    }
-
-    @Override
-    public Sound getSound()
-    {
-        return Sound.LASER;
     }
 
     private static final BufferedImage image = ImageHandler.loadImage("laser");

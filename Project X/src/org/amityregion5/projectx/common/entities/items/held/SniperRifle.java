@@ -23,7 +23,6 @@ import java.awt.image.BufferedImage;
 import org.amityregion5.projectx.common.entities.items.DamageDealing;
 import org.amityregion5.projectx.common.entities.items.Upgradeable;
 import org.amityregion5.projectx.common.tools.ImageHandler;
-import org.amityregion5.projectx.common.tools.Sound;
 
 /**
  * Class documentation.
@@ -41,13 +40,6 @@ public class SniperRifle extends Gun implements DamageDealing, Upgradeable
     public SniperRifle()
     {
         super(1000, 100, 100, 1, 1, 30);
-    }
-
-    @Override
-    public Sound getSound()
-    {
-        // TODO sniper rifle sound
-        return null;
     }
 
     @Override

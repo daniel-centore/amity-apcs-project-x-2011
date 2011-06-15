@@ -70,7 +70,6 @@ import org.amityregion5.projectx.common.communication.messages.StatusUpdateMessa
 import org.amityregion5.projectx.common.communication.messages.UpdateWeaponMessage;
 import org.amityregion5.projectx.common.communication.messages.WaveMessage;
 import org.amityregion5.projectx.common.communication.messages.WeaponUpgradedMessage;
-import org.amityregion5.projectx.common.communication.messages.sound.SoundControlMessage;
 import org.amityregion5.projectx.common.entities.Damageable;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.EntityConstants;
@@ -80,7 +79,6 @@ import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.common.entities.items.Upgradeable;
 import org.amityregion5.projectx.common.entities.items.held.ProjectileWeapon;
 import org.amityregion5.projectx.common.maps.AbstractMap;
-import org.amityregion5.projectx.common.tools.Sound;
 import org.amityregion5.projectx.common.tools.TimeController;
 
 /**
@@ -433,23 +431,6 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             PointMessage pm = (PointMessage) m;
             // ((PlayerEntity) entityHandler.getEntity(pm.getID())).setPoints(pm.getAmount());
             ((PlayerEntity) controllerThread.getEntity(pm.getID())).setPoints(pm.getAmount());
-        } else if (m instanceof SoundControlMessage)
-        {
-            SoundControlMessage scm = (SoundControlMessage) m;
-            Sound s = Sound.valueOf(scm.getSound().toString());
-            switch (scm.getType())
-            {
-            case ONCE:
-                SoundManager.playOnce(s);
-                break;
-            case START:
-                SoundManager.playLoop(s);
-                break;
-            case STOP:
-                SoundManager.stopSound(s);
-                break;
-            }
-
         } else if (m instanceof WeaponUpgradedMessage)
         {
             if (me.getCurrWeapon().equals(((WeaponUpgradedMessage) m).getID()))
@@ -546,7 +527,6 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             ((ProjectileWeapon) p.getCurrWeapon()).fire();
             if (!p.getFired())
             {
-                SoundManager.playOnce(p.getCurrWeapon().getSound());
                 p.setFired(true);
             }
             GameWindow.fireRepaintRequired();

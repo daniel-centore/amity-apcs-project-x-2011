@@ -24,7 +24,6 @@ import java.awt.image.BufferedImage;
 
 import org.amityregion5.projectx.common.entities.items.Upgradeable;
 import org.amityregion5.projectx.common.tools.ImageHandler;
-import org.amityregion5.projectx.common.tools.Sound;
 
 /**
  * A submachine gun. Starts out with low damage and range but high fire rate.
@@ -39,12 +38,6 @@ public class Uzi extends Gun implements Upgradeable {
     public Uzi()
     {
         super(400, 500, 500, 10, 50, 10);
-    }
-
-    @Override
-    public Sound getSound()
-    {
-        return Sound.PISTOL_SHOT;
     }
 
     private static final BufferedImage image = ImageHandler.loadImage("Uzi");

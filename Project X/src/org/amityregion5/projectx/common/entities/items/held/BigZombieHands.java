@@ -7,7 +7,6 @@ package org.amityregion5.projectx.common.entities.items.held;
 import java.awt.image.BufferedImage;
 import org.amityregion5.projectx.common.entities.items.DamageDealing;
 import org.amityregion5.projectx.common.tools.ImageHandler;
-import org.amityregion5.projectx.common.tools.Sound;
 
 /**
  *
@@ -28,12 +27,6 @@ public class BigZombieHands extends MeleeWeapon implements DamageDealing {
     public BufferedImage getDefaultImage()
     {
         return image;
-    }
-
-    @Override
-    public Sound getSound()
-    {
-        return Sound.NULL_SOUND;
     }
 
     @Override

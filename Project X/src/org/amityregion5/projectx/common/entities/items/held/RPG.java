@@ -21,7 +21,6 @@ package org.amityregion5.projectx.common.entities.items.held;
 import java.awt.image.BufferedImage;
 import org.amityregion5.projectx.common.entities.items.DamageDealing;
 import org.amityregion5.projectx.common.entities.items.Upgradeable;
-import org.amityregion5.projectx.common.tools.Sound;
 
 /**
  * Rocket-propelled grenade weapon. Currently not used.
@@ -31,10 +30,9 @@ import org.amityregion5.projectx.common.tools.Sound;
  * @author Joe Stein
  * @author Mike DiBuduo
  */
-public class RPG extends Gun implements Upgradeable, DamageDealing
-{
-    public static final long serialVersionUID = 605L;
+public class RPG extends Gun implements Upgradeable, DamageDealing {
 
+    public static final long serialVersionUID = 605L;
     private final int UPGRADE_COST = 250;
     private final int AMMO_UPGRADE = 5;
 
@@ -45,17 +43,10 @@ public class RPG extends Gun implements Upgradeable, DamageDealing
     }
 
     @Override
-        public Sound getSound()
-        {
-            return null;
-            //none yet
-        }
-
-    @Override
-        public String getName()
-        {
-            return "RPG-7";
-        }
+    public String getName()
+    {
+        return "RPG-7";
+    }
 
     public BufferedImage getDefaultImage()
     {
@@ -77,8 +68,8 @@ public class RPG extends Gun implements Upgradeable, DamageDealing
     }
 
     @Override
-        public boolean isSplash()
-        {
-            return true;
-        }
+    public boolean isSplash()
+    {
+        return true;
+    }
 }
