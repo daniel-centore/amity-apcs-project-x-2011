@@ -275,28 +275,38 @@ public class Client extends Thread {
 
             for (Entity f : gc.getEntities())
             {
-                if (CollisionDetection.hasRectangleCollision(e,0,0,f)) {
-                    if (e instanceof Block && f instanceof Block) {
+                if (CollisionDetection.hasRectangleCollision(e, 0, 0, f))
+                {
+                    if (e instanceof Block && f instanceof Block)
+                    {
                         if (((Block) e).getHp() <= ((Block) f).getHp())
                             return;
                         gc.removeEntity(f);
-                    }
-                    else return;
+                    } else
+                        return;
                 }
             }
-
+            
+            // don't put blocks in main area!
+            Area a = gc.getMap().getArea();
+            if (a.getHitBox().contains(e.getX(), e.getY(), e.getWidth(), e.getHeight()))
+                return;
+            
             player.spendCash(price);
             server.relayMessage(new CashMessage(player.getCash(), player.getUniqueID()));
             GameController.getInstance().addEntity(e);
-        } else if (m instanceof RequestUpgradeMessage) {
+        } else if (m instanceof RequestUpgradeMessage)
+        {
             RequestUpgradeMessage rum = (RequestUpgradeMessage) m;
             Weapon wep = player.getCurrWeapon();
             // always should, bar pathological circumstances!
             if (wep.getUniqueID() == rum.getID())
             {
-                if (wep instanceof Upgradeable) {
+                if (wep instanceof Upgradeable)
+                {
                     Upgradeable upg = (Upgradeable) wep;
-                    if (player.getCash() >= upg.getUpgradeCost() && upg.getUpgradeLevel() < Weapon.LVL_CAP) {
+                    if (player.getCash() >= upg.getUpgradeCost() && upg.getUpgradeLevel() < Weapon.LVL_CAP)
+                    {
                         player.spendCash(upg.getUpgradeCost());
                         upg.upgrade();
                         server.relayMessage(new WeaponUpgradedMessage(rum.getID()));
@@ -304,16 +314,18 @@ public class Client extends Thread {
                     }
                 }
             }
-            //perhaps else do blocks?
-        } else if (m instanceof RequestHealMessage) {
+            // perhaps else do blocks?
+        } else if (m instanceof RequestHealMessage)
+        {
             Area area = server.getGameController().getMap().getArea();
             int need = area.getMaxHp() - area.getHp();
             int have = player.getCash();
-            if (need > have) {
+            if (need > have)
+            {
                 area.heal(player.getCash());
                 player.setCash(0);
-            }
-            else {
+            } else
+            {
                 area.setHp(area.getMaxHp());
                 player.spendCash(need);
             }
@@ -340,12 +352,10 @@ public class Client extends Thread {
             {
                 player.spendCash(pw.getMagCost());
                 pw.addAmmo(pw.getRoundsPerMag());
-                server.relayMessage(new AmmoUpdateMessage(player.getUniqueID(),
-                        player.getCurrWepIndex(),
-                        pw.getAmmo()));
+                server.relayMessage(new AmmoUpdateMessage(player.getUniqueID(), player.getCurrWepIndex(), pw.getAmmo()));
                 server.relayMessage(new CashMessage(player.getCash(), player.getUniqueID()));
             }
-            
+
         }
     }
 
@@ -394,7 +404,7 @@ public class Client extends Thread {
         {
             send(m);
         }
-        
+
         kill();
     }
 
