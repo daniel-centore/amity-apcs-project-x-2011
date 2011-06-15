@@ -515,7 +515,6 @@ public class LobbyWindow extends JFrame implements MessageListener
                 public void paintComponent(Graphics g)
                 {
                     super.paintComponent(g);
-                    System.out.println(value.getClass());
                     User user = (User) value;
                     String username = user.toString();
                     Font f = g.getFont();

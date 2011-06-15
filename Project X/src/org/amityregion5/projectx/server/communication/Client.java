@@ -330,7 +330,6 @@ public class Client extends Thread {
         {
             shotThread.reload();
             shotThread.setShooting(false); // can't reload while we're shooting can we?
-            System.out.println("sending reload message");
             send(new ReloadingMessage(((ProjectileWeapon) player.getCurrWeapon())
                     .getReloadTime()));
             ((ProjectileWeapon) player.getCurrWeapon()).reload(); // reload over here

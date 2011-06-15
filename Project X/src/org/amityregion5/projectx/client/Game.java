@@ -455,9 +455,6 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         {
             AmmoUpdateMessage aum = (AmmoUpdateMessage) m;
             ((PlayerEntity) controllerThread.getEntity(aum.getID())).getWeapon(aum.getWepID()).setAmmo(aum.getAmmo());
-            System.out.println("setting " + aum.getID() + "'s wepid " + aum.getWepID() + " to have " + aum.getAmmo() + " ammo");
-            System.out.println("me unique is " + me.getUniqueID());
-            System.out.println("my weapon is " + me.getCurrWepIndex());
         } else if (m instanceof ReloadMessage)
         {
            ((ProjectileWeapon) me.getCurrWeapon()).reload();
@@ -581,7 +578,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                 Entity e = controllerThread.getEntity(id);
                 if (e == null)
                 {
-                    System.out.println("NULL ENTITY ID: [" + id + "]!");
+                    System.err.println("NULL ENTITY ID: [" + id + "]!");
                     break;
                 }
 
