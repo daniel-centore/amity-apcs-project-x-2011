@@ -66,7 +66,7 @@ public class RPG extends Gun implements Upgradeable, DamageDealing
 
     public int getUpgradeCost()
     {
-        return UPGRADE_COST;
+        return (int) (UPGRADE_COST * Math.pow(1.2, upgradeLevel - 1));
     }
 
     public void upgrade()

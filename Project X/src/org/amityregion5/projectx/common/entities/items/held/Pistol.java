@@ -72,6 +72,6 @@ public class Pistol extends Gun implements Upgradeable {
 
     public int getUpgradeCost()
     {
-        return UPGRADE_COST;
+        return (int) (UPGRADE_COST * Math.pow(1.2, upgradeLevel - 1));
     }
 }
