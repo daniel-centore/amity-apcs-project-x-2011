@@ -57,7 +57,7 @@ public class Pistol extends Gun implements Upgradeable {
         if (upgradeLevel < LVL_CAP)
         {
             upgradeLevel++;
-            setAttackRate(getAttackRate() + 1);
+            setAttackRate(getAttackRate() + .5);
             setDamage(getDamage() + 2);
             setRPM(getRPM() + 2);
         }
