@@ -26,6 +26,7 @@ import org.amityregion5.projectx.common.entities.characters.enemies.BossEnemy;
 import org.amityregion5.projectx.common.entities.characters.enemies.DefaultEnemy;
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
 import org.amityregion5.projectx.common.entities.characters.enemies.SuicideBomber;
+import org.amityregion5.projectx.server.game.GameController;
 
 /**
  * A wave of enemies, consisting of several EnemyGroups.
@@ -36,14 +37,16 @@ public class EnemyWave {
     private int waveNumber;
     private ArrayList<EnemyGroup> enemies;
     private long spawnTime;
+    private GameController controller;
 
     /**
      * Creates this wave. Use difficulty, etc. to generate the wave.
      */
-    public EnemyWave(int n, ArrayList<EnemyGroup> en)
+    public EnemyWave(int n, ArrayList<EnemyGroup> en, GameController c)
     {
         waveNumber = n;
         enemies = new ArrayList<EnemyGroup>(en.size());
+        controller = c;
         for (EnemyGroup group : en)
         {
             Enemy oldEnemy = group.getEnemy();
@@ -68,7 +71,7 @@ public class EnemyWave {
             }
             if (number < 0)
                 number = (int) (waveNumEnemies(waveNumber));
-            EnemyGroup newGroup = new EnemyGroup(newEnemy, number);
+            EnemyGroup newGroup = new EnemyGroup(newEnemy, number*controller.getPlayers().size());
             enemies.add(newGroup);
         }
         spawnTime = (int) (1000 * waveSpawnTime(n));

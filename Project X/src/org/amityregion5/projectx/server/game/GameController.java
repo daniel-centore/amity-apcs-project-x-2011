@@ -338,4 +338,10 @@ public final class GameController {
     {
         return timeController;
     }
+
+    public List<PlayerEntity> getPlayers()
+    {
+        return players;
+    }
+
 }

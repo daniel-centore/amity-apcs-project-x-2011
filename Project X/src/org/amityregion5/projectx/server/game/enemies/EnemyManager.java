@@ -89,7 +89,7 @@ public class EnemyManager {
                 for (int i = 1; i <= NUM_WAVES; i++)
                 {
                     if (i >= START_WAVE)
-                        gen.addWave(new EnemyWave(i, enemies));
+                        gen.addWave(new EnemyWave(i, enemies, controller));
                 }
                 gen.start();
             }
