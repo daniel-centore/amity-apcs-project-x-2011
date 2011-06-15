@@ -134,7 +134,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         InputHandler.registerListener(this);
         RepaintHandler.setGame(this);
 
-        controllerThread.start();
+        // controllerThread.start();
     }
 
     public void mouseDragged(int x, int y)
@@ -170,7 +170,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             this.destroy();
             new LobbyWindow(getCommunicationHandler(), null, me.getUsername());
             GameWindow.closeWindow();
-            
+
         } else if (button == MouseEvent.BUTTON1)
         {
             getCommunicationHandler().send(new FiringMessage(true));
@@ -193,10 +193,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
 
         int keyCode = e.getKeyCode();
 
-        if (ChatDrawing.isChatting() && !(e.isActionKey() || e.getKeyCode() == KeyEvent.VK_SHIFT || 
-                e.getKeyCode() == KeyEvent.VK_ALT || e.getKeyCode() == KeyEvent.VK_ENTER || 
-                e.getKeyCode() == KeyEvent.VK_BACK_SPACE || e.getKeyCode() == KeyEvent.VK_CONTROL || 
-                e.getKeyCode() == KeyEvent.VK_ESCAPE))
+        if (ChatDrawing.isChatting() && !(e.isActionKey() || e.getKeyCode() == KeyEvent.VK_SHIFT || e.getKeyCode() == KeyEvent.VK_ALT || e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_BACK_SPACE || e.getKeyCode() == KeyEvent.VK_CONTROL || e.getKeyCode() == KeyEvent.VK_ESCAPE))
         {
             ChatDrawing.addLetter(e.getKeyChar());
         } else if (ChatDrawing.isChatting())
@@ -457,12 +454,11 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             ((PlayerEntity) controllerThread.getEntity(aum.getID())).getWeapon(aum.getWepID()).setAmmo(aum.getAmmo());
         } else if (m instanceof ReloadMessage)
         {
-           ((ProjectileWeapon) me.getCurrWeapon()).reload();
+            ((ProjectileWeapon) me.getCurrWeapon()).reload();
         } else if (m instanceof ReloadingMessage)
         {
             me.setReloading(true);
-            new Thread()
-            {
+            new Thread() {
                 @Override
                 public void run()
                 {
@@ -472,15 +468,13 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                     } catch (InterruptedException ex)
                     {
                         Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    finally
+                    } finally
                     {
                         me.setReloading(false);
                     }
                 }
             }.start();
-        }
-        else
+        } else
         {
             System.err.println("Unknown message type encountered. " + "Please make sure you have the latest game version!");
         }
@@ -564,7 +558,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         // System.out.println(str);
         String[] entStrs = str.split(";");
         long time = Long.valueOf(entStrs[0]);
-        
+
         for (int i = 1; i < entStrs.length; i++)
         {
             String[] entVals = entStrs[i].split(",");
@@ -609,7 +603,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
 
                 me.setMoveSpeed(speed);
                 me.setDirectionMoving(moving);
-                
+
                 e.setDirectionMoving(moving);
                 e.setMoveSpeed(speed);
             }
