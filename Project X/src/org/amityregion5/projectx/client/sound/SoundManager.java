@@ -18,16 +18,14 @@
  */
 package org.amityregion5.projectx.client.sound;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseWheelEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
-import org.amityregion5.projectx.client.GameInputListener;
 
 /**
  * A class that handles playing sounds client-side.
@@ -39,18 +37,14 @@ public class SoundManager extends Thread {
     public static boolean BACKGROUND = false;
     private static volatile Player player = null;
 
-    private static File SONG_1 = new File("resources/sounds/Song1");
-    private static File SONG_2 = new File("resources/sounds/Song2");
-    private static File SONG_3 = new File("resources/sounds/Song3");
-    private static File SONG_4 = new File("resources/sounds/Song4");
+    public static File SONG_1 = new File("resources/sounds/Song1.mp3");
+    public static File SONG_2 = new File("resources/sounds/Song2.mp3");
+    public static File SONG_3 = new File("resources/sounds/Song3.mp3");
+    public static File SONG_4 = new File("resources/sounds/Song4.mp3");
 
-    public static void play(int song)
+    public synchronized static void play(final File f)
     {
-    }
-
-    private static void playMe(final File f)
-    {
-        if(player != null)
+        if (player != null)
             player.close();
 
         new Thread() {
@@ -61,18 +55,31 @@ public class SoundManager extends Thread {
                 {
                     player = new Player(new FileInputStream(f));
                     player.play();
-                }
-                catch(JavaLayerException ex)
+                    if (player.isComplete())
+                        play(f);
+
+                } catch (JavaLayerException ex)
                 {
                     ex.printStackTrace();
-                }
-                catch(FileNotFoundException e)
+                } catch (FileNotFoundException e)
                 {
                     e.printStackTrace();
                 }
             }
         }.start();
+    }
 
-
+    public static void preload()
+    {
+        try
+        {
+            player = new Player(new FileInputStream(SONG_1));
+        } catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        } catch (JavaLayerException e)
+        {
+            e.printStackTrace();
+        }
     }
 }

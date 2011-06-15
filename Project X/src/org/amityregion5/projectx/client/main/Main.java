@@ -36,10 +36,14 @@ import org.amityregion5.projectx.client.preferences.PreferenceManager;
 public class Main {
 
     public static final int SPLASH_TIME = 2000; // how long to show the splash screen (ms)
-
-    public static void main(String[] args)
+    
+    public static void load()
     {
-        //SoundManager.preload();
+        main();
+    }
+
+    private static void main()
+    {
         try
         {
             // default look and feel for prettiness :D

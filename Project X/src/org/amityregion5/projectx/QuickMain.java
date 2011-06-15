@@ -21,9 +21,12 @@ package org.amityregion5.projectx;
 
 
 
+import java.net.InetAddress;
+
 import org.amityregion5.projectx.client.communication.CommunicationHandler;
 import org.amityregion5.projectx.client.gui.LobbyWindow;
 import org.amityregion5.projectx.client.preferences.PreferenceManager;
+import org.amityregion5.projectx.client.sound.SoundManager;
 import org.amityregion5.projectx.common.communication.messages.ActivePlayersMessage;
 import org.amityregion5.projectx.common.communication.messages.BooleanReplyMessage;
 import org.amityregion5.projectx.common.communication.messages.IntroduceMessage;
@@ -31,7 +34,6 @@ import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.server.Server;
 import org.amityregion5.projectx.server.controllers.DefaultServerController;
 import org.amityregion5.projectx.server.controllers.ServerController;
-import java.net.InetAddress;
 
 /**
  * Class documentation.
@@ -41,7 +43,7 @@ import java.net.InetAddress;
 public class QuickMain {
     public static void main(String[] args) throws Exception
     {
-        //SoundManager.preload();
+        SoundManager.preload();
         Server s = new Server("test server @ " + InetAddress.getLocalHost().getCanonicalHostName());
         ServerController sc = new DefaultServerController();
         s.setController(sc);

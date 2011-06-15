@@ -58,10 +58,10 @@ public class Keys {
     public static int[] RELOAD = { KeyEvent.VK_R };
     public static int[] BUY_AMMO = { KeyEvent.VK_C };
 
-    public static int[] SONG_1 = { KeyEvent.VK_F9 };
-    public static int[] SONG_2 = { KeyEvent.VK_F10 };
-    public static int[] SONG_3 = { KeyEvent.VK_F11 };
-    public static int[] SONG_4 = { KeyEvent.VK_F12 };
+    public static int[] SONG_1 = { KeyEvent.VK_F5 };
+    public static int[] SONG_2 = { KeyEvent.VK_F6 };
+    public static int[] SONG_3 = { KeyEvent.VK_F7 };
+    public static int[] SONG_4 = { KeyEvent.VK_F8 };
 
     public static void refreshKeyPrefs()
     {

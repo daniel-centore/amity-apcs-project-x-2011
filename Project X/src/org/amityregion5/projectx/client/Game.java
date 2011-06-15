@@ -42,6 +42,7 @@ import org.amityregion5.projectx.client.gui.ServerChooserWindow;
 import org.amityregion5.projectx.client.gui.StatBarDrawing;
 import org.amityregion5.projectx.client.gui.input.InputHandler;
 import org.amityregion5.projectx.client.gui.input.Keys;
+import org.amityregion5.projectx.client.sound.SoundManager;
 import org.amityregion5.projectx.common.communication.Constants;
 import org.amityregion5.projectx.common.communication.MessageListener;
 import org.amityregion5.projectx.common.communication.RawListener;
@@ -296,7 +297,19 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             else if(Keys.isKey(Keys.BUY_AMMO, keyCode))
             {
                 communicationHandler.send(new BuyAmmoMessage());
-            }
+            } else if (Keys.isKey(Keys.SONG_1, keyCode))
+            {
+                SoundManager.play(SoundManager.SONG_1);
+            } else if (Keys.isKey(Keys.SONG_2, keyCode))
+            {
+                SoundManager.play(SoundManager.SONG_2);
+            } else if (Keys.isKey(Keys.SONG_3, keyCode))
+            {
+                SoundManager.play(SoundManager.SONG_3);
+            } else if (Keys.isKey(Keys.SONG_4, keyCode))
+            {
+                SoundManager.play(SoundManager.SONG_4);
+            } 
             if(me == null)
             {
                 return;

@@ -20,24 +20,27 @@ package org.amityregion5.projectx;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+
 import org.amityregion5.projectx.client.gui.SplashScreen;
-import org.amityregion5.projectx.client.gui.UsernameWindow;
 import org.amityregion5.projectx.client.preferences.PreferenceManager;
+import org.amityregion5.projectx.client.sound.SoundManager;
 
 /**
  * The project's umbrella main. Will be the entry point of the jar.
  *
  * @author Joe Stein
+ * @author Daniel Centore
  */
 public class Main
 {
-
     public static final int SPLASH_TIME = 2000;
 
     public static void main(String[] args)
     {
+        SoundManager.preload();
+        
         if (args.length > 0)
         {
             org.amityregion5.projectx.server.Main.main(args);
