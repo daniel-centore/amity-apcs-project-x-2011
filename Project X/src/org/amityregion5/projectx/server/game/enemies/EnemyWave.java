@@ -51,20 +51,20 @@ public class EnemyWave {
             int number = -1;
             if (oldEnemy instanceof BossEnemy)
             {
-                newEnemy = new BossEnemy(n, oldEnemy.getMaxHp(), 0, 0);
+                newEnemy = new BossEnemy(n, (int)(oldEnemy.getMaxHp()*waveEnemyHealth(waveNumber)), 0, 0);
                 number = 1;
             }
             else if (oldEnemy instanceof SuicideBomber)
             {
-                newEnemy = new SuicideBomber(oldEnemy.getMaxHp(), 0, 0);
+                newEnemy = new SuicideBomber((int)(oldEnemy.getMaxHp()*waveEnemyHealth(waveNumber)), 0, 0);
             }
             else if (oldEnemy instanceof ArmoredEnemy)
             {
-                newEnemy = new ArmoredEnemy(((ArmoredEnemy) oldEnemy).getArmor(), oldEnemy.getMaxHp(), 0, 0);
+                newEnemy = new ArmoredEnemy(((ArmoredEnemy) oldEnemy).getArmor(), (int)(oldEnemy.getMaxHp()*waveEnemyHealth(waveNumber)), 0, 0);
             }
             else
             {
-                newEnemy = new DefaultEnemy(oldEnemy.getMaxHp(), 0, 0);
+                newEnemy = new DefaultEnemy((int)(oldEnemy.getMaxHp()*waveEnemyHealth(waveNumber)), 0, 0);
             }
             if (number < 0)
                 number = (int) (waveNumEnemies(waveNumber));
@@ -92,6 +92,11 @@ public class EnemyWave {
     public ArrayList<EnemyGroup> getEnemyGroups()
     {
         return enemies;
+    }
+
+    public static double waveEnemyHealth(int wn)
+    {
+        return wn*1.05;
     }
 
 
