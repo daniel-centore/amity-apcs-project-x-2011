@@ -80,7 +80,7 @@ public class ShotThread extends Thread
                server.playerFired(player);
             } else
             {
-               if (((ProjectileWeapon) (player.getCurrWeapon())).getAmmoInMag() <= 1)
+               if (((ProjectileWeapon) (player.getCurrWeapon())).getAmmoInMag() <= 0)
                {
                   ((ProjectileWeapon) (player.getCurrWeapon())).reload();
                   server.getClients().get(player.getUsername()).send(new ReloadMessage());
