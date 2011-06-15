@@ -22,7 +22,6 @@ package org.amityregion5.projectx.common.entities.characters.enemies;
 import java.awt.image.BufferedImage;
 import org.amityregion5.projectx.common.entities.Damageable;
 import org.amityregion5.projectx.common.entities.characters.CharacterEntity;
-import org.amityregion5.projectx.common.entities.items.held.ZombieHands;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
 import org.amityregion5.projectx.common.tools.ImageHandler;
 

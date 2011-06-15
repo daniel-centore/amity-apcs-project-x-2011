@@ -21,7 +21,6 @@ package org.amityregion5.projectx.server.controllers;
 import java.util.ArrayList;
 
 import org.amityregion5.projectx.server.Server;
-import org.amityregion5.projectx.server.controllers.GUIServerController;
 
 /**
  * Class documentation.

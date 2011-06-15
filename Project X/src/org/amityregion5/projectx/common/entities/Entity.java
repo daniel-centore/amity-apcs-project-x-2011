@@ -19,7 +19,6 @@
  */
 package org.amityregion5.projectx.common.entities;
 
-import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
@@ -27,7 +26,6 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
 
-import org.amityregion5.projectx.common.tools.ImageHandler;
 
 /**
  * An entity. All should be created server-side to guarantee they each get unique ids.

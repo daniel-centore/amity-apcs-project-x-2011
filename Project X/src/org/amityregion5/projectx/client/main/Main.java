@@ -23,7 +23,6 @@ import javax.swing.UIManager;
 
 import org.amityregion5.projectx.client.communication.MulticastCommunicationHandler;
 import org.amityregion5.projectx.client.gui.ServerChooserWindow;
-import org.amityregion5.projectx.client.gui.SplashScreen;
 import org.amityregion5.projectx.client.gui.UsernameWindow;
 import org.amityregion5.projectx.client.preferences.PreferenceManager;
 import org.amityregion5.projectx.client.sound.SoundManager;

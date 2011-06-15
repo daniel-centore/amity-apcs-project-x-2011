@@ -19,8 +19,6 @@
  */
 package org.amityregion5.projectx.common.entities.items.held;
 
-import java.awt.Point;
-
 /**
  * A ProjectileWeapon that fires Bullets into field.
  *

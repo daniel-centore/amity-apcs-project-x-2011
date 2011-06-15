@@ -19,8 +19,6 @@
  */
 package org.amityregion5.projectx.common.entities.items.held;
 
-import org.amityregion5.projectx.common.entities.items.DamageDealing;
-
 /**
  * A Weapon which can be used only within melee range.
  *
