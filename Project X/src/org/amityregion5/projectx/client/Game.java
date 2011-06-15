@@ -640,7 +640,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                         ((Damageable) e).setHp(hp);
                     }
 
-                    if(e == me && me.getCurrWeapon() != null)
+                    if(e == me && ((ProjectileWeapon) me.getCurrWeapon()).getWeaponTip() != null)
                     {
                         int x1 = (int) ((ProjectileWeapon) me.getCurrWeapon()).getWeaponTip().getX();
                         int y1 = (int) ((ProjectileWeapon) me.getCurrWeapon()).getWeaponTip().getY();
