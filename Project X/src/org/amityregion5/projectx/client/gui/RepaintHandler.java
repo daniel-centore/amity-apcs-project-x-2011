@@ -210,7 +210,7 @@ public class RepaintHandler extends Thread {
             if(wep instanceof Gun)
             {
 
-                Gun gun = (Gun)wep;
+                Gun gun = (Gun) wep;
                 int x2;
                 int y2;
                 int x;
@@ -220,7 +220,6 @@ public class RepaintHandler extends Thread {
                 y = (int) gun.getWeaponTip().getY();
                 x2 = (int) (Math.cos(Math.toRadians(pe.getDirectionFacing())) * wep.getRange() + x);
                 y2 = (int) (Math.sin(Math.toRadians(pe.getDirectionFacing())) * wep.getRange() + y);
-
 
                     //x2 = (int) (Math.cos(Math.toRadians(pe.getDirectionFacing())) * wep.getRange()) + pe.getCenterX();
                     //y2 = (int) (Math.sin(Math.toRadians(pe.getDirectionFacing())) * wep.getRange()) + pe.getCenterY();
@@ -252,9 +251,11 @@ public class RepaintHandler extends Thread {
         if(wep instanceof Gun)
         {
             Gun gun = (Gun)wep;
+            int theta = (int) Math.toDegrees(Math.atan2(pe.getCenterX() - (pe.getX() + Gun.DEFAULT_GUN_POINT.getX()),
+                            pe.getCenterY() - (pe.getY() + Gun.DEFAULT_GUN_POINT.getY())) + (Math.PI / 2));
             double r = Point.distance(pe.getCenterX(), pe.getCenterY(), pe.getX() + Gun.DEFAULT_GUN_POINT.getX(), pe.getY() + Gun.DEFAULT_GUN_POINT.getY());
-            int x = (int)(pe.getCenterX() + r * Math.cos(Math.toRadians(pe.getDirectionFacing())));
-            int y = (int)(pe.getCenterY() + r * Math.sin(Math.toRadians(pe.getDirectionFacing())));
+            int x = (int)(pe.getCenterX() + r * Math.cos(Math.toRadians(pe.getDirectionFacing() - theta)));
+            int y = (int)(pe.getCenterY() + r * Math.sin(Math.toRadians(pe.getDirectionFacing() - theta)));
             gun.setWeaponTip(new Point(x,y));
         }
         
