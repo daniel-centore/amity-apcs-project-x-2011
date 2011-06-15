@@ -39,6 +39,7 @@ import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.common.entities.items.field.Area;
 import org.amityregion5.projectx.common.entities.items.field.Block;
 import org.amityregion5.projectx.common.entities.items.held.Gun;
+import org.amityregion5.projectx.common.entities.items.held.ProjectileWeapon;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 
@@ -123,6 +124,24 @@ public class RepaintHandler extends Thread {
                     if (ce.hasWeapons())
                     {
                         drawWeapon(ce,g);
+                        if (ce instanceof PlayerEntity && ((ProjectileWeapon) ce.getCurrWeapon()).hasSight())
+                        {
+                            ProjectileWeapon gun = (ProjectileWeapon) ce.getCurrWeapon();
+                            int x2;
+                            int y2;
+                            int x;
+                            int y;
+
+                            x = (int) gun.getWeaponTip().getX();
+                            y = (int) gun.getWeaponTip().getY();
+                            x2 = (int) (Math.cos(Math.toRadians(ce.getDirectionFacing())) * gun.getRange() + x);
+                            y2 = (int) (Math.sin(Math.toRadians(ce.getDirectionFacing())) * gun.getRange() + y);
+                            Color oldColor = g.getColor();
+                            g.setColor(Color.BLUE);
+                            //g.drawLine(pe.getCenterX(), pe.getCenterY(), x2, y2);
+                            g.drawLine(x, y, x2, y2);
+                            g.setColor(oldColor);
+                        }
                     }
                 }
                 g.drawImage(e.getImage(), at, null);

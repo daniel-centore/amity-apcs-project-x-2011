@@ -537,7 +537,6 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             if (me.getCash() >= ((ProjectileWeapon) (me.getCurrWeapon())).getSightCost() 
                     && !((ProjectileWeapon) (me.getCurrWeapon())).hasSight())
             {
-                System.out.println("getting sight");
                 ((ProjectileWeapon) (me.getCurrWeapon())).getSight();
                 me.spendCash(((ProjectileWeapon) (me.getCurrWeapon())).getSightCost());
                 communicationHandler.send(new CashMessage(me.getCash(), me.getUniqueID()));
