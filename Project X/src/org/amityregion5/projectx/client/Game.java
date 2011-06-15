@@ -124,31 +124,40 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         if(gameOver)
             return;
 
-        if (me.getHitBox().contains(x,y))
-            return;
-
         lastMouseX = x;
         lastMouseY = y;
 
         if(me == null || me.getImage() == null)
-        {
             return;
-        }
-        int x1;
-        int y1;
-        if (me.getCurrWeapon() != null && 
-                ((ProjectileWeapon) me.getCurrWeapon()).getWeaponTip() != null)
-        {
-            x1 = (int) ((ProjectileWeapon) me.getCurrWeapon()).getWeaponTip().getX();
-            y1 = (int) ((ProjectileWeapon) me.getCurrWeapon()).getWeaponTip().getY();
-        } else
-        {
-            x1 = me.getCenterX();
-            y1 = me.getCenterY();
-        }
 
-        int angle = (int) Math.toDegrees(Math.atan2(y - y1, x - x1));
-        me.setDirectionFacing(angle);
+        if (me.getHitBox().contains(x,y))
+            return;
+
+        int cx = me.getCenterX();
+        int cy = me.getCenterY();
+
+        if ((cx-x)*(cx-x) + (cy-y)*(cy-y) < 3600) {
+            int angle = (int) Math.toDegrees(Math.atan2(y - cy, x - cx));
+            me.setDirectionFacing(angle);
+        }
+        else {
+            int x1;
+            int y1;
+
+            if (me.getCurrWeapon() != null && 
+                    ((ProjectileWeapon) me.getCurrWeapon()).getWeaponTip() != null)
+            {
+                x1 = (int) ((ProjectileWeapon) me.getCurrWeapon()).getWeaponTip().getX();
+                y1 = (int) ((ProjectileWeapon) me.getCurrWeapon()).getWeaponTip().getY();
+            } else
+            {
+                x1 = cx;
+                y1 = cy;
+            }
+
+            int angle = (int) Math.toDegrees(Math.atan2(y - y1, x - x1));
+            me.setDirectionFacing(angle);
+        }
 
         GameWindow.fireRepaintRequired();
     }
