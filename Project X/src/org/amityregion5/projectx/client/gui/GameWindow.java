@@ -21,6 +21,7 @@ package org.amityregion5.projectx.client.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -47,6 +48,7 @@ import org.amityregion5.projectx.common.tools.ImageHandler;
  * 
  */
 public class GameWindow extends JFrame {
+
     private static final BufferedImage MAP_IMAGE = ImageHandler.loadMap("TestMap");
     private static final long serialVersionUID = 594L;
     public static final int GAME_WIDTH = MAP_IMAGE.getWidth(); // the game size we will draw at before resizing
@@ -58,7 +60,6 @@ public class GameWindow extends JFrame {
     private int yOffset; // how much screen is offset vertically
     private int lastWidth; // the last width of the window to reduce memory usage
     private int lastHeight; // the last height... ^^
-    private Image img;
 
     /**
      * Creates a GameWindow
@@ -95,57 +96,65 @@ public class GameWindow extends JFrame {
                 int w = this.getWidth();
                 int h = this.getHeight();
 
-                if (w != lastWidth || h != lastHeight || img == null)
+                if(w != lastWidth || h != lastHeight)
                 {
                     lastHeight = h;
                     lastWidth = w;
-                    img = createImage(w,h);
                 }
-                
-                
+
+                Image buffer2 = createImage(getWidth(), getHeight());
+                Graphics2D buffer2g = (Graphics2D) buffer2.getGraphics();
+                buffer2g.setColor(Color.black);
+                buffer2g.fillRect(0, 0, getWidth(), getHeight());
+
                 int[] scale = scaleImage(buffer, w, h);
 
-                img.getGraphics().drawImage(buffer, (xOffset = scale[2]), (yOffset = scale[3]), scale[0], scale[1], null);
+                buffer2g.drawImage(buffer, (xOffset = scale[2]), (yOffset = scale[3]), scale[0], scale[1], null);
 
                 // draw chat
                 BufferedImage chat = ChatDrawing.getChat(ChatDrawing.CHAT_WIDTH, ChatDrawing.CHAT_HEIGHT);
                 if(chat != null)
                 {
-                    img.getGraphics().drawImage(chat, xOffset, img.getHeight(null) - ChatDrawing.CHAT_HEIGHT - yOffset, null);
+                    buffer2g.drawImage(chat, xOffset, this.getHeight() - ChatDrawing.CHAT_HEIGHT - yOffset, null);
                 }
 
                 // draw stat bar
                 if(game.getMe() != null)
                 {
-                    img.getGraphics().drawImage(StatBarDrawing.getStatBar(game.getMe()),xOffset,
-                        img.getHeight(null) - StatBarDrawing.HEIGHT - yOffset,null);
+                    buffer2g.drawImage(StatBarDrawing.getStatBar(game.getMe()), xOffset,
+                            this.getHeight() - StatBarDrawing.HEIGHT - yOffset, null);
                     // draw ammo
-                    if (game.getMe().hasWeapons() && game.getMe().getCurrWeapon() != null)
+                    if(game.getMe().hasWeapons() && game.getMe().getCurrWeapon() != null)
                     {
                         Point p = this.getMousePosition();
-                        if (p != null)
+                        if(p != null)
                         {
-                            int am = ((ProjectileWeapon) game.getMe()
-                               .getCurrWeapon()).getAmmoInMag();
-                            if (am > -1)
+                            int am = ((ProjectileWeapon) game.getMe().getCurrWeapon()).getAmmoInMag();
+                            if(am > -1)
                             {
-                                Graphics2D g2 = (Graphics2D) img.getGraphics();
-                                g2.setColor(Color.white);
-                                g2.drawString(
-                                   String.valueOf(am), (int) p.getX() - 5,
-                                   (int) p.getY() - 5);
-                            } else
+                                if(am == 0)
+                                    buffer2g.setColor(Color.red);
+                                else
+                                    buffer2g.setColor(Color.white);
+
+                                buffer2g.setFont(new Font("Serif", Font.BOLD, 16));
+
+                                buffer2g.drawString(
+                                        String.valueOf(am), (int) p.getX() - 5,
+                                        (int) p.getY() - 5);
+                            }
+                            else
                             {
-                                img.getGraphics().drawString(
-                                   "inf", (int) p.getX() - 5,
-                                   (int) p.getY() - 5);
+                                buffer2g.drawString(
+                                        "inf", (int) p.getX() - 5,
+                                        (int) p.getY() - 5);
                             }
                         }
                     }
                 }
-                
 
-                g.drawImage(img, 0, 0, null);
+
+                g.drawImage(buffer2, 0, 0, null);
             }
         };
 
