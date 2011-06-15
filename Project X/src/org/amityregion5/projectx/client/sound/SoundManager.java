@@ -82,4 +82,10 @@ public class SoundManager extends Thread {
             e.printStackTrace();
         }
     }
+
+    public static void stopMusic()
+    {
+        if (player != null)
+            player.close();
+    }
 }

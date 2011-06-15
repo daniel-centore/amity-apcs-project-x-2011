@@ -85,11 +85,9 @@ public class RawCommunicationHandler extends Thread {
             Logger.getLogger(RawCommunicationHandler.class.getName()).log(Level.SEVERE, null, ex);
             keepRunning = false;
         }
-        // final String mes;
+
         while (keepRunning)
         {
-            // String to read. Current format is:
-            // uniqueId,x-coord,y-coord,direction
             try
             {
                 final String mes = bis.readLine();

@@ -310,6 +310,9 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             } else if (Keys.isKey(Keys.SONG_4, keyCode))
             {
                 SoundManager.play(SoundManager.SONG_4);
+            } else if (Keys.isKey(Keys.STOP, keyCode))
+            {
+                SoundManager.stopMusic();
             } 
             if(me == null)
             {

@@ -34,34 +34,41 @@ import org.amityregion5.projectx.client.preferences.PreferenceManager;
  */
 public class Keys {
     
+    // -- This is a section of key constants --
+    
+    // For movement
     public static int[] UP      = { KeyEvent.VK_UP, KeyEvent.VK_W };
     public static int[] DOWN    = { KeyEvent.VK_DOWN, KeyEvent.VK_S };
     public static int[] LEFT    = { KeyEvent.VK_LEFT, KeyEvent.VK_A };
     public static int[] RIGHT   = { KeyEvent.VK_RIGHT, KeyEvent.VK_D };
     
-    public static int[] CHAT    = { KeyEvent.VK_T, KeyEvent.VK_QUOTE };
-    public static int[] GRID    = { KeyEvent.VK_G };
-    public static int[] FIRE    = { KeyEvent.VK_SPACE };
-    public static int[] HEAL    = { KeyEvent.VK_B };
-
-    public static int[] UPGRADE_WEAPON = { KeyEvent.VK_V };
+    // Shows you extra info
+    public static int[] CHAT        = { KeyEvent.VK_T, KeyEvent.VK_QUOTE };
+    public static int[] GRID        = { KeyEvent.VK_G };
+    public static int[] LEADERBOARD = { KeyEvent.VK_U };
     
+    // Handles current weapon control
+    public static int[] FIRE           = { KeyEvent.VK_SPACE };
+    public static int[] HEAL           = { KeyEvent.VK_B };
+    public static int[] UPGRADE_WEAPON = { KeyEvent.VK_V };
+    public static int[] RELOAD         = { KeyEvent.VK_R };
+    public static int[] BUY_AMMO       = { KeyEvent.VK_C };
+    
+    // Objects that we can add using F1-F3
     public static int[] BLOCK  = { KeyEvent.VK_F1 };
     public static int[] FENCE  = { KeyEvent.VK_F2 };
     public static int[] WALL   = { KeyEvent.VK_F3 };
     
-    public static int[] LEADERBOARD = { KeyEvent.VK_U };
-    
+    // Rotates through out weapons
     public static int[] CHANGE_WEAPON_1 = { KeyEvent.VK_COMMA };
     public static int[] CHANGE_WEAPON_2 = { KeyEvent.VK_PERIOD };
     
-    public static int[] RELOAD = { KeyEvent.VK_R };
-    public static int[] BUY_AMMO = { KeyEvent.VK_C };
-
+    // Music control
     public static int[] SONG_1 = { KeyEvent.VK_F5 };
     public static int[] SONG_2 = { KeyEvent.VK_F6 };
     public static int[] SONG_3 = { KeyEvent.VK_F7 };
     public static int[] SONG_4 = { KeyEvent.VK_F8 };
+    public static int[] STOP   = { KeyEvent.VK_F9 };
 
     public static void refreshKeyPrefs()
     {
