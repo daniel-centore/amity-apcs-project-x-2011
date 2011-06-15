@@ -155,7 +155,8 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         }
         int x1;
         int y1;
-        if (me.getCurrWeapon() != null)
+        if (me.getCurrWeapon() != null && 
+                ((ProjectileWeapon) me.getCurrWeapon()).getWeaponTip() != null)
         {
             x1 = (int) ((ProjectileWeapon) me.getCurrWeapon()).getWeaponTip().getX();
             y1 = (int) ((ProjectileWeapon) me.getCurrWeapon()).getWeaponTip().getY();

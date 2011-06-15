@@ -133,27 +133,26 @@ public class GameWindow extends JFrame {
                             if(am > -1)
                             {
                                 buffer2g.setFont(new Font("Sans", Font.BOLD, 16));
-                                if(am == 0)
+                                if(game.getMe().isReloading())
                                 {
                                     buffer2g.setColor(Color.red);
-                                    if (game.getMe().isReloading())
-                                    {
-                                        buffer2g.drawString(
+                                    buffer2g.drawString(
                                             "-RELOADING-", (int) p.getX() - 5,
                                             (int) p.getY() - 5);
-                                    } else
-                                    {
-                                        buffer2g.drawString(
+                                }
+                                else if(am == 0)
+                                {
+                                    buffer2g.setColor(Color.red);
+                                    buffer2g.drawString(
                                             "0", (int) p.getX() - 5,
                                             (int) p.getY() - 5);
-                                    }
                                 }
                                 else
                                 {
                                     buffer2g.setColor(Color.white);
                                     buffer2g.drawString(
-                                        String.valueOf(am), (int) p.getX() - 5,
-                                        (int) p.getY() - 5);
+                                            String.valueOf(am), (int) p.getX() - 5,
+                                            (int) p.getY() - 5);
                                 }
                             }
                             else

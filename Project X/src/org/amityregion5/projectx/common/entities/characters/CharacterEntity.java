@@ -101,6 +101,8 @@ public abstract class CharacterEntity extends Entity {
      */
     public Weapon getCurrWeapon()
     {
+        if (currWeapon >= weapons.size())
+            return null;
         return weapons.get(currWeapon);
     }
 

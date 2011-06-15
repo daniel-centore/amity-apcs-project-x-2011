@@ -237,7 +237,6 @@ public final class GameController {
 
         if (wep == null) return;
         
-        int range = wep.getRange();
         int theta = (int) Math.toDegrees(Math.atan2(player.getCenterX() - (player.getX() + wep.getOrigWeaponTip().getX()),
                         player.getCenterY() - (player.getY() + wep.getOrigWeaponTip().getY())) + (Math.PI / 2));
         double r = Point.distance(player.getCenterX(), player.getCenterY(),
@@ -245,10 +244,10 @@ public final class GameController {
                 wep.getOrigWeaponTip().getY());
         int x = (int)(player.getCenterX() + r * Math.cos(Math.toRadians(player.getDirectionFacing() - theta)));
         int y = (int)(player.getCenterY() + r * Math.sin(Math.toRadians(player.getDirectionFacing() - theta)));
-        int x2 = (int) (Math.cos(Math.toRadians(direction)) * range + x);
-        int y2 = (int) (Math.sin(Math.toRadians(direction)) * range + y);
+        int x2 = (int) (Math.cos(Math.toRadians(direction)) * wep.getRange() + x);
+        int y2 = (int) (Math.sin(Math.toRadians(direction)) * wep.getRange() + y);
 
-        Line2D.Double line = new Line2D.Double(player.getCenterX(), player.getCenterY(), x2, y2);
+        Line2D.Double line = new Line2D.Double(x, y, x2, y2);
 
         // should be Damageable, too, but java is kind of stupid
         // need to enforce by ourselves
