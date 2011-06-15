@@ -499,6 +499,8 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         }
         else if(m instanceof ReloadingMessage)
         {
+            System.out.println("received reloadingmessage time " +
+                    ((ReloadingMessage) m).getMs());
             me.setReloading(true);
             new Thread() {
 

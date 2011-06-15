@@ -19,6 +19,7 @@
  */
 package org.amityregion5.projectx.common.entities.items.held;
 
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import org.amityregion5.projectx.common.entities.items.Upgradeable;
 import org.amityregion5.projectx.common.tools.ImageHandler;
@@ -66,5 +67,12 @@ public class Pistol extends Gun implements Upgradeable {
     public int getUpgradeCost()
     {
         return (int) (UPGRADE_COST * Math.pow(1.2, upgradeLevel - 1));
+    }
+
+    private final Point ORIG_TIP = new Point(53,45);
+    @Override
+    public Point getOrigWeaponTip()
+    {
+        return ORIG_TIP;
     }
 }

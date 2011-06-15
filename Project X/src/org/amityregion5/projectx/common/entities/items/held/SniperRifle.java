@@ -18,6 +18,7 @@
  */
 package org.amityregion5.projectx.common.entities.items.held;
 
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 import org.amityregion5.projectx.common.entities.items.DamageDealing;
@@ -73,5 +74,12 @@ public class SniperRifle extends Gun implements DamageDealing, Upgradeable
             setAttackRate(getAttackRate() + 1);
             setMaxAmmo(getMaxAmmo() + AMMO_UPGRADE);
         }
+    }
+
+    private final Point ORIG_TIP = new Point(75,42);
+    @Override
+    public Point getOrigWeaponTip()
+    {
+        return ORIG_TIP;
     }
 }

@@ -44,7 +44,8 @@ public abstract class ProjectileWeapon extends Weapon implements Upgradeable
    private Point weaponTip;
    private static final int MAG_COST = 50;
    private int reloadTime = 500; // default reload time half a second
-   // TODO make reload time upgradeable!
+   // ORIG_WEAPON_TIP needs to be changed each time a weapon is changed!
+   // TODO make reload time upgradeable and variable on each gun!
    
    /**
     * Creates a projectile weapon with the given characteristics.
@@ -192,6 +193,8 @@ public abstract class ProjectileWeapon extends Weapon implements Upgradeable
    {
       return weaponTip;
    }
+
+   public abstract Point getOrigWeaponTip();
 
    public boolean isSplash()
    {

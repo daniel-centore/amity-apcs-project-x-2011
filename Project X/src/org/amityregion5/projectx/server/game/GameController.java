@@ -43,6 +43,7 @@ import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
 import org.amityregion5.projectx.common.entities.items.held.Laser;
 import org.amityregion5.projectx.common.entities.items.held.Pistol;
+import org.amityregion5.projectx.common.entities.items.held.ProjectileWeapon;
 import org.amityregion5.projectx.common.entities.items.held.SniperRifle;
 import org.amityregion5.projectx.common.entities.items.held.Uzi;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
@@ -232,12 +233,20 @@ public final class GameController {
     {
         int direction = player.getDirectionFacing();
 
-        Weapon wep = player.getCurrWeapon();
+        ProjectileWeapon wep = (ProjectileWeapon) player.getCurrWeapon();
 
+        if (wep == null) return;
+        
         int range = wep.getRange();
-
-        int x2 = (int) (Math.cos(Math.toRadians(direction)) * range) + player.getCenterX();
-        int y2 = (int) (Math.sin(Math.toRadians(direction)) * range) + player.getCenterY();
+        int theta = (int) Math.toDegrees(Math.atan2(player.getCenterX() - (player.getX() + wep.getOrigWeaponTip().getX()),
+                        player.getCenterY() - (player.getY() + wep.getOrigWeaponTip().getY())) + (Math.PI / 2));
+        double r = Point.distance(player.getCenterX(), player.getCenterY(),
+                player.getX() + wep.getOrigWeaponTip().getX(), player.getY() +
+                wep.getOrigWeaponTip().getY());
+        int x = (int)(player.getCenterX() + r * Math.cos(Math.toRadians(player.getDirectionFacing() - theta)));
+        int y = (int)(player.getCenterY() + r * Math.sin(Math.toRadians(player.getDirectionFacing() - theta)));
+        int x2 = (int) (Math.cos(Math.toRadians(direction)) * range + x);
+        int y2 = (int) (Math.sin(Math.toRadians(direction)) * range + y);
 
         Line2D.Double line = new Line2D.Double(player.getCenterX(), player.getCenterY(), x2, y2);
 

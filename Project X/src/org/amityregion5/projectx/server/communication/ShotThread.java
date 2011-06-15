@@ -98,11 +98,11 @@ public class ShotThread extends Thread
 
     public void reload()
     {
+        this.setShooting(false);
         server.getClients().get(player.getUsername()).send(
                 new ReloadingMessage(((ProjectileWeapon) player.getCurrWeapon()).getReloadTime()));
         ((ProjectileWeapon) (player.getCurrWeapon())).reload();
         server.getClients().get(player.getUsername()).send(new ReloadMessage());
-        this.setShooting(false);
     }
 
     /**

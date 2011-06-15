@@ -18,6 +18,7 @@
  */
 package org.amityregion5.projectx.common.entities.items.held;
 
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import org.amityregion5.projectx.common.entities.items.DamageDealing;
 import org.amityregion5.projectx.common.entities.items.Upgradeable;
@@ -71,5 +72,11 @@ public class RPG extends Gun implements Upgradeable, DamageDealing {
     public boolean isSplash()
     {
         return true;
+    }
+
+    @Override
+    public Point getOrigWeaponTip()
+    {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }
