@@ -39,8 +39,6 @@ public class Main
 
     public static void main(String[] args)
     {
-        SoundManager.preload();
-        
         if (args.length > 0)
         {
             org.amityregion5.projectx.server.Main.main(args);

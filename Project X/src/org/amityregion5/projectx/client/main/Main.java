@@ -26,6 +26,7 @@ import org.amityregion5.projectx.client.gui.ServerChooserWindow;
 import org.amityregion5.projectx.client.gui.SplashScreen;
 import org.amityregion5.projectx.client.gui.UsernameWindow;
 import org.amityregion5.projectx.client.preferences.PreferenceManager;
+import org.amityregion5.projectx.client.sound.SoundManager;
 
 /**
  * Main class for loading the Client
@@ -39,11 +40,12 @@ public class Main {
     
     public static void load()
     {
-        main();
+        main(new String[0]);
     }
 
-    private static void main()
+    public static void main(String[] args)
     {
+        SoundManager.preload();
         try
         {
             // default look and feel for prettiness :D
