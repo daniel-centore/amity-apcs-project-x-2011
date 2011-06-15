@@ -124,6 +124,9 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         if(gameOver)
             return;
 
+        if (me.getHitBox().contains(x,y))
+            return;
+
         lastMouseX = x;
         lastMouseY = y;
 
@@ -637,14 +640,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                         ((Damageable) e).setHp(hp);
                     }
 
-                    if(e == me && ((ProjectileWeapon) me.getCurrWeapon()).getWeaponTip() != null)
-                    {
-                        int x1 = (int) ((ProjectileWeapon) me.getCurrWeapon()).getWeaponTip().getX();
-                        int y1 = (int) ((ProjectileWeapon) me.getCurrWeapon()).getWeaponTip().getY();
-                        int angle = (int) Math.toDegrees(Math.atan2(lastMouseY - y1, lastMouseX - x1));
-                        me.setDirectionFacing(angle);
-                    }
-                    else
+                    if (e != me)
                         e.setDirectionFacing(facing);
 
                     e.setDirectionMoving(moving);
