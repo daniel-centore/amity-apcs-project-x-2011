@@ -303,7 +303,11 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             } else if (Keys.isKey(Keys.STOP, keyCode))
             {
                 SoundManager.stopMusic();
-            } 
+            } else if (Keys.isKey(Keys.BUY_SIGHT, keyCode))
+            {
+                System.out.println("Sight key hit");
+                communicationHandler.send(new SightMessage());
+            }
             if(me == null)
             {
                 return;
@@ -528,6 +532,16 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                     }
                 }
             }.start();
+        } else if (m instanceof SightMessage)
+        {
+            if (me.getCash() >= ((ProjectileWeapon) (me.getCurrWeapon())).getSightCost() 
+                    && !((ProjectileWeapon) (me.getCurrWeapon())).hasSight())
+            {
+                System.out.println("getting sight");
+                ((ProjectileWeapon) (me.getCurrWeapon())).getSight();
+                me.spendCash(((ProjectileWeapon) (me.getCurrWeapon())).getSightCost());
+                communicationHandler.send(new CashMessage(me.getCash(), me.getUniqueID()));
+            }
         }
         else
         {

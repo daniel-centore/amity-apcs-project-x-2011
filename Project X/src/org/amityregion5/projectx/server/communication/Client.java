@@ -356,6 +356,16 @@ public class Client extends Thread {
                 server.relayMessage(new CashMessage(player.getCash(), player.getUniqueID()));
             }
 
+        } else if (m instanceof SightMessage)
+        {
+            if (player.getCash() >= ((ProjectileWeapon) (player.getCurrWeapon())).getSightCost() 
+                    && !((ProjectileWeapon) (player.getCurrWeapon())).hasSight())
+            {
+                System.out.println("getting sight");
+                ((ProjectileWeapon) (player.getCurrWeapon())).getSight();
+                player.spendCash(((ProjectileWeapon) (player.getCurrWeapon())).getSightCost());
+                server.relayMessage(new CashMessage(player.getCash(), player.getUniqueID()));
+            }
         }
     }
 

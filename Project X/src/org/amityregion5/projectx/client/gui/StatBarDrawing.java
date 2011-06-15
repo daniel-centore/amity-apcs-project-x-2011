@@ -125,7 +125,14 @@ public class StatBarDrawing {
             b.delete(0, b.length());
             g2.setFont(g2.getFont().deriveFont(13.0f));
             b.append("Upgrade cost: $");
-            b.append(pw.getUpgradeCost());
+            if (pw.getUpgradeLevel() < 5)
+            {
+                b.append(pw.getUpgradeCost());
+            } else 
+            {
+                b.delete(b.length() - 1, b.length());
+                b.append("Max Level");
+            }
             g2.drawString(b.toString(), 265, g2.getFontMetrics().getHeight() + 5);
 
             // draw ammo cost

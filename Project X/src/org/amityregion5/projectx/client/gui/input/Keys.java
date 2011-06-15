@@ -53,6 +53,7 @@ public class Keys {
     public static int[] UPGRADE_WEAPON = { KeyEvent.VK_V };
     public static int[] RELOAD         = { KeyEvent.VK_R };
     public static int[] BUY_AMMO       = { KeyEvent.VK_C };
+    public static int[] BUY_SIGHT      = { KeyEvent.VK_F};
     
     // Objects that we can add using F1-F3
     public static int[] BLOCK  = { KeyEvent.VK_F1 };
