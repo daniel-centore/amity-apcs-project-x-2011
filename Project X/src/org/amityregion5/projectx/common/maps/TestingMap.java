@@ -30,7 +30,6 @@ import java.util.logging.Logger;
 import org.amityregion5.projectx.client.gui.GameWindow;
 import org.amityregion5.projectx.common.entities.Entity;
 import org.amityregion5.projectx.common.entities.items.field.Area;
-import org.amityregion5.projectx.common.entities.items.field.Wall;
 import org.amityregion5.projectx.common.tools.ImageHandler;
 
 /**

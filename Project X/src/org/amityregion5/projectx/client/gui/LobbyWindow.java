@@ -96,12 +96,12 @@ public class LobbyWindow extends JFrame implements MessageListener
         playerListModel = new DefaultListModel();
         initComponents();
         playerList.setCellRenderer(new CustomCellRenderer());
-        playerListModel.addElement(username);
+        playerListModel.addElement(new User(username));
         if (players != null)
         {
             for (String player : players)
             {
-                playerListModel.addElement(player);
+                playerListModel.addElement(new User(player));
             }
         }
         playerList.setModel(playerListModel);
@@ -307,7 +307,7 @@ public class LobbyWindow extends JFrame implements MessageListener
 
                 public void run()
                 {
-                    playerListModel.addElement(((IntroduceMessage) m).getText());
+                    playerListModel.addElement(new User(((IntroduceMessage) m).getText()));
                 }
             });
         } else if (m instanceof ActivePlayersMessage)
@@ -391,8 +391,9 @@ public class LobbyWindow extends JFrame implements MessageListener
                 public void run()
                 {
                     ReadyMessage rm = (ReadyMessage) m;
-                    User u = (User) playerListModel.get(playerListModel.indexOf(rm.getUsername()));
+                    User u = (User) playerListModel.get(playerListModel.indexOf(new User(rm.getUsername())));
                     u.setReady(rm.isAffirmative());
+                    LobbyWindow.this.repaint();
                 }
             });
         }
@@ -439,6 +440,14 @@ public class LobbyWindow extends JFrame implements MessageListener
                 return this.username.equals((String) o);
             }
             return false;
+        }
+
+        @Override
+        public int hashCode()
+        {
+            int hash = 5;
+            hash = 37 * hash + (this.username != null ? this.username.hashCode() : 0);
+            return hash;
         }
     }
 
@@ -506,6 +515,7 @@ public class LobbyWindow extends JFrame implements MessageListener
                 public void paintComponent(Graphics g)
                 {
                     super.paintComponent(g);
+                    System.out.println(value.getClass());
                     User user = (User) value;
                     String username = user.toString();
                     Font f = g.getFont();
@@ -526,7 +536,7 @@ public class LobbyWindow extends JFrame implements MessageListener
                 {
                     Graphics g = getGraphics();
                     FontMetrics fm = g.getFontMetrics(g.getFont());
-                    return new Dimension(fm.stringWidth((String) value), fm.getHeight());
+                    return new Dimension(fm.stringWidth(value.toString()), fm.getHeight());
                 }
             };
         }

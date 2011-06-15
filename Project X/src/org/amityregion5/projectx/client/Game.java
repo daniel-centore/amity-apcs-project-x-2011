@@ -62,6 +62,7 @@ import org.amityregion5.projectx.common.communication.messages.FiringMessage;
 import org.amityregion5.projectx.common.communication.messages.Message;
 import org.amityregion5.projectx.common.communication.messages.PointMessage;
 import org.amityregion5.projectx.common.communication.messages.ReloadMessage;
+import org.amityregion5.projectx.common.communication.messages.ReloadingMessage;
 import org.amityregion5.projectx.common.communication.messages.RequestEntityAddMessage;
 import org.amityregion5.projectx.common.communication.messages.RequestHealMessage;
 import org.amityregion5.projectx.common.communication.messages.RequestUpgradeMessage;
@@ -479,7 +480,15 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         } else if (m instanceof ReloadMessage)
         {
            ((ProjectileWeapon) me.getCurrWeapon()).reload();
-        } else
+        } else if (m instanceof ReloadingMessage)
+        {
+            // TODO do something on receiving a ReloadingMessage.
+            // ReloadingMessage has getMs() that returns the reload time in
+            // milliseconds.
+            // maybe paint a bar that fills up in the given milliseconds
+            // to indicate reloading? idk
+        }
+        else
         {
             System.err.println("Unknown message type encountered. " + "Please make sure you have the latest game version!");
         }

@@ -47,7 +47,7 @@ import org.amityregion5.projectx.common.tools.ImageHandler;
  * 
  */
 public class GameWindow extends JFrame {
-    private static final BufferedImage MAP_IMAGE = ImageHandler.loadImage("TestMap");
+    private static final BufferedImage MAP_IMAGE = ImageHandler.loadMap("TestMap");
     private static final long serialVersionUID = 594L;
     public static final int GAME_WIDTH = MAP_IMAGE.getWidth(); // the game size we will draw at before resizing
     public static final int GAME_HEIGHT = MAP_IMAGE.getHeight();

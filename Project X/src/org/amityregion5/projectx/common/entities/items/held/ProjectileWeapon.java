@@ -42,7 +42,9 @@ public abstract class ProjectileWeapon extends Weapon
    private int currentRounds; // rounds that are in current mag
    private Point weaponTip;
    private static final int MAG_COST = 50;
-
+   private int reloadTime = 500; // default reload time half a second
+   // TODO make reload time upgradeable!
+   
    /**
     * Creates a projectile weapon with the given characteristics.
     * @param range the range of the weapon, in linear pixels
@@ -117,7 +119,7 @@ public abstract class ProjectileWeapon extends Weapon
          {
             try
             {
-               Thread.sleep(500);
+               Thread.sleep(reloadTime);
                if (currentRounds == roundsPerMag)
                {
                   return;
@@ -194,4 +196,9 @@ public abstract class ProjectileWeapon extends Weapon
    {
       return false;
    }
+
+    public int getReloadTime()
+    {
+        return reloadTime;
+    }
 }
