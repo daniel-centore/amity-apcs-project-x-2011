@@ -36,6 +36,7 @@ public class PlayerEntity extends CharacterEntity implements Comparable<PlayerEn
     private int points; // points the player has
     private int cash; // how much money they have
     private String username; // their username
+    private boolean reloading; // if he or she is reloading
 
     /**
      * Creates a player
@@ -156,5 +157,15 @@ public class PlayerEntity extends CharacterEntity implements Comparable<PlayerEn
     public int compareTo(PlayerEntity arg0)
     {
         return (arg0.getPoints() - this.getPoints());
+    }
+
+    public boolean isReloading()
+    {
+        return reloading;
+    }
+
+    public void setReloading(boolean r)
+    {
+        reloading = r;
     }
 }

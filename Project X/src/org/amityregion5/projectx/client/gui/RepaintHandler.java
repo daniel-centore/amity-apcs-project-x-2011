@@ -39,7 +39,6 @@ import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.common.entities.items.field.Area;
 import org.amityregion5.projectx.common.entities.items.field.Block;
 import org.amityregion5.projectx.common.entities.items.held.Gun;
-import org.amityregion5.projectx.common.entities.items.held.Uzi;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
 import org.amityregion5.projectx.common.maps.AbstractMap;
 

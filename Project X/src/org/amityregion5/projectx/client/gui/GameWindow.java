@@ -118,11 +118,11 @@ public class GameWindow extends JFrame {
                     buffer2g.drawImage(chat, xOffset, this.getHeight() - ChatDrawing.CHAT_HEIGHT - yOffset, null);
                 }
 
-                // draw stat bar
                 if(game.getMe() != null)
                 {
                     buffer2g.drawImage(StatBarDrawing.getStatBar(game.getMe()), xOffset,
                             this.getHeight() - StatBarDrawing.HEIGHT - yOffset, null);
+
                     // draw ammo
                     if(game.getMe().hasWeapons() && game.getMe().getCurrWeapon() != null)
                     {
@@ -132,16 +132,21 @@ public class GameWindow extends JFrame {
                             int am = ((ProjectileWeapon) game.getMe().getCurrWeapon()).getAmmoInMag();
                             if(am > -1)
                             {
+                                buffer2g.setFont(new Font("Sans", Font.BOLD, 16));
                                 if(am == 0)
+                                {
                                     buffer2g.setColor(Color.red);
+                                    buffer2g.drawString(
+                                        "-RELOADING-", (int) p.getX() - 5,
+                                        (int) p.getY() - 5);
+                                }
                                 else
+                                {
                                     buffer2g.setColor(Color.white);
-
-                                buffer2g.setFont(new Font("Serif", Font.BOLD, 16));
-
-                                buffer2g.drawString(
+                                    buffer2g.drawString(
                                         String.valueOf(am), (int) p.getX() - 5,
                                         (int) p.getY() - 5);
+                                }
                             }
                             else
                             {
@@ -151,6 +156,8 @@ public class GameWindow extends JFrame {
                             }
                         }
                     }
+
+                    // draw reloading
                 }
 
 

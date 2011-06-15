@@ -22,6 +22,7 @@ package org.amityregion5.projectx.common.entities.items.held;
 import java.awt.Point;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.amityregion5.projectx.common.entities.items.Upgradeable;
 
 /**
  * An item which releases ammo when used.
@@ -31,7 +32,7 @@ import java.util.logging.Logger;
  * @author Joe Stein
  * @author Michael Wenke
  */
-public abstract class ProjectileWeapon extends Weapon
+public abstract class ProjectileWeapon extends Weapon implements Upgradeable
 {
 
    private static final long serialVersionUID = 605L;
@@ -201,4 +202,6 @@ public abstract class ProjectileWeapon extends Weapon
     {
         return reloadTime;
     }
+
+    public abstract int getUpgradeCost();
 }

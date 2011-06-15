@@ -328,13 +328,14 @@ public class Client extends Thread {
             server.relayMessage(new UpdateWeaponMessage(player.getWeapon(), player.getUniqueID()));
         } else if (m instanceof ReloadMessage)
         {
+            shotThread.reload();
             shotThread.setShooting(false); // can't reload while we're shooting can we?
+            System.out.println("sending reload message");
             send(new ReloadingMessage(((ProjectileWeapon) player.getCurrWeapon())
                     .getReloadTime()));
             ((ProjectileWeapon) player.getCurrWeapon()).reload(); // reload over here
             // tell the client it reloaded :D
             send(new ReloadMessage());
-
         } else if (m instanceof BuyAmmoMessage)
         {
             ProjectileWeapon pw = (ProjectileWeapon) player.getCurrWeapon();

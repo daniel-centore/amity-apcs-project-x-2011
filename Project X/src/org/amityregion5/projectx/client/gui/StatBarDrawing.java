@@ -112,6 +112,7 @@ public class StatBarDrawing {
                 g2.drawString(String.valueOf(pw.getAmmo()), 235, HEIGHT - SPACE * 2);
             }
 
+            // paint the ammo in mag
             g2.setFont(oldFont);
 
             if(pw.getAmmoInMag() == 0)
@@ -119,6 +120,19 @@ public class StatBarDrawing {
             g2.drawString(b.toString(), 140, HEIGHT - SPACE * 2);
 
             g2.setColor(Color.BLACK);
+
+            // draw upgrade cost
+            b.delete(0, b.length());
+            g2.setFont(g2.getFont().deriveFont(13.0f));
+            b.append("Upgrade cost: $");
+            b.append(pw.getUpgradeCost());
+            g2.drawString(b.toString(), 265, g2.getFontMetrics().getHeight() + 5);
+
+            // draw ammo cost
+            b.delete(0, b.length());
+            b.append("Ammo cost: $");
+            b.append(pw.getMagCost());
+            g2.drawString(b.toString(), 265, g2.getFontMetrics().getHeight() * 2 + 5);
 
         }
         catch(Exception ioobe)

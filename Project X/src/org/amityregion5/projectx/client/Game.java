@@ -368,7 +368,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
     }
 
     @Override
-    public void handle(Message m)
+    public void handle(final Message m)
     {
         if (m instanceof AnnounceMessage)
         {
@@ -463,16 +463,35 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
            ((ProjectileWeapon) me.getCurrWeapon()).reload();
         } else if (m instanceof ReloadingMessage)
         {
-            // TODO do something on receiving a ReloadingMessage.
-            // ReloadingMessage has getMs() that returns the reload time in
-            // milliseconds.
-            // maybe paint a bar that fills up in the given milliseconds
-            // to indicate reloading? idk
+            me.setReloading(true);
+            new Thread()
+            {
+                @Override
+                public void run()
+                {
+                    try
+                    {
+                        Thread.sleep(((ReloadingMessage) m).getMs());
+                    } catch (InterruptedException ex)
+                    {
+                        Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    finally
+                    {
+                        me.setReloading(false);
+                    }
+                }
+            }.start();
         }
         else
         {
             System.err.println("Unknown message type encountered. " + "Please make sure you have the latest game version!");
         }
+    }
+
+    public boolean isPlayerReloading()
+    {
+        return me.isReloading();
     }
 
     public void tellSocketClosed()

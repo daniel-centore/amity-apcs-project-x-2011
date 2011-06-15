@@ -21,6 +21,7 @@ package org.amityregion5.projectx.server.communication;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.amityregion5.projectx.common.communication.messages.ReloadMessage;
+import org.amityregion5.projectx.common.communication.messages.ReloadingMessage;
 
 import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
 import org.amityregion5.projectx.common.entities.items.held.ProjectileWeapon;
@@ -35,84 +36,91 @@ import org.amityregion5.projectx.server.Server;
 public class ShotThread extends Thread
 {
 
-   private PlayerEntity player;
-   private Server server;
-   private boolean keepShooting = true;
-   private boolean keepRunning = true;
+    private PlayerEntity player;
+    private Server server;
+    private boolean keepShooting = true;
+    private boolean keepRunning = true;
 
-   public ShotThread(PlayerEntity p, Server s)
-   {
-      player = p;
-      server = s;
-      this.setDaemon(true);
-   }
+    public ShotThread(PlayerEntity p, Server s)
+    {
+        player = p;
+        server = s;
+        this.setDaemon(true);
+    }
 
-   public void setPlayer(PlayerEntity p)
-   {
-      player = p;
-   }
+    public void setPlayer(PlayerEntity p)
+    {
+        player = p;
+    }
 
-   @Override
-   public void run()
-   {
-      while (keepRunning)
-      {
-         // stop shooting if we're not supposed to shoot
-         synchronized (this)
-         {
-            while (!keepShooting)
+    @Override
+    public void run()
+    {
+        while (keepRunning)
+        {
+            // stop shooting if we're not supposed to shoot
+            synchronized (this)
             {
-               try
-               {
-                  wait();
-               } catch (Exception e)
-               {
-                  e.printStackTrace();
-                  keepRunning = false;
-               }
+                while (!keepShooting)
+                {
+                    try
+                    {
+                        wait();
+                    } catch (Exception e)
+                    {
+                        e.printStackTrace();
+                        keepRunning = false;
+                    }
+                }
+
             }
+            try
+            {
+                if (player.fire())
+                {
+                    server.playerFired(player);
 
-         }
-         try
-         {
-            if (player.fire())
+                }
+                // auto-reload if rounds = 0
+                if (((ProjectileWeapon) (player.getCurrWeapon())).getAmmoInMag() <= 0)
+                {
+                    reload();
+                }
+                // sleeps in order to get the attack rate right
+                Thread.sleep((int) (1000 / player.getCurrWeapon().getAttackRate()));
+            } catch (InterruptedException ex)
             {
-               server.playerFired(player);
-            } else
-            {
-               if (((ProjectileWeapon) (player.getCurrWeapon())).getAmmoInMag() <= 0)
-               {
-                  ((ProjectileWeapon) (player.getCurrWeapon())).reload();
-                  server.getClients().get(player.getUsername()).send(new ReloadMessage());
-                  this.setShooting(false);
-               }
+                Logger.getLogger(ShotThread.class.getName()).log(Level.SEVERE, null, ex);
+                keepShooting = false;
             }
-            // sleeps in order to get the attack rate right
-            Thread.sleep((int) (1000 / player.getCurrWeapon().getAttackRate()));
-         } catch (InterruptedException ex)
-         {
-            Logger.getLogger(ShotThread.class.getName()).log(Level.SEVERE, null, ex);
-            keepShooting = false;
-         }
-      }
-   }
+        }
+    }
 
-   /**
-    * Sets whether or not this player is shooting.
-    * <b>This thread will stop and resume shooting by itself.</b>
-    * There is no need to externally notify() or wait() it.
-    * @param shooting whether or not the player associated with this ShotThread is shooting
-    */
-   public void setShooting(boolean shooting)
-   {
-      synchronized (this)
-      {
-         if (shooting)
-         {
-            this.notify();
-         }
-      }
+    public void reload()
+    {
+        server.getClients().get(player.getUsername()).send(
+                new ReloadingMessage(((ProjectileWeapon) player.getCurrWeapon()).getReloadTime()));
+        ((ProjectileWeapon) (player.getCurrWeapon())).reload();
+        server.getClients().get(player.getUsername()).send(new ReloadMessage());
+        this.setShooting(false);
+    }
 
-      keepShooting = shooting;
-   }
+    /**
+     * Sets whether or not this player is shooting.
+     * <b>This thread will stop and resume shooting by itself.</b>
+     * There is no need to externally notify() or wait() it.
+     * @param shooting whether or not the player associated with this ShotThread is shooting
+     */
+    public void setShooting(boolean shooting)
+    {
+        synchronized (this)
+        {
+            if (shooting)
+            {
+                this.notify();
+            }
+        }
+
+        keepShooting = shooting;
+    }
 }
