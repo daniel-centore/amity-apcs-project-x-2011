@@ -21,7 +21,7 @@ package org.amityregion5.projectx.common.entities;
 
 import java.util.Iterator;
 
-import org.amityregion5.projectx.ConcurrentHashMapWrapper;
+import org.amityregion5.projectx.common.tools.ConcurrentHashMapWrapper;
 
 /**
  * Holds all of our entities
