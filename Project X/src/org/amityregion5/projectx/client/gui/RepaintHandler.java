@@ -253,11 +253,9 @@ public class RepaintHandler extends Thread {
         if(wep instanceof Gun)
         {
             Gun gun = (Gun)wep;
-            double r = Point.distance(pe.getCenterX(), pe.getCenterY(), pe.getX() + Gun.DEFAULT_GUN_POINT.x, pe.getY() + Gun.DEFAULT_GUN_POINT.y);
+            double r = Point.distance(pe.getCenterX(), pe.getCenterY(), pe.getX() + Gun.DEFAULT_GUN_POINT.getX(), pe.getY() + Gun.DEFAULT_GUN_POINT.getY());
             int x = (int)(pe.getCenterX() + r * Math.cos(Math.toRadians(pe.getDirectionFacing())));
-            System.out.println("x " + x);
             int y = (int)(pe.getCenterY() + r * Math.sin(Math.toRadians(pe.getDirectionFacing())));
-            System.out.println("y " + y);
             gun.setWeaponTip(new Point(x,y));
         }
         
