@@ -305,7 +305,6 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                 SoundManager.stopMusic();
             } else if (Keys.isKey(Keys.BUY_SIGHT, keyCode))
             {
-                System.out.println("Sight key hit");
                 communicationHandler.send(new SightMessage());
             }
             if(me == null)
@@ -511,8 +510,6 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         }
         else if(m instanceof ReloadingMessage)
         {
-            System.out.println("received reloadingmessage time " +
-                    ((ReloadingMessage) m).getMs());
             me.setReloading(true);
             new Thread() {
 
