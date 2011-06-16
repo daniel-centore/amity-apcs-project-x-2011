@@ -160,4 +160,14 @@ public class ChatDrawing {
         return isChatting;
     }
 
+    public static void reset()
+    {
+        currChat = new StringBuffer();
+        chats = new ArrayList<String>();
+        for (int i = 1; i <= NUM_CHATS; i++)
+        {
+            chats.add("");
+        }
+    }
+
 }

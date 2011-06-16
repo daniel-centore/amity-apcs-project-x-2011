@@ -171,6 +171,8 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             communicationHandler.removeListener(this);
             rch.removeRawListener(this);
             InputHandler.removeListener(this);
+            StatBarDrawing.reset();
+            ChatDrawing.reset();
             new LobbyWindow(getCommunicationHandler(), null, me.getUsername());
             GameWindow.closeWindow();
 

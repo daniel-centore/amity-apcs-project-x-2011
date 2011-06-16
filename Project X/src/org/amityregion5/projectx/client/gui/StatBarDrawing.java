@@ -37,7 +37,7 @@ import org.amityregion5.projectx.common.entities.items.held.ProjectileWeapon;
 import org.amityregion5.projectx.common.entities.items.held.Weapon;
 
 /**
- * Class documentation.
+ * A class that returns a drawing of the player's stats bar.
  *
  * @author Joe Stein
  */
@@ -50,6 +50,12 @@ public class StatBarDrawing {
     public static final int HEIGHT = 50;
     private static int waveNumber = 0;
     private static String waveStr = "Wave " + String.valueOf(waveNumber);
+
+    public static void reset()
+    {
+        waveNumber = 0;
+        waveStr = "Wave 0";
+    }
 
     public static BufferedImage getStatBar(PlayerEntity p)
     {
