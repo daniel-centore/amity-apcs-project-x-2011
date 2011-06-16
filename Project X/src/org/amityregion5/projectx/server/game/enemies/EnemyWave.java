@@ -99,7 +99,7 @@ public class EnemyWave {
 
     public static double waveEnemyHealth(int wn)
     {
-        return wn*1.05;
+        return 1+wn*.05;
     }
 
 
