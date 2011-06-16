@@ -44,8 +44,9 @@ public abstract class ProjectileWeapon extends Weapon implements Upgradeable
    private Point weaponTip;
    private static final int MAG_COST = 50;
    private final int SIGHT_COST = 100;
-   private boolean sight = false; //determines of the weapon has a sight purchased
-   private int reloadTime = 500; // default reload time half a second
+   private boolean sight = false; //determines of the weapon has a sight purchase
+   private int reloadTime; // default reload time half a second
+   public static final int DEFAULT_RELOAD_TIME = 500;
    // ORIG_WEAPON_TIP needs to be changed each time a weapon is changed!
    // TODO make reload time upgradeable and variable on each gun!
    
@@ -65,6 +66,7 @@ public abstract class ProjectileWeapon extends Weapon implements Upgradeable
       roundsPerMag = rpm;
       currentRounds = rpm;
       this.damage = damage;
+      reloadTime = DEFAULT_RELOAD_TIME;
    }
 
    @Override
@@ -206,6 +208,11 @@ public abstract class ProjectileWeapon extends Weapon implements Upgradeable
     public int getReloadTime()
     {
         return reloadTime;
+    }
+
+    public void setReloadTime(int t)
+    {
+        reloadTime = t;
     }
     
     public boolean hasSight()
