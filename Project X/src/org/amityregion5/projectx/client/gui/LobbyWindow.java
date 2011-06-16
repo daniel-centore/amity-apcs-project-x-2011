@@ -19,6 +19,7 @@
  */
 package org.amityregion5.projectx.client.gui;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -72,6 +73,8 @@ public class LobbyWindow extends JFrame implements MessageListener
     private String lastFrom; // last person to recieve from
     private Game game; // game used by LobbyWindow
     private String username; // our username
+    private String[] specialUsernames = new String[]
+    {"The5678Nerd", "cowguru2000", "Senor Herp", "Danielle", "Joe_Shmo_101", "mdubs", "Mr. B"};
 
     /**
      * Creates a new LobbyWindow.
@@ -476,6 +479,13 @@ public class LobbyWindow extends JFrame implements MessageListener
                     g.setColor(isSelected ? list.getSelectionBackground() : list.getBackground());
                     g.fillRect(0, 0, getWidth(), getHeight());
                     g.setColor(isSelected ? list.getSelectionForeground() : list.getForeground());
+                    for (String names: specialUsernames)
+                    {
+                        if(username.equals(names))
+                        {
+                            g.setColor(Color.RED);
+                        }
+                    }
                     g.setFont(f);
                     g.drawString(username, 0, fm.getAscent());
                 }

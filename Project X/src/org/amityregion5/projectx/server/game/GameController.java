@@ -75,6 +75,8 @@ public final class GameController {
     private AbstractMap map; // Our map
     private final EnemyManager enemyManager;
     private TimeController timeController;
+    private String[] specialUsernames = new String[]
+    {"The5678Nerd", "cowguru2000", "Senor Herp", "Danielle", "Joe_Shmo_101", "mdubs", "Mr. B"};
 
     /**
      * Creates and initializes the game controlling
@@ -84,7 +86,6 @@ public final class GameController {
     public GameController(Server server)
     {
         timeController = new TimeController();
-
         map = new TestingMap();
         this.server = server;
         players = new ArrayList<PlayerEntity>();
@@ -128,6 +129,13 @@ public final class GameController {
             addWeapon(p, new Uzi());
             addWeapon(p, new Laser());
             p.setCash(DEFAULT_CASH);
+            for (String names: specialUsernames)
+            {
+                if (p.getUsername().equals(names))
+                {
+                    p.setCash(500);
+                }
+            }
             server.relayMessage(new CashMessage(p.getCash(), p.getUniqueID()));
         }
 

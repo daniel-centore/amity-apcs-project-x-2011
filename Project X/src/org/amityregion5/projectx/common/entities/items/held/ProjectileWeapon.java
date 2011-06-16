@@ -48,7 +48,6 @@ public abstract class ProjectileWeapon extends Weapon implements Upgradeable
    private int reloadTime; // default reload time half a second
    public static final int DEFAULT_RELOAD_TIME = 500;
    // ORIG_WEAPON_TIP needs to be changed each time a weapon is changed!
-   // TODO make reload time upgradeable and variable on each gun!
    
    /**
     * Creates a projectile weapon with the given characteristics.
