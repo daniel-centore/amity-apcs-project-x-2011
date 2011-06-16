@@ -506,7 +506,8 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         }
         else if(m instanceof ReloadMessage)
         {
-            ((ProjectileWeapon) me.getCurrWeapon()).reload();
+            if (me.getCurrWeapon() instanceof ProjectileWeapon)
+                ((ProjectileWeapon) me.getCurrWeapon()).reload();
         }
         else if(m instanceof ReloadingMessage)
         {
