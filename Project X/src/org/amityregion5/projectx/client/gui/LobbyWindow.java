@@ -510,6 +510,7 @@ public class LobbyWindow extends JFrame implements MessageListener
         {
             return new JPanel()
             {
+                private static final long serialVersionUID = 670L;
 
                 @Override
                 public void paintComponent(Graphics g)

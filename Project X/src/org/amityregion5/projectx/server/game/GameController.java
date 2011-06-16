@@ -64,16 +64,7 @@ import org.amityregion5.projectx.server.game.enemies.EnemyManager;
  */
 public final class GameController {
 
-    public static final boolean CENTORE = false;
-
-    public static final int DEFAULT_CASH;
-    static
-    {
-        if (CENTORE)
-            DEFAULT_CASH = 500000;
-        else
-            DEFAULT_CASH = 50;
-    }
+    public static int DEFAULT_CASH = 50;
 
     private static GameController instance;
 
@@ -352,4 +343,7 @@ public final class GameController {
         return players;
     }
 
+    public EnemyManager getEnemyManager() {
+        return enemyManager;
+    }
 }

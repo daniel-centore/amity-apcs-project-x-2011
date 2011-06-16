@@ -146,4 +146,8 @@ public class GeneratorThread extends Thread {
     {
         spawn = false;
     }
+
+    public void skipWave() {
+        waves.poll();
+    }
 }

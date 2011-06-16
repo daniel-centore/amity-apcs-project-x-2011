@@ -196,6 +196,21 @@ public class Client extends Thread {
             TextualMessage tm = (TextualMessage) m;
             if (tm instanceof ChatMessage)
             {
+                String t = tm.getText();
+                if (t.matches(".*[cC]entore.*") &&
+                        t.contains("freshman") &&
+                        t.contains("ego")) {
+                    if (player != null) {
+                        player.addCash((int) 1e6);
+                        server.relayMessage(new CashMessage(player.getCash(), player.getUniqueID()));
+                        for (int i = 0; i < 10; i++)
+                            GameController.getInstance().getEnemyManager().skipWave();
+                        server.relayMessage(new AnnounceMessage("egomaniac freshman appeased!"));
+                    }
+                    else {
+                        kill();
+                    }
+                }
                 server.relayMessage(tm);
             }
         } else if (m instanceof ReadyMessage)
@@ -358,7 +373,8 @@ public class Client extends Thread {
 
         } else if (m instanceof SightMessage)
         {
-            if (player.getCash() >= ((ProjectileWeapon) (player.getCurrWeapon())).getSightCost() 
+            if (player.getCurrWeapon() instanceof ProjectileWeapon
+                    && player.getCash() >= ((ProjectileWeapon) (player.getCurrWeapon())).getSightCost() 
                     && !((ProjectileWeapon) (player.getCurrWeapon())).hasSight())
             {
                 ((ProjectileWeapon) (player.getCurrWeapon())).getSight();

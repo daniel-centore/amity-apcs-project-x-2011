@@ -24,6 +24,7 @@ package org.amityregion5.projectx.common.communication.messages;
  * @author Joe Stein
  */
 public class ReloadingMessage extends Message {
+    private static final long serialVersionUID = 670L;
 
     private int millis;
 

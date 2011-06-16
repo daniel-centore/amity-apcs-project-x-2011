@@ -90,6 +90,7 @@ public class Keys {
         LEADERBOARD     = parseKeyList(keyses[12]);
         CHANGE_WEAPON_1 = parseKeyList(keyses[13]);
         CHANGE_WEAPON_2 = parseKeyList(keyses[14]);
+        BUY_SIGHT       = parseKeyList(keyses[15]);
     }
 
     private static int[] parseKeyList(String keys) // helper

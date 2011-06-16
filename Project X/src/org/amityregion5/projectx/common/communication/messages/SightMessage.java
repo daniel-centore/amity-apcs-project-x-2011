@@ -25,6 +25,5 @@ package org.amityregion5.projectx.common.communication.messages;
  */
 public class SightMessage extends Message
 {
-    private static final long serialVersionUID = 603L;
-    
+    private static final long serialVersionUID = 670L;
 }

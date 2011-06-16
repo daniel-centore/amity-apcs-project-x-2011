@@ -95,6 +95,8 @@ public class GUIServerController extends javax.swing.JFrame implements ServerCon
         jLabel1.setText("Server Control");
 
         playerList.setModel(new javax.swing.AbstractListModel() {
+            private static final long serialVersionUID = 670L;
+
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }

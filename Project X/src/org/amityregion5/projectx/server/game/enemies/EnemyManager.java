@@ -42,14 +42,7 @@ public class EnemyManager {
     private ArrayList<Point> spawnArea;
     private GameController controller;
     private static final int NUM_WAVES = 666; // Completely arbitrary
-    private static final int START_WAVE; // for testing
-    static 
-    {
-        if (GameController.CENTORE)
-            START_WAVE = 90;
-        else
-            START_WAVE = 1;
-    }
+    private static final int START_WAVE = 1; // for testing
 
     public EnemyManager(GameController c, ArrayList<Point> area)
     {
@@ -99,6 +92,10 @@ public class EnemyManager {
     public void kill()
     {
         gen.kill();
+    }
+
+    public void skipWave() {
+        gen.skipWave();
     }
 
     /**
