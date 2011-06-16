@@ -384,8 +384,15 @@ public class Client extends Thread {
                 ((ProjectileWeapon) (player.getCurrWeapon())).getSight();
                 player.spendCash(((ProjectileWeapon) (player.getCurrWeapon())).getSightCost());
                 server.relayMessage(new CashMessage(player.getCash(), player.getUniqueID()));
-                this.send(new SightMessage());
+                send(new SightMessage());
             }
+        } else if (m instanceof ActivePlayersMessage)
+        {
+            // client wants a list of active players
+            send(server.getPlayersUpdate(this));
+        } else if (m instanceof GoodbyeMessage)
+        {
+            server.removeClient(username);
         }
     }
 

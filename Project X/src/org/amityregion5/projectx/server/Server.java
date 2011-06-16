@@ -269,6 +269,26 @@ public class Server {
     }
 
     /**
+     * @param c the client to exclude
+     * @return a Message of all active players excluding the specified client
+     */
+    public ActivePlayersMessage getPlayersUpdate(Client cl)
+    {
+        List<User> users = new ArrayList<User>();
+
+        synchronized(this)
+        {
+            for(Client c : clients.values())
+            {
+                if (c != cl)
+                    users.add(new User(c.getUsername(), !c.isWaiting()));
+            }
+        }
+
+        return new ActivePlayersMessage(users);
+    }
+
+    /**
      * Checks if we already have a client with a certain IP
      * 
      * @param ip IP to check

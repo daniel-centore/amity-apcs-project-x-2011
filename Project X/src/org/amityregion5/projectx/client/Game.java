@@ -169,11 +169,13 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         {
             this.destroy();
             communicationHandler.removeListener(this);
+            communicationHandler.send(new GoodbyeMessage(me.getUsername()));
             rch.removeRawListener(this);
             InputHandler.removeListener(this);
             StatBarDrawing.reset();
             ChatDrawing.reset();
             new LobbyWindow(getCommunicationHandler(), null, me.getUsername());
+            communicationHandler.send(new IntroduceMessage(me.getUsername()));
             GameWindow.closeWindow();
 
         }
@@ -462,7 +464,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             if(sum.getType() == StatusUpdateMessage.Type.END_GAME)
             {
                 gameOver = true;
-                JOptionPane.showMessageDialog(null, "The enemies have taken over!", "Game Over", JOptionPane.OK_OPTION);
+                JOptionPane.showMessageDialog(GameWindow.getInstance(), "The enemies have taken over!", "Game Over", JOptionPane.OK_OPTION);
                 rch.kill();
                 RepaintHandler.endGame();
                 GameWindow.fireRepaintRequired();

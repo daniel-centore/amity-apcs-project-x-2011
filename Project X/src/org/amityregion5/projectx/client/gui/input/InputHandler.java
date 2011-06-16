@@ -36,13 +36,13 @@ import org.amityregion5.projectx.client.GameInputListener;
  */
 public class InputHandler {
 
-    private static ArrayList<GameInputListener> gils = new ArrayList<GameInputListener>(); // Input listeners
+    private static final ArrayList<GameInputListener> gils = new ArrayList<GameInputListener>(); // Input listeners
 
     /**
      * Registers the given GameInputListener with the input handler
      * @param gil the GameInputListener to register
      */
-    public static void registerListener(GameInputListener gil)
+    public static synchronized void registerListener(GameInputListener gil)
     {
         gils.add(gil);
     }
@@ -51,51 +51,50 @@ public class InputHandler {
      * Unregisters the given GameInputListener.
      * @param gil the GameInputListener to unregister
      */
-    public static void removeListener(GameInputListener gil)
+    public static synchronized void removeListener(GameInputListener gil)
     {
         gils.remove(gil);
     }
 
-    public static void mouseDragged(int x, int y)
+    public static synchronized void mouseDragged(int x, int y)
     {
-        for (GameInputListener g : gils)
+        for(GameInputListener g : gils)
             g.mouseDragged(x, y);
     }
 
-    public static void mouseMoved(int x, int y)
+    public static synchronized void mouseMoved(int x, int y)
     {
-        for (GameInputListener g : gils)
+        for(GameInputListener g : gils)
             g.mouseMoved(x, y);
     }
 
-    public static void mousePressed(int x, int y, int button)
+    public static synchronized void mousePressed(int x, int y, int button)
     {
-        for (GameInputListener g : gils)
+        for(GameInputListener g : gils)
             g.mousePressed(x, y, button);
     }
 
-    public static void mouseReleased(int x, int y, int button)
+    public static synchronized void mouseReleased(int x, int y, int button)
     {
-        for (GameInputListener g : gils)
+        for(GameInputListener g : gils)
             g.mouseReleased(x, y, button);
     }
 
-    public static void keyReleased(int keyCode) // only when key is released
+    public static synchronized void keyReleased(int keyCode) // only when key is released
     {
-        for (GameInputListener g : gils)
+        for(GameInputListener g : gils)
             g.keyReleased(keyCode);
     }
 
-    public static void keyPressed(KeyEvent e)
+    public static synchronized void keyPressed(KeyEvent e)
     {
-        for (GameInputListener g : gils)
+        for(GameInputListener g : gils)
             g.keyPressed(e);
     }
 
-    public static void mouseScrolled(MouseWheelEvent e)
+    public static synchronized void mouseScrolled(MouseWheelEvent e)
     {
-        for (GameInputListener g : gils)
+        for(GameInputListener g : gils)
             g.mouseScrolled(e);
     }
-
 }
