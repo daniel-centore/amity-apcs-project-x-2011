@@ -63,6 +63,7 @@ public class Client extends Thread {
     private PlayerEntity player; // client's player (once we make it!)
     private RawClient raw; // client's raw client (once created)
     private ShotThread shotThread; // helps this client with shooting
+    private boolean dead = false; // whether or not this client is already dead
 
     /**
      * Creates a client
@@ -127,6 +128,9 @@ public class Client extends Thread {
 
     private void disconnected() // helper
     {
+        if (dead) return; // already dead, no need to act
+        
+        dead = true;
         System.out.println("Client disconnected");
         // remove this client from the server list
         if (username != null) // this client gave us its username

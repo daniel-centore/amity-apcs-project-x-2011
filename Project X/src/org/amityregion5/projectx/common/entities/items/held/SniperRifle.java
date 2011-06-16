@@ -54,6 +54,7 @@ public class SniperRifle extends Gun implements DamageDealing, Upgradeable
         return image;
     }
 
+    @Override
     public int getMagCost() {
         return super.getMagCost() / 10;
     }

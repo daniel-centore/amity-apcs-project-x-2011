@@ -20,6 +20,7 @@
 package org.amityregion5.projectx.common.communication.messages;
 
 import java.util.List;
+import org.amityregion5.projectx.common.communication.User;
 
 /**
  * Has a list of active players on the server
@@ -31,13 +32,13 @@ public class ActivePlayersMessage extends Message {
 
     private static final long serialVersionUID = 145L;
 
-    private List<String> players; // player list
+    private List<User> players; // player list
 
     /**
      * Creates an ActivePlayersMessage
      * @param players List of players
      */
-    public ActivePlayersMessage(List<String> players)
+    public ActivePlayersMessage(List<User> players)
     {
         this.players = players;
     }
@@ -47,7 +48,7 @@ public class ActivePlayersMessage extends Message {
      * 
      * @return the active players on the server in a List<String>
      */
-    public List<String> getPlayers()
+    public List<User> getPlayers()
     {
         return players;
     }
@@ -56,7 +57,7 @@ public class ActivePlayersMessage extends Message {
      * Sets the list of players
      * @param players The list
      */
-    public void setPlayers(List<String> players)
+    public void setPlayers(List<User> players)
     {
         this.players = players;
     }

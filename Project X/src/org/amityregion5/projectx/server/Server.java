@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.amityregion5.projectx.common.communication.Constants;
+import org.amityregion5.projectx.common.communication.User;
 import org.amityregion5.projectx.common.communication.messages.ActivePlayersMessage;
 import org.amityregion5.projectx.common.communication.messages.AnnounceMessage;
 import org.amityregion5.projectx.common.communication.messages.ChatMessage;
@@ -252,17 +253,17 @@ public class Server {
      */
     public ActivePlayersMessage getPlayersUpdate()
     {
-        List<String> names = new ArrayList<String>();
+        List<User> users = new ArrayList<User>();
 
         synchronized (this)
         {
             for (Client c : clients.values())
             {
-                names.add(c.getUsername());
+                users.add(new User(c.getUsername(),c.isWaiting()));
             }
         }
 
-        return new ActivePlayersMessage(names);
+        return new ActivePlayersMessage(users);
     }
 
     /**

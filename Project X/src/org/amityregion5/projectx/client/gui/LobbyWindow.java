@@ -41,6 +41,7 @@ import org.amityregion5.projectx.client.Game;
 import org.amityregion5.projectx.client.communication.CommunicationHandler;
 import org.amityregion5.projectx.client.communication.MulticastCommunicationHandler;
 import org.amityregion5.projectx.common.communication.MessageListener;
+import org.amityregion5.projectx.common.communication.User;
 import org.amityregion5.projectx.common.communication.messages.ActivePlayersMessage;
 import org.amityregion5.projectx.common.communication.messages.AnnounceMessage;
 import org.amityregion5.projectx.common.communication.messages.ChatMessage;
@@ -78,7 +79,7 @@ public class LobbyWindow extends JFrame implements MessageListener
      * @param sock the socket that was connected to the server after choosing
      * @param players the players that were already in this lobby. Can be empty or null.
      */
-    public LobbyWindow(CommunicationHandler ch, List<String> players, String username)
+    public LobbyWindow(CommunicationHandler ch, List<User> players, String username)
     {
         super("Project X Lobby");
 
@@ -99,9 +100,9 @@ public class LobbyWindow extends JFrame implements MessageListener
         playerListModel.addElement(new User(username));
         if (players != null)
         {
-            for (String player : players)
+            for (User player : players)
             {
-                playerListModel.addElement(new User(player));
+                playerListModel.addElement(player);
             }
         }
         playerList.setModel(playerListModel);
@@ -317,11 +318,11 @@ public class LobbyWindow extends JFrame implements MessageListener
 
                 public void run()
                 {
-                    List<String> usernames = ((ActivePlayersMessage) m).getPlayers();
+                    List<User> usernames = ((ActivePlayersMessage) m).getPlayers();
 
-                    for (String q : usernames)
+                    for (User q : usernames)
                     {
-                        playerListModel.addElement(new User(q));
+                        playerListModel.addElement(q);
                     }
                 }
             });
@@ -332,7 +333,7 @@ public class LobbyWindow extends JFrame implements MessageListener
 
                 public void run()
                 {
-                    playerListModel.removeElement(((GoodbyeMessage) m).getText());
+                    playerListModel.removeElement(new User(((GoodbyeMessage) m).getText()));
                 }
             });
         } else if (m instanceof StatusUpdateMessage)
@@ -396,58 +397,6 @@ public class LobbyWindow extends JFrame implements MessageListener
                     LobbyWindow.this.repaint();
                 }
             });
-        }
-    }
-
-    /**
-     * Used in the list model.
-     */
-    private class User
-    {
-        private String username;
-        private boolean ready;
-
-        public User(String u)
-        {
-            username = u;
-            ready = false;
-        }
-
-        public void setReady(boolean r)
-        {
-            ready = r;
-        }
-
-        public boolean isReady()
-        {
-            return ready;
-        }
-
-        @Override
-        public String toString()
-        {
-            return username;
-        }
-
-        @Override
-        public boolean equals(Object o)
-        {
-            if (o instanceof User && ((User) o).username.equals(this.username))
-            {
-                return true;
-            } else if (o instanceof String)
-            {
-                return this.username.equals((String) o);
-            }
-            return false;
-        }
-
-        @Override
-        public int hashCode()
-        {
-            int hash = 5;
-            hash = 37 * hash + (this.username != null ? this.username.hashCode() : 0);
-            return hash;
         }
     }
 
