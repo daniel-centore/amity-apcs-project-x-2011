@@ -28,7 +28,8 @@ public abstract class MeleeWeapon extends Weapon {
 
     private static final long serialVersionUID = 605L;
     
-    // TODO: shouldn't the range be the size of the weapon?
+    //shouldn't the range be the size of the weapon? 
+    //Since this isn't implemented, this shouldn't be a problem :)
     public static final int MELEE_RANGE = 5; // default to 5 pixels range
     
     private int damage;

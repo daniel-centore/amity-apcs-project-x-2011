@@ -23,7 +23,7 @@ public class Bomb extends MeleeWeapon implements DamageDealing {
         super(SWORD_RATE, DAMAGE);
     }
 
-    // TODO: make bomb sprite
+    
     private static final BufferedImage image = ImageHandler.loadImage("E_Hands");
 
     @Override

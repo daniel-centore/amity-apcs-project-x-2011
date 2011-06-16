@@ -39,7 +39,7 @@ public class RPG extends Gun implements Upgradeable, DamageDealing {
 
     public RPG()
     {
-        // TODO: balance against the other weapons.
+        //balance against the other weapons.
         super(600, -1, -1, .25, 1, 30);
     }
 
@@ -51,7 +51,7 @@ public class RPG extends Gun implements Upgradeable, DamageDealing {
 
     public BufferedImage getDefaultImage()
     {
-        //none yet TODO rpg sprite
+        //none yet
         return null;
 
     }
