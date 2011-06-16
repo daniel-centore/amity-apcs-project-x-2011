@@ -484,6 +484,7 @@ public class LobbyWindow extends JFrame implements MessageListener
                         if(username.equals(names))
                         {
                             g.setColor(Color.RED);
+                            username += " (Admin)";
                         }
                     }
                     g.setFont(f);
