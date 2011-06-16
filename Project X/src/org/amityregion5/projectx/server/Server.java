@@ -126,7 +126,6 @@ public class Server {
         }
         clients.put(username, c);
         c.setWaiting(true);
-        this.incrementWaiting();
     }
 
     /**

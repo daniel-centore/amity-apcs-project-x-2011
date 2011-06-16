@@ -175,12 +175,9 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                 @Override
                 public void run()
                 {
-                    System.out.println("sending goodbye message");
                     communicationHandler.send(new GoodbyeMessage(me.getUsername()));
 
-                    System.out.println("destroying this game");
                     Game.this.destroy();
-                    rch.removeRawListener(Game.this);
                     StatBarDrawing.reset();
                     ChatDrawing.reset();
                     GameWindow.closeWindow();
@@ -188,7 +185,6 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                     boolean joined = false;
                     while(!joined)
                     {
-                        System.out.println("introducing self...");
                         Message reply = communicationHandler.requestReply(new IntroduceMessage(username));
                         // ActivePlayerUpdate message serves as an affirmative here.
                         if(reply instanceof ActivePlayersMessage)
