@@ -170,44 +170,51 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
     {
         if(gameOver)
         {
-            System.out.println("sending goodbye message");
-            communicationHandler.send(new GoodbyeMessage(me.getUsername()));
-
-            System.out.println("destroying this game");
-            this.destroy();
-            rch.removeRawListener(this);
-            StatBarDrawing.reset();
-            ChatDrawing.reset();
-            GameWindow.closeWindow();
-
-            boolean joined = false;
-            while(!joined)
+            new Thread()
             {
-                System.out.println("introducing self...");
-                Message reply = communicationHandler.requestReply(new IntroduceMessage(username));
-                // ActivePlayerUpdate message serves as an affirmative here.
-                if(reply instanceof ActivePlayersMessage)
+                @Override
+                public void run()
                 {
-                    ActivePlayersMessage apm = (ActivePlayersMessage) reply;
-                    joined = true;
-                    new LobbyWindow(communicationHandler, apm.getPlayers(), username);
+                    System.out.println("sending goodbye message");
+                    communicationHandler.send(new GoodbyeMessage(me.getUsername()));
+
+                    System.out.println("destroying this game");
+                    Game.this.destroy();
+                    rch.removeRawListener(Game.this);
+                    StatBarDrawing.reset();
+                    ChatDrawing.reset();
+                    GameWindow.closeWindow();
+
+                    boolean joined = false;
+                    while(!joined)
+                    {
+                        System.out.println("introducing self...");
+                        Message reply = communicationHandler.requestReply(new IntroduceMessage(username));
+                        // ActivePlayerUpdate message serves as an affirmative here.
+                        if(reply instanceof ActivePlayersMessage)
+                        {
+                            ActivePlayersMessage apm = (ActivePlayersMessage) reply;
+                            joined = true;
+                            new LobbyWindow(communicationHandler, apm.getPlayers(), username);
+                        }
+                        else if(reply instanceof DisconnectRequestMessage)
+                        {
+                            JOptionPane.showMessageDialog(null, ((DisconnectRequestMessage) reply).getReason(),
+                                    "Disconnected", JOptionPane.ERROR_MESSAGE);
+                            joined = true; // get us out of the loop
+                        }
+                        else if(reply instanceof Message)
+                        {
+                            System.out.println(reply.getClass());
+                            // generic message means error
+                            JOptionPane.showMessageDialog(null, "I/O error. Check logs for details.",
+                                    "Disconnected", JOptionPane.ERROR_MESSAGE);
+                            joined = true;
+                        }
+                    }
+                    InputHandler.removeListener(Game.this);
                 }
-                else if(reply instanceof DisconnectRequestMessage)
-                {
-                    JOptionPane.showMessageDialog(null, ((DisconnectRequestMessage) reply).getReason(),
-                            "Disconnected", JOptionPane.ERROR_MESSAGE);
-                    joined = true; // get us out of the loop
-                }
-                else if(reply instanceof Message)
-                {
-                    System.out.println(reply.getClass());
-                    // generic message means error
-                    JOptionPane.showMessageDialog(null, "I/O error. Check logs for details.",
-                            "Disconnected", JOptionPane.ERROR_MESSAGE);
-                    joined = true;
-                }
-            }
-            InputHandler.removeListener(this);
+            }.start();
         }
         else if(button == MouseEvent.BUTTON1)
         {
