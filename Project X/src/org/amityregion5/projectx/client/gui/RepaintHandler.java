@@ -222,7 +222,7 @@ public class RepaintHandler extends Thread {
         if (pe.hasWeapons())
         {
             Weapon wep = pe.getCurrWeapon();
-            if(wep instanceof Gun)
+            if(wep instanceof Gun && ((Gun) wep).getWeaponTip() != null)
             {
 
                 Gun gun = (Gun) wep;

@@ -139,6 +139,7 @@ public class Server {
         Client c = clients.remove(username);
         if(c != null && c.isWaiting())
         {
+            System.err.println("c " + username + " waiting so dec on remove");
             waiting--; // only if we were waiting on them should we count ir
         }
         relayMessage(new GoodbyeMessage(username));
@@ -181,7 +182,6 @@ public class Server {
         waiting = 0;
         for(Client client : clients.values())
         {
-            client.setWaiting(true);
             client.send(new AnnounceMessage("Game Over!"));
             client.send(new StatusUpdateMessage(
                     StatusUpdateMessage.Type.END_GAME));
@@ -346,6 +346,7 @@ public class Server {
      */
     public void incrementWaiting()
     {
+        System.out.println("incing, " + waiting + "+1 waiting");
         waiting++;
         this.updateWaitingStatus();
     }
@@ -355,6 +356,7 @@ public class Server {
      */
     public void decrementWaiting()
     {
+        System.out.println("decing, " + waiting + "-1 waiting");
         waiting--;
 
         if(waiting == 0 && clients.size() >= MIN_PLAYERS)

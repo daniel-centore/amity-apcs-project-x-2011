@@ -40,7 +40,7 @@ import org.amityregion5.projectx.server.game.GameController;
  */
 public class RawServer extends Thread {
 
-    private ArrayList<RawClient> rawClients; // THe list of clients
+    private ArrayList<RawClient> rawClients; // The list of clients
     private boolean keepRunning = true; // Should we keep looking?
     private ServerSocket rawSock; // Socket to search upon
     private Server server; // the main server

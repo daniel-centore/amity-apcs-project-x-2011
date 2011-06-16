@@ -201,11 +201,11 @@ public class LobbyWindow extends JFrame implements MessageListener
         if (ready)
         {
             readyButton.setText("Ready");
-            CommunicationHandler.getInstance().send(new ReadyMessage(false));
+            ch.send(new ReadyMessage(false));
         } else
         {
             readyButton.setText("Not Ready");
-            CommunicationHandler.getInstance().send(new ReadyMessage(true));
+            ch.send(new ReadyMessage(true));
         }
 
         ready = !ready;
@@ -213,7 +213,7 @@ public class LobbyWindow extends JFrame implements MessageListener
 
     private void BackToServerChooserButtonActionPerformed(java.awt.event.ActionEvent evt)
     {
-        CommunicationHandler.getInstance().kill(); // close old connection
+        ch.kill(); // close old connection
         ch.removeListener(this);
         ServerChooserWindow chooser = new ServerChooserWindow();
         MulticastCommunicationHandler mch = new MulticastCommunicationHandler();
@@ -418,6 +418,7 @@ public class LobbyWindow extends JFrame implements MessageListener
             public void run()
             {
                 playerListModel.removeAllElements();
+                readyButton.setEnabled(false);
                 playerList.setEnabled(false);
                 chatField.setEnabled(false);
                 sendBtn.setEnabled(false);

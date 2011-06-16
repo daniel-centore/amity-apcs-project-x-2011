@@ -175,9 +175,8 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                 @Override
                 public void run()
                 {
-                    communicationHandler.send(new GoodbyeMessage(me.getUsername()));
-
                     Game.this.destroy();
+                    
                     StatBarDrawing.reset();
                     ChatDrawing.reset();
                     GameWindow.closeWindow();
@@ -503,8 +502,10 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             if(sum.getType() == StatusUpdateMessage.Type.END_GAME)
             {
                 gameOver = true;
+                communicationHandler.send(new GoodbyeMessage(username));
                 JOptionPane.showMessageDialog(GameWindow.getInstance(), "The enemies have taken over!", "Game Over", JOptionPane.OK_OPTION);
                 rch.kill();
+                communicationHandler.removeListener(this);
                 RepaintHandler.endGame();
                 GameWindow.fireRepaintRequired();
             }
@@ -519,7 +520,8 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         {
             PointMessage pm = (PointMessage) m;
             // ((PlayerEntity) entityHandler.getEntity(pm.getID())).setPoints(pm.getAmount());
-            ((PlayerEntity) controllerThread.getEntity(pm.getID())).setPoints(pm.getAmount());
+            if (controllerThread.getEntity(pm.getID()) != null)
+                ((PlayerEntity) controllerThread.getEntity(pm.getID())).setPoints(pm.getAmount());
         }
         else if(m instanceof WeaponUpgradedMessage)
         {
@@ -737,6 +739,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         communicationHandler.removeListener(this);
         dUpThread.kill();
         rch.kill();
+        rch = null;
         GameWindow.closeWindow();
     }
 
