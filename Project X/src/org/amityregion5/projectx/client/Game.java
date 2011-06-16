@@ -200,7 +200,6 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                         }
                         else if(reply instanceof Message)
                         {
-                            System.out.println(reply.getClass());
                             // generic message means error
                             JOptionPane.showMessageDialog(null, "I/O error. Check logs for details.",
                                     "Disconnected", JOptionPane.ERROR_MESSAGE);
@@ -501,6 +500,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             StatusUpdateMessage sum = (StatusUpdateMessage) m;
             if(sum.getType() == StatusUpdateMessage.Type.END_GAME)
             {
+                controllerThread.kill();
                 gameOver = true;
                 communicationHandler.send(new GoodbyeMessage(username));
                 JOptionPane.showMessageDialog(GameWindow.getInstance(), "The enemies have taken over!", "Game Over", JOptionPane.OK_OPTION);
@@ -771,7 +771,6 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
 
     private void startCountdown(int i)
     {
-        System.out.println("countdown " + i);
         countdown = i;
         new Countdown(i).start();
     }

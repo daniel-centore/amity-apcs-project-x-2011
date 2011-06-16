@@ -234,12 +234,10 @@ public class Client extends Thread {
             if (rm.isAffirmative())
             {
                 waiting = false;
-                System.err.println("decing " + username + " on ready");
                 server.decrementWaiting();
             } else
             {
                 waiting = true;
-                System.err.println("incing " + username + " on unready");
                 server.incrementWaiting();
             }
         } else if (m instanceof NotifyMessage)
@@ -249,7 +247,6 @@ public class Client extends Thread {
             {
             case LOBBY_READY:
                 waiting = true;
-                System.err.println("incing " + username + " on lobby ready");
                 server.incrementWaiting();
                 break;
             }
