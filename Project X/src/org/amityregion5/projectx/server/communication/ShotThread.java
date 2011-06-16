@@ -79,7 +79,6 @@ public class ShotThread extends Thread
                 if (player.fire())
                 {
                     server.playerFired(player);
-
                 }
                 // auto-reload if rounds = 0
                 if (((ProjectileWeapon) (player.getCurrWeapon())).getAmmoInMag() <= 0)
@@ -122,5 +121,11 @@ public class ShotThread extends Thread
         }
 
         keepShooting = shooting;
+    }
+
+    public void kill()
+    {
+        keepShooting = false;
+        keepRunning = false;
     }
 }

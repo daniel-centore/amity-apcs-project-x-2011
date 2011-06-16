@@ -329,7 +329,7 @@ public class RepaintHandler extends Thread {
     }
 
     /**
-     * Ends the game, darkening the background etc.
+     * Ends the game.
      */
     public static void endGame()
     {

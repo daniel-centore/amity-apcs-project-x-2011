@@ -114,7 +114,7 @@ public class Server {
      */
     public synchronized void addClient(String username, Client c)
     {
-
+        System.out.println("adding client");
         if(clients.size() == MAX_PLAYERS)
         {
             c.disconnect("This game is full.", true);
@@ -137,7 +137,8 @@ public class Server {
     {
         controller.clientLeft(username);
         Client c = clients.remove(username);
-        if(c.isWaiting())
+        System.out.println("client " + username + " removed, " + clients.size() + " left");
+        if(c != null && c.isWaiting())
         {
             waiting--; // only if we were waiting on them should we count ir
         }
@@ -181,10 +182,13 @@ public class Server {
         waiting = 0;
         for(Client client : clients.values())
         {
+            client.setWaiting(true);
             client.send(new AnnounceMessage("Game Over!"));
             client.send(new StatusUpdateMessage(
                     StatusUpdateMessage.Type.END_GAME));
+            client.getShotThread().kill();
         }
+        
         multicaster = new Multicaster(name);
         multicaster.setDaemon(true);
         multicaster.start();
@@ -278,6 +282,7 @@ public class Server {
 
         synchronized(this)
         {
+            System.out.println("getting players update, " + clients.size() + " clients");
             for(Client c : clients.values())
             {
                 if (c != cl)

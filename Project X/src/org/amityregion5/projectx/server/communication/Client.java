@@ -126,6 +126,11 @@ public class Client extends Thread {
         }
     }
 
+    public void setWaiting(boolean w)
+    {
+        waiting = w;
+    }
+
     private void disconnected() // helper
     {
         if (dead) return; // already dead, no need to act
@@ -195,12 +200,16 @@ public class Client extends Thread {
                     sendReply((BlockingMessage) m, new BooleanReplyMessage(false));
                 }
             }
+        } else if (m instanceof GoodbyeMessage)
+        {
+            shotThread.setShooting(false);
+            server.removeClient(username);
         } else if (m instanceof TextualMessage)
         {
             TextualMessage tm = (TextualMessage) m;
             if (tm instanceof ChatMessage)
             {
-                String t = tm.getText();
+               /* String t = tm.getText();
                 if (t.matches(".*[cC]entore.*") &&
                         t.contains("freshman") &&
                         t.contains("ego")) {
@@ -214,7 +223,7 @@ public class Client extends Thread {
                     else {
                         kill();
                     }
-                }
+                } */
                 server.relayMessage(tm);
             }
         } else if (m instanceof ReadyMessage)
@@ -234,7 +243,6 @@ public class Client extends Thread {
         } else if (m instanceof NotifyMessage)
         {
             NotifyMessage nm = (NotifyMessage) m;
-
             switch (nm.getWhat())
             {
             case LOBBY_READY:
@@ -390,9 +398,6 @@ public class Client extends Thread {
         {
             // client wants a list of active players
             send(server.getPlayersUpdate(this));
-        } else if (m instanceof GoodbyeMessage)
-        {
-            server.removeClient(username);
         }
     }
 
@@ -482,5 +487,10 @@ public class Client extends Thread {
     public RawClient getRaw()
     {
         return raw;
+    }
+
+    public ShotThread getShotThread()
+    {
+        return shotThread;
     }
 }

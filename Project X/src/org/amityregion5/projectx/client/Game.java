@@ -131,26 +131,29 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         if(me == null || me.getImage() == null)
             return;
 
-        if (me.getHitBox().contains(x,y))
+        if(me.getHitBox().contains(x, y))
             return;
 
         int cx = me.getCenterX();
         int cy = me.getCenterY();
 
-        if ((cx-x)*(cx-x) + (cy-y)*(cy-y) < 3600) {
+        if((cx - x) * (cx - x) + (cy - y) * (cy - y) < 3600)
+        {
             int angle = (int) Math.toDegrees(Math.atan2(y - cy, x - cx));
             me.setDirectionFacing(angle);
         }
-        else {
+        else
+        {
             int x1;
             int y1;
 
-            if (me.getCurrWeapon() instanceof ProjectileWeapon &&
-                    ((ProjectileWeapon) me.getCurrWeapon()).getWeaponTip() != null)
+            if(me.getCurrWeapon() instanceof ProjectileWeapon
+                    && ((ProjectileWeapon) me.getCurrWeapon()).getWeaponTip() != null)
             {
                 x1 = (int) ((ProjectileWeapon) me.getCurrWeapon()).getWeaponTip().getX();
                 y1 = (int) ((ProjectileWeapon) me.getCurrWeapon()).getWeaponTip().getY();
-            } else
+            }
+            else
             {
                 x1 = cx;
                 y1 = cy;
@@ -167,17 +170,44 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
     {
         if(gameOver)
         {
-            this.destroy();
-            communicationHandler.removeListener(this);
+            System.out.println("sending goodbye message");
             communicationHandler.send(new GoodbyeMessage(me.getUsername()));
+
+            System.out.println("destroying this game");
+            this.destroy();
             rch.removeRawListener(this);
-            InputHandler.removeListener(this);
             StatBarDrawing.reset();
             ChatDrawing.reset();
-            new LobbyWindow(getCommunicationHandler(), null, me.getUsername());
-            communicationHandler.send(new IntroduceMessage(me.getUsername()));
             GameWindow.closeWindow();
 
+            boolean joined = false;
+            while(!joined)
+            {
+                System.out.println("introducing self...");
+                Message reply = communicationHandler.requestReply(new IntroduceMessage(username));
+                // ActivePlayerUpdate message serves as an affirmative here.
+                if(reply instanceof ActivePlayersMessage)
+                {
+                    ActivePlayersMessage apm = (ActivePlayersMessage) reply;
+                    joined = true;
+                    new LobbyWindow(communicationHandler, apm.getPlayers(), username);
+                }
+                else if(reply instanceof DisconnectRequestMessage)
+                {
+                    JOptionPane.showMessageDialog(null, ((DisconnectRequestMessage) reply).getReason(),
+                            "Disconnected", JOptionPane.ERROR_MESSAGE);
+                    joined = true; // get us out of the loop
+                }
+                else if(reply instanceof Message)
+                {
+                    System.out.println(reply.getClass());
+                    // generic message means error
+                    JOptionPane.showMessageDialog(null, "I/O error. Check logs for details.",
+                            "Disconnected", JOptionPane.ERROR_MESSAGE);
+                    joined = true;
+                }
+            }
+            //InputHandler.removeListener(this);
         }
         else if(button == MouseEvent.BUTTON1)
         {
@@ -296,22 +326,28 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
             else if(Keys.isKey(Keys.BUY_AMMO, keyCode))
             {
                 communicationHandler.send(new BuyAmmoMessage());
-            } else if (Keys.isKey(Keys.SONG_1, keyCode))
+            }
+            else if(Keys.isKey(Keys.SONG_1, keyCode))
             {
                 SoundManager.play(SoundManager.SONG_1);
-            } else if (Keys.isKey(Keys.SONG_2, keyCode))
+            }
+            else if(Keys.isKey(Keys.SONG_2, keyCode))
             {
                 SoundManager.play(SoundManager.SONG_2);
-            } else if (Keys.isKey(Keys.SONG_3, keyCode))
+            }
+            else if(Keys.isKey(Keys.SONG_3, keyCode))
             {
                 SoundManager.play(SoundManager.SONG_3);
-            } else if (Keys.isKey(Keys.SONG_4, keyCode))
+            }
+            else if(Keys.isKey(Keys.SONG_4, keyCode))
             {
                 SoundManager.play(SoundManager.SONG_4);
-            } else if (Keys.isKey(Keys.STOP, keyCode))
+            }
+            else if(Keys.isKey(Keys.STOP, keyCode))
             {
                 SoundManager.stopMusic();
-            } else if (Keys.isKey(Keys.BUY_SIGHT, keyCode))
+            }
+            else if(Keys.isKey(Keys.BUY_SIGHT, keyCode))
             {
                 communicationHandler.send(new SightMessage());
             }
@@ -513,7 +549,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         }
         else if(m instanceof ReloadMessage)
         {
-            if (me.getCurrWeapon() instanceof ProjectileWeapon)
+            if(me.getCurrWeapon() instanceof ProjectileWeapon)
                 ((ProjectileWeapon) me.getCurrWeapon()).reload();
         }
         else if(m instanceof ReloadingMessage)
@@ -538,7 +574,8 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                     }
                 }
             }.start();
-        } else if (m instanceof SightMessage)
+        }
+        else if(m instanceof SightMessage)
         {
             ((ProjectileWeapon) me.getCurrWeapon()).getSight();
         }
@@ -662,7 +699,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                         ((Damageable) e).setHp(hp);
                     }
 
-                    if (e != me)
+                    if(e != me)
                         e.setDirectionFacing(facing);
 
                     e.setDirectionMoving(moving);
