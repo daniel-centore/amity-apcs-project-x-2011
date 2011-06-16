@@ -93,6 +93,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
      */
     public Game(CommunicationHandler ch, AbstractMap m, String username)
     {
+        RepaintHandler.reset();
         timeController = new TimeController();
         this.username = username;
         // entityHandler = new EntityHandler();
@@ -167,6 +168,9 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         if(gameOver)
         {
             this.destroy();
+            communicationHandler.removeListener(this);
+            rch.removeRawListener(this);
+            InputHandler.removeListener(this);
             new LobbyWindow(getCommunicationHandler(), null, me.getUsername());
             GameWindow.closeWindow();
 
@@ -685,6 +689,8 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
      */
     private void destroy()
     {
+        rch.removeRawListener(this);
+        communicationHandler.removeListener(this);
         dUpThread.kill();
         rch.kill();
         GameWindow.closeWindow();

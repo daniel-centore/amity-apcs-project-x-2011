@@ -176,11 +176,6 @@ public class RepaintHandler extends Thread {
                 drawLeaderboard(g,img.getWidth(null),img.getHeight(null));
             }
 
-            //if (game.getCountdown() >= 0)
-            {
-                //drawCountdown(game.getCountdown(),g,img.getWidth(null));
-            }
-
         }
 
         return img;
@@ -339,5 +334,11 @@ public class RepaintHandler extends Thread {
     public static void endGame()
     {
         showingLb = true;
+    }
+
+    public static void reset()
+    {
+        showingLb = false;
+        showingGrid = false;
     }
 }

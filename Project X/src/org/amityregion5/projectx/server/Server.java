@@ -60,7 +60,6 @@ public class Server {
     private ServerController controller; // controls the server
     private int waiting; // how many people we are waiting for
     private GameController gameController; // Current game controller
-    
     /**
      * A HashMap of the connected Clients to this Server.
      * Will not include clients until they have sent an IntroduceMessage
@@ -89,7 +88,8 @@ public class Server {
             rawServ.start();
             System.out.println("Server successfully started! Yipee!");
             System.out.println("-----------------------------------------");
-        } catch (IOException e)
+        }
+        catch(IOException e)
         {
             System.err.println("A server is already running on this computer!");
             System.exit(1);
@@ -115,12 +115,12 @@ public class Server {
     public synchronized void addClient(String username, Client c)
     {
 
-        if (clients.size() == MAX_PLAYERS)
+        if(clients.size() == MAX_PLAYERS)
         {
-            c.disconnect("This game is full.",true);
+            c.disconnect("This game is full.", true);
         }
 
-        if (controller != null)
+        if(controller != null)
         {
             controller.clientJoined(username);
         }
@@ -137,7 +137,7 @@ public class Server {
     {
         controller.clientLeft(username);
         Client c = clients.remove(username);
-        if (c.isWaiting())
+        if(c.isWaiting())
         {
             waiting--; // only if we were waiting on them should we count ir
         }
@@ -160,9 +160,9 @@ public class Server {
      */
     public synchronized void kill()
     {
-        if (listening)
+        if(listening)
             listening = false;
-        for (Client client : clients.values())
+        for(Client client : clients.values())
         {
             client.send(new AnnounceMessage("Server shutting down now!"));
             client.send(new StatusUpdateMessage(
@@ -178,7 +178,8 @@ public class Server {
      */
     public synchronized void endGame()
     {
-        for (Client client : clients.values())
+        waiting = 0;
+        for(Client client : clients.values())
         {
             client.send(new AnnounceMessage("Game Over!"));
             client.send(new StatusUpdateMessage(
@@ -232,17 +233,18 @@ public class Server {
     public synchronized void relayMessage(Message m)
     {
         // hook for the controller
-        if (m instanceof ChatMessage)
+        if(m instanceof ChatMessage)
         {
             ChatMessage cm = (ChatMessage) m;
             controller.chatted(cm.getFrom(), cm.getText());
-        } else if (m instanceof AnnounceMessage)
+        }
+        else if(m instanceof AnnounceMessage)
         {
             AnnounceMessage am = (AnnounceMessage) m;
             controller.chatted("[SERVER] ", am.getText());
         }
         // relay to clients
-        for (Client client : clients.values())
+        for(Client client : clients.values())
         {
             client.send(m);
         }
@@ -255,11 +257,11 @@ public class Server {
     {
         List<User> users = new ArrayList<User>();
 
-        synchronized (this)
+        synchronized(this)
         {
-            for (Client c : clients.values())
+            for(Client c : clients.values())
             {
-                users.add(new User(c.getUsername(),c.isWaiting()));
+                users.add(new User(c.getUsername(), !c.isWaiting()));
             }
         }
 
@@ -274,9 +276,9 @@ public class Server {
      */
     public synchronized boolean hasClientWithIP(String ip)
     {
-        for (Client client : clients.values())
+        for(Client client : clients.values())
         {
-            if (client.getIP().equals(ip))
+            if(client.getIP().equals(ip))
             {
                 return true;
             }
@@ -289,10 +291,12 @@ public class Server {
      */
     public InetAddress getInetAddress()
     {
-        try {
+        try
+        {
             return InetAddress.getLocalHost();
         }
-        catch (UnknownHostException e) {
+        catch(UnknownHostException e)
+        {
             return servSock.getInetAddress();
         }
     }
@@ -329,10 +333,11 @@ public class Server {
     {
         waiting--;
 
-        if (waiting == 0 && clients.size() >= MIN_PLAYERS)
+        if(waiting == 0 && clients.size() >= MIN_PLAYERS)
         {
-                startGame();
-        } else
+            startGame();
+        }
+        else
         {
             this.updateWaitingStatus();
         }
@@ -343,13 +348,13 @@ public class Server {
      */
     public void startGame()
     {
+        waiting = 0;
         setListening(false);
-
         relayMessage(new StatusUpdateMessage(StatusUpdateMessage.Type.STARTING));
         gameController = new GameController(this);
 
     }
-    
+
     /**
      * @return A HashMap of connected clients
      */
@@ -374,7 +379,7 @@ public class Server {
      */
     public void playerFired(PlayerEntity player)
     {
-        if (gameController != null)
+        if(gameController != null)
         {
             //relayMessage(new FiredMessage(player.getUniqueID()));
             gameController.playerFired(player);
@@ -391,24 +396,25 @@ public class Server {
         {
             try
             {
-                while (listening)
+                while(listening)
                 {
                     Client newc = new Client(servSock.accept(), Server.this);
-                    if (!listening)
+                    if(!listening)
                     {
-                        if (clients.isEmpty()) // if nobody is playing, lets have a new game
+                        if(clients.isEmpty()) // if nobody is playing, lets have a new game
                             Server.this.setListening(true);
                         else
-                            newc.disconnect("The game has already started.",true);
+                            newc.disconnect("The game has already started.", true);
                     }
 
                     newc.start();
-                    if (controller != null)
+                    if(controller != null)
                     {
                         controller.clientConnected(newc.getIP());
                     }
                 }
-            } catch (IOException e)
+            }
+            catch(IOException e)
             {
                 listening = false;
             }
@@ -431,5 +437,4 @@ public class Server {
     {
         rawServ.send(s);
     }
-
 }

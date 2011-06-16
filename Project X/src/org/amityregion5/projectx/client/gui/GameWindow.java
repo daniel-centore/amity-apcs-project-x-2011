@@ -60,16 +60,19 @@ public class GameWindow extends JFrame {
     private int yOffset; // how much screen is offset vertically
     private int lastWidth; // the last width of the window to reduce memory usage
     private int lastHeight; // the last height... ^^
+    private static Game game;
 
     /**
      * Creates a GameWindow
      * @param map The map of the game
      * @param game The game
      */
-    public GameWindow(AbstractMap map, final Game game)
+    public GameWindow(AbstractMap map, Game game)
     {
         super("Amity Project X");
-
+        
+        this.game = game;
+        
         instance = this;
 
         this.setBackground(Color.black);
@@ -83,95 +86,7 @@ public class GameWindow extends JFrame {
             }
         });
 
-        panel = new JComponent() {
-
-            private static final long serialVersionUID = 594L;
-
-            @Override
-            // called when we run RepaintHandler.fireUpdateRequired()
-            public void paintComponent(Graphics g)
-            {
-                buffer = RepaintHandler.getMapFlatImage();
-
-                int w = this.getWidth();
-                int h = this.getHeight();
-
-                if(w != lastWidth || h != lastHeight)
-                {
-                    lastHeight = h;
-                    lastWidth = w;
-                }
-
-                Image buffer2 = createImage(getWidth(), getHeight());
-                Graphics2D buffer2g = (Graphics2D) buffer2.getGraphics();
-                buffer2g.setColor(Color.black);
-                buffer2g.fillRect(0, 0, getWidth(), getHeight());
-
-                int[] scale = scaleImage(buffer, w, h);
-
-                buffer2g.drawImage(buffer, (xOffset = scale[2]), (yOffset = scale[3]), scale[0], scale[1], null);
-
-                // draw chat
-                BufferedImage chat = ChatDrawing.getChat(ChatDrawing.CHAT_WIDTH, ChatDrawing.CHAT_HEIGHT);
-                if(chat != null)
-                {
-                    buffer2g.drawImage(chat, xOffset, this.getHeight() - ChatDrawing.CHAT_HEIGHT - yOffset, null);
-                }
-
-                if(game.getMe() != null)
-                {
-                    buffer2g.drawImage(StatBarDrawing.getStatBar(game.getMe()), xOffset,
-                            this.getHeight() - StatBarDrawing.HEIGHT - yOffset, null);
-
-                    // draw ammo
-                    if(game.getMe().hasWeapons() && game.getMe().getCurrWeapon() != null)
-                    {
-                        Point p = this.getMousePosition();
-                        if(p != null)
-                        {
-                            int am = ((ProjectileWeapon) game.getMe().getCurrWeapon()).getAmmoInMag();
-                            if(am > -1)
-                            {
-                                buffer2g.setFont(new Font("Sans", Font.BOLD, 16));
-                                if(game.getMe().isReloading())
-                                {
-                                    buffer2g.setColor(Color.red);
-                                    buffer2g.drawString(
-                                            "-RELOADING-", (int) p.getX() - 5,
-                                            (int) p.getY() - 5);
-                                }
-                                else if(am == 0)
-                                {
-                                    buffer2g.setColor(Color.red);
-                                    buffer2g.drawString(
-                                            "0", (int) p.getX() - 5,
-                                            (int) p.getY() - 5);
-                                }
-                                else
-                                {
-                                    buffer2g.setColor(Color.white);
-                                    buffer2g.drawString(
-                                            String.valueOf(am), (int) p.getX() - 5,
-                                            (int) p.getY() - 5);
-                                }
-                            }
-                            else
-                            {
-                                buffer2g.drawString(
-                                        "inf", (int) p.getX() - 5,
-                                        (int) p.getY() - 5);
-                            }
-                        }
-                    }
-
-                    // draw reloading
-                }
-
-
-                g.drawImage(buffer2, 0, 0, null);
-            }
-        };
-
+        panel = new GamePanel();
         panel.addFocusListener(game);
 
         // register listeners
@@ -198,6 +113,100 @@ public class GameWindow extends JFrame {
         }
         panel.requestFocusInWindow();
 
+    }
+
+    public static void setGame(Game g)
+    {
+        game = g;
+    }
+
+    private class GamePanel extends JComponent {
+
+        private static final long serialVersionUID = 594L;
+
+        @Override
+        // called when we run RepaintHandler.fireUpdateRequired()
+        public void paintComponent(Graphics g)
+        {
+            buffer = RepaintHandler.getMapFlatImage();
+
+            int w = this.getWidth();
+            int h = this.getHeight();
+
+            if(w != lastWidth || h != lastHeight)
+            {
+                lastHeight = h;
+                lastWidth = w;
+            }
+
+            Image buffer2 = createImage(getWidth(), getHeight());
+            Graphics2D buffer2g = (Graphics2D) buffer2.getGraphics();
+            buffer2g.setColor(Color.black);
+            buffer2g.fillRect(0, 0, getWidth(), getHeight());
+
+            int[] scale = scaleImage(buffer, w, h);
+
+            buffer2g.drawImage(buffer, (xOffset = scale[2]), (yOffset = scale[3]), scale[0], scale[1], null);
+
+            // draw chat
+            BufferedImage chat = ChatDrawing.getChat(ChatDrawing.CHAT_WIDTH, ChatDrawing.CHAT_HEIGHT);
+            if(chat != null)
+            {
+                buffer2g.drawImage(chat, xOffset, this.getHeight() - ChatDrawing.CHAT_HEIGHT - yOffset, null);
+            }
+
+            if(game.getMe() != null)
+            {
+                buffer2g.drawImage(StatBarDrawing.getStatBar(game.getMe()), xOffset,
+                        this.getHeight() - StatBarDrawing.HEIGHT - yOffset, null);
+
+                // draw ammo
+                if(game.getMe().hasWeapons() && game.getMe().getCurrWeapon() != null)
+                {
+                    Point p = this.getMousePosition();
+                    if(p != null)
+                    {
+                        int am = ((ProjectileWeapon) game.getMe().getCurrWeapon()).getAmmoInMag();
+                        if(am > -1)
+                        {
+                            buffer2g.setFont(new Font("Sans", Font.BOLD, 16));
+                            if(game.getMe().isReloading())
+                            {
+                                buffer2g.setColor(Color.red);
+                                buffer2g.drawString(
+                                        "-RELOADING-", (int) p.getX() - 5,
+                                        (int) p.getY() - 5);
+                            }
+                            else if(am == 0)
+                            {
+                                buffer2g.setColor(Color.red);
+                                buffer2g.drawString(
+                                        "0", (int) p.getX() - 5,
+                                        (int) p.getY() - 5);
+                            }
+                            else
+                            {
+                                buffer2g.setColor(Color.white);
+                                buffer2g.drawString(
+                                        String.valueOf(am), (int) p.getX() - 5,
+                                        (int) p.getY() - 5);
+                            }
+                        }
+                        else
+                        {
+                            buffer2g.drawString(
+                                    "inf", (int) p.getX() - 5,
+                                    (int) p.getY() - 5);
+                        }
+                    }
+                }
+
+                // draw reloading
+            }
+
+
+            g.drawImage(buffer2, 0, 0, null);
+        }
     }
 
     /**

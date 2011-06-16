@@ -62,13 +62,13 @@ public class EntityControllerThread extends Thread {
     @Override
     public void run()
     {
-        while (keepRunning)
+        while(keepRunning)
         {
-            for (final Entity e : entities)
+            for(final Entity e : entities)
             {
                 double r = e.getMoveSpeed();
 
-                if (r > 0 || e instanceof Enemy)
+                if(r > 0 || e instanceof Enemy)
                 {
                     double theta = e.getDirectionMoving();
 
@@ -78,47 +78,49 @@ public class EntityControllerThread extends Thread {
                     double newY = offsetY + e.getY();
 
                     boolean collision = false;
-                    for (Entity q : entities)
+                    for(Entity q : entities)
                     {
-                        if (q instanceof Block && q != e)
-                            if (CollisionDetection.hasCollision(e, (int) offsetX, (int) offsetY, q))
+                        if(q instanceof Block && q != e)
+                            if(CollisionDetection.hasCollision(e, (int) offsetX, (int) offsetY, q))
                             {
                                 collision = true;
 
-                                if (e instanceof Enemy)
+                                if(e instanceof Enemy)
                                 {
                                     processEnemyCollision((Enemy) e, (Block) q);
                                 }
                             }
                     }
 
-                    if (e instanceof PlayerEntity)
+                    if(e instanceof PlayerEntity)
                     {
                         Rectangle thb = e.getHitBox();
                         thb.setLocation((int) newX, (int) newY);
 
                         // AN, player base
-                        if (map.getPlayArea().contains(thb))
+                        if(map.getPlayArea().contains(thb))
                         {
                             e.setX(newX);
                             e.setY(newY);
                         }
-                    } else if (!collision)
+                    }
+                    else if(!collision)
                     {
                         e.setX(newX);
                         e.setY(newY);
                     }
                 }
 
-                if (e instanceof Enemy && CollisionDetection.hasCollision(e, 0, 0, map.getArea()))
+                if(e instanceof Enemy && CollisionDetection.hasCollision(e, 0, 0, map.getArea()))
                 {
                     Enemy en = (Enemy) e;
-                    if (en instanceof SuicideBomber)
+                    if(en instanceof SuicideBomber)
                     {
                         SuicideBomber sb = (SuicideBomber) en;
                         map.getArea().damage(sb.getCurrWeapon().getDamage()); // attack the area specifically
                         removeEntity(sb);
-                    } else
+                    }
+                    else
                     {
                         int relY = (int) map.getPlayArea().getCenterY() - e.getCenterY();
                         int relX = (int) map.getPlayArea().getCenterX() - e.getCenterX();
@@ -127,19 +129,20 @@ public class EntityControllerThread extends Thread {
                         e.setDirectionFacing(dir);
                         en.stop();
                         map.getArea().damage(en.getCurrWeapon().getDamage());
-                        if (map.getArea().killed() && keepRunning && isOnServer)
-                        {
-                            // game over!
-                            keepRunning = false;
-                            server.endGame();
-                        }
+                    }
+                    if(map.getArea().killed() && keepRunning && isOnServer)
+                    {
+                        // game over!
+                        keepRunning = false;
+                        server.endGame();
                     }
                 }
             }
             try
             {
                 Thread.sleep(EntityConstants.MOVE_UPDATE_TIME);
-            } catch (InterruptedException ex)
+            }
+            catch(InterruptedException ex)
             {
                 Logger.getLogger(EntityControllerThread.class.getName()).log(Level.SEVERE, null, ex);
                 keepRunning = false;
@@ -149,22 +152,23 @@ public class EntityControllerThread extends Thread {
 
     private void processEnemyCollision(Enemy e, Block q) // helper
     {
-        if (e instanceof SuicideBomber)
+        if(e instanceof SuicideBomber)
         {
             q.damage(((SuicideBomber) e).getCurrWeapon().getDamage());
-            if (q.killed())
+            if(q.killed())
                 removeEntity(q);
             else
                 q.requestUpdate();
 
             removeEntity(e);
-        } else
+        }
+        else
         {
             Damageable dam = (Damageable) q;
 
             dam.damage(e.getCurrWeapon().getDamage());
 
-            if (dam.killed())
+            if(dam.killed())
                 removeEntity(q);
             else
                 q.requestUpdate();
@@ -186,7 +190,7 @@ public class EntityControllerThread extends Thread {
 
     public void removeEntity(Entity e)
     {
-        if (!isOnServer)
+        if(!isOnServer)
             return;
 
         entities.requestRemove(e);

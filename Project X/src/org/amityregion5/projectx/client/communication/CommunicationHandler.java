@@ -177,7 +177,8 @@ public class CommunicationHandler extends Thread {
      */
     public synchronized void registerListener(MessageListener mh)
     {
-        listeners.add(mh);
+        if (!listeners.contains(mh))
+            listeners.add(mh);
     }
 
     /**
