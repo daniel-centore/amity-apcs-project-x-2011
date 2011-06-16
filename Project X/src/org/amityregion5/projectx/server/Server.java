@@ -50,7 +50,7 @@ import org.amityregion5.projectx.server.game.GameController;
 public class Server {
 
     public static final int MIN_PLAYERS = 1; // minimum number of players to have a game
-    public static final int MAX_PLAYERS = 4; // maximum number of players to allow to connect
+    public static final int MAX_PLAYERS = 8; // maximum number of players to allow to connect
     private String name; // the text name of the server
     private boolean listening = true; // should we be listening for clients?
     private ServerSocket servSock; // Server Socket
