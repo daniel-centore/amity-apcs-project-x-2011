@@ -125,7 +125,8 @@ public class Server {
             controller.clientJoined(username);
         }
         clients.put(username, c);
-        this.updateWaitingStatus();
+        c.setWaiting(true);
+        this.incrementWaiting();
     }
 
     /**
@@ -137,7 +138,6 @@ public class Server {
     {
         controller.clientLeft(username);
         Client c = clients.remove(username);
-        System.out.println("client " + username + " removed, " + clients.size() + " left");
         if(c != null && c.isWaiting())
         {
             waiting--; // only if we were waiting on them should we count ir

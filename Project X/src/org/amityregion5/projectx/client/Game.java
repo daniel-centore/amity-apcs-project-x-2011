@@ -207,7 +207,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
                     joined = true;
                 }
             }
-            //InputHandler.removeListener(this);
+            InputHandler.removeListener(this);
         }
         else if(button == MouseEvent.BUTTON1)
         {
