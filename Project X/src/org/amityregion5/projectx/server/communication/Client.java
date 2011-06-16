@@ -380,6 +380,7 @@ public class Client extends Thread {
                 ((ProjectileWeapon) (player.getCurrWeapon())).getSight();
                 player.spendCash(((ProjectileWeapon) (player.getCurrWeapon())).getSightCost());
                 server.relayMessage(new CashMessage(player.getCash(), player.getUniqueID()));
+                this.send(new SightMessage());
             }
         }
     }

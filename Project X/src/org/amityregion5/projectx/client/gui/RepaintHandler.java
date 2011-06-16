@@ -124,6 +124,7 @@ public class RepaintHandler extends Thread {
                     if (ce.hasWeapons())
                     {
                         drawWeapon(ce,g);
+                        //draw sight if one exists
                         if (ce instanceof PlayerEntity && ((ProjectileWeapon) ce.getCurrWeapon()).hasSight())
                         {
                             ProjectileWeapon gun = (ProjectileWeapon) ce.getCurrWeapon();
