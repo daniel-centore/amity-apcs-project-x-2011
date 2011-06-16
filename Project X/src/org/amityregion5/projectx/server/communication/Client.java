@@ -209,7 +209,7 @@ public class Client extends Thread {
             TextualMessage tm = (TextualMessage) m;
             if (tm instanceof ChatMessage)
             {
-               /* String t = tm.getText();
+               String t = tm.getText();
                 if (t.matches(".*[cC]entore.*") &&
                         t.contains("freshman") &&
                         t.contains("ego")) {
@@ -223,7 +223,7 @@ public class Client extends Thread {
                     else {
                         kill();
                     }
-                } */
+                }
                 server.relayMessage(tm);
             }
         } else if (m instanceof ReadyMessage)
