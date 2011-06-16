@@ -76,7 +76,7 @@ public final class GameController {
     private final EnemyManager enemyManager;
     private TimeController timeController;
     private String[] specialUsernames = new String[]
-    {"The5678Nerd", "cowguru2000", "Senor Herp", "Danielle", "Joe_Shmo_101", "mdubs", "Mr. B"};
+    {"The5678Nerd", "cowguru2000", "Senhor Herp", "Danielle", "JoeShmo101", "mdubs", "Mr. B"};
 
     /**
      * Creates and initializes the game controlling

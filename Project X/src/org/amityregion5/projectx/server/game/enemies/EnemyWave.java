@@ -105,7 +105,7 @@ public class EnemyWave {
 
     public static double waveSpawnTime(int wn)
     {
-        return 34 / (33 + wn); // inversely-decreasing number
+        return .01; // inversely-decreasing number
     }
 
     public static double waveNumEnemies(int wn)

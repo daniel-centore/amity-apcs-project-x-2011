@@ -74,7 +74,7 @@ public class LobbyWindow extends JFrame implements MessageListener
     private Game game; // game used by LobbyWindow
     private String username; // our username
     private String[] specialUsernames = new String[]
-    {"The5678Nerd", "cowguru2000", "Senor Herp", "Danielle", "Joe_Shmo_101", "mdubs", "Mr. B"};
+    {"The5678Nerd", "cowguru2000", "Senhor Herp", "Danielle", "JoeShmo101", "mdubs", "Mr. B"};
 
     /**
      * Creates a new LobbyWindow.

@@ -42,7 +42,7 @@ public class EnemyManager {
     private ArrayList<Point> spawnArea;
     private GameController controller;
     private static final int NUM_WAVES = 666; // Completely arbitrary
-    private static final int START_WAVE = 20; // for testing
+    private static final int START_WAVE = 1; // for testing
 
     public EnemyManager(GameController c, ArrayList<Point> area)
     {
@@ -105,6 +105,6 @@ public class EnemyManager {
      */
     public static int waveDelayTime(int wn)
     {
-        return 20000;
+        return 30000;
     }
 }
