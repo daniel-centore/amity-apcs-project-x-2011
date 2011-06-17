@@ -17,9 +17,14 @@
  * it under the terms of the GNU General Public License as published
  * by the Free Software Foundation.
  */
-
 package org.amityregion5.projectx.client.gui;
 
+import java.awt.Font;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+import java.util.ResourceBundle;
 import javax.swing.JFrame;
 
 /**
@@ -34,13 +39,29 @@ import javax.swing.JFrame;
 public class SplashScreen extends JFrame {
 
     private static final long serialVersionUID = 475L;
-    
+
     /** Creates new form SplashScreen */
     public SplashScreen()
     {
         initComponents();
+        String version;
+        try
+        {
+            ResourceBundle props = ResourceBundle.getBundle("org/amityregion5/projectx/info");
+            version = props.getString("version");
+        }
+        catch(Exception e)
+        {
+            version = "??";
+        }
+        versionLabel.setText("Version: " + version); // TODO version number
         this.setLocationRelativeTo(null); // center on screen
         this.setVisible(true);
+    }
+
+    public static void main(String[] args)
+    {
+        new SplashScreen();
     }
 
     /**
@@ -63,37 +84,38 @@ public class SplashScreen extends JFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
+        versionLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setAlwaysOnTop(true);
         setResizable(false);
         setUndecorated(true);
 
-        jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 48));
+        jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 48)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("PROJECT X");
 
         jLabel2.setText("Created by:");
 
-        jLabel3.setFont(new java.awt.Font("Lucida Sans", 0, 12));
+        jLabel3.setFont(new java.awt.Font("Lucida Sans", 0, 12)); // NOI18N
         jLabel3.setText("Dan \"Danielle\" Centore");
 
-        jLabel4.setFont(new java.awt.Font("Lucida Sans", 0, 12));
-        jLabel4.setText("Michael \"Dr. No\" Wenke");
+        jLabel4.setFont(new java.awt.Font("Lucida Sans", 0, 12)); // NOI18N
+        jLabel4.setText("Mike \"Mikey D\" DiBuduo");
 
         jLabel5.setFont(new java.awt.Font("Lucida Sans", 0, 12)); // NOI18N
-        jLabel5.setText("Mike \"My Ked\" DiBuduo");
+        jLabel5.setText("Jenny \"Keep Voting!!\" Liu");
 
         jLabel6.setFont(new java.awt.Font("Lucida Sans", 0, 12)); // NOI18N
-        jLabel6.setText("Joe \"Einstein\" Stein");
+        jLabel6.setText("Cameron \"Keep Firing!!\" Simpson");
 
         jLabel7.setFont(new java.awt.Font("Lucida Sans", 0, 12)); // NOI18N
-        jLabel7.setText("Cameron \"Awesome\" Simpson");
+        jLabel7.setText("Joe \"Einstein\" Stein");
 
         jLabel8.setFont(new java.awt.Font("Lucida Sans", 0, 12)); // NOI18N
-        jLabel8.setText("Jenny \"Keep Voting!!\" Liu");
+        jLabel8.setText("Michael \"Dr. No\" Wenke");
 
-        jLabel9.setFont(new java.awt.Font("Lucida Sans", 0, 12)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Lucida Sans", 0, 12));
         jLabel9.setText("Mike \"Zuul\" Zuo");
 
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -101,11 +123,15 @@ public class SplashScreen extends JFrame {
 
         jLabel11.setFont(new java.awt.Font("Lucida Sans", 0, 12)); // NOI18N
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel11.setText("Mr. \"Franky\" Barretta");
+        jLabel11.setText("Mr. \"Mister\" Barretta");
 
         jLabel12.setFont(new java.awt.Font("Lucida Sans", 0, 12)); // NOI18N
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel12.setText("Scott \"Scotty D\" DellaTorre");
+
+        versionLabel.setFont(versionLabel.getFont().deriveFont(versionLabel.getFont().getStyle() | java.awt.Font.BOLD, 12));
+        versionLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        versionLabel.setText("Version:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -115,25 +141,26 @@ public class SplashScreen extends JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(38, 38, 38)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
                             .addComponent(jLabel6)
                             .addComponent(jLabel7)
                             .addComponent(jLabel8)
-                            .addComponent(jLabel9))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel11)
-                            .addComponent(jLabel12)))
-                    .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel12)
+                            .addComponent(versionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 314, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 292, Short.MAX_VALUE)
                         .addComponent(jLabel10)))
                 .addContainerGap())
         );
@@ -142,18 +169,18 @@ public class SplashScreen extends JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel10))
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel11))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel12))
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -163,13 +190,14 @@ public class SplashScreen extends JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel9)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(versionLabel))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -183,6 +211,6 @@ public class SplashScreen extends JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel versionLabel;
     // End of variables declaration//GEN-END:variables
-
 }
