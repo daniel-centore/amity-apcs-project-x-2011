@@ -46,6 +46,11 @@ public abstract class Weapon extends HeldItem implements DamageDealing {
         return range;
     }
 
+    public void setRange(int r)
+    {
+        range = r;
+    }
+
     /**
      * Gets attack rate, in attacks per second.
      * @return attack rate in attacks per second

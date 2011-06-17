@@ -61,7 +61,7 @@ public class Pistol extends Gun implements Upgradeable {
             setAttackRate(getAttackRate() + .5);
             setDamage(getDamage() + 2);
             setRPM(getRPM() + 2);
-            setReloadTime((int)(DEFAULT_RELOAD_TIME - 50*(upgradeLevel - 1)));
+            setReloadTime(DEFAULT_RELOAD_TIME - 50*(upgradeLevel - 1));
         }
     }
 

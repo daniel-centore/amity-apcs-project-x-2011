@@ -63,7 +63,8 @@ public class Uzi extends Gun implements Upgradeable {
             setAttackRate(getAttackRate() + 1);
             setDamage(getDamage() + 2);
             setMaxAmmo(getMaxAmmo() + AMMO_UPGRADE * 5);
-            setReloadTime((int)(DEFAULT_RELOAD_TIME - 50*(upgradeLevel - 1)));
+            setRange(getRange() + 60);
+            setReloadTime(DEFAULT_RELOAD_TIME - 50*(upgradeLevel - 1));
         }
     }
 

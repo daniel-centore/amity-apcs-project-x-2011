@@ -74,7 +74,7 @@ public class SniperRifle extends Gun implements DamageDealing, Upgradeable
 
             setAttackRate(getAttackRate() + 1);
             setMaxAmmo(getMaxAmmo() + AMMO_UPGRADE);
-            setReloadTime((int)(DEFAULT_RELOAD_TIME - 50*(upgradeLevel - 1)));
+            setReloadTime(DEFAULT_RELOAD_TIME - 50*(upgradeLevel - 1));
         }
     }
 

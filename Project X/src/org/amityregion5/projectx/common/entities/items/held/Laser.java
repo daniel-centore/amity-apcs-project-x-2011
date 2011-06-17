@@ -59,9 +59,9 @@ public class Laser extends Gun implements Upgradeable {
         if (upgradeLevel < LVL_CAP)
         {
             upgradeLevel++;
-            setDamage(getDamage() + 2);
+            setDamage(getDamage() + 1);
             setMaxAmmo(getMaxAmmo() + 100);
-            setReloadTime((int)(DEFAULT_RELOAD_TIME - 50*(upgradeLevel - 1)));
+            setReloadTime(DEFAULT_RELOAD_TIME - 50*(upgradeLevel - 1));
         }
     }
 

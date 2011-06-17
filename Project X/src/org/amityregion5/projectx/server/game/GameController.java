@@ -290,12 +290,7 @@ public final class GameController {
                 Damageable d = (Damageable) e;
                 double dist = e.getCenterLocation().distance(new Point(player.getCenterX(), player.getCenterY()));
                 int damage = d.damage(player.getCurrWeapon().getDamage(dist));
-                if(player.getCurrWeapon() instanceof Laser && e instanceof ArmoredEnemy)
-                {
-                    // cut damage dealt by laser to armoredenemy
-                    damage *= (2.0/5);
-                }
-                for(Client c : clients)
+                for (Client c : clients)
                 {
                     if(c.getPlayer().equals(player))
                     {
