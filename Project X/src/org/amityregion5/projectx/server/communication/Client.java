@@ -213,16 +213,7 @@ public class Client extends Thread {
                 if (t.matches(".*[cC]entore.*") &&
                         t.contains("freshman") &&
                         t.contains("ego")) {
-                    if (player != null) {
-                        player.addCash((int) 1e6);
-                        server.relayMessage(new CashMessage(player.getCash(), player.getUniqueID()));
-                        for (int i = 0; i < 10; i++)
-                            GameController.getInstance().getEnemyManager().skipWave();
-                        server.relayMessage(new AnnounceMessage("egomaniac freshman appeased!"));
-                    }
-                    else {
-                        kill();
-                    }
+                    server.relayMessage(new AnnounceMessage("egomaniac freshman appeased!"));
                 }
                 server.relayMessage(tm);
             }
