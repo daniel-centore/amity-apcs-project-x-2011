@@ -34,7 +34,7 @@ import org.amityregion5.projectx.common.tools.ImageHandler;
 public class Uzi extends Gun implements Upgradeable {
 
     private static final long serialVersionUID = 605L;
-    private final int UPGRADE_COST = 150;
+    private final int UPGRADE_COST = 100;
 
     public Uzi()
     {

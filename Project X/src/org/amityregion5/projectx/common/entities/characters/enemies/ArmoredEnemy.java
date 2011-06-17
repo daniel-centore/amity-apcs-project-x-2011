@@ -42,12 +42,6 @@ public class ArmoredEnemy extends Enemy {
         return super.damage(amt - armor);
     }
 
-//    @Override
-//    public String getDefaultImage()
-//    {
-//        return "sprites/Enemy_Big"; // Need real graphic!!
-//    }
-
     private static final BufferedImage image = ImageHandler.loadImage("Enemy_Big");
 
     @Override

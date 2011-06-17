@@ -84,4 +84,13 @@ public class SniperRifle extends Gun implements DamageDealing, Upgradeable
     {
         return ORIG_TIP;
     }
+
+    @Override
+    public int getDamage(double dist) {
+
+        if (dist > super.getRange())
+            return 0; // out of range!
+
+        return getDamage();
+    }
 }

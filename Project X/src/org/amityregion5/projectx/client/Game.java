@@ -170,13 +170,13 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
     {
         if(gameOver)
         {
-            new Thread()
-            {
+            new Thread() {
+
                 @Override
                 public void run()
                 {
                     Game.this.destroy();
-                    
+
                     StatBarDrawing.reset();
                     ChatDrawing.reset();
                     GameWindow.closeWindow();
@@ -471,13 +471,21 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         }
         else if(m instanceof AddEntityMessage)
         {
-            AddEntityMessage aem = (AddEntityMessage) m;
-            Entity e = aem.getEntity();
-            if(e instanceof CharacterEntity)
-                ((CharacterEntity) e).updateWeaponImages();
+            new Thread() {
 
-            // entityHandler.addEntity(e);
-            controllerThread.addEntity(e);
+                @Override
+                public void run()
+                {
+                    AddEntityMessage aem = (AddEntityMessage) m;
+                    Entity e = aem.getEntity();
+                    if(e instanceof CharacterEntity)
+                        ((CharacterEntity) e).updateWeaponImages();
+
+                    // entityHandler.addEntity(e);
+                    controllerThread.addEntity(e);
+                }
+            }.start();
+            
         }
         else if(m instanceof AddWeaponMessage)
         {
@@ -520,7 +528,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
         {
             PointMessage pm = (PointMessage) m;
             // ((PlayerEntity) entityHandler.getEntity(pm.getID())).setPoints(pm.getAmount());
-            if (controllerThread.getEntity(pm.getID()) != null)
+            if(controllerThread.getEntity(pm.getID()) != null)
                 ((PlayerEntity) controllerThread.getEntity(pm.getID())).setPoints(pm.getAmount());
         }
         else if(m instanceof WeaponUpgradedMessage)

@@ -40,6 +40,7 @@ import org.amityregion5.projectx.common.entities.EntityControllerThread;
 import org.amityregion5.projectx.common.entities.EntityList;
 import org.amityregion5.projectx.common.entities.characters.CharacterEntity;
 import org.amityregion5.projectx.common.entities.characters.PlayerEntity;
+import org.amityregion5.projectx.common.entities.characters.enemies.ArmoredEnemy;
 import org.amityregion5.projectx.common.entities.characters.enemies.Enemy;
 import org.amityregion5.projectx.common.entities.items.held.Laser;
 import org.amityregion5.projectx.common.entities.items.held.Pistol;
@@ -65,9 +66,7 @@ import org.amityregion5.projectx.server.game.enemies.EnemyManager;
 public final class GameController {
 
     public static int DEFAULT_CASH = 50;
-
     private static GameController instance;
-
     private List<PlayerEntity> players; // List of current Players (do we even need this..?)
     private Collection<Client> clients; // List of current Clients
     private EntityControllerThread entityMoverThread; // will be in charge of moving entities
@@ -97,7 +96,7 @@ public final class GameController {
         entityMoverThread = new EntityControllerThread(map, server);
 
         Random r = new Random();
-        for (Client c : clients)
+        for(Client c : clients)
         {
             PlayerEntity p = new PlayerEntity(0, 0, c.getUsername());
             int spawnY = (int) (map.getPlayArea().getY() + r.nextInt((int) map.getPlayArea().getHeight() - p.getHeight()));
@@ -113,16 +112,16 @@ public final class GameController {
             c.send(new AddMeMessage(p));
         }
 
-        for (Client c : clients)
+        for(Client c : clients)
         {
             c.send(new AnnounceMessage("You should begin preparing your defences!"));
-            for (PlayerEntity p : players)
+            for(PlayerEntity p : players)
             {
                 c.send(new AddEntityMessage(p));
             }
         }
 
-        for (PlayerEntity p : players)
+        for(PlayerEntity p : players)
         {
             addWeapon(p, new Pistol());
             addWeapon(p, new SniperRifle());
@@ -206,14 +205,14 @@ public final class GameController {
     {
         ArrayList<Point> spawns = new ArrayList<Point>();
         final int MARGIN = 40;
-        if (map instanceof TestingMap)
+        if(map instanceof TestingMap)
         {
-            for (int i = -MARGIN; i < GameWindow.GAME_HEIGHT + MARGIN; i += 10)
+            for(int i = -MARGIN;i < GameWindow.GAME_HEIGHT + MARGIN;i += 10)
             {
                 spawns.add(new Point(-MARGIN, i));
                 spawns.add(new Point(GameWindow.GAME_WIDTH + MARGIN, i += 10));
             }
-            for (int i = -MARGIN; i < GameWindow.GAME_WIDTH + MARGIN; i += 10)
+            for(int i = -MARGIN;i < GameWindow.GAME_WIDTH + MARGIN;i += 10)
             {
                 spawns.add(new Point(i, -MARGIN));
                 spawns.add(new Point(i, GameWindow.GAME_HEIGHT + MARGIN));
@@ -234,15 +233,16 @@ public final class GameController {
 
         ProjectileWeapon wep = (ProjectileWeapon) player.getCurrWeapon();
 
-        if (wep == null) return;
-        
+        if(wep == null)
+            return;
+
         int theta = (int) Math.toDegrees(Math.atan2(player.getCenterX() - (player.getX() + wep.getOrigWeaponTip().getX()),
-                        player.getCenterY() - (player.getY() + wep.getOrigWeaponTip().getY())) + (Math.PI / 2));
+                player.getCenterY() - (player.getY() + wep.getOrigWeaponTip().getY())) + (Math.PI / 2));
         double r = Point.distance(player.getCenterX(), player.getCenterY(),
-                player.getX() + wep.getOrigWeaponTip().getX(), player.getY() +
-                wep.getOrigWeaponTip().getY());
-        int x = (int)(player.getCenterX() + r * Math.cos(Math.toRadians(player.getDirectionFacing() - theta)));
-        int y = (int)(player.getCenterY() + r * Math.sin(Math.toRadians(player.getDirectionFacing() - theta)));
+                player.getX() + wep.getOrigWeaponTip().getX(), player.getY()
+                + wep.getOrigWeaponTip().getY());
+        int x = (int) (player.getCenterX() + r * Math.cos(Math.toRadians(player.getDirectionFacing() - theta)));
+        int y = (int) (player.getCenterY() + r * Math.sin(Math.toRadians(player.getDirectionFacing() - theta)));
         int x2 = (int) (Math.cos(Math.toRadians(direction)) * wep.getRange() + x);
         int y2 = (int) (Math.sin(Math.toRadians(direction)) * wep.getRange() + y);
 
@@ -252,23 +252,24 @@ public final class GameController {
         // need to enforce by ourselves
         ArrayList<Enemy> toDamage = new ArrayList<Enemy>();
 
-        if (wep instanceof Laser)
+        if(wep instanceof Laser)
         {
-            for (Entity e : getEntities())
+            for(Entity e : getEntities())
             {
-                if (e instanceof Enemy && line.intersects(e.getHitBox()))
+                if(e instanceof Enemy && line.intersects(e.getHitBox()))
                     toDamage.add((Enemy) e);
             }
-        } else
+        }
+        else
         {
             double closest = Double.MAX_VALUE;
             Enemy closestEn = null;
-            for (Entity e : getEntities())
+            for(Entity e : getEntities())
             {
-                if (e instanceof Enemy && line.intersects(e.getHitBox()))
+                if(e instanceof Enemy && line.intersects(e.getHitBox()))
                 {
                     double dist = e.getCenterLocation().distance(new Point(player.getCenterX(), player.getCenterY()));
-                    if (dist < closest)
+                    if(dist < closest)
                     {
                         closestEn = (Enemy) e;
                         closest = dist;
@@ -281,18 +282,22 @@ public final class GameController {
 
         Iterator<Enemy> itr = toDamage.iterator();
         // for (Enemy e : toDamage)
-        while (itr.hasNext())
+        while(itr.hasNext())
         {
             Enemy e = itr.next();
-
-            if (e != null)
+            if(e != null)
             {
                 Damageable d = (Damageable) e;
                 double dist = e.getCenterLocation().distance(new Point(player.getCenterX(), player.getCenterY()));
                 int damage = d.damage(player.getCurrWeapon().getDamage(dist));
-                for (Client c : clients)
+                if(player.getCurrWeapon() instanceof Laser && e instanceof ArmoredEnemy)
                 {
-                    if (c.getPlayer().equals(player))
+                    // cut damage dealt by laser to armoredenemy
+                    damage /= 3;
+                }
+                for(Client c : clients)
+                {
+                    if(c.getPlayer().equals(player))
                     {
                         PlayerEntity p = c.getPlayer();
                         p.addPoints(damage);
@@ -304,7 +309,7 @@ public final class GameController {
                     }
                 }
                 e.requestUpdate();
-                if (d.killed())
+                if(d.killed())
                 {
                     removeEntity(e);
                 }
@@ -351,7 +356,13 @@ public final class GameController {
         return players;
     }
 
-    public EnemyManager getEnemyManager() {
+    public EnemyManager getEnemyManager()
+    {
         return enemyManager;
+    }
+
+    public int getNumPlayers()
+    {
+        return players.size();
     }
 }

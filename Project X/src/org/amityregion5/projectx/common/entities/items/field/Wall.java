@@ -33,7 +33,7 @@ public class Wall extends Block {
     private static final long serialVersionUID = 547L;
     
     public static final int DEFAULT_HEALTH = 10000;
-    public static final int PRICE = 250;
+    public static int PRICE = 250;
 
     public Wall(int x, int y)
     {
@@ -43,6 +43,7 @@ public class Wall extends Block {
     public Wall(int x, int y, int health)
     {
         super(x, y, health);
+        PRICE += 30;
     }
 
     public Wall(Entity e)

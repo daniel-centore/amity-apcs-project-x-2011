@@ -32,6 +32,7 @@ import org.amityregion5.projectx.server.game.GameController;
  * A wave of enemies, consisting of several EnemyGroups.
  * 
  * @author Michael Wenke
+ * @author Joe Stein
  */
 public class EnemyWave {
     private int waveNumber;
@@ -103,13 +104,18 @@ public class EnemyWave {
     }
 
 
+    /**
+     * Returns the spawn time between enemies in seconds.
+     * @param wn the wave number (ignored right now)
+     * @return the spawn time between enemies, in seconds
+     */
     public static double waveSpawnTime(int wn)
     {
-        return .01; // inversely-decreasing number
+        return 0.1; // 10 milliseconds between each enemy
     }
 
     public static double waveNumEnemies(int wn)
     {
-        return (wn*wn + 12*wn + 36) / 49;
+        return ((wn*wn + 12*wn + 36) / 49);
     }
 }
