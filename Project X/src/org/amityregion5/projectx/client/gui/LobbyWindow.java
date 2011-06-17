@@ -79,7 +79,8 @@ public class LobbyWindow extends JFrame implements MessageListener
     /**
      * Creates a new LobbyWindow.
      * 
-     * @param sock the socket that was connected to the server after choosing
+     * @param ch the CommunicationHandler to use and listen to
+     * @param username the username of this user
      * @param players the players that were already in this lobby. Can be empty or null.
      */
     public LobbyWindow(CommunicationHandler ch, List<User> players, String username)

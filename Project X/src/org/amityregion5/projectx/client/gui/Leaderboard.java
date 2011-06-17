@@ -44,10 +44,10 @@ public class Leaderboard {
 
     /**
      * Gets the leaderboard image. Recommended width x height: 300 x 300.
-     * @param width
-     * @param height
-     * @param players
-     * @return
+     * @param width the width of the board (recommend 300 px)
+     * @param height the height of the board (recommend 300 px)
+     * @param players the list of players whose score and usernames to draw
+     * @return the image of the leaderboard
      */
     public static BufferedImage getBoard(int width, int height, ArrayList<PlayerEntity> players)
     {

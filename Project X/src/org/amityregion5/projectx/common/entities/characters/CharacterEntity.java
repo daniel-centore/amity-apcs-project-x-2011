@@ -48,8 +48,8 @@ public abstract class CharacterEntity extends Entity {
     /**
      * Create a character.
      *
-     * @param health The amount of health the character begins with.
-     * @param max_health The most amount of health this character can have.
+     * @param x the character's initial x-coordinate
+     * @param y the character's initial y-coordinate
      */
     public CharacterEntity(int x, int y)
     {

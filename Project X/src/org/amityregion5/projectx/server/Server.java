@@ -271,7 +271,7 @@ public class Server {
     }
 
     /**
-     * @param c the client to exclude
+     * @param cl the client to exclude
      * @return a Message of all active players excluding the specified client
      */
     public ActivePlayersMessage getPlayersUpdate(Client cl)

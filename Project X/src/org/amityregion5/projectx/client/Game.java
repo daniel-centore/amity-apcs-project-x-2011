@@ -439,7 +439,7 @@ public class Game implements GameInputListener, MessageListener, RawListener, Fo
     }
 
     /**
-     * @returnm Current map
+     * @return Current map
      */
     public AbstractMap getMap()
     {

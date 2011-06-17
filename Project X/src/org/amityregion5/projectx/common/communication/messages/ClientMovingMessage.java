@@ -33,7 +33,6 @@ public class ClientMovingMessage extends Message {
     private int dir;
     /**
      * Creates the new message.
-     * @param id the id of the entity
      * @param speed the new speed of the entity
      * @param dir the new direction of the entity, in degrees
      */

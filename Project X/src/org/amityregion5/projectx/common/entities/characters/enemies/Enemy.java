@@ -43,7 +43,9 @@ public abstract class Enemy extends CharacterEntity implements Damageable {
     /**
      * Creates an enemy with specified health.
      *
-     * @param health
+     * @param max the enemy's max (and initial) health
+     * @param x the enemy's initial x-coordinate
+     * @param y the enemy's initial y-coordinate
      */
     public Enemy(int max, int x, int y)
     {

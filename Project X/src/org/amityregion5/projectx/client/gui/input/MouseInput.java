@@ -91,7 +91,7 @@ public class MouseInput implements MouseMotionListener, MouseListener, MouseWhee
      * 
      * @param x X and Y coordinates to fix
      * @param y
-     * @returnA Point inside GAME_WIDTH and GAME_HEIGHT
+     * @return a Point inside GAME_WIDTH and GAME_HEIGHT
      */
     public static Point fix(int x, int y)
     {
