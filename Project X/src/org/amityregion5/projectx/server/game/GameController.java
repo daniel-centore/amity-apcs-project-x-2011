@@ -293,7 +293,7 @@ public final class GameController {
                 if(player.getCurrWeapon() instanceof Laser && e instanceof ArmoredEnemy)
                 {
                     // cut damage dealt by laser to armoredenemy
-                    damage /= 3;
+                    damage *= (2.0/5);
                 }
                 for(Client c : clients)
                 {
