@@ -75,7 +75,9 @@ public final class GameController {
     private final EnemyManager enemyManager;
     private TimeController timeController;
     private String[] specialUsernames = new String[]
-    {"The5678Nerd", "cowguru2000", "Senhor Herp", "Señor Derp", "Danielle", "JoeShmo101", "mdubs", "Mr. B"};
+    {
+        "The5678Nerd", "cowguru2000", "Senhor Herp", "Señor Derp", "Danielle", "JoeShmo101", "mdubs", "Mr. B"
+    };
 
     /**
      * Creates and initializes the game controlling
@@ -128,9 +130,9 @@ public final class GameController {
             addWeapon(p, new Uzi());
             addWeapon(p, new Laser());
             p.setCash(DEFAULT_CASH);
-            for (String name : specialUsernames)
+            for(String name : specialUsernames)
             {
-                if (p.getUsername().equalsIgnoreCase(name))
+                if(p.getUsername().equalsIgnoreCase(name))
                 {
                     p.setCash(500);
                 }
@@ -290,7 +292,12 @@ public final class GameController {
                 Damageable d = (Damageable) e;
                 double dist = e.getCenterLocation().distance(new Point(player.getCenterX(), player.getCenterY()));
                 int damage = d.damage(player.getCurrWeapon().getDamage(dist));
-                for (Client c : clients)
+                if(player.getCurrWeapon() instanceof Laser && e instanceof ArmoredEnemy)
+                {
+                    // cut damage dealt by laser to armoredenemy
+                    damage *= (1.0 / 2);
+                }
+                for(Client c : clients)
                 {
                     if(c.getPlayer().equals(player))
                     {
