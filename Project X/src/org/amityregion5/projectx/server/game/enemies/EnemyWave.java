@@ -75,7 +75,7 @@ public class EnemyWave {
             EnemyGroup newGroup = new EnemyGroup(newEnemy, number*controller.getPlayers().size());
             enemies.add(newGroup);
         }
-        spawnTime = (int) (1000 * waveSpawnTime(n));
+        spawnTime = (int) (waveSpawnTime(n));
     }
 
     public long getSpawnTime()
@@ -105,13 +105,13 @@ public class EnemyWave {
 
 
     /**
-     * Returns the spawn time between enemies in seconds.
+     * Returns the spawn time between enemies in ms.
      * @param wn the wave number (ignored right now)
-     * @return the spawn time between enemies, in seconds
+     * @return the spawn time between enemies, in ms
      */
     public static double waveSpawnTime(int wn)
     {
-        return 0.1; // 10 milliseconds between each enemy
+        return 75;
     }
 
     public static double waveNumEnemies(int wn)

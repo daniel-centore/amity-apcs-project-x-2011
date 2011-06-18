@@ -49,7 +49,7 @@ public class StatBarDrawing {
     public static final int WIDTH = 600;
     public static final int HEIGHT = 50;
     private static int waveNumber = 0;
-    private static String waveStr = "Wave " + String.valueOf(waveNumber);
+    private static String waveStr = "";
 
     public static void reset()
     {
@@ -165,27 +165,4 @@ public class StatBarDrawing {
         waveStr = "Wave " + String.valueOf(waveNumber);
     }
 
-    public static void main(String[] args)
-    {
-        JFrame frame = new JFrame();
-        frame.setSize(700, 200);
-        final PlayerEntity p = new PlayerEntity(0, 0, "bob");
-        p.addWeapon(new Pistol());
-        p.setPoints(20974);
-        p.setCash(500);
-        final JPanel panel = new JPanel() {
-
-            private static final long serialVersionUID = 595L;
-
-            @Override
-            public void paintComponent(Graphics g)
-            {
-                g.drawImage(getStatBar(p), 0, 0, null);
-            }
-        };
-        frame.add(panel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-
-    }
 }
