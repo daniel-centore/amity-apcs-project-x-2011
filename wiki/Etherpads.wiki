@@ -1,0 +1,5 @@
+ * Etherpads
+   * [http://ietherpad.com/amity-apcs-project-x-2011 Class Organization]
+   * [http://ietherpad.com/amity-apcs-project-x-2011-game Game Specs]
+   * [http://apcsamity.www.ietherpad.com/1 Game Summary]
+   * [http://projectx-instructions.ietherpad.com/1 Game Instructions]
